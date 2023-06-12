@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.itwillbs.mapper.EmployeeMapper">
+  	
+  	<!-- 사원 추가 동작 -->
+  	<insert id="insertEmployee">
+  		insert into emp_main 
+  		(employee_id, employee_name, jumin, department_name, position, phone_num, line_num, email, 
+  		address, extraaddress , post_num, marriage, emp_date, gender, employee_photo, employee_status) 
+  		values (#{employee_id},#{employee_name},#{jumin},#{department_name},#{position},#{phone_num},#{line_num},#{email},
+  		#{address},#{extraaddress},#{post_num}, #{marriage},#{emp_date}, #{gender}, #{employee_photo}, #{employee_status} )
+  	</insert>
+  	<!-- 사원 추가 동작 -->
+  	
+  	<!-- 사원번호 부여를 위한 계산 동작 -->
+  	<select id="getMaxEmployee_id" resultType="Integer">
+  		SELECT MAX(employee_id) FROM emp_main WHERE position != '일용' 
+  	</select>
+  	
+  	<select id="getMaxEmployee_id_al" resultType="Integer">
+  		SELECT MAX(employee_id) FROM emp_main WHERE position='일용' 
+  	</select>
+  	<!-- 사원번호 부여를 위한 계산 동작 -->
+
+  	<!-- 사원 정보 조회 -->
+  	<select id="getEmployee" resultType="com.itwillbs.domain.EmployeeVO">
+		SELECT * FROM emp_main WHERE employee_id=#{employee_id}  	
+  	</select>
+  	<!-- 사원 정보 조회 -->
+  	
+  	<!-- 사원 목록 출력-->
+  	<select id="empList" resultType="com.itwillbs.domain.EmployeeVO">
+		SELECT * FROM emp_main
+  	</select>
+  	<!-- 사원 목록 출력 -->
+  	
+  	<!-- 회원정보 수정 -->
+  	<update id="updateEmployee">
+  		UPDATE emp_main SET employee_name=#{employee_name}, jumin=#{jumin},department_name=#{department_name},position=#{position},phone_num=#{phone_num},line_num=#{line_num}, 
+  		address=#{address},extraaddress=#{extraaddress},post_num=#{post_num},marriage=#{marriage},emp_date=#{emp_date},gender=#{gender}, employee_photo=#{employee_photo}, email=#{email}, employee_status=#{employee_status} 
+  		WHERE employee_id=#{employee_id}
+  	</update>
+  	<!-- 회원정보 수정 -->
+  	
+  	
+  	<!-- 일용직 직원 수 -->
+  		<select id="alCount" resultType="Integer">
+  			SELECT COUNT(employee_id) FROM emp_main WHERE position='일용'  
+  		</select>
+  	<!-- 일용직 직원 수 -->
+  	<!-- 임직원 수 -->
+  	  	<select id="empCount" resultType="Integer">
+  			SELECT COUNT(employee_id) FROM emp_main WHERE position != '일용' 
+  		</select>
+  	<!-- 임직원 수 -->
+  	
+  	
+  	<!-- 로그인 -->
+  	<select id="login" resultType="com.itwillbs.domain.EmployeeVO">
+  		select * from tbl_member 
+  		where user_id=#{user_id} and user_pw=#{user_pw}
+  	</select>
+  	<!-- 로그인 -->
+  	
+  	
+  	<!-- 회원정보 삭제 -->
+  	<delete id="delete">
+  		delete from tbl_member where user_id=#{user_id} and user_pw=#{user_pw} 
+  	</delete>
+  	<!-- 회원정보 삭제 -->
+  
+  </mapper>
