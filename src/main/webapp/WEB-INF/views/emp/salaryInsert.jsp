@@ -9,7 +9,8 @@
 </head>
 <body id="body-pd" style="font-family: 'TheJamsil5';">
 <jsp:include page="../common/header.jsp"/>
-<h1>사원 급여 등록</h1>
+<h1>사원 급여 등록 / 수정</h1>
+<input type="button" value="급여등록 / 수정" onclick="location.href='/emp/salaryInsert'">
 
 </body>
 </html>

@@ -54,7 +54,8 @@ $(document).ready(function(){
 	<br>
 	    <h1>사원 정보</h1>
 <%-- 	    	    ${evo } --%>
-	    <form action="/emp/info?employee_id=${evo.employee_id }" method="post">
+	    <form action="" method="post">
+	    <input type="hidden" name="employee_id" value="${evo.employee_id }">
 	    <!-- 권한제어 -->
 <%-- 	    <c:if test="${sessionScope.department_name eq '인사팀' }"> --%>
 		    <input type="button" value="수정" id="update">
