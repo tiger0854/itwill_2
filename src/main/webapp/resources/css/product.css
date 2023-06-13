@@ -1,0 +1,299 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
+@font-face {
+    font-family: 'TheJamsil5';
+    src: url('The Jamsil OTF 3 Regular.otf') format('woff2');
+}
+
+body{
+	font-family: 'TheJamsil5';
+}
+.product-table {
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center; 
+}
+
+.product-table thead th {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #999;
+  border-top: 2px solid #999;
+
+}
+
+.btn-search,
+.btn-add {
+  border-radius: 3px;
+  border: none;
+  padding: 5px 15px;
+  font-size: 14px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-weight: bold;
+}
+
+.btn-container {
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.btn-search {
+  margin-right: 10px;
+}
+
+.btn-search:hover {
+  background-color: #808080;
+  color: #fff;
+}
+
+.btn-add:hover {
+  background-color: #0363cd;
+  color: #fff;
+}
+
+.btn-add {
+  background-color: #8080ff;
+  color: #fff;
+}
+
+/* Product box */
+.product-box {
+  margin-top: 20px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+}
+
+.product-box {
+  border-radius: 5px;
+  border-collapse: separate;
+}
+
+.product-box th,
+.product-box td {
+  padding: 5px;
+}
+
+/* Search box */
+.product-box select,
+.product-box input[type="date"] {
+  width: 67%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.product-box input[type="text"] {
+  width: 30%;
+  padding: 5px;
+  margin-right: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+
+
+/* Product box2 */
+.product-box2 {
+  margin-top: 20px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  border-collapse: separate;
+  padding: 10px;
+  width: 33.3%;
+}
+
+
+.product-box2 th,
+.product-box2 td {
+  padding: 5px;
+}
+
+
+
+/* Search box2 */
+.product-box2 select,
+.product-box2 input[type="date"] {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.product-box2 input[type="text"] {
+  width: 30%;
+  padding: 5px;
+  margin-right: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.product-box2 {
+  margin-top: 20px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.product-box2 th,
+.product-box2 td {
+  padding: 5px;
+}
+
+/* Search box3 */
+.product-box3 {
+  margin-top: 20px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+}
+
+.product-box3 select,
+.product-box3 input[type="date"] {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.product-box3 input[type="text"] {
+  width: 70%;
+  padding: 5px;
+  margin-right: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.product-box3 {
+  margin-top: 20px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.product-box3 th,
+.product-box3 td {
+  padding: 5px;
+}
+
+
+
+/* Product table */
+
+
+.product-table th,
+.product-table td {
+  padding: 10px;
+}
+
+
+
+.product-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.product-table tbody tr:hover {
+  background-color: #f0f0f0;
+}
+
+/* Heading */
+h4 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+
+.box {
+    border-radius: 5px;
+    padding: 20px;
+    width: 400px;
+  }
+ 
+.box td{
+	margin-bottom: 20px;
+}
+
+  .box input[type="text"],
+  .box input[type="date"],
+  .box select {
+    padding: 8px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 14px;
+  }
+
+  .box table {
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .box tbody tr {
+    padding-bottom: 10px;
+  }
+  
+  .box tbody tr + tr {
+  border-top: 20px solid transparent; /* Adjust the desired spacing (top border thickness) */
+}
+
+  .box tbody tr:not(:last-child) {
+    margin-bottom: 10px;
+  }
+  
+  .btn-edit {
+    font-size: 20px;
+    border: none;
+    background-color: transparent;
+    transition: all 0.2s;
+  }
+
+  .btn-edit i {
+    color: blue;
+    transition: all 0.2s;
+  }
+
+  .btn-edit:focus,
+  .btn-edit:hover {
+    outline: none;
+    transform: scale(1.2);
+  }
+
+  .btn-delete {
+    font-size: 20px;
+    border: none;
+    background-color: transparent;
+    transition: all 0.2s;
+  }
+
+  .btn-delete i {
+    color: red;
+    transition: all 0.2s;
+  }
+
+  .btn-delete:focus,
+  .btn-delete:hover {
+    outline: none;
+    transform: scale(1.2);
+  }
+  
+  .black-bar {
+  background-color: #000000;
+  height: 45px;
+  width: 100%;
+  margin-bottom: 20px;
+  font-size: 10px;
+}
+
