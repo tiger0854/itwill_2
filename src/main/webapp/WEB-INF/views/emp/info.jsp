@@ -23,6 +23,7 @@ $(document).ready(function(){
 		$('#line_num').attr('readonly',false);
 		$('#emp_date').attr('readonly',false);
 		$('#email').attr('readonly',false);
+		$('#extraAddress').attr('readonly',false);
 		
 		$('#gender').attr('disabled',false);
 		$('#marriage').attr('disabled',false);
@@ -127,7 +128,7 @@ $(document).ready(function(){
 		            <td><input type="text" size="50" value="${evo.email }" id="email" name="email" readonly></td>
 		            <td>주소</td>
 		            <td><input type="text" size="30" placeholder="주소" id="address" name="address" value="${evo.address }" readonly >
-		            <input type="text" size="18" placeholder="상세주소" id="extraAddress" name="extraaddress" value="${evo.extraaddress }"></td>
+		            <input type="text" size="18" placeholder="상세주소" id="extraAddress" name="extraaddress" value="${evo.extraaddress }" readonly></td>
 		            <td><input type="button" value="우편번호 찾기" onclick="execDaumPostcode()" id="address_find" disabled></td>
 		            <td><input type="text" size="10" placeholder="우편번호" id="postcode" name="post_num" value="${evo.post_num }" readonly></td>
 		        </tr>

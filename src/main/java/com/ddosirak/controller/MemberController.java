@@ -135,6 +135,14 @@ public class MemberController {
 		
 	}//  salaryInfoGET() method end
 	
+	// 사원 급여 등록 및 수정 페이지
+	@RequestMapping(value = "/salaryInsert", method = RequestMethod.GET)
+	public void salaryInsertGET(Model model) {
+		logger.debug("salaryInsertGET() 호출![]~(￣▽￣)~*");
+		logger.debug("페이지 이동!");
+		
+	}// salaryInsertGET() method end
+	
 	
 	
 	
