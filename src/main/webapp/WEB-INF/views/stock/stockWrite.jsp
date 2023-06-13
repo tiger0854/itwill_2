@@ -10,24 +10,40 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 <!-- <link rel="stylesheet" type="text/css" href="../css/css.css"> -->
-<link rel="stylesheet" type="text/css" href="../css/product.css">
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 </head>
 <body>
 <!-- 재고등록 폼 -->
 <div class="black-bar"> <h4 style="text-align: center; color: white; padding-top: 8px">  <i class='bx bx-edit'></i>창고 등록</h4></div>
 		<div style="display: flex; justify-content: center; margin-bottom: 15px" >
-		  <img src="logo.png">
+		  <img src="../../resources/css/logo.png">
 		</div>
 <div class="container mt-3">
 <!--  		<hr width="100%" style="border: 2px solid black"> -->
 
 <!--         <hr width="100%" style="border: 2px solid black"> -->
-<!-- 창고코드(패턴자동생성), 창고명, 관리자명, 사용여부, 구분(냉장,냉동,상온) -->
+<!-- 품목코드, 품목명, 단위, 수량, 비고, 등록자, 창고명 -->
 <form action="" method="post" >
 <table class="box" style="margin-top: 30px; width: 100%">
   <tbody>
     <tr>
-      <td>창고코드</td>
+      <td>품목코드</td>
+      <td><input type="text" value=""></td>
+    </tr>
+    <tr>
+      <td>품목명</td>
+      <td><input type="text" value=""></td>
+    </tr>
+    <tr>
+      <td>단위</td>
+      <td><input type="text" value=""></td>
+    </tr>
+    <tr>
+      <td>수량</td>
+      <td><input type="text" value=""></td>
+    </tr>
+    <tr>
+      <td>등록자</td>
       <td><input type="text" value=""></td>
     </tr>
     <tr>
@@ -35,27 +51,8 @@
       <td><input type="text" value=""></td>
     </tr>
     <tr>
-      <td>관리자명</td>
+      <td>비고</td>
       <td><input type="text" value=""></td>
-    </tr>
-    <tr>
-      <td>사용여부</td>
-      <td>
-      <select>
-      <option>Y</option>
-      <option>N</option>
-      </select>
-      </td>
-    </tr>
-    <tr>
-      <td>구분</td>
-      <td>
-      <select>
-      <option>냉장</option>
-      <option>냉동</option>
-      <option>상온</option>
-      </select>
-      </td>
     </tr>
   </tbody>
 </table>

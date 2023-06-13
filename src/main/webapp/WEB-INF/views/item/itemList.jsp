@@ -4,29 +4,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!--  <%@ include file="../header.jsp"%> -->
+<jsp:include page="../common/header.jsp"/>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="../css/css.css">
-<link rel="stylesheet" type="text/css" href="../css/product.css">
+
 <script>
 function itemwrite() {
   // 새 창을 열기 위한 URL
-  var popupUrl = 'itemWrite.jsp';
+  var popupUrl = '/item/itemWrite';
   // 새 창 열기
   window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 }
 
 function itemedit() {
 	  // 새 창을 열기 위한 URL
-	  var popupUrl = 'itemEdit.jsp';
+	  var popupUrl = '/item/itemEdit';
 	  // 새 창 열기
 	  window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
-	}
+}
 
 
 
@@ -43,7 +37,7 @@ function itemedit() {
 <div class="height-100">
         <div class="container mt-3">
         
-<h4 style="margin-top: 150px;"><i class="bx bx-book"></i> 품목정보 관리</h4>
+<h4 style="margin-top: 150px;"><i class="bx bx-book"></i> 품목 관리</h4>
 <div style="margin-top: 10px;">
 <hr width="100%" style="border: 2px solid black">
 <!-- 상품목록 검색, 등록버튼 -->
@@ -110,7 +104,18 @@ function itemedit() {
         <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
       </tr>
       
-        <tr>
+      <tr>
+        <td><a href="productorderstatus.jsp">품번</a></td>
+        <td>품명</td>
+        <td>자재유형</td>
+        <td>재고단위</td>
+        <td>사용여부</td>
+        <td>단가</td>
+        <td><button class=btn-edit onclick="itemedit()"><i class='bx bx-edit'></i></button></td>
+        <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
+      </tr>
+            
+       <tr>
         <td><a href="productorderstatus.jsp">품번</a></td>
         <td>품명</td>
         <td>자재유형</td>
@@ -121,8 +126,7 @@ function itemedit() {
         <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
       </tr>
       
-      
-        <tr>
+       <tr>
         <td><a href="productorderstatus.jsp">품번</a></td>
         <td>품명</td>
         <td>자재유형</td>
@@ -133,9 +137,8 @@ function itemedit() {
         <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
       </tr>
       
-         </tr>
-      
-        <tr>
+        
+       <tr>
         <td><a href="productorderstatus.jsp">품번</a></td>
         <td>품명</td>
         <td>자재유형</td>
@@ -145,20 +148,6 @@ function itemedit() {
         <td><button class=btn-edit onclick="itemedit()"><i class='bx bx-edit'></i></button></td>
         <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
       </tr>
-      
-         </tr>
-      
-        <tr>
-        <td><a href="productorderstatus.jsp">품번</a></td>
-        <td>품명</td>
-        <td>자재유형</td>
-        <td>재고단위</td>
-        <td>사용여부</td>
-        <td>단가</td>
-        <td><button class=btn-edit onclick="itemedit()"><i class='bx bx-edit'></i></button></td>
-        <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
-      </tr>
-      
     </tbody>
   </table>
   

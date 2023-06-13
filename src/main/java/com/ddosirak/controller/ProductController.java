@@ -64,8 +64,8 @@ public class ProductController {
 		logger.debug("productWriteGET() 호출![]~(￣▽￣)~*");
 		logger.debug("/pro/orderEdit.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
 		
-	}// productWriteGET() method end
-	// 생산관리 - 작업지시글작성
+	}// productEditGET() method end
+	// 생산관리 - 작업지시글수정
 	
 	// http://localhost:8088/pro/orderstatusList
 	@RequestMapping(value="/orderstatusList",method=RequestMethod.GET)
@@ -74,9 +74,28 @@ public class ProductController {
 		logger.debug("/pro/orderstatusList.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
 		
 		
-	}// productWriteGET() method end
+	}// productStatusGET() method end
+	// 생산관리 - 작업지시현황
 	
+	// http://localhost:8088/pro/etcstatusList
+	@RequestMapping(value="/etcstatusList",method=RequestMethod.GET)
+	public void productEtclistGET() {
+		logger.debug("oetcstatusListGET() 호출![]~(￣▽￣)~*");
+		logger.debug("/pro/etcstatusList.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
 
+	}// productEtclistGET()
+	// 생산관리 - 실적목록
+	
+	// http://localhost:8088/pro/etcWrite
+	@RequestMapping(value="/etcWrite",method=RequestMethod.GET)
+	public void productEtcWriteGET() {
+		logger.debug("oetcstatusListGET() 호출![]~(￣▽￣)~*");
+		logger.debug("/pro/etcWrite.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
+
+	}// productEtcWriteGET() method end
+	// 생산관리 - 실적등록
+	
+	
 	
 
 }// public class end

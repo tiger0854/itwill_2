@@ -4,17 +4,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!--  <%@ include file="../header.jsp"%> -->
+<jsp:include page="../common/header.jsp"/>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="../css/css.css">
-<link rel="stylesheet" type="text/css" href="../css/product.css">
-<script>
 
+<script>
+function stockwrite() {
+	  // 새 창을 열기 위한 URL
+	  var popupUrl = '/stock/stockWrite';
+	  // 새 창 열기
+	  window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
+	}
+
+	function stockEdit() {
+		  // 새 창을 열기 위한 URL
+		  var popupUrl = '/stock/stockEdit';
+		  // 새 창 열기
+		  window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
+		}
 
 </script>
 
@@ -35,7 +42,7 @@
 <!-- 재고목록 검색, 등록버튼 -->
 <div class=btn-container>
 <button class=btn-search><i class='bx bx-search-alt-2'></i> 재고 조회</button>
-<button class=btn-add onclick="orderwrite()"><i class='bx bx-plus-medical'></i> 재고 추가</button>
+<button class=btn-add onclick="stockwrite()"><i class='bx bx-plus-medical'></i> 재고 추가</button>
 </div>
 
 <!-- 재고목록 검색박스 -->
@@ -69,73 +76,73 @@
 </div>
 
 <!-- 재고 리스트 -->
-<!-- 	창고명, 창고코드, 관리자명, 사용여부, 구분 ,수정/삭제 표시 -->
- <h4 style="margin-top: 100px;"><i class='bx bx-list-ol icon'></i> 창고 목록</h4>     
+<!-- 일자, 품목코드, 품목명, 창고명, 수량, 비고, (검색 기능) -->
+ <h4 style="margin-top: 100px;"><i class='bx bx-list-ol icon'></i>재고 목록</h4>     
   <table class="product-table"style="margin-top: 20px;width: 100%;">
     <thead>
       <tr>
+        <th>일자</th>
+        <th>품목코드</th>
+        <th>품목명</th>
         <th>창고명</th>
-        <th>창고코드</th>
-        <th>관리자명</th>
-        <th>사용여부</th>
-        <th>구분</th>
+        <th>수량</th>
         <th>수정</th>
         <th>삭제</th>
       </tr>
     </thead>
     <tbody>
       <tr>
+        <td>일자</td>
+        <td>품목코드</td>
+        <td>품목명</td>
         <td>창고명</td>
-        <td>창고코드</td>
-        <td>관리자명</td>
-        <td>사용여부</td>
-        <td>구분</td>
-        <td><button class=btn-edit onclick="orderedit()"><i class='bx bx-edit'></i></button></td>
+        <td>수량</td>
+        <td><button class=btn-edit onclick="stockEdit()"><i class='bx bx-edit'></i></button></td>
         <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
       </tr>
       
         <tr>
+         <td>일자</td>
+        <td>품목코드</td>
+        <td>품목명</td>
         <td>창고명</td>
-        <td>창고코드</td>
-        <td>관리자명</td>
-        <td>사용여부</td>
-        <td>구분</td>
-        <td><button class=btn-edit onclick="orderedit()"><i class='bx bx-edit'></i></button></td>
+        <td>수량</td>
+        <td><button class=btn-edit onclick="stockEdit()"><i class='bx bx-edit'></i></button></td>
         <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
-      </tr>
+       </tr>
       
        
-        <tr>
+       <tr>
+         <td>일자</td>
+        <td>품목코드</td>
+        <td>품목명</td>
         <td>창고명</td>
-        <td>창고코드</td>
-        <td>관리자명</td>
-        <td>사용여부</td>
-        <td>구분</td>
-        <td><button class=btn-edit onclick="orderedit()"><i class='bx bx-edit'></i></button></td>
-        <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
-      </tr>
-      
-        
-      
-        <tr>
-        <td>창고명</td>
-        <td>창고코드</td>
-        <td>관리자명</td>
-        <td>사용여부</td>
-        <td>구분</td>
-        <td><button class=btn-edit onclick="orderedit()"><i class='bx bx-edit'></i></button></td>
+        <td>수량</td>
+        <td><button class=btn-edit onclick="stockEdit()"><i class='bx bx-edit'></i></button></td>
         <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
       </tr>
       
         
       
        <tr>
+        <td>일자</td>
+        <td>품목코드</td>
+        <td>품목명</td>
         <td>창고명</td>
-        <td>창고코드</td>
-        <td>관리자명</td>
-        <td>사용여부</td>
-        <td>구분</td>
-        <td><button class=btn-edit onclick="orderedit()"><i class='bx bx-edit'></i></button></td>
+        <td>수량</td>
+        <td><button class=btn-edit onclick="stockEdit()"><i class='bx bx-edit'></i></button></td>
+        <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
+      </tr>
+      
+        
+      
+       <tr>
+        <td>일자</td>
+        <td>품목코드</td>
+        <td>품목명</td>
+        <td>창고명</td>
+        <td>수량</td>
+        <td><button class=btn-edit onclick="stockEdit()"><i class='bx bx-edit'></i></button></td>
         <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
       </tr>
       

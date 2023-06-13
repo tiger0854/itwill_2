@@ -11,17 +11,18 @@
 <script>
 function etcwrite() {
   // 새 창을 열기 위한 URL
-  var popupUrl = 'productEtcWrite.jsp';
+  var popupUrl = '/pro/etcWrite';
   // 새 창 열기
-  window.open(popupUrl, '_blank', 'width=500,height=400,resizable=yes');
+  window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 }
 
 function etcEdit() {
 	  // 새 창을 열기 위한 URL
-	  var popupUrl = 'productEtcEdit.jsp';
+	  var popupUrl = '/pro/etcEdit';
 	  // 새 창 열기
-	  window.open(popupUrl, '_blank', 'width=500,height=400,resizable=yes');
+	  window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 	}
+
 
 </script>
 
@@ -32,7 +33,6 @@ function etcEdit() {
 <body>
 
 
-
 <div class="height-100">
         <div class="container mt-3">
         
@@ -40,52 +40,89 @@ function etcEdit() {
 
 
 <!-- 실적 리스트 -->
- <h4 style="margin-top: 100px;"><i class='bx bx-list-ol icon'></i> 생산 실적 현황</h4>  
+ <h4 style="margin-top: 100px;"><i class='bx bx-list-ol icon'></i> 작업지시 현황</h4>  
 
-<!-- 품번, 품명, 단위 , 투입량 -->
-  <table class="product-table"style="margin-top: 20px;width: 100%;text-align: center;">
-  <br>
+
+  <table class="product-table"style="margin-top: 20px;width: 100%;">
    작업지시번호 : <span style="color: blue"><b>ORD12345678</b></span>
     <thead>
       <tr>
-        <th>품번</th>
+        <th>실적일자</th>
         <th>품명</th>
+        <th>품번</th>
         <th>단위</th>
+        <th>불량여부</th>
+        <th>불량사유</th>
         <th>투입량</th>
+        <th>수정</th>
+        <th>삭제</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>품번</td>
+        <td>실적일자</td>
         <td>품명</td>
+        <td>품번</td>
         <td>단위</td>
+        <td>불량여부</td>
+        <td>불량사유</td>
         <td>투입량</td>
+        <td><button class=btn-edit onclick="etcEdit()"><i class='bx bx-edit'></i></button></td>
+        <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
       </tr>
+      
       <tr>
-        <td>품번</td>
+        <td>실적일자</td>
         <td>품명</td>
+        <td>품번</td>
         <td>단위</td>
+        <td>불량여부</td>
+        <td>불량사유</td>
         <td>투입량</td>
+        <td><button class=btn-edit onclick="etcEdit()"><i class='bx bx-edit'></i></button></td>
+        <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
       </tr>
+      
+     
+      
       <tr>
-        <td>품번</td>
+        <td>실적일자</td>
         <td>품명</td>
+        <td>품번</td>
         <td>단위</td>
+        <td>불량여부</td>
+        <td>불량사유</td>
         <td>투입량</td>
+        <td><button class=btn-edit onclick="etcEdit()"><i class='bx bx-edit'></i></button></td>
+        <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
       </tr>
-
+      
+      
+      
       <tr>
-        <td>품번</td>
+        <td>실적일자</td>
         <td>품명</td>
+        <td>품번</td>
         <td>단위</td>
+        <td>불량여부</td>
+        <td>불량사유</td>
         <td>투입량</td>
+        <td><button class=btn-edit onclick="etcEdit()"><i class='bx bx-edit'></i></button></td>
+        <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
       </tr>
-
+      
+        
+      
       <tr>
-        <td>품번</td>
+        <td>실적일자</td>
         <td>품명</td>
+        <td>품번</td>
         <td>단위</td>
+        <td>불량여부</td>
+        <td>불량사유</td>
         <td>투입량</td>
+        <td><button class=btn-edit onclick="etcEdit()"><i class='bx bx-edit'></i></button></td>
+        <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
       </tr>
       
     </tbody>

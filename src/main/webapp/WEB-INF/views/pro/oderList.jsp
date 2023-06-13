@@ -127,10 +127,10 @@ function orderedit() {
         <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
       </tr>
       
-         </tr>
-      
+     
+      <!-- 지시상태가 마감일때는 생산실적 현황 페이지가 보이도록 -->
         <tr>
-        <td><a href="/pro/orderstatusList">작업지시번호</a></td>
+        <td><a href="/pro/etcstatusList">작업지시번호</a></td>
         <td>수주번호</td>
         <td>작업지시자</td>
         <td>마감</td>
@@ -143,7 +143,7 @@ function orderedit() {
         <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
       </tr>
       
-         </tr>
+         
       
         <tr>
         <td><a href="/pro/orderstatusList">작업지시번호</a></td>
@@ -158,8 +158,6 @@ function orderedit() {
         <td><button class=btn-edit onclick="orderedit()"><i class='bx bx-edit'></i></button></td>
         <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
       </tr>
-      
-         </tr>
       
         <tr>
         <td><a href="/pro/orderstatusList">작업지시번호</a></td>

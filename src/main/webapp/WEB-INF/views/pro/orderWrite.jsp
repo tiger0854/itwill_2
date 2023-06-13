@@ -35,6 +35,10 @@
       <td><input type="text" value=""></td>
     </tr>
     <tr>
+      <td>수주수량</td>
+      <td><input type="text" value=""></td>
+    </tr>
+    <tr>
       <td>작업지시자</td>
       <td><input type="text" value=""></td>
     </tr>

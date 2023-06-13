@@ -10,13 +10,13 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 <!-- <link rel="stylesheet" type="text/css" href="../css/css.css"> -->
-<link rel="stylesheet" type="text/css" href="../css/product.css">
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 </head>
 <body>
 <!-- 상품 수정 폼 -->
 <div class="black-bar"> <h4 style="text-align: center; color: white; padding-top: 8px">  <i class='bx bx-edit'></i>상품 수정 하기</h4></div>
 		<div style="display: flex; justify-content: center; margin-bottom: 15px" >
-		  <img src="logo.png">
+		  <img src="../../resources/css/logo.png">
 		</div>
 <div class="container mt-3">
 <!--  		<hr width="100%" style="border: 2px solid black"> -->
