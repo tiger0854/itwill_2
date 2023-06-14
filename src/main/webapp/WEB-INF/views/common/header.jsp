@@ -16,6 +16,11 @@ function toggleDropdown() {
 	  const collapseSale = document.getElementById('collapseSale');
 	  collapseSale.classList.toggle('show');
 	}
+	
+function toggleDropdown2() {
+	  const collapseSale = document.getElementById('collapseSale2');
+	  collapseSale.classList.toggle('show');
+	}	
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
@@ -86,10 +91,23 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					</div>
                  <a href="#" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">구매관리</span> </a> </div>
                  <a href="#" class="nav_link"> <i class='bx bx-bookmark nav_icon'></i> <span class="nav_name">창고관리</span> </a> 
-                 <a href="#" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span class="nav_name">입/출고관리</span> </a> 
-            </div> 
-            <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a>
+                                    <a href="#" class="nav_link" onclick="toggleDropdown2()"> <i class="bx bxs-cart-alt nav_icon"></i> <span class="nav_name">입/출고관리  ></span> </a> 
+                <div class="nav_link collapse" id="collapseSale2">
+                <!--입출고-->
+		  			<a href="/inbound/orderWrite" class="nav_link"> - 발주등록</a><br>
+		  		    <a href="/inbound/orderList" class="nav_link"> - 발주현황</a><br>
+		  		    <a href="/emp/salary" class="nav_link"> - 입고등록</a><br>
+		  		    <a href="#" class="nav_link"> - 입고현황</a><br>
+		  		    <a href="/outbound/insert" class="nav_link"> - 출고등록</a><br>
+		  		    <a href="/outbound/list" class="nav_link"> - 출고현황</a><br>
+		  		<!--입출고-->
+				</div>
+					</div>
+					
         </nav>
-    </div>
+        
+            </div> 
+    
+          <!--   <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a> -->
 </body>
 </html>

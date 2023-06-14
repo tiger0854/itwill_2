@@ -1,67 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css.css">
 <script type="text/javascript">
-function toggleDropdown() {
-	  const collapseSale = document.getElementById('collapseSale');
-	  collapseSale.classList.toggle('show');
-	}
-	
+var openWin;
 
-	
-document.addEventListener("DOMContentLoaded", function(event) {
-	
-
-	   
-	const showNavbar = (toggleId, navId, bodyId, headerId) =>{
-	const toggle = document.getElementById(toggleId),
-	nav = document.getElementById(navId),
-	bodypd = document.getElementById(bodyId),
-	headerpd = document.getElementById(headerId)
-
-	// Validate that all variables exist
-	if(toggle && nav && bodypd && headerpd){
-	toggle.addEventListener('click', ()=>{
-	// show navbar
-	nav.classList.toggle('show')
-	// change icon
-	toggle.classList.toggle('bx-x')
-	// add padding to body
-	bodypd.classList.toggle('body-pd')
-	// add padding to header
-	headerpd.classList.toggle('body-pd')
-	})
-	}
-	}
-
-	showNavbar('header-toggle','nav-bar','body-pd','header')
-
-	/*===== LINK ACTIVE =====*/
-	const linkColor = document.querySelectorAll('.nav_link')
-
-	function colorLink(){
-	if(linkColor){
-	linkColor.forEach(l=> l.classList.remove('active'))
-	this.classList.add('active')
-	}
-	}
-	linkColor.forEach(l=> l.addEventListener('click', colorLink))
-
-	 // Your code to run since DOM is loaded and ready
-	});
+function openChild()
+{
+    // window.name = "부모창 이름"; 
+    window.name = "parentForm";
+    // window.open("open할 window", "자식창 이름", "팝업창 옵션");
+    openWin = window.open("/inbound/productList",
+            "childForm", "width=570, height=350, resizable = no, scrollbars = no");    
+}
 </script>
+
 <!-- 판매목록 drop 기능 -->
 <style type="text/css">
 td{
-height: 60px; vertical-align: middle;
+height: 50px; vertical-align: middle;
 }
   
 </style>
@@ -104,9 +72,9 @@ height: 60px; vertical-align: middle;
   <option value="3">발주번호</option>
 	</select>
 	<input type="text" class="form-control" placeholder="검색어를 입력하세요">
-	 <button type="button" class="btn btn-primary">검색</button>
+	 <button type="button" class="btn btn-primary" onclick="openChild();">검색</button>
 	</div>
- <table class="table table-striped" style="width: 1100px;">
+ <table class="table table-striped" style="width: 1200px;">
     <thead style="border-bottom: 1px solid">
       <tr>
         <th>발주번호</th>
@@ -118,42 +86,47 @@ height: 60px; vertical-align: middle;
         <th>물품단가</th>
         <th>총액</th>
         <th>담당자</th>
+        <th>거래처</th>
         <th>진행상황</th>
         <th>수정/취소</th>
       </tr>
     </thead>
-    <tbody>
+    <c:forEach var="vo" items="${orderList}">
+    
       <tr>
-        <td><a>13123414</a></td>
-        <td>1</td>
-        <td>이천쌀</td>
-        <td>14개</td>
-        <td>2023/06/06</td>
-        <td>2023/06/05</td>
-        <td>1,500원</td>
-        <td>2,500원</td>
-        <td>김동길</td>
-        <td style="color: red;">발주대기</td>
+        <td>${vo.order_number }</td>
+        <td>${vo.material_code }</td>
+        <td>${vo.material_name }</td>
+        <td>${vo.order_piece }개</td>
+        <td>${vo.order_date }</td>
+        <td>${vo.pay_date }</td>
+        <td><fmt:formatNumber>${vo.material_price }</fmt:formatNumber>원</td>
+        <td><fmt:formatNumber>${vo.material_price*vo.order_piece }</fmt:formatNumber>원</td>
+        <td>${vo.order_resp }</td>
+        <td>${vo.order_trade }</td>
+        <c:choose>
+       		<c:when test="${vo.order_state == 0 }">
+       		<td style="color: red;">발주대기</td>
+       		</c:when>
+       		<c:otherwise>
+       		<td style="color: blue;">발주완료</td>
+       		</c:otherwise>
+        </c:choose>
          <td>
+         <c:choose>
+         <c:when test="${vo.order_state == 0 }">
       <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" onclick="openModal()">수정</button>
         <button type="button" class="btn btn-secondary btn-sm">취소</button>
+        </c:when>
+        <c:otherwise>
+        --
+        </c:otherwise>
+        </c:choose>
         </td>
       </tr>
-      <tr>
-      <td>14123414</td>
-        <td>2</td>
-        <td>잡곡쌀</td>
-        <td>16개</td>
-        <td>2023/06/07</td>
-        <td>2023/06/05</td>
-        <td>2,500원</td>
-        <td>3,500원</td>
-        <td>김김이</td>
-        <td style="color: blue;">발주완료</td>
-        <td></td>
-      </tr>
-
-    </tbody>
+  
+      </c:forEach>
+     
   </table>
 </div>
 <!-- 전체 -->
@@ -248,13 +221,14 @@ height: 60px; vertical-align: middle;
 
     </tbody>
   </table>
+  
 </div>
   <!-- 발주완료 -->
-  
-  </div>
-  <button type="button" class="btn btn-outline-primary"style="margin-bottom: 30px;margin-right:30px; float: right;">발주등록</button>
+    </div>
+  <button type="button" class="btn btn-outline-primary"style="margin-bottom: 30px;margin-right:50px; float: right;" onclick="location.href='/inbound/orderWrite'">발주등록</button>
  
     </div>
+  </div>
     
   
     
