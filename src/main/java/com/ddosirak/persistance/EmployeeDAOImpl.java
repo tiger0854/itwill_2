@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.ddosirak.domain.EmployeeVO;
+import com.ddosirak.domain.SalaryVO;
 
 //@Repository : 스프링에 해당 파일이 DAO의 동작을 하는 객체라고 등록하는 것.
 
@@ -34,7 +35,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	
 	private static final Logger logger = LoggerFactory.getLogger(EmployeeDAOImpl.class);
 	
-	// C - 회원가입
+/////////////////////////////////////////사원동작////////////////////////////////////////////////////	
+	// C - 사원등록
 	@Override
 	public void insertEmployee(EmployeeVO vo) {
 		// 1,2 DB 연결
@@ -100,7 +102,23 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	@Override
 	public Integer alCount() {
 		return sqlSession.selectOne(NAMESPACE+".alCount");
-	}// alCount() method end
+	}// alCount() method end	
+/////////////////////////////////////////사원동작////////////////////////////////////////////////////
+	
+	
+/////////////////////////////////////////급여동작////////////////////////////////////////////////////	
+	@Override
+	public SalaryVO getSalaryInfo(int employee_id) {
+		SalaryVO svo = sqlSession.selectOne(NAMESPACE+".getSalaryinfo",employee_id);
+		return svo;
+	}// getSalaryInfo() method end
+	
+	@Override
+	public void salaryInsert(EmployeeVO vo) {
+		sqlSession.update(NAMESPACE+".salaryInsert",vo);
+	}// getSalaryInfo() method end
+	
+	
 	
 	
 	

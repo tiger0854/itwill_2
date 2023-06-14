@@ -3,9 +3,11 @@ package com.ddosirak.service;
 import java.util.List;
 
 import com.ddosirak.domain.EmployeeVO;
+import com.ddosirak.domain.SalaryVO;
 
 public interface EmployeeService {
 	
+/////////////////////////////////////////사원동작////////////////////////////////////////////////////
 	// 사원정보 등록
 	public void employeeInsert(EmployeeVO vo);
 	
@@ -25,6 +27,16 @@ public interface EmployeeService {
 	
 	// 사원 정보 수정
 	public Integer updateEmployee(EmployeeVO vo);
+/////////////////////////////////////////사원동작////////////////////////////////////////////////////
+	
+/////////////////////////////////////////급여동작////////////////////////////////////////////////////
+	// 급여정보 조회
+	public SalaryVO getSalaryInfo(int employee_id);
+	// 급여정보 등록
+	public void salaryInsert(EmployeeVO vo);
+
+
+/////////////////////////////////////////급여동작////////////////////////////////////////////////////
 	
 	// 로그인
 //	public EmployeeVO employeeLogin(EmployeeVO vo);// id,pw 들어감.

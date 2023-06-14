@@ -24,6 +24,10 @@ public class EmployeeVO {
 	private String vacation_status;
 	private String working_hours;
 	
+	private int year_sal;
+	private String bank_name;
+	private String sal_account;
+	
 	// getter / setter
 	
 	public String getExtraaddress() {
@@ -140,6 +144,25 @@ public class EmployeeVO {
 	public void setWorking_hours(String working_hours) {
 		this.working_hours = working_hours;
 	}
+	public int getYear_sal() {
+		return year_sal;
+	}
+	public void setYear_sal(int year_sal) {
+		this.year_sal = year_sal;
+	}
+	public String getBank_name() {
+		return bank_name;
+	}
+	public void setBank_name(String bank_name) {
+		this.bank_name = bank_name;
+	}
+	public String getSal_account() {
+		return sal_account;
+	}
+	public void setSal_account(String sal_account) {
+		this.sal_account = sal_account;
+	}
+	
 	
 	//toString()
 	@Override
@@ -150,9 +173,8 @@ public class EmployeeVO {
 				+ extraaddress + ", post_num=" + post_num + ", marriage=" + marriage + ", emp_date=" + emp_date
 				+ ", gender=" + gender + ", employee_photo=" + employee_photo + ", exp_date=" + exp_date
 				+ ", employee_status=" + employee_status + ", vacation_status=" + vacation_status + ", working_hours="
-				+ working_hours + "]";
+				+ working_hours + ", year_sal=" + year_sal + ", bank_name=" + bank_name + ", sal_account=" + sal_account
+				+ "]";
 	}
-	
-	
-	
+
 }// public class end

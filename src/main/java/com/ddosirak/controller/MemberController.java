@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ddosirak.domain.EmployeeVO;
+import com.ddosirak.domain.SalaryVO;
 import com.ddosirak.service.EmployeeService;
 
 // 컨트롤러 구현 전 정하면 좋은 것들.
@@ -125,23 +126,62 @@ public class MemberController {
 		
 	}// salaryGET() method end
 	
-	// 사원 급여조회 페이지
+	// 사원 급여조회 페이지 GET
 	@RequestMapping(value = "/salaryInfo", method = RequestMethod.GET)
 	public void salaryInfoGET(Model model, int employee_id) {
 		logger.debug("salaryInfoGET() 호출![]~(￣▽￣)~*");
 
 		EmployeeVO evo = eService.getEmployee(employee_id);
 		model.addAttribute("evo",evo);
+		SalaryVO svo = eService.getSalaryInfo(employee_id);
+		model.addAttribute("svo",svo);
 		
 	}//  salaryInfoGET() method end
+	// 사원 급여조회 페이지 POST
+	@RequestMapping(value = "/salaryInfo", method = RequestMethod.POST)
+	public void salaryInfoPOST(Model model, int employee_id, EmployeeVO evo) {
+		logger.debug("salaryInfoPOST() 호출![]~(￣▽￣)~*");
+
+		model.addAttribute("evo",evo);
+		SalaryVO svo = eService.getSalaryInfo(employee_id);
+		model.addAttribute("svo",svo);
+	}//  salaryInfoPOST() method end
 	
-	// 사원 급여 등록 및 수정 페이지
+	
+	// 사원 급여 등록 및 수정 페이지 GET
 	@RequestMapping(value = "/salaryInsert", method = RequestMethod.GET)
-	public void salaryInsertGET(Model model) {
+	public void salaryInsertGET(Model model, int employee_id) {
 		logger.debug("salaryInsertGET() 호출![]~(￣▽￣)~*");
 		logger.debug("페이지 이동!");
 		
+		EmployeeVO evo = eService.getEmployee(employee_id);
+		model.addAttribute("evo",evo);
+		
 	}// salaryInsertGET() method end
+	// 사원 급여 등록 및 수정 페이지 POST
+	@RequestMapping(value = "/salaryInsert", method = RequestMethod.POST)
+	public String salaryInsertPOST(Model model, int employee_id,EmployeeVO vo) {
+		logger.debug("salaryInsertPOST() 호출![]~(￣▽￣)~*");
+		logger.debug("페이지 이동!");
+		eService.salaryInsert(vo);
+		
+		EmployeeVO evo = eService.getEmployee(employee_id);
+		model.addAttribute("evo",evo);
+		
+		return "redirect:/emp/salaryInfo?employee_id="+employee_id;
+	}// salaryInsertPOST() method end
+	
+	// 사원 급여 명세서 조회 페이지
+	@RequestMapping(value = "/salaryDetail", method = RequestMethod.GET)
+	public void salaryDetailGET(Model model, int employee_id) {
+		logger.debug("salaryDetailGET() 호출![]~(￣▽￣)~*");
+		logger.debug("페이지 이동!");
+		
+		EmployeeVO evo = eService.getEmployee(employee_id);
+		model.addAttribute("evo",evo);
+		
+		
+	}// salaryDetailGET() method end
 	
 	
 	

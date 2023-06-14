@@ -3,12 +3,13 @@ package com.ddosirak.persistance;
 import java.util.List;
 
 import com.ddosirak.domain.EmployeeVO;
+import com.ddosirak.domain.SalaryVO;
 
 // persistance 영속성 > DB관련 처리
 
 public interface EmployeeDAO {
 	// 필요한 동작들을 추상메서드를 사용하여 정의! (만들어두기만 한다.)
-
+/////////////////////////////////////////사원동작////////////////////////////////////////////////////
 	// C - 사원정보 등록
 	public void insertEmployee(EmployeeVO vo); 
 	
@@ -28,7 +29,17 @@ public interface EmployeeDAO {
 	
 	// 사원정보 수정
 	public Integer updateEmployee(EmployeeVO vo);
-
+/////////////////////////////////////////사원동작////////////////////////////////////////////////////
+	
+	
+/////////////////////////////////////////급여동작////////////////////////////////////////////////////
+	// 급여정보 조회
+	public SalaryVO getSalaryInfo(int employee_id);
+	// 급여정보 등록
+	public void salaryInsert(EmployeeVO vo);
+	
+	
+/////////////////////////////////////////급여동작////////////////////////////////////////////////////
 	// R - 로그인
 //	public EmployeeVO loginMember(EmployeeVO vo);
 //	public EmployeeVO loginMember(String id, String pw); // 메서드 오버로딩 (기존 방식, VO객체를 가능하면 항상 사용해야 한다.)

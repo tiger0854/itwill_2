@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.ddosirak.domain.EmployeeVO;
+import com.ddosirak.domain.SalaryVO;
 import com.ddosirak.persistance.EmployeeDAO;
 
 
@@ -19,7 +20,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	// DAO 객체 접근 필요 > 의존관계!
 	@Inject
 	private EmployeeDAO edao; // 의존성 주입
-	
+/////////////////////////////////////////사원동작////////////////////////////////////////////////////
 	// 사원 정보 등록
 	@Override
 	public void employeeInsert(EmployeeVO vo) {
@@ -68,8 +69,24 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Integer alCount() {
 		return edao.alCount();
 	} // 일용직 수
+/////////////////////////////////////////사원동작////////////////////////////////////////////////////
+
+	
+/////////////////////////////////////////급여동작////////////////////////////////////////////////////
+	// 급여정보 조회
+	@Override
+	public SalaryVO getSalaryInfo(int employee_id) {
+		return edao.getSalaryInfo(employee_id);
+	}//getSalaryInfo() method end
+	
+	// 급여 등록
+	@Override
+	public void salaryInsert(EmployeeVO vo) {
+		edao.salaryInsert(vo);	
+	}// salaryInsert() method end
 	
 	
+/////////////////////////////////////////급여동작////////////////////////////////////////////////////	
 	
 	
 	
