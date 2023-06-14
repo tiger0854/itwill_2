@@ -61,8 +61,8 @@ public class ProductController {
 		logger.debug("orderWriteGET() 호출![]~(￣▽￣)~*");
 		logger.debug(vo+" ");
 		// >> DAO > 사원 추가 메서드 호출
-
-
+    
+   
 //		return "redirect:/emp/list"; // 주소를 변경하면서 페이지 이동
 	}
 	// http://localhost:8088/pro/orderWrite
