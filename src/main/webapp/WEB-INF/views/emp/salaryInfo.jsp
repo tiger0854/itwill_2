@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -119,20 +121,23 @@ $(document).ready(function(){
 				<td>지급일자</td>
 				<td>지급액수</td>
 				<td>지급현황</td>
-				<td>명세서조회</td>
+				<td>상세조회</td>
 			</tr>
+			<c:if test="${empty salaryList }">
 			<tr>
-				<td>2023-07-01</td>
-				<td>3,000,000</td>
-				<td>지급완료</td>
-				<td><a href="/emp/salaryDetail?employee_id=${evo.employee_id}&sal_date=2023-07-01">명세서조회</a></td>
+				<td>지급내역 없음</td>
 			</tr>
-			<tr>
-				<td>2023-06-01</td>
-				<td>2,890,000</td>
-				<td>지급완료</td>
-				<td><a href="/emp/salaryDetail?employee_id=${evo.employee_id}&sal_date=2023-06-01">명세서조회</a></td>
-			</tr>
+			</c:if>
+				<c:if test="${!empty salaryList }">
+					<c:forEach var="svo" items="${salaryList}">
+						<tr>
+							<td>${svo.sal_date }</td>
+							<td><fmt:formatNumber value="${svo.salary*10000}"/> 원</td>
+							<td>지급완료</td>
+							<td><a href="/emp/salaryDetail?employee_id=${evo.employee_id}&sal_date=${svo.sal_date}">상세조회(아이콘)</a></td>
+						</tr>
+					</c:forEach>
+				</c:if>
 		</table>
 	 </div>
 

@@ -12,15 +12,10 @@
 <jsp:include page="../common/header.jsp"/>
 <!-- 사원 개인이 들어오는 경우 > 급여명세서 페이지 출력 -->
 <%-- ${empList } --%>
-<h1>사원 급여관리</h1>
-<table>
-	<tr>
-		<td><input type="button" value="월별 급여대장 조회"></td>
-		<td><input type="button" value="연별 급여대장 조회"></td>
-		<td><input type="button" value="급여 지급" onclick="location.href='/emp/salaryPay'"></td>
-	</tr>
-</table>
+<h1>사원 급여 지급</h1>
+
 <!-- 관리자가 들어오는 경우 > 사원리스트 + 급여 대시보드 출력 -->
+			<!-- 검색/필터용 -->
 		    <table class="table table-striped" style="margin-top: 10px;" >
 		        <tr>
 		            <td><select name="department_name">
@@ -55,33 +50,29 @@
 		            <td><input type="text" size="15" placeholder="이름"><input type="button" value="검색"></td>
 		        </tr>
 		    </table>
+		    <!-- 검색/필터용 -->
+<form action="" method="post">	
+	<input type="submit" value="급여 지급">
+	<input type="button" value="뒤로가기" onclick="location.href='/emp/salary'">	    
 		    <table class="table table-striped" style="margin-top: 10px;" >
-		
 		        <tr>
-		            <td>사원번호</td>
+		            <td>선택</td>
 		            <td>성명</td>
 		            <td>부서</td>
 		            <td>직급</td>
-		            <td>계좌번호</td>
+		            <td>최근 지급일</td>
 		        </tr>
 		        <c:forEach var="vo" items="${empList }">
 		        <tr>
-		            <td>${vo.employee_id}</td>
+		            <td><input type="checkbox" value="${vo.employee_id }" name="employee_id" ></td>
 		            <td><a href="/emp/salaryInfo?employee_id=${vo.employee_id}">${vo.employee_name }</a></td>
 		            <td>${vo.department_name }</td>
 		            <td>${vo.position }</td>
-		            <td>
-			            <c:if test="${empty vo.sal_account }">
-			           	 	미등록
-			            </c:if>
-			            <c:if test="${!empty vo.sal_account }">
-			            	${vo.sal_account }
-			            </c:if>
-		            </td>
+		            <td>${vo.emp_date }</td>
 		        </tr>
 		        </c:forEach>
-		    </table>
-<!-- 사원리스트에서 사원 이름 클릭 > 사원 급여명세서 조회 / 수정 가능 -->
+		    </table> 
+</form>
 
 
 </body>

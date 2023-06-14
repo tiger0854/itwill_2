@@ -1,5 +1,6 @@
 package com.ddosirak.persistance;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,16 +108,35 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	
 	
 /////////////////////////////////////////급여동작////////////////////////////////////////////////////	
+	// 급여정보 조회
 	@Override
-	public SalaryVO getSalaryInfo(int employee_id) {
-		SalaryVO svo = sqlSession.selectOne(NAMESPACE+".getSalaryinfo",employee_id);
-		return svo;
+	public List<SalaryVO> getSalaryInfo(int employee_id) {
+		logger.debug("getSalaryInfo() !");
+		List<SalaryVO> salaryList = sqlSession.selectList(NAMESPACE+".getSalaryinfo",employee_id);
+		return salaryList;
 	}// getSalaryInfo() method end
 	
+	// 급여 정보 등록
 	@Override
 	public void salaryInsert(EmployeeVO vo) {
+		logger.debug("salaryInsert() !");
 		sqlSession.update(NAMESPACE+".salaryInsert",vo);
 	}// getSalaryInfo() method end
+	
+	// 급여 지급
+	@Override
+	public void salaryPay(int employee_id) {
+		logger.debug("salaryPay() !");
+		sqlSession.insert(NAMESPACE+".salaryPay",employee_id);
+	}//salaryPay() method end
+	
+	// 사원 급여정보 조회
+	@Override
+	public SalaryVO getEmpSalaryInfo(SalaryVO vo) {
+		logger.debug("getEmpSalaryInfo() !");
+		SalaryVO svo = sqlSession.selectOne(NAMESPACE+".getEmpSalaryinfo",vo);
+		return svo;
+	}// getEmpSalaryInfo() method end
 	
 	
 	

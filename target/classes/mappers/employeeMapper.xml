@@ -73,6 +73,19 @@
 		SELECT * FROM emp_salary WHERE employee_id = #{employee_id}
 	</select>
 	<!-- 급여 정보 조회 -->
+	<!-- 급여 정보 조회 (명세서) -->
+	<select id="getEmpSalaryinfo" resultType="com.ddosirak.domain.SalaryVO">
+		SELECT * FROM emp_salary WHERE employee_id = #{employee_id} AND sal_date = #{sal_date} limit 1
+	</select>
+	<!-- 급여 정보 조회 (명세서) -->
+	<!-- 급여 지급 -->
+	<insert id="salaryPay">
+		INSERT IGNORE INTO emp_salary (employee_id, salary, sal_account, bank_name, sal_date)
+		SELECT m.employee_id, ROUND(m.year_sal/12*0.91, 2) AS salary, m.sal_account, m.bank_name, CURDATE() AS sal_date
+		FROM emp_main m
+		WHERE m.employee_id = #{employee_id}
+	</insert>
+	<!-- 급여 지급 -->
 
 	
   	<!-- 급여 동작 -->

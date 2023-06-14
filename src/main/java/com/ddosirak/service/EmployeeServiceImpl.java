@@ -1,5 +1,6 @@
 package com.ddosirak.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -75,7 +76,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 /////////////////////////////////////////급여동작////////////////////////////////////////////////////
 	// 급여정보 조회
 	@Override
-	public SalaryVO getSalaryInfo(int employee_id) {
+	public List<SalaryVO> getSalaryInfo(int employee_id) {
 		return edao.getSalaryInfo(employee_id);
 	}//getSalaryInfo() method end
 	
@@ -84,6 +85,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void salaryInsert(EmployeeVO vo) {
 		edao.salaryInsert(vo);	
 	}// salaryInsert() method end
+
+	// 급여 지급
+	@Override
+	public void salaryPay(int employee_id) {
+		edao.salaryPay(employee_id);
+	}// salaryPay() method end
+	
+	// 사원 급여정보 조회
+	@Override
+	public SalaryVO getEmpSalaryInfo(SalaryVO vo) {
+		return edao.getEmpSalaryInfo(vo);
+	}//getEmpSalaryInfo() method end
+	
+	
 	
 	
 /////////////////////////////////////////급여동작////////////////////////////////////////////////////	

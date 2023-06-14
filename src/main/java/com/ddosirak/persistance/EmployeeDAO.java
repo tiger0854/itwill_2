@@ -1,5 +1,6 @@
 package com.ddosirak.persistance;
 
+import java.sql.Date;
 import java.util.List;
 
 import com.ddosirak.domain.EmployeeVO;
@@ -34,9 +35,13 @@ public interface EmployeeDAO {
 	
 /////////////////////////////////////////급여동작////////////////////////////////////////////////////
 	// 급여정보 조회
-	public SalaryVO getSalaryInfo(int employee_id);
+	public List<SalaryVO> getSalaryInfo(int employee_id);
 	// 급여정보 등록
 	public void salaryInsert(EmployeeVO vo);
+	// 급여 지급
+	public void salaryPay(int employee_id);
+	// 사원 급여 지급 정보 조회 (개인)
+	public SalaryVO getEmpSalaryInfo(SalaryVO vo);
 	
 	
 /////////////////////////////////////////급여동작////////////////////////////////////////////////////

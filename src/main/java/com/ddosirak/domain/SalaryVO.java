@@ -11,6 +11,9 @@ public class SalaryVO {
 	private String salary_reason;
 	private String salary_rule;
 	private Date sal_date;
+	private String sal_account; 
+	private String bank_name; 
+	private int working_day;
 	
 	// getter / setter
 	public int getSal_num() {
@@ -55,14 +58,37 @@ public class SalaryVO {
 	public void setSal_date(Date sal_date) {
 		this.sal_date = sal_date;
 	}
+	public String getSal_account() {
+		return sal_account;
+	}
+	public void setSal_account(String sal_account) {
+		this.sal_account = sal_account;
+	}
+	public String getBank_name() {
+		return bank_name;
+	}
+	public void setBank_name(String bank_name) {
+		this.bank_name = bank_name;
+	}
+	public int getWorking_day() {
+		return working_day;
+	}
+	public void setWorking_day(int working_day) {
+		this.working_day = working_day;
+	}
+	
 	
 	// toString()
 	@Override
 	public String toString() {
 		return "SalaryVO [sal_num=" + sal_num + ", employee_id=" + employee_id + ", salary=" + salary + ", deduction="
 				+ deduction + ", salary_reason=" + salary_reason + ", salary_rule=" + salary_rule + ", sal_date="
-				+ sal_date + "]";
+				+ sal_date + ", sal_account=" + sal_account + ", bank_name=" + bank_name + ", working_day="
+				+ working_day + "]";
 	}
+	
+
+
 	
 	
 
