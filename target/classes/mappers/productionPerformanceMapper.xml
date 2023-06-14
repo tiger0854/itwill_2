@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.ddosirak.mapper.ProductionPerformanceMapper">
+  
+  	<!-- 실적 등록 -->
+  	<insert id="insertProdPerf">
+  		insert into prod_perf_add
+  		(perf_id, item_code, item_name, perf_gobd, err_reason, remark, pfQTY, perf_date)
+  		values
+  		(#{perf_id}, #{item_code}, #{item_name}, #{perf_gobd}, #{err_reason}, #{remark}, #{pfQTY}, #{perf_date})
+  	</insert>
+  	<!-- 실적 등록 -->
+  	
+  	<!-- 실적 현황 -->
+  	<select id="prodPerfList" resultType="com.ddosirak.domain.ProductionPerformanceVO">
+  		SELECT a.perf_id, a.item_code, a.item_name, a.perf_gobd, a.err_reason, a.remark, a.pfQTY, a.perf_date
+		FROM prod_perf_add a
+		LEFT OUTER JOIN prod_perf_list l
+		ON 1=1
+		WHERE wo_code=#{wo_code }
+  	</select>
+  	<!-- 실적 현황 -->
+  	
+  </mapper>
+  

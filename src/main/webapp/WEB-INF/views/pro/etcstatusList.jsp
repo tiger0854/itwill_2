@@ -60,38 +60,15 @@ function etcwrite() {
       </tr>
     </thead>
     <tbody>
+    
+    <c:forEach var="prmList" items="${prodPerfList }">
       <tr>
-        <td>품번</td>
-        <td>품명</td>
-        <td>단위</td>
-        <td>투입량</td>
+        <td>${prmList.item_code }</td>
+        <td>${prmList.item_name }</td>
+        <td>${prmList.unit }</td>
+        <td>${prmList.iQTY }</td>
       </tr>
-      <tr>
-        <td>품번</td>
-        <td>품명</td>
-        <td>단위</td>
-        <td>투입량</td>
-      </tr>
-      <tr>
-        <td>품번</td>
-        <td>품명</td>
-        <td>단위</td>
-        <td>투입량</td>
-      </tr>
-
-      <tr>
-        <td>품번</td>
-        <td>품명</td>
-        <td>단위</td>
-        <td>투입량</td>
-      </tr>
-
-      <tr>
-        <td>품번</td>
-        <td>품명</td>
-        <td>단위</td>
-        <td>투입량</td>
-      </tr>
+     </c:forEach>
       
     </tbody>
   </table>

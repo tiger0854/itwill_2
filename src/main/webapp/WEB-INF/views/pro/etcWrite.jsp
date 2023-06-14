@@ -23,33 +23,41 @@
 
 <!--         <hr width="100%" style="border: 2px solid black"> -->
 <!-- 품번, 품명, 실적일, 실적수량, 불량여부, 불량사유 , 비고 -->
-<form action="" method="post" >
+<form action="" method="post">
 <table class="box" style="margin-top: 30px; width: 100%">
   <tbody>
     <tr>
       <td>품번</td>
-      <td><input type="text" value=""></td>
+      <td><input type="text" name="item_code"></td>
     </tr>
     <tr>
       <td>품명</td>
-      <td><input type="text" value=""></td>
+      <td><input type="text"name="item_name"></td>
+    </tr>
+    <tr>
+      <td>실적수량</td>
+      <td><input type="number"name="pfQTY" min="0"></td>
+    </tr>
+    <tr>
+      <td>실적일</td>
+      <td><input class="perf_date" type="date"name="perf_date"></td>
     </tr>
     <tr>
       <td>불량여부</td>
       <td>
-      <select>
-      	<option>불량</option>
-      	<option>정상</option>
+      <select class="gobd" name="perf_gobd" onchange="handlegobdchange();">
+      	<option value="n">불량</option>
+      	<option value="y">정상</option>
       </select>
       </td>
     </tr>
     <tr>
       <td>불량사유</td>
-      <td><input type="text" value=""></td>
+      <td><input class="gobd-reason" type="text" name="err_reason"></td>
     </tr>
     <tr>
       <td>비고</td>
-      <td><input type="text" value=""></td>
+      <td><input type="text" name="remark"></td>
     </tr>
   </tbody>
 </table>
@@ -58,7 +66,7 @@
 
 <!-- 작업지시등록, 취소 버튼 -->
 <div style="text-align: center; margin-top: 50px">
-<button type="submit" class=btn-add> <i class='bx bx-edit'></i> 등록</button>
+<button class=btn-add onclick="onsubmit();"> <i class='bx bx-edit'></i> 등록</button>
 <button class=btn-search onclick="window.close()">X 취소</button>
 </div>
 
@@ -66,5 +74,28 @@
 
 <br>
 </div>
+<script type="text/javascript">
+	function onsubmit() {
+		document.getElementsByTagName('form').submit();
+		window.close();
+	}
+	
+	function handlegobdchange() {
+		if(document.querySelector('.gobd').value === "y") {
+			document.querySelector('.gobd-reason').disabled = true;
+		} else {
+			document.querySelector('.gobd-reason').disabled = false;
+		}
+	}
+	
+	function disableFutureDates() {
+		var today = new Date().toISOString().split('T')[0];
+		document.querySelector('.perf_date').max = today;
+	}
+	
+	window.addEventListener('DOMContentLoaded', function() {
+		disableFutureDates();
+	});
+</script>
 </body>
 </html>
