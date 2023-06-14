@@ -44,7 +44,7 @@ function etcEdit() {
 
 
   <table class="product-table"style="margin-top: 20px;width: 100%;">
-   작업지시번호 : <span style="color: blue"><b>ORD12345678</b></span>
+   작업지시번호 : <span style="color: blue"><b>${param.wo_code}</b></span>
     <thead>
       <tr>
         <th>실적일자</th>
@@ -54,8 +54,6 @@ function etcEdit() {
         <th>불량여부</th>
         <th>불량사유</th>
         <th>투입량</th>
-        <th>수정</th>
-        <th>삭제</th>
       </tr>
     </thead>
     <tbody>
@@ -67,8 +65,6 @@ function etcEdit() {
         <td>불량여부</td>
         <td>불량사유</td>
         <td>투입량</td>
-        <td><button class=btn-edit onclick="etcEdit()"><i class='bx bx-edit'></i></button></td>
-        <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
       </tr>
       
       <tr>
@@ -79,8 +75,6 @@ function etcEdit() {
         <td>불량여부</td>
         <td>불량사유</td>
         <td>투입량</td>
-        <td><button class=btn-edit onclick="etcEdit()"><i class='bx bx-edit'></i></button></td>
-        <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
       </tr>
       
      
@@ -93,8 +87,6 @@ function etcEdit() {
         <td>불량여부</td>
         <td>불량사유</td>
         <td>투입량</td>
-        <td><button class=btn-edit onclick="etcEdit()"><i class='bx bx-edit'></i></button></td>
-        <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
       </tr>
       
       
@@ -107,8 +99,6 @@ function etcEdit() {
         <td>불량여부</td>
         <td>불량사유</td>
         <td>투입량</td>
-        <td><button class=btn-edit onclick="etcEdit()"><i class='bx bx-edit'></i></button></td>
-        <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
       </tr>
       
         
@@ -121,8 +111,6 @@ function etcEdit() {
         <td>불량여부</td>
         <td>불량사유</td>
         <td>투입량</td>
-        <td><button class=btn-edit onclick="etcEdit()"><i class='bx bx-edit'></i></button></td>
-        <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
       </tr>
       
     </tbody>

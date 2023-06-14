@@ -19,47 +19,85 @@
 		  <img src="../../resources/css/logo.png">
 		</div>
 
+
+<!--     <tr> -->
+<!--       <td>수주번호</td> -->
+<!--       <td><input type="text" name="so_code"></td> -->
+<!--     </tr> -->
+<!--     <tr> -->
+<!--       <td>수주수량</td> -->
+<!--       <td><input type="text" name="sQTY"></td> -->
+<!--     </tr> -->
+<!--     <tr> -->
+<!--       <td>작업지시자</td> -->
+<!--       <td><input type="text" name="employee_id"></td> -->
+<!--     </tr> -->
+<!--     <tr> -->
+<!--       <td>납품예정일</td> -->
+<!--       <td><input type="date" name="delivery_date"></td> -->
+<!--     </tr> -->
+<!--     <tr> -->
+<!--       <td>라인코드</td> -->
+<!--       <td><input type="text" name="line_code"></td> -->
+<!--     </tr> -->
+<!--     <tr> -->
+<!--       <td>품목코드</td> -->
+<!--       <td><input type="text" name="item_code"></td> -->
+<!--     </tr> -->
+<!--     <tr> -->
+<!--       <td>지시수량</td> -->
+<!--       <td><input type="text" name="oQTY"></td> -->
+<!--     </tr> -->
+<!--     <tr> -->
+<!--       <td>생산수량</td> -->
+<!--       <td><input type="text" name="pQTY"></td> -->
+<!--     </tr> -->
+<!--   </tbody> -->
+<!-- </table> -->
+
+
+
 <div class="container mt-3">
 <!--         <hr width="100%" style="border: 2px solid black"> -->
-
+<%-- ${pvo} --%>
 <form action="" method="post" >
 <table class="box" style="margin-top: 30px; width: 100%">
   <tbody>
     <tr>
       <td>작업지시 번호</td>
-      <td><input type="text" value=""></td>
+      <td><input type="text" value="${pvo.wo_code}" readonly="readonly"></td>
     </tr>
     <tr>
       <td>수주번호</td>
-      <td><input type="text" value=""></td>
+      <td><input type="text" value="${pvo.so_code}" name="so_code"></td>
     </tr>
     <tr>
       <td>작업지시자</td>
-      <td><input type="text" value=""></td>
+      <td><input type="text" value="${pvo.employee_id}" name="employee_id"></td>
     </tr>
     <tr>
       <td>납품예정일</td>
-      <td><input type="date" value=""></td>
+      <td><input type="date" value="${pvo.delivery_date}" name="delivery_date"></td>
     </tr>
     <tr>
       <td>라인명</td>
-      <td><input type="text" value=""></td>
+      <td><input type="text" value="${pvo.line_code}" name="line_code"></td>
     </tr>
     <tr>
       <td>품목명</td>
-      <td><input type="text" value=""></td>
+      <td><input type="text" value="${pvo.item_code}" name="item_code"></td>
     </tr>
     <tr>
       <td>지시일자</td>
-      <td><input type="date" value=""></td>
+      <td><input type="date" value="${pvo.wo_date}" readonly="readonly"></td>
     </tr>
     <tr>
       <td>지시수량</td>
-      <td><input type="text" value=""></td>
+      <td><input type="text" value="${pvo.oQTY}" name="oQTY"></td>
     </tr>
     <tr>
       <td>생산수량</td>
-      <td><input type="text" value=""></td>
+      <td><input type="text" value="${pvo.pQTY}" name="pQTY"></td>
     </tr>
   </tbody>
 </table>

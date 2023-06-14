@@ -44,9 +44,11 @@
 	</bean>
 	<!-- SqlSessionTemplate : 디비연결, mybatis 설정, 매퍼 설정(SQL 실행), 디비 종료 -->
 	
+	
 	<!-- 외부 객체 등록 -->
 	<context:component-scan base-package="com.ddosirak.persistance"/>
 	<context:component-scan base-package="com.ddosirak.service"/>
+	<context:component-scan base-package="com.ddosirak.workorder"/>
 		<!-- bean id="mdao" class="com.itwillbs.persistance.MemberDAOImpl"/>를 작성하지 않아도 되도록 작성한 것! -->
 	<!-- 외부 객체 등록 -->
 
