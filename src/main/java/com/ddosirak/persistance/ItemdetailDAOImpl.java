@@ -1,0 +1,56 @@
+package com.ddosirak.persistance;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+
+import com.ddosirak.domain.ItemdetailVO;
+
+public class ItemdetailDAOImpl implements ItemdetailDAO {
+	
+	private static final String NAMESPACE="com.ddosirak.mapper.ItemdetailMapper";
+	
+	private static final Logger logger=org.slf4j.LoggerFactory.getLogger(ItemdetailDAOImpl.class);
+	
+	@Inject
+	SqlSession sqlsession;
+	
+	//상품 기초 목록
+	@Override
+	public List<ItemdetailVO> mdList() {
+		logger.debug("dao : 상품 기초 목록 실행");
+		return sqlsession.selectList(NAMESPACE+".itemlist");
+	}
+	
+	//상품 기초 등록
+	@Override
+	public Integer insertMD(ItemdetailVO vo) {
+		logger.debug("dao : 자재 기초 등록 실행");
+		logger.debug(vo+"");
+		return sqlsession.insert(NAMESPACE+".insertid",vo);
+	}
+	
+	//상품 기초 수정
+	@Override
+	public Integer updateMD(ItemdetailVO vo) {
+		logger.debug("dao : 상품 기초 수정 실행(update)");
+		return sqlsession.update(NAMESPACE+".updateid",vo);
+	}
+	@Override
+	public ItemdetailVO editMD(String item_code) {
+		logger.debug("dao : 상품 기초 수정 실행(edit)");
+		return sqlsession.selectOne(NAMESPACE+".editid", item_code);
+	}
+	
+	//자제 삭제
+	@Override
+	public void deleteM(String item_code) {
+		logger.debug("dao : 자재 삭제 실행");
+		sqlsession.delete(NAMESPACE+".deleteid",item_code);
+
+	}
+
+}

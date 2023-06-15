@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.ddosirak.mapper.MaterialdetailMapper">
+  <!-- 물품 조회 -->
+  <select id="selectMaterialDetail" resultType="com.ddosirak.domain.MaterialdetailVO">
+  select * from material_detail
+  </select>
+  <!-- 물품 조회 -->
+  <!-- 물품 기초 등록 -->
+  <insert id="insertMaterialDetail">
+  insert into material_detail (material_code, material_name, material_type) 
+  values (#{material_code}, #{material_name}, #{material_type})
+  </insert>
+  <!-- 물품 기초 등록 -->
+  <!-- 물품 기초 수정 -->
+  <select id="editMaterialDetail" resultType="com.ddosirak.domain.MaterialdetailVO">
+  select material_code, material_name from material_detail where material_code = #{material_code}
+  </select>
+  <update id="updateMaterialDetail">
+  UPDATE material_detail SET material_name = #{material_name}, material_type = #{material_type}
+  WHERE material_code = #{material_code} 
+  </update>
+  <!-- 물품 기초 수정 -->  
+  <!-- 물품 삭제 -->
+  <delete id="deleteMaterial">
+  delete from material_detail where material_code = #{material_code}
+  </delete>
+  <!-- 물품 삭제 -->
+  </mapper>

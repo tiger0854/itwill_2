@@ -3,74 +3,75 @@ package com.ddosirak.controller;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.ddosirak.domain.EmployeeVO;
+import com.ddosirak.domain.WarehouseVO;
 import com.ddosirak.service.EmployeeService;
-
-// 컨트롤러 구현 전 정하면 좋은 것들.
-// - 컨트롤러별 공통 주소 (URI) 설계
-// - 각 기능별 주소(URI) 설계
-// - 각 URI별 호출방식 설정(GET/POST) 
-//		> 사용자의 정보입력,조회(GET)
-//		> 데이터 처리, Db접근(POST)  >> 해당 분류가 일반적인 방식.
-// - 결과처리, 페이지 이동 설계
-// - 예외처리
-
+import com.ddosirak.service.WarehouseService;
 
 @Controller
-@RequestMapping(value="/warehouse/*")
+@RequestMapping(value = "/foundation/warehouse/*")
 public class WarehouseController {
-	
 	private static final Logger logger = LoggerFactory.getLogger(WarehouseController.class);
 	
-	// 서비스의 정보가 필요함. > 의존관계
-//	@Inject
-//	private ProductService eService;
+	@Inject
+	private WarehouseService service;
 	
-	// 동작 구현 > 메서드 설계
+	// http://localhost:8088/foundation/warehouse/warehouseList
+	//창고 목록
+	@RequestMapping(value="/warehouseList", method=RequestMethod.GET)
+	public void warehouseListGET(Model model) {
+		logger.debug("warehouseListGET호출");
+		List<WarehouseVO> whList=service.warehouseList();
+		logger.debug("whlist 개수 : "+whList.size());
+		model.addAttribute("whList", whList);
+	}
 	
-///////////////////////////////////////////////////관리//////////////////////////////////////////////////////////////////////////////
-	// http://localhost:8088/warehouse/warehouseList
-	@RequestMapping(value="/warehouseList",method=RequestMethod.GET)
-	public void warehouseListGET() {
-		logger.debug("warehouseListGET() 호출![]~(￣▽￣)~*");
-		logger.debug("/warehouse/warehouseList.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
+	//창고 등록
+	@RequestMapping(value = "/warehouseWrite", method = RequestMethod.GET)
+	public void insertWhGET() {
+		logger.debug("insertWhGET 호출");
+	}
+	
+	@RequestMapping(value = "/warehouseWrite", method = RequestMethod.POST)
+	public String insertWhPOST(WarehouseVO vo) {
+		logger.debug("insertWhPOSt 호출");
+		int result=service.insertwh(vo);
+	
+		if(result==0) {
+			return "/foundation/warehouse/warehouseWrite";
+		}else {
+			return "redirect:/foundation/warehouse/warehouseList";
+		}
+	}
+	//창고 수정
+	@RequestMapping(value = "/warehouseEdit", method = RequestMethod.GET)
+	public void updateWhGET(String wh_code, Model model) {
+		logger.debug("updateWhget 호출");
+		WarehouseVO resultvo=service.editwh(wh_code);
+		model.addAttribute("resultvo", resultvo);
+	}
+	@RequestMapping(value = "/warehouseEdit", method = RequestMethod.POST)
+	public String updateWhPOST(WarehouseVO vo) {
+		logger.debug("updateWhpost 호출");
+		int result=service.updatewh(vo);
 		
-	}// productListGET() method end
-	// 상품관리 - 상품목록
-	
-	@RequestMapping(value="/warehouseWrite",method=RequestMethod.GET)
-	public void stockWritetGET() {
-		logger.debug("warehouseWriteGET()GET() 호출![]~(￣▽￣)~*");
-		logger.debug("/stock/stockWrite.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
-		
-	}// itemWritetGET() method end
-	// 상품관리 - 상품등록
-	
-	@RequestMapping(value="/warehouseEdit",method=RequestMethod.GET)
-	public void stockEditGET() {
-		logger.debug("stockEditGET() 호출![]~(￣▽￣)~*");
-		logger.debug("/stock/stockEdit.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
-		
-	}// itemEditGET() method end
-	// 상품관리 - 상품수정
-	
-	
-
-}// public class end
-
-
-
-
-
-
-
+		if(result==0) {
+			return "/foundation/warehouse/warehouseEdit";
+		}else {
+			return "redirect:/foundation/warehouse/warehouseList";
+		}
+	}
+	@RequestMapping(value = "/warehouseDelete", method = RequestMethod.GET)
+	public String deleteWhGET(String wh_code) {
+		logger.debug("deleteWhGET 호출");
+		service.deletewh(wh_code);
+		return "redirect:/foundation/warehouse/warehouseList";
+	}
+}
