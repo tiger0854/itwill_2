@@ -18,10 +18,8 @@ function orderwrite() {
   window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 }
 
-function orderedit() {
-	  // 새 창을 열기 위한 URL
-	  var popupUrl = '/pro/orderEdit';
-	  // 새 창 열기
+function orderedit(wo_code) {
+	  var popupUrl = '/pro/orderEdit?wo_code='+ wo_code;
 	  window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 	}
 
@@ -80,7 +78,7 @@ function orderedit() {
 <!-- 작업지시목록 리스트 -->
 <!-- 작업지시상태 시작/지시 :  작업지시 현황 리스트 -->
 <!-- 작업지시상태 마감 :  실적현황 -> 실적등록 -->
-
+<%-- ${oderList} --%>
  <h4 style="margin-top: 100px;"><i class='bx bx-list-ol icon'></i> 작업지시 목록</h4>     
   <table class="product-table"style="margin-top: 20px;width: 100%;">
     <thead>
@@ -90,8 +88,8 @@ function orderedit() {
         <th>작업지시자</th>
         <th>지시상태</th>
         <th>납품예정일</th>
-        <th>라인명</th>
-        <th>품목명</th>
+        <th>라인코드</th>
+        <th>품목코드</th>
         <th>지시수량</th>
         <th>생산수량</th>
         <th>수정</th>
@@ -99,80 +97,52 @@ function orderedit() {
       </tr>
     </thead>
     <tbody>
+    <c:forEach var="vo" items="${oderList }">
       <tr>
-        <td><a href="/pro/orderstatusList">작업지시번호</a></td>
-        <td>수주번호</td>
-        <td>작업지시자</td>
-        <td>지시</td>
-        <td>납품예정일</td>
-        <td>라인명</td>
-        <td>품목명</td>
-        <td>지시수량</td>
-        <td>생산수량</td>
-        <td><button class=btn-edit onclick="orderedit()"><i class='bx bx-edit'></i></button></td>
-        <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
+		<c:choose>
+		  <c:when test="${vo.wo_status eq '지시' or vo.wo_status eq '시작'}">
+		    <td><a href="/pro/orderstatusList?wo_code=${vo.wo_code}">${vo.wo_code}</a></td>
+		  </c:when>
+		  <c:when test="${vo.wo_status eq '마감'}">
+		    <td><a href="/pro/closedOrders?wo_code=${vo.wo_code}">${vo.wo_code}</a></td>
+		  </c:when>
+		  <c:otherwise>
+		    <td>${vo.wo_code}</td>
+		  </c:otherwise>
+		</c:choose>
+        <td>${vo.so_code}</td>
+        <td>${vo.employee_id}</td>
+        <c:choose>
+	  <c:when test="${vo.wo_status eq '지시'}">
+	    <td style="color: blue;">${vo.wo_status}</td>
+	  </c:when>
+	  <c:when test="${vo.wo_status eq '마감'}">
+	    <td style="color: red;">${vo.wo_status}</td>
+	  </c:when>
+	  <c:when test="${vo.wo_status eq '시작'}">
+	    <td style="color: green;">${vo.wo_status}</td>
+	  </c:when>
+	  <c:otherwise>
+	    <td>${vo.wo_status}</td>
+	  </c:otherwise>
+	</c:choose>
+        <td>${vo.delivery_date}</td>
+        <td>${vo.line_code}</td>
+        <td>${vo.item_code}</td>
+        <td>${vo.oQTY}</td>
+        <td>${vo.pQTY}</td>
+		<c:choose>
+		  <c:when test="${vo.wo_status eq '지시'}">
+		    <td><button class="btn-edit" onclick="orderedit('${vo.wo_code}')"><i class="bx bx-edit"></i></button></td>
+		    <td><button class="btn-delete"><i class="bx bxs-trash"></i></button></td>
+		  </c:when>
+		  <c:otherwise>
+		    <td></td>
+		    <td></td>
+		  </c:otherwise>
+		</c:choose>
       </tr>
-      
-        <tr>
-        <td><a href="/pro/orderstatusList">작업지시번호</a></td>
-        <td>수주번호</td>
-        <td>작업지시자</td>
-        <td>시작</td>
-        <td>납품예정일</td>
-        <td>라인명</td>
-        <td>품목명</td>
-        <td>지시수량</td>
-        <td>생산수량</td>
-        <td><button class=btn-edit onclick="orderedit()"><i class='bx bx-edit'></i></button></td>
-        <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
-      </tr>
-      
-     
-      <!-- 지시상태가 마감일때는 생산실적 현황 페이지가 보이도록 -->
-        <tr>
-        <td><a href="/pro/etcstatusList">작업지시번호</a></td>
-        <td>수주번호</td>
-        <td>작업지시자</td>
-        <td>마감</td>
-        <td>납품예정일</td>
-        <td>라인명</td>
-        <td>품목명</td>
-        <td>지시수량</td>
-        <td>생산수량</td>
-        <td><button class=btn-edit onclick="orderedit()"><i class='bx bx-edit'></i></button></td>
-        <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
-      </tr>
-      
-         
-      
-        <tr>
-        <td><a href="/pro/orderstatusList">작업지시번호</a></td>
-        <td>수주번호</td>
-        <td>작업지시자</td>
-        <td>지시상태</td>
-        <td>납품예정일</td>
-        <td>라인명</td>
-        <td>품목명</td>
-        <td>지시수량</td>
-        <td>생산수량</td>
-        <td><button class=btn-edit onclick="orderedit()"><i class='bx bx-edit'></i></button></td>
-        <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
-      </tr>
-      
-        <tr>
-        <td><a href="/pro/orderstatusList">작업지시번호</a></td>
-        <td>수주번호</td>
-        <td>작업지시자</td>
-        <td>지시상태</td>
-        <td>납품예정일</td>
-        <td>라인명</td>
-        <td>품목명</td>
-        <td>지시수량</td>
-        <td>생산수량</td>
-        <td><button class=btn-edit onclick="orderedit()"><i class='bx bx-edit'></i></button></td>
-        <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
-      </tr>
-      
+      </c:forEach>
     </tbody>
   </table>
   
