@@ -16,14 +16,14 @@
 <script>
 function warehousewrite() {
   // 새 창을 열기 위한 URL
-  var popupUrl = '/foundation/warehouse/warehouseWrite';
+  var popupUrl = '/foundation/warehouse/warehouseUpload';
   // 새 창 열기
   window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 }
 
 function warehouseedit() {
 	  // 새 창을 열기 위한 URL
-	  var popupUrl = 'warehouseEdit.jsp';
+	  var popupUrl = '/foundation/warehouse/warehouseUpdate';
 	  // 새 창 열기
 	  window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 	}
@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         <td>${dto.wh_name }</td>
         <td>${dto.retail_code }</td>
         <td>${dto.wh_type }</td>
-        <td><button class=btn-edit onclick="location.href='warehouseEdit?wh_code=${dto.wh_code}';" ><i class='bx bx-edit'></i></button></td>
+        <td><button class=btn-edit onclick="location.href='warehouseUpdate?wh_code=${dto.wh_code}';" ><i class='bx bx-edit'></i></button></td>
         <td><button class=btn-delete onclick="location.href='warehouseDelete?wh_code=${dto.wh_code}';" ><i class='bx bxs-trash'></i></button></td>
       </tr>
       </c:forEach>

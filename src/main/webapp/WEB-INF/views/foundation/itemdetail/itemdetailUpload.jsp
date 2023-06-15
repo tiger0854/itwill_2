@@ -28,38 +28,20 @@
   <tbody>
     <tr>
       <td>품번</td>
-      <td><input type="text" value=""></td>
+      <td><input type="text" name="item_code"></td>
     </tr>
     <tr>
       <td>품명</td>
-      <td><input type="text" value=""></td>
-    </tr>
-    <tr>
-      <td>자재유형</td>
-      <td>
-      <select>
-      	<option>완제품</option>
-      	<option>부자재</option>
-      </select>
-      </td>
+      <td><input type="text" name="item_name"></td>
     </tr>
     <tr>
       <td>재고단위</td>
-      <td><input type="text" value=""></td>
+      <td><input type="text" name="unit"></td>
     </tr>
     <tr>
-      <td>사용여부</td>
-      <td>
-      <select>
-      	<option>완제품</option>
-      	<option>부자재</option>
-      </select>
-      </td>
-    </tr>
-    
     <tr>
       	<td>단가</td>
-      	<td><input type="text" value=""></td>
+      	<td><input type="text" name="item_price"></td>
     </tr>
   </tbody>
 </table>

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ddosirak.domain.WarehouseVO;
-import com.ddosirak.service.EmployeeService;
 import com.ddosirak.service.WarehouseService;
 
 @Controller
@@ -34,36 +33,36 @@ public class WarehouseController {
 	}
 	
 	//창고 등록
-	@RequestMapping(value = "/warehouseWrite", method = RequestMethod.GET)
+	@RequestMapping(value = "/warehouseUpload", method = RequestMethod.GET)
 	public void insertWhGET() {
 		logger.debug("insertWhGET 호출");
 	}
 	
-	@RequestMapping(value = "/warehouseWrite", method = RequestMethod.POST)
+	@RequestMapping(value = "/warehouseUpload", method = RequestMethod.POST)
 	public String insertWhPOST(WarehouseVO vo) {
 		logger.debug("insertWhPOSt 호출");
 		int result=service.insertwh(vo);
 	
 		if(result==0) {
-			return "/foundation/warehouse/warehouseWrite";
+			return "/foundation/warehouse/warehouseUpload";
 		}else {
 			return "redirect:/foundation/warehouse/warehouseList";
 		}
 	}
 	//창고 수정
-	@RequestMapping(value = "/warehouseEdit", method = RequestMethod.GET)
+	@RequestMapping(value = "/warehouseUpdate", method = RequestMethod.GET)
 	public void updateWhGET(String wh_code, Model model) {
 		logger.debug("updateWhget 호출");
 		WarehouseVO resultvo=service.editwh(wh_code);
 		model.addAttribute("resultvo", resultvo);
 	}
-	@RequestMapping(value = "/warehouseEdit", method = RequestMethod.POST)
+	@RequestMapping(value = "/warehouseUpdate", method = RequestMethod.POST)
 	public String updateWhPOST(WarehouseVO vo) {
 		logger.debug("updateWhpost 호출");
 		int result=service.updatewh(vo);
 		
 		if(result==0) {
-			return "/foundation/warehouse/warehouseEdit";
+			return "/foundation/warehouse/warehouseUpdate";
 		}else {
 			return "redirect:/foundation/warehouse/warehouseList";
 		}

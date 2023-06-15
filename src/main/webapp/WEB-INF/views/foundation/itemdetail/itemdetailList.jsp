@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!--  <%@ include file="../header.jsp"%> -->
+<!--  <%@ include file="../../common/header.jsp"%> -->
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -16,7 +16,7 @@
 <script>
 function itemwrite() {
   // 새 창을 열기 위한 URL
-  var popupUrl = 'itemWrite.jsp';
+  var popupUrl = 'itemdetailUpload';
   // 새 창 열기
   window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 }
@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 <!-- 상품목록 검색, 등록버튼 -->
 <div class=btn-container>
 <button class=btn-search><i class='bx bx-search-alt-2'></i> 조회</button>
-<button class=btn-add onclick="itemwrite()"><i class='bx bx-plus-medical'></i> 추가</button>
+<button class=btn-add onclick="location.href='itemdetailUpload';"><i class='bx bx-plus-medical'></i> 추가</button>
 </div>
 
 <!-- 품목 검색박스 -->
@@ -166,74 +166,24 @@ document.addEventListener("DOMContentLoaded", function(event) {
       <tr>
         <th>품번</th>
         <th>품명</th>
-        <th>자재유형</th>
-        <th>재고단위</th>
-        <th>사용여부</th>
-        <th>단가</th>
+        <th>단위</th>
+        <th>상품가격</th>
         <th>수정</th>
         <th>삭제</th>
       </tr>
     </thead>
     <tbody>
+    <c:forEach var="vo" items="${resultlist}">
       <tr>
-        <td><a href="productorderstatus.jsp">품번</a></td>
-        <td>품명</td>
-        <td>자재유형</td>
-        <td>재고단위</td>
-        <td>사용여부</td>
-        <td>단가</td>
-        <td><button class=btn-edit onclick="itemedit()"><i class='bx bx-edit'></i></button></td>
+        <td>${vo.item_code}</td>
+        <td>${vo.item_name}</td>
+        <td>${vo.unit }</td>
+        <td>${vo.item_price }</td>
+        <td><button class=btn-edit onclick="location.href='itemdetailUpdate?item_code=${vo.item_code}';"><i class='bx bx-edit'></i></button></td>
         <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
       </tr>
-      
-        <tr>
-        <td><a href="productorderstatus.jsp">품번</a></td>
-        <td>품명</td>
-        <td>자재유형</td>
-        <td>재고단위</td>
-        <td>사용여부</td>
-        <td>단가</td>
-        <td><button class=btn-edit onclick="itemedit()"><i class='bx bx-edit'></i></button></td>
-        <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
-      </tr>
-      
-      
-        <tr>
-        <td><a href="productorderstatus.jsp">품번</a></td>
-        <td>품명</td>
-        <td>자재유형</td>
-        <td>재고단위</td>
-        <td>사용여부</td>
-        <td>단가</td>
-        <td><button class=btn-edit onclick="itemedit()"><i class='bx bx-edit'></i></button></td>
-        <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
-      </tr>
-      
-         </tr>
-      
-        <tr>
-        <td><a href="productorderstatus.jsp">품번</a></td>
-        <td>품명</td>
-        <td>자재유형</td>
-        <td>재고단위</td>
-        <td>사용여부</td>
-        <td>단가</td>
-        <td><button class=btn-edit onclick="itemedit()"><i class='bx bx-edit'></i></button></td>
-        <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
-      </tr>
-      
-         </tr>
-      
-        <tr>
-        <td><a href="productorderstatus.jsp">품번</a></td>
-        <td>품명</td>
-        <td>자재유형</td>
-        <td>재고단위</td>
-        <td>사용여부</td>
-        <td>단가</td>
-        <td><button class=btn-edit onclick="itemedit()"><i class='bx bx-edit'></i></button></td>
-        <td><button class=btn-delete><i class='bx bxs-trash'></i></button></td>
-      </tr>
+     </c:forEach>
+        
       
     </tbody>
   </table>
