@@ -24,7 +24,7 @@ private static final Logger logger = LoggerFactory.getLogger(MaterialdetailContr
 	
 	@Inject
 	private MaterialdetailService service;
-	
+	   
 	//자재 기초 목록
 	// http://localhost:8088/foundation/materialdetail/materialdetailList
 	@RequestMapping(value = "/materialdetailList", method = RequestMethod.GET)
