@@ -16,7 +16,7 @@
 <!-- 창고수정 폼 -->
 <div class="black-bar"> <h4 style="text-align: center; color: white; padding-top: 8px">  <i class='bx bx-edit'></i>  작업지시 수정</h4></div>
 		<div style="display: flex; justify-content: center; margin-bottom: 15px" >
-		  <img src="logo.png">
+		  <img src="../../../resources/css/logo.png">
 		</div>
 		
 <div class="container mt-3">
@@ -34,11 +34,7 @@
       <td><input type="text" name="wh_name" value="${resultvo.wh_name }" required="required"></td>
     </tr>
     <tr>
-      <td>관리자명</td>
-      <td><input type="text" ></td>
-    </tr>
-    <tr>
-      <td>구분</td>
+      <td>재고/자재</td>
       <td>
       <select name="retail_code">
       <option value="재고">재고 창고</option>
@@ -47,7 +43,7 @@
       </td>
     </tr>
     <tr>
-      <td>구분</td>
+      <td>냉장/냉동/상온</td>
       <td>
       <select name="wh_type">
       <option value="냉장">냉장</option>

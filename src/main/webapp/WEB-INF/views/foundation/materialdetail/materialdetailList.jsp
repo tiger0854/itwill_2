@@ -50,20 +50,21 @@ function orderedit() {
 <table class="product-box2"style="margin-top: 20px; width: 100%; " border="1">
  	
      <tr>
-        <th>입고창고</th>
+        <th>품목코드</th>
+        <td>
+		<input type="text" value="" placeholder="품번">
+        </td>
+        <th>품목이름</th>
+        <td>
+        <input type="text" value="" placeholder="품명">
+        </td>
+        <th>품목속성</th>
         <td>
         <select>
-        <option>전체</option>
-        <option>A</option>
-        <option>B</option>
+        	<option>원자재</option>
+        	<option>부자재</option>
         </select>
         <td>
-        <th>품번</th>
-        <td>
-        <input type="text" value="" placeholder="품번 검색하기"><input type="text" value="" placeholder="품명">
-        </td>
-        <th>입고일자</th>
-        <td><input type="date" value=""><td>
 		</td>
       </tr>
   </table>
@@ -83,14 +84,21 @@ function orderedit() {
       </tr>
     </thead>
     <tbody>
-    <c:forEach var="dto" items="${mdList }">
+    <c:forEach var="vo" items="${mdList }">
+    <script>
+      function materialDelete(){
+    		if(confirm("자재명 : ${vo.material_code}를/을 정말로 삭제하시겠습니까?")){
+    			location.href='materialdetailUpdate?material_code=${vo.material_code}';
+    		}
+    	}
+      </script>
       <tr>
-        <td>${dto.material_code }</a></td>
-        <td>${dto.material_name }</td>
-        <td>${dto.material_type }</td>
+        <td>${vo.material_code }</a></td>
+        <td>${vo.material_name }</td>
+        <td>${vo.material_type }</td>
         <td><button class=btn-edit onclick="location.href='materialdetailUpdate?material_code=${dto.material_code}'"><i class='bx bx-edit'></i></button></td>
 <!--         <td><button class=btn-edit onclick="orderedit()"><i class='bx bx-edit'></i></button></td> -->
-        <td><button class=btn-delete onclick="location.href='materialdetailDelete?material_code=${dto.material_code}'"><i class='bx bxs-trash'></i></button></td>
+        <td><button class=btn-delete onclick=materialDelete()><i class='bx bxs-trash'></i></button></td>
       </tr>
       </c:forEach>
     </tbody>

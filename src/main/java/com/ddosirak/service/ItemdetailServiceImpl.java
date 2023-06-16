@@ -37,14 +37,15 @@ public class ItemdetailServiceImpl implements ItemdetailService {
 	}
 
 	@Override
-	public ItemdetailVO editID(String material_code) {
+	public ItemdetailVO editID(String item_code) {
 		logger.debug("service : editmd  실행");
-		return dao.editID(material_code);
+		return dao.editID(item_code);
 	}
 
 	@Override
-	public void deleteI(String material_code) {
+	public void deleteI(String item_code) {
 		logger.debug("service : deletemd 실행");
+		dao.deleteI(item_code);
 	}
 
 }

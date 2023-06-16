@@ -21,7 +21,7 @@
   </select>
   <update id="updateid">
   UPDATE item_detail
-  SET item_name = #{item_name}, item_price = #{item_price}
+  SET item_name = #{item_name}, item_price = #{item_price}, unit = #{unit}
   WHERE item_code = #{item_code};
   </update>
   <!-- 상품 기초 수정 -->

@@ -13,8 +13,8 @@ public interface ItemdetailService {
 
 	// 자재 기초 수정
 	public Integer updateID(ItemdetailVO vo);
-	public ItemdetailVO editID(String material_code);
+	public ItemdetailVO editID(String item_code);
 
 	// 자재 삭제
-	public void deleteI(String material_code);
+	public void deleteI(String item_code);
 }

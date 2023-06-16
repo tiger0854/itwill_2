@@ -66,5 +66,12 @@ public class ItemdetailController {
 		}
 	}
 	
+	//상품 기초 삭제
+	@RequestMapping(value="/itemdetailDelete",method=RequestMethod.GET)
+	public String idDeleteGET(String item_code) {
+		logger.debug("idDeleteGET 호출");
+		service.deleteI(item_code);
+		return "redirect:/foundation/itemdetail/itemdetailList";
+	}
 	
 }
