@@ -1,12 +1,11 @@
-package com.ddosirak.persistance;
+package com.ddosirak.service;
 
 import java.util.List;
 
 import com.ddosirak.domain.ItemdetailVO;
 
-
-public interface ItemdetailDAO {
-	//자재 목록
+public interface ItemdetailService {
+	// 자재 목록
 	public List<ItemdetailVO> idList();
 
 	// 자재 기초 등록

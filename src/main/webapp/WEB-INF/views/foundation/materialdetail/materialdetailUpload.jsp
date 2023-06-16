@@ -16,7 +16,7 @@
 <!-- 창고등록 폼 -->
 <div class="black-bar"> <h4 style="text-align: center; color: white; padding-top: 8px">  <i class='bx bx-edit'></i>창고 등록</h4></div>
 		<div style="display: flex; justify-content: center; margin-bottom: 15px" >
-		  <img src="logo.png">
+		  <img src="../../../resources/css/logo.png">
 		</div>
 <div class="container mt-3">
 <!--  		<hr width="100%" style="border: 2px solid black"> -->
@@ -27,33 +27,23 @@
 <table class="box" style="margin-top: 30px; width: 100%">
   <tbody>
     <tr>
-      <td>창고코드</td>
-      <td><input type="text" name="wh_code" required="required"></td>
+      <td>자재코드</td>
+      <td><input type="text" name="material_code" required="required"></td>
     </tr>
     <tr>
-      <td>창고명</td>
-      <td><input type="text" name="wh_name" required="required"></td>
+      <td>자재명</td>
+      <td><input type="text" name="material_name" required="required"></td>
     </tr>
     <tr>
       <td>관리자명</td>
       <td><input type="text" ></td>
     </tr>
     <tr>
-      <td>구분</td>
+      <td>자재구분</td>
       <td>
-      <select name="retail_code">
-      <option value="재고">재고 창고</option>
-      <option value="자재">자재 창고</option>
-      </select>
-      </td>
-    </tr>
-    <tr>
-      <td>구분</td>
-      <td>
-      <select name="wh_type">
-      <option value="냉장">냉장</option>
-      <option value="냉동">냉동</option>
-      <option value="상온">상온</option>
+      <select name="material_type">
+      <option value="원자재">원자재</option>
+      <option value="부자재">부자재</option>
       </select>
       </td>
     </tr>

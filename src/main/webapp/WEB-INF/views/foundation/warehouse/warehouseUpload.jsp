@@ -13,32 +13,29 @@
 <link rel="stylesheet" type="text/css" href="../css/product.css">
 </head>
 <body>
-<!-- 창고수정 폼 -->
-<div class="black-bar"> <h4 style="text-align: center; color: white; padding-top: 8px">  <i class='bx bx-edit'></i>  작업지시 수정</h4></div>
+<!-- 창고등록 폼 -->
+<div class="black-bar"> <h4 style="text-align: center; color: white; padding-top: 8px">  <i class='bx bx-edit'></i>창고 등록</h4></div>
 		<div style="display: flex; justify-content: center; margin-bottom: 15px" >
-		  <img src="logo.png">
+		  <img src="../../../resources/css/logo.png">
 		</div>
-		
 <div class="container mt-3">
-<!--         <hr width="100%" style="border: 2px solid black"> -->
+<!--  		<hr width="100%" style="border: 2px solid black"> -->
 
+<!--         <hr width="100%" style="border: 2px solid black"> -->
+<!-- 창고코드(패턴자동생성), 창고명, 관리자명, 사용여부, 구분(냉장,냉동,상온) -->
 <form action="" method="post" >
 <table class="box" style="margin-top: 30px; width: 100%">
   <tbody>
     <tr>
       <td>창고코드</td>
-      <td>${resultvo.wh_code}</td>
+      <td><input type="text" name="wh_code" required="required"></td>
     </tr>
     <tr>
       <td>창고명</td>
-      <td><input type="text" name="wh_name" value="${resultvo.wh_name }" required="required"></td>
+      <td><input type="text" name="wh_name" required="required"></td>
     </tr>
     <tr>
-      <td>관리자명</td>
-      <td><input type="text" ></td>
-    </tr>
-    <tr>
-      <td>구분</td>
+      <td>재고/자재</td>
       <td>
       <select name="retail_code">
       <option value="재고">재고 창고</option>
@@ -47,7 +44,7 @@
       </td>
     </tr>
     <tr>
-      <td>구분</td>
+      <td>냉장/냉동/상온</td>
       <td>
       <select name="wh_type">
       <option value="냉장">냉장</option>
@@ -63,7 +60,7 @@
 
 <!-- 창고등록, 취소 버튼 -->
 <div style="text-align: center; margin-top: 50px">
-<button type="submit" class=btn-add> <i class='bx bx-edit'></i> 수정</button>
+<button type="submit" class=btn-add> <i class='bx bx-edit'></i> 등록</button>
 <button class=btn-search onclick="window.close()">X 취소</button>
 </div>
 

@@ -16,7 +16,7 @@
 <!-- 상품등록 폼 -->
 <div class="black-bar"> <h4 style="text-align: center; color: white; padding-top: 8px">  <i class='bx bx-edit'></i>상품등록</h4></div>
 		<div style="display: flex; justify-content: center; margin-bottom: 15px" >
-		  <img src="logo.png">
+		  <img src="../../../resources/css/logo.png">
 		</div>
 <div class="container mt-3">
 <!--  		<hr width="100%" style="border: 2px solid black"> -->
@@ -28,38 +28,20 @@
   <tbody>
     <tr>
       <td>품번</td>
-      <td><input type="text" value=""></td>
+      <td><input type="text" name="item_code"></td>
     </tr>
     <tr>
       <td>품명</td>
-      <td><input type="text" value=""></td>
-    </tr>
-    <tr>
-      <td>자재유형</td>
-      <td>
-      <select>
-      	<option>완제품</option>
-      	<option>부자재</option>
-      </select>
-      </td>
+      <td><input type="text" name="item_name"></td>
     </tr>
     <tr>
       <td>재고단위</td>
-      <td><input type="text" value=""></td>
+      <td><input type="text" name="unit"></td>
     </tr>
     <tr>
-      <td>사용여부</td>
-      <td>
-      <select>
-      	<option>완제품</option>
-      	<option>부자재</option>
-      </select>
-      </td>
-    </tr>
-    
     <tr>
       	<td>단가</td>
-      	<td><input type="text" value=""></td>
+      	<td><input type="text" name="item_price"></td>
     </tr>
   </tbody>
 </table>
