@@ -18,4 +18,7 @@ public interface ProOrderService {
 	
 	// 작업지시 정보 수정
 	public Integer EditProOrder(ProOrderVO vo);
+	
+	// 작업지시 정보 삭제
+	public void deleteProOrder(String wo_code);
 } // interface end

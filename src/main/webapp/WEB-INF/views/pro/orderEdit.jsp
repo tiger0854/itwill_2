@@ -11,6 +11,13 @@
 <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 <!-- <link rel="stylesheet" type="text/css" href="../css/css.css"> -->
 <link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
+
+<script type="text/javascript">
+if("${result}" == "CREATEOK"){
+	alert("작업지시 수정완료!");
+}
+</script>
+
 </head>
 <body>
 <!-- 작업지시수정 폼 -->
@@ -18,42 +25,6 @@
 		<div style="display: flex; justify-content: center; margin-bottom: 15px" >
 		  <img src="../../resources/css/logo.png">
 		</div>
-
-
-<!--     <tr> -->
-<!--       <td>수주번호</td> -->
-<!--       <td><input type="text" name="so_code"></td> -->
-<!--     </tr> -->
-<!--     <tr> -->
-<!--       <td>수주수량</td> -->
-<!--       <td><input type="text" name="sQTY"></td> -->
-<!--     </tr> -->
-<!--     <tr> -->
-<!--       <td>작업지시자</td> -->
-<!--       <td><input type="text" name="employee_id"></td> -->
-<!--     </tr> -->
-<!--     <tr> -->
-<!--       <td>납품예정일</td> -->
-<!--       <td><input type="date" name="delivery_date"></td> -->
-<!--     </tr> -->
-<!--     <tr> -->
-<!--       <td>라인코드</td> -->
-<!--       <td><input type="text" name="line_code"></td> -->
-<!--     </tr> -->
-<!--     <tr> -->
-<!--       <td>품목코드</td> -->
-<!--       <td><input type="text" name="item_code"></td> -->
-<!--     </tr> -->
-<!--     <tr> -->
-<!--       <td>지시수량</td> -->
-<!--       <td><input type="text" name="oQTY"></td> -->
-<!--     </tr> -->
-<!--     <tr> -->
-<!--       <td>생산수량</td> -->
-<!--       <td><input type="text" name="pQTY"></td> -->
-<!--     </tr> -->
-<!--   </tbody> -->
-<!-- </table> -->
 
 
 
@@ -80,24 +51,39 @@
       <td><input type="date" value="${pvo.delivery_date}" name="delivery_date"></td>
     </tr>
     <tr>
-      <td>라인명</td>
+      <td>라인코드</td>
       <td><input type="text" value="${pvo.line_code}" name="line_code"></td>
     </tr>
     <tr>
-      <td>품목명</td>
+      <td>품목코드</td>
       <td><input type="text" value="${pvo.item_code}" name="item_code"></td>
     </tr>
     <tr>
       <td>지시일자</td>
       <td><input type="date" value="${pvo.wo_date}" readonly="readonly"></td>
     </tr>
+     <tr>
+      <td>현재 지시 상태 </td>
+      <td>${pvo.wo_status}</td>
+    </tr>
+    <tr>
+      <td>지시 상태 수정</td>
+      <td>
+      <select name="wo_status">
+      <option value="${pvo.wo_status }">변경안함</option>
+      <option value="지시">지시</option>
+      <option value="시작">시작</option>
+      <option value="마감">마감</option>
+      </select></td>
+    </tr>
+    
     <tr>
       <td>지시수량</td>
-      <td><input type="text" value="${pvo.oQTY}" name="oQTY"></td>
+      <td><input type="number" value="${pvo.oQTY}" name="oQTY"></td>
     </tr>
     <tr>
       <td>생산수량</td>
-      <td><input type="text" value="${pvo.pQTY}" name="pQTY"></td>
+      <td><input type="number" value="${pvo.pQTY}" name="pQTY"></td>
     </tr>
   </tbody>
 </table>
@@ -106,8 +92,8 @@
 
 <!-- 작업지시등록, 취소 버튼 -->
 <div style="text-align: center; margin-top: 50px">
-<button type="submit" class=btn-add> <i class='bx bx-edit'></i> 수정</button>
-<button class=btn-search onclick="window.close()">X 취소</button>
+<button type="submit"  class=btn-add> <i class='bx bx-edit'></i> 수정</button>
+<button class=btn-search onclick="window.close()">X 닫기</button>
 </div>
 
 </form>

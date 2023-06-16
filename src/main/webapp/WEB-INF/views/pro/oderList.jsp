@@ -23,6 +23,11 @@ function orderedit(wo_code) {
 	  window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 	}
 
+if("${result}" == "CREATEOK"){
+	alert("작업지시 삭제완료!");
+}
+
+
 </script>
 
 </head>
@@ -97,6 +102,7 @@ function orderedit(wo_code) {
       </tr>
     </thead>
     <tbody>
+    
     <c:forEach var="vo" items="${oderList }">
       <tr>
 		<c:choose>
@@ -134,7 +140,7 @@ function orderedit(wo_code) {
 		<c:choose>
 		  <c:when test="${vo.wo_status eq '지시'}">
 		    <td><button class="btn-edit" onclick="orderedit('${vo.wo_code}')"><i class="bx bx-edit"></i></button></td>
-		    <td><button class="btn-delete"><i class="bx bxs-trash"></i></button></td>
+		    <td><button class="btn-delete" onclick="ProOrderDelete()"><i class="bx bxs-trash"></i></button></td>
 		  </c:when>
 		  <c:otherwise>
 		    <td></td>
@@ -142,6 +148,15 @@ function orderedit(wo_code) {
 		  </c:otherwise>
 		</c:choose>
       </tr>
+      
+    <script>
+      function ProOrderDelete(){
+    		if(confirm("정말로 삭제하시겠습니까?")){
+    			location.href='/pro/proOrderDelete?wo_code=${vo.wo_code}';
+    		}
+    	}
+	</script>
+      
       </c:forEach>
     </tbody>
   </table>
