@@ -104,7 +104,7 @@ function orderedit(wo_code) {
 		    <td><a href="/pro/orderstatusList?wo_code=${vo.wo_code}">${vo.wo_code}</a></td>
 		  </c:when>
 		  <c:when test="${vo.wo_status eq '마감'}">
-		    <td><a href="/pro/closedOrders?wo_code=${vo.wo_code}">${vo.wo_code}</a></td>
+		    <td><a href="/pro/etcstatusList?wo_code=${vo.wo_code}">${vo.wo_code}</a></td>
 		  </c:when>
 		  <c:otherwise>
 		    <td>${vo.wo_code}</td>

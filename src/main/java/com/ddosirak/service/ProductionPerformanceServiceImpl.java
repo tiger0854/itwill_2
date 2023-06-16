@@ -28,11 +28,34 @@ public class ProductionPerformanceServiceImpl implements ProductionPerformanceSe
 
 	// 실적 현황
 	@Override
-	public List<ProductionPerformanceVO> prodPerfList() {
+	public List<ProductionPerformanceVO> prodPerfList(String wo_code) {
 		
-		return ppdao.prodPerfList();
+		return ppdao.prodPerfList(wo_code);
 		
 	}
+
+	// 실적 수정 조회
+	@Override
+	public ProductionPerformanceVO perfUpdateList(int perf_id) {
+		return ppdao.perfUpdateList(perf_id);
+	}
+
+	// 실적 수정 동작
+	@Override
+	public Integer perfUpdateBoard(ProductionPerformanceVO uvo) {
+		return ppdao.perfUpdateBoard(uvo);
+	}
+
+	// 실적 삭제 동작
+	@Override
+	public Integer perfDeleteBoard(int perf_id) {
+		return null;
+	}
+
+	
+	
+	
+	
 	
 	
 	

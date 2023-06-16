@@ -89,7 +89,7 @@
   	<!-- 작업지시  수정 -->
   	<update id="editProOrder">
   		UPDATE prod SET so_code=#{so_code}, sQTY=#{sQTY},employee_id=#{employee_id},delivery_date=#{delivery_date},line_code=#{line_code},item_code=#{item_code}, 
-  		oQTY=#{oQTY},pQTY=#{pQTY} 
+  		oQTY=#{oQTY},pQTY=#{pQTY},wo_status=#{wo_status}
   		WHERE wo_code=#{wo_code}
   	</update>
   	<!-- 작업지시  수정 -->

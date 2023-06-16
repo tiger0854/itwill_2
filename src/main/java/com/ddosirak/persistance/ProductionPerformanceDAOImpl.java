@@ -35,14 +35,56 @@ public class ProductionPerformanceDAOImpl implements ProductionPerformanceDAO {
 	}
 	
 	// 실적 현황
-	public List<ProductionPerformanceVO> prodPerfList() {
+	public List<ProductionPerformanceVO> prodPerfList(String wo_code) {
 		// 1,2 DB 연결
 		// 3. SQL 작성 && pstmt
 		// 4. SQL 실행
-		List<ProductionPerformanceVO> prodPerfList = sqlSession.selectList(NAMESPACE + ".prodPerfList");
+		List<ProductionPerformanceVO> prodPerfList = sqlSession.selectList(NAMESPACE + ".prodPerfList", wo_code);
 		logger.debug("@@@@@@@ prodPerfList : " + prodPerfList);
 		logger.debug("실적 조회 완료");
 		return prodPerfList;
 	}
+
+	// 실적 수정(조회)
+	@Override
+	public ProductionPerformanceVO perfUpdateList(int perf_id) {
+		// 1,2 DB 연결
+		// 3. SQL 작성 && pstmt
+		// 4. SQL 실행
+		
+		ProductionPerformanceVO perfUpdateList = sqlSession.selectOne(NAMESPACE + ".perfUpdateList", perf_id);
+		logger.debug("@@@@@@@ perfUpdateList : " + perfUpdateList);
+		logger.debug("실적 수정 조회 완료");
+		return perfUpdateList;
+	}
+
+	// 실적 수정 동작
+	@Override
+	public Integer perfUpdateBoard(ProductionPerformanceVO uvo) {
+		
+		Integer perfUpdate = sqlSession.update(NAMESPACE + ".perfUpdate", uvo);
+		logger.debug("@@@@@@@ perfUpdateList : " + perfUpdate);
+		logger.debug("실적 수정 조회 완료");
+		return perfUpdate;
+		
+	}
+
+	// 실적 삭제 동작
+	@Override
+	public Integer perfDeleteBoard(int perf_id) {
+		Integer perfDelete = sqlSession.update(NAMESPACE + ".perfDelete", perf_id);
+		logger.debug("@@@@@@@ perfDelete : " + perfDelete);
+		logger.debug("실적 삭제 완료");
+		return perfDelete;
+	}
+	
+	
+
+	
+	
+
+	
+	
+	
 	
 }

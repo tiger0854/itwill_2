@@ -96,6 +96,21 @@
       <td><input type="text" value="${pvo.oQTY}" name="oQTY"></td>
     </tr>
     <tr>
+	    <td>현재 지시 상태</td>
+		    <td>${pvo.wo_status}</td>
+	    </tr>
+    <tr>
+    <tr>
+   		<td>지시 상태 변경</td>
+	    <td>
+	      <select name="wo_status">
+		      <option value="${pvo.wo_status}" selected="selected">변경안함</option>
+		      <option value="지시">지시</option>
+		      <option value="시작">시작</option>
+		      <option value="마감">마감</option>
+	      </select>
+    	</td>
+    <tr>
       <td>생산수량</td>
       <td><input type="text" value="${pvo.pQTY}" name="pQTY"></td>
     </tr>

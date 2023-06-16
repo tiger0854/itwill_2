@@ -16,7 +16,7 @@ public class ProductionPerformanceVO {
 	private int perf_id;
 	private int err_code;
 	private int iQTY;
-	private char perf_gobd;
+	private String perf_gobd;
 	private int pfQTY;
 	private int employee_id;
 	private Date perf_date;
@@ -109,10 +109,11 @@ public class ProductionPerformanceVO {
 	public void setiQTY(int iQTY) {
 		this.iQTY = iQTY;
 	}
-	public char getPerf_gobd() {
+
+	public String getPerf_gobd() {
 		return perf_gobd;
 	}
-	public void setPerf_gobd(char perf_gobd) {
+	public void setPerf_gobd(String perf_gobd) {
 		this.perf_gobd = perf_gobd;
 	}
 	public int getPfQTY() {
@@ -151,7 +152,6 @@ public class ProductionPerformanceVO {
 	public void setItem_price(int item_price) {
 		this.item_price = item_price;
 	}
-	
 	@Override
 	public String toString() {
 		return "ProductionPerformanceVO [wo_code=" + wo_code + ", so_code=" + so_code + ", factory_code=" + factory_code
@@ -161,6 +161,7 @@ public class ProductionPerformanceVO {
 				+ ", employee_id=" + employee_id + ", perf_date=" + perf_date + ", err_reason=" + err_reason
 				+ ", item_name=" + item_name + ", item_price=" + item_price + ", unit=" + unit + "]";
 	}
+	
 	
 	
 	
