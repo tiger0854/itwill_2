@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.ddosirak.mapper.WarehouseMapper">
+  <!-- 창고 조회 -->
+  <select id="selectWarehouse" resultType="com.ddosirak.domain.WarehouseVO">
+  select * from warehouse
+  </select>
+  <!-- 창고 조회 -->
+  <!-- 창고 등록 -->
+  <insert id="insertWarehouse">
+  insert into warehouse values(#{wh_code},#{wh_name},#{retail_code},#{wh_type})
+  </insert>
+  <!-- 창고 등록 -->
+  <!-- 창고 수정 -->
+  <select id="editWarehouse" resultType="com.ddosirak.domain.WarehouseVO">
+  select * from warehouse where wh_code=#{wh_code}
+  </select>
+  <update id="updateWarehouse">
+  UPDATE warehouse SET wh_name = #{wh_name}, retail_code = #{retail_code}, wh_type = #{wh_type}
+  WHERE wh_code = #{wh_code} 
+  </update>
+  <!-- 창고 수정 -->  
+  <!-- 창고 삭제 -->
+  <delete id="deleteWarehouse">
+  delete from warehouse where wh_code = #{wh_code}
+  </delete>
+  <!-- 창고 삭제 -->
+  
+  </mapper>

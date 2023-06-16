@@ -11,26 +11,31 @@
 <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 <!-- <link rel="stylesheet" type="text/css" href="../css/css.css"> -->
 <link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
-
-// $(document).ready(function() {
-//     generateWorkOrderNumber(); // 페이지 로드 시 작업지시 번호 생성
-    
-//     function generateWorkOrderNumber() {
-//         $.ajax({
-//             url: '/workorder/generate',
-//             success: function(data) {
-//                 $('[name="wo_code"]').val(data.wo_code);
-//             },
-//             error: function() {
-//                 alert('작업지시 번호 생성에 실패했습니다.');
-//             }
-//         });
-//     }
-// });
-
-</script> 
+  $(document).ready(function() {
+    $(".btn-add").click(function() {
+      var frObj = $("#fr");
+      var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
+      $.ajax({
+        url: "/pro/orderWrite", // 요청을 보낼 서버의 URL
+        type: "POST", // HTTP 요청 방식 (POST)
+        data: formData, // 전송할 데이터 (직렬화된 폼 데이터)
+        success: function(response) {
+		 alert("작성 성공!");
+		 opener.location.reload();
+         window.close(); // 윈도우 창을 닫습니다.
+        },
+        error: function(xhr, status, error) {
+          console.error("에러 발생:", error);
+        }
+      });
+    });
+  });
+</script>
 
 
 </head>
@@ -45,28 +50,10 @@
        
 <!--         <hr width="100%" style="border: 2px solid black"> -->
 
-<form action="/pro/orderWrite" method="post" >
+<form role="form" id="fr">
 <table class="box" style="margin-top: 30px; width: 100%">
   <tbody>
-    <tr>
-    
-<!--     CREATE TABLE `springdb`.`prod` ( -->
-<!--   `wo_code` VARCHAR(30) NOT NULL, -->
-<!--   `so_code` VARCHAR(45) NULL, -->
-<!--   `employee_id` INT NULL, -->
-<!--   `factory_code` VARCHAR(45) NULL, -->
-<!--   `line_code` VARCHAR(45) NULL, -->
-<!--   `item_code` VARCHAR(45) NULL, -->
-<!--   `oQTY` INT NULL, -->
-<!--   `pQTY` INT NULL, -->
-<!--   `sQTY` INT NULL, -->
-<!--   `wo_status` VARCHAR(45) NULL, -->
-<!--   `wo_date` VARCHAR(45) NULL, -->
-<!--   `remark` VARCHAR(45) NULL, -->
-<!--   PRIMARY KEY (`wo_code`)); -->
-<!--     <td>작업지시 번호</td> -->
-<!--       <td><input type="text" name="wo_code"></td> -->
-    </tr>
+
     <tr>
       <td>수주번호</td>
       <td><input type="text" name="so_code"></td>
@@ -93,11 +80,11 @@
     </tr>
     <tr>
       <td>지시수량</td>
-      <td><input type="text" name="oQTY"></td>
+      <td><input type="number" name="oQTY" ></td>
     </tr>
     <tr>
       <td>생산수량</td>
-      <td><input type="text" name="pQTY"></td>
+      <td><input type="number" name="pQTY"></td>
     </tr>
   </tbody>
 </table>
@@ -106,7 +93,7 @@
 
 <!-- 작업지시등록, 취소 버튼 -->
 <div style="text-align: center; margin-top: 50px">
-<button type="submit" class=btn-add> <i class='bx bx-edit'></i> 등록</button>
+<button type="button" class=btn-add> <i class='bx bx-edit'></i> 등록</button>
 <button class=btn-search onclick="window.close()">X 취소</button>
 </div>
 

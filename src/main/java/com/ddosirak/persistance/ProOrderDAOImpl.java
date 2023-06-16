@@ -46,29 +46,39 @@ public class ProOrderDAOImpl implements ProOrderDAO {
 		logger.debug("사원 등록 완료!");
 
 	}//insertMember() method end
-
+	
+	//작업지시 목록
 	@Override
 	public List<ProOrderVO> proOrderList() {
 		logger.debug("proOrderList()!");
 		List<ProOrderVO> proOrderList = sqlSession.selectList(NAMESPACE+".proOrderList");
 		return proOrderList;
 	}
-
+	
+	//작업지시 정보조회
 	@Override
 	public ProOrderVO getProOrder(String wo_code) {
 		logger.debug("getProdoer()!");
 		ProOrderVO resultVO = sqlSession.selectOne((NAMESPACE)+".getProOrder", wo_code);
 		return resultVO;
 	}
-
+	
+	//작업지시 수정
 	@Override
 	public Integer EditProOrder(ProOrderVO vo) {
 		logger.debug("EditProOrder() !");
 		Integer result = sqlSession.selectOne(NAMESPACE+".editProOrder",vo);
 		return result;
 	}
-
-
+	
+	//작업지시 삭제
+	@Override
+	public void deleteProOrder(String wo_code) {
+		logger.debug("dao: 작업지시 삭제 호출");
+		sqlSession.delete(NAMESPACE+".deleteProOrder",wo_code);
+	}
+	
+	
 	
 
 

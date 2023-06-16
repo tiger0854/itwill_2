@@ -45,6 +45,11 @@ public class ProOrderServiceImpl implements ProOrderService {
 		
 		return odao.EditProOrder(vo);
 	}
+
+	@Override
+	public void deleteProOrder(String wo_code) {
+		odao.deleteProOrder(wo_code);
+	}
 	
 	
 	
