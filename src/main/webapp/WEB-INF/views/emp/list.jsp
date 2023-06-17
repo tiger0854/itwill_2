@@ -20,10 +20,10 @@
 	    		<td>${empCount} 명</td>
 	    		<td>일용근로자 수</td>
 	    		<td>${alCount}명</td>
-	    		<td>출근인원</td>
-	    		<td>23명</td>
-	    		<td>출근율</td>
-	    		<td>90%</td>
+	    		<td>전일근무자</td>
+	    		<td>${alCount_all}명</td>
+	    		<td>오전/오후근무자</td>
+	    		<td>${alCount_am} / ${alCount_pm}명</td>
 	    	</tr>
 	    	<tr>
 	    		<td>채용 공고</td>

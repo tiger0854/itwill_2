@@ -60,7 +60,7 @@
 		            <td>성명</td>
 		            <td>부서</td>
 		            <td>직급</td>
-		            <td>최근 지급일</td>
+		            <td>작업시간</td>
 		        </tr>
 		        <c:forEach var="vo" items="${empList }">
 		        <tr>
@@ -68,7 +68,7 @@
 		            <td><a href="/emp/salaryInfo?employee_id=${vo.employee_id}">${vo.employee_name }</a></td>
 		            <td>${vo.department_name }</td>
 		            <td>${vo.position }</td>
-		            <td>${vo.emp_date }</td>
+		            <td>${vo.working_hours }</td>
 		        </tr>
 		        </c:forEach>
 		    </table> 

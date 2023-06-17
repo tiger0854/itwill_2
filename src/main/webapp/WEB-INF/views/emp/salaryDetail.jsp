@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
@@ -28,7 +29,10 @@
 	<tr>
 		<td>현재은행</td>
 		<td colspan="2">현재계좌</td>
-		<td>기준연봉</td>
+		<td>
+			<c:if test="${!evo.position.equals('일용') }">기준연봉</c:if>
+			<c:if test="${evo.position.equals('일용') }">일급</c:if>
+		</td>
 	</tr>
 	<tr>
 		<td>${evo.bank_name }</td>
@@ -49,13 +53,22 @@
 		<td>${svo.sal_date }</td>
 	</tr>
 	<tr>
-		<td>기준 월급</td>
+		<td>
+			<c:if test="${!evo.position.equals('일용') }">기준월급</c:if>
+			<c:if test="${evo.position.equals('일용') }">일급</c:if>
+		</td>
 		<td>공제액</td>
 		<td>실 지급액수</td>
 	</tr>
 	<tr>
-		<td><fmt:formatNumber value="${svo.salary*10000*1.0989}"/>원</td>
-		<td><fmt:formatNumber value="${svo.salary*10000*1.0989-svo.salary*10000}"/>원</td>
+		<td>
+			<c:if test="${!evo.position.equals('일용') }"><fmt:formatNumber value="${((svo.salary*10000*1.0989)-(svo.salary*10000*1.0989)%10)+10}"/>원</c:if>
+			<c:if test="${evo.position.equals('일용') }"><fmt:formatNumber value="${svo.salary*10000}"/>원</c:if>
+		</td>
+		<td>
+			<c:if test="${!evo.position.equals('일용') }"><fmt:formatNumber value="${((svo.salary*10000*1.0989-svo.salary*10000))-((svo.salary*10000*1.0989-svo.salary*10000)%10)+10}"/>원</c:if>
+			<c:if test="${evo.position.equals('일용') }">0원</c:if>
+		</td>
 		<td><fmt:formatNumber value="${svo.salary*10000}"/>원</td>
 	</tr>
 </table>

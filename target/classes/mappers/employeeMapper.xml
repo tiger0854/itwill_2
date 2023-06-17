@@ -10,9 +10,9 @@
   	<insert id="insertEmployee">
   		insert into emp_main 
   		(employee_id, employee_name, jumin, department_name, position, phone_num, line_num, email, 
-  		address, extraaddress , post_num, marriage, emp_date, gender, employee_photo, employee_status) 
+  		address, extraaddress , post_num, marriage, emp_date, gender, employee_photo, employee_status, year_sal, sal_account, bank_name, working_hours) 
   		values (#{employee_id},#{employee_name},#{jumin},#{department_name},#{position},#{phone_num},#{line_num},#{email},
-  		#{address},#{extraaddress},#{post_num}, #{marriage},#{emp_date}, #{gender}, #{employee_photo}, #{employee_status} )
+  		#{address},#{extraaddress},#{post_num}, #{marriage},#{emp_date}, #{gender}, #{employee_photo}, #{employee_status}, #{year_sal}, #{sal_account}, #{bank_name}, #{working_hours} )
   	</insert>
   	<!-- 사원 추가 동작 -->
   	
@@ -48,8 +48,14 @@
   	
   	
   	<!-- 일용직 직원 수 -->
-  		<select id="alCount" resultType="Integer">
-  			SELECT COUNT(employee_id) FROM emp_main WHERE position='일용'  
+  		<select id="alCount_all" resultType="Integer">
+  			SELECT COUNT(employee_id) FROM emp_main WHERE position='일용' AND working_hours='전일반'  
+  		</select>
+  		<select id="alCount_am" resultType="Integer">
+  			SELECT COUNT(employee_id) FROM emp_main WHERE position='일용' AND working_hours='오전반'
+  		</select>
+  		<select id="alCount_pm" resultType="Integer">
+  			SELECT COUNT(employee_id) FROM emp_main WHERE position='일용' AND working_hours='오후반'
   		</select>
   	<!-- 일용직 직원 수 -->
   	<!-- 임직원 수 -->
@@ -86,6 +92,14 @@
 		WHERE m.employee_id = #{employee_id}
 	</insert>
 	<!-- 급여 지급 -->
+	<!-- 일용직 급여 지급 -->
+	<insert id="al_salaryPay">
+		INSERT IGNORE INTO emp_salary (employee_id, salary, sal_account, bank_name, sal_date)
+		SELECT m.employee_id, m.year_sal AS salary, m.sal_account, m.bank_name, CURDATE() AS sal_date
+		FROM emp_main m
+		WHERE m.employee_id = #{employee_id}
+	</insert>
+	<!-- 일용직 급여 지급 -->
 
 	
   	<!-- 급여 동작 -->

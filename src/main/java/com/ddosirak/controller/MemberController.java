@@ -1,6 +1,7 @@
 package com.ddosirak.controller;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -13,7 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ddosirak.domain.EmployeeListVO;
 import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.SalaryVO;
 import com.ddosirak.service.EmployeeService;
@@ -42,9 +45,8 @@ public class MemberController {
 	
 	
 ////////////////////////////////////////////////////사원 관리//////////////////////////////////////////////////////////////////////////////
-	// http://localhost:8088/member/MemberJoin.me
 	// http://localhost:8088/emp/insert
-	// 회원가입 처리 - 정보 입력
+	// 사원등록 - 정보 입력
 	@RequestMapping(value="/insert",method=RequestMethod.GET)
 	public void employeeInsertGET() {
 		logger.debug("employeeInsertGET() 호출![]~(￣▽￣)~*");
@@ -52,7 +54,7 @@ public class MemberController {
 		
 //		return "/emp/emp_add";
 	}// employeeInsertGET() method end
-	// 회원가입 처리 - 정보 처리
+	// 사원등록 - 정보 처리
 	@RequestMapping(value="/insert",method=RequestMethod.POST)
 	public String employeeInsertPOST(EmployeeVO vo) {	
 		logger.debug("employeeInsertPOST() 호출![]~(￣▽￣)~*");
@@ -88,25 +90,33 @@ public class MemberController {
 	}// alInsertGET() method end
 	// 일용직 일괄등록 > 동작
 	@RequestMapping(value="/insert_al",method=RequestMethod.POST)
-	public String alInsertPOST(EmployeeVO vo) {	
+//	public String alInsertPOST(ArrayList<EmployeeVO> vo) {	
+	public String alInsertPOST(@ModelAttribute(value="EmployeeListVO") EmployeeListVO voList) {	
 		logger.debug("alInsertPOST() 호출![]~(￣▽￣)~*");
-		
-		logger.debug(vo+" ");
-		
+
 		// 사원번호 부여 동작
-		logger.debug("!!!!"+vo.getPosition());
-		if(vo.getPosition().equals("일용")) {
-			// 일용직 사원의 직번
-			vo.setEmployee_id(eService.getMaxId_al());
-		}else {
-			// 임직원의 직번
-			vo.setEmployee_id(eService.getMaxId());
-		}// i-e end
-		// 서비스 > 사원 추가 메서드 호출
-		// >> DAO > 사원 추가 메서드 호출
-		eService.employeeInsert(vo);
-		
-		logger.debug(">> vo: "+vo);
+		for(int i=0;i<voList.getEmployeelist().size();i++) {
+			logger.debug("!!!!"+voList.getEmployeelist().get(i).getPosition());
+			if(voList.getEmployeelist().get(i).getPosition().equals("일용")) {
+				// 일용직 사원의 직번
+				voList.getEmployeelist().get(i).setEmployee_id(eService.getMaxId_al());
+				if(voList.getEmployeelist().get(i).getWorking_hours().equals("전일반")) {
+					voList.getEmployeelist().get(i).setYear_sal(10);
+				}else if(voList.getEmployeelist().get(i).getWorking_hours().equals("오전반")){
+					voList.getEmployeelist().get(i).setYear_sal(5);
+				}else if(voList.getEmployeelist().get(i).getWorking_hours().equals("오후반")) {
+					voList.getEmployeelist().get(i).setYear_sal(5);
+				} // i-e-e end
+			}else {
+				// 임직원의 직번
+				voList.getEmployeelist().get(i).setEmployee_id(eService.getMaxId());
+			}// i-e end
+			
+			// 서비스 > 사원 추가 메서드 호출
+			// >> DAO > 사원 추가 메서드 호출
+			eService.employeeInsert(voList.getEmployeelist().get(i));
+		}// for end
+		logger.debug(">> vo: "+voList);
 		// 페이지 이동
 		
 		return "redirect:/emp/list"; // 주소를 변경하면서 페이지 이동
@@ -138,9 +148,15 @@ public class MemberController {
 		
 		List<EmployeeVO> empList = eService.empList();
 		int empCount = eService.empCount();
-		int alCount = eService.alCount();
+		int alCount_all = eService.alCount_all();
+		int alCount_am = eService.alCount_am();
+		int alCount_pm = eService.alCount_pm();
+		int alCount = alCount_all+alCount_am+alCount_pm;
 		model.addAttribute("empList",empList);
 		model.addAttribute("empCount",empCount);
+		model.addAttribute("alCount_all",alCount_all);
+		model.addAttribute("alCount_am",alCount_am);
+		model.addAttribute("alCount_pm",alCount_pm);
 		model.addAttribute("alCount",alCount);
 		
 	}//listGET() method end
@@ -243,8 +259,17 @@ public class MemberController {
 		if(employee_id != null) {
 			for(int i=0;i<employee_id.length;i++) {
 				logger.debug(employee_id[i]+"번 사원에게 급여 지급!");
-				// 급여지급 동작
-				eService.salaryPay(employee_id[i]);
+				
+				int idLength = Integer.toString(employee_id[i]).length();
+				logger.debug("employee_id - length : "+ idLength);
+				
+				if(idLength <= 4) { // 임직원, 코드 4자리
+					// 급여지급 동작
+					eService.salaryPay(employee_id[i]);
+				}else if(idLength >= 4) { // 일용직, 코드 5자리
+					// 일용직 급여지급 동작
+					eService.al_salaryPay(employee_id[i]);
+				}// i-ei end
 			}// for end
 		}else {
 			logger.debug("ids에 값 없음!");

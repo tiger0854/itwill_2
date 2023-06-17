@@ -101,9 +101,17 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		return sqlSession.selectOne(NAMESPACE+".empCount");
 	}// empCount() method end
 	@Override
-	public Integer alCount() {
-		return sqlSession.selectOne(NAMESPACE+".alCount");
-	}// alCount() method end	
+	public Integer alCount_all() {
+		return sqlSession.selectOne(NAMESPACE+".alCount_all");
+	}// alCount_all() method end
+	@Override
+	public Integer alCount_am() {
+		return sqlSession.selectOne(NAMESPACE+".alCount_am");
+	}// alCount_am() method end
+	@Override
+	public Integer alCount_pm() {
+		return sqlSession.selectOne(NAMESPACE+".alCount_pm");
+	}// alCount_pm() method end
 /////////////////////////////////////////사원동작////////////////////////////////////////////////////
 	
 	
@@ -129,6 +137,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		logger.debug("salaryPay() !");
 		sqlSession.insert(NAMESPACE+".salaryPay",employee_id);
 	}//salaryPay() method end
+	// 일용직 급여 지급
+	@Override
+	public void al_salaryPay(int employee_id) {
+		logger.debug("al_salaryPay() !");
+		sqlSession.insert(NAMESPACE+".al_salaryPay",employee_id);
+	}//al_salaryPay() method end
 	
 	// 사원 급여정보 조회
 	@Override

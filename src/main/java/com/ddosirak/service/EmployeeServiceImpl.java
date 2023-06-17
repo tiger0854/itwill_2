@@ -67,9 +67,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return edao.empCount();
 	} // 임직원 수
 	@Override
-	public Integer alCount() {
-		return edao.alCount();
-	} // 일용직 수
+	public Integer alCount_all() {
+		return edao.alCount_all();
+	} // 일용직 수, 전일
+	@Override
+	public Integer alCount_am() {
+		return edao.alCount_am();
+	} // 일용직 수, 오전
+	@Override
+	public Integer alCount_pm() {
+		return edao.alCount_pm();
+	} // 일용직 수, 오후
 /////////////////////////////////////////사원동작////////////////////////////////////////////////////
 
 	
@@ -91,6 +99,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void salaryPay(int employee_id) {
 		edao.salaryPay(employee_id);
 	}// salaryPay() method end
+	// 일용직 급여 지급
+	@Override
+	public void al_salaryPay(int employee_id) {
+		edao.al_salaryPay(employee_id);
+	}// al_salaryPay() method end
 	
 	// 사원 급여정보 조회
 	@Override

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -95,7 +96,10 @@ $(document).ready(function(){
 		        <tr>
 		            <td>휴대폰 번호</td>
 		            <td><input type="text" size="50" value="${evo.phone_num }" id="phone_num" name="phone_num" readonly></td>
-		            <td>기준 연봉</td>
+		            <td>
+					<c:if test="${!evo.position.equals('일용') }">기준연봉</c:if>
+					<c:if test="${evo.position.equals('일용') }">일급</c:if>
+					</td>
 		            <td><input type="text" value="${evo.year_sal }" id="year_sal" name="year_sal" readonly>만원</td>
 		        </tr>
 		        <tr>
