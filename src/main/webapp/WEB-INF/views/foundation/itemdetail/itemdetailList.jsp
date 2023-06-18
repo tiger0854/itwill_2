@@ -21,6 +21,12 @@ function itemUpdate() {
 	  // 새 창 열기
 	  window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 	}
+	
+function itemDelete(item_code, item_name) {
+	  if (confirm("품명 : " + item_name + "를/을 정말로 삭제하시겠습니까?")) {
+	    location.href = 'itemDelete?item_code=' + item_code;
+	  }
+	}
 </script>
 
 
@@ -91,20 +97,13 @@ function itemUpdate() {
     </thead>
     <tbody>
     <c:forEach var="vo" items="${resultlist}">
-    <script>
-      function itemDelete(){
-    		if(confirm("품명 : ${vo.item_name}를/을 정말로 삭제하시겠습니까?")){
-    			location.href='itemdetailDelete?item_code=${vo.item_code}';
-    		}
-    	}
-      </script>
       <tr>
         <td>${vo.item_code}</td>
         <td>${vo.item_name}</td>
         <td>${vo.unit }</td>
         <td>${vo.item_price }</td>
         <td><button class=btn-edit onclick="location.href='itemdetailUpdate?item_code=${vo.item_code}';"><i class='bx bx-edit'></i></button></td>
-        <td><button class=btn-delete onclick=itemDelete><i class='bx bxs-trash'></i></button></td>
+        <td><button class=btn-delete onclick="itemDelete('${vo.item_code},'${vo.item_name }');"><i class='bx bxs-trash'></i></button></td>
       </tr>
      </c:forEach>
         

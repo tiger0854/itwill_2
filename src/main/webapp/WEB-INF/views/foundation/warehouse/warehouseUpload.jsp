@@ -28,7 +28,7 @@
   <tbody>
     <tr>
       <td>창고코드</td>
-      <td><input type="text" name="wh_code" required="required"></td>
+      <td>창고코드는 WARE001 형식으로 자동으로 입력됩니다.</td>
     </tr>
     <tr>
       <td>창고명</td>

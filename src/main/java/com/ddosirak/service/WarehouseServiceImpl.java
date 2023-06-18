@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.ddosirak.codeBulider.CodeBuilder;
+import com.ddosirak.codeBulider.CodeBuilder.ServiceName;
 import com.ddosirak.domain.WarehouseVO;
 import com.ddosirak.persistance.WarehouseDAO;
 
@@ -31,6 +33,8 @@ public class WarehouseServiceImpl implements WarehouseService {
 	@Override
 	public Integer insertwh(WarehouseVO vo) {
 		logger.debug("service : 창고 등록 호출");
+		CodeBuilder cb = new CodeBuilder();
+		vo.setWh_code(cb.FoundationCodeBuilder(ServiceName.WAREHOUSE));
 		int result=dao.insertWh(vo);
 		logger.debug("sevice : 창고 등록 완료");
 		return result;

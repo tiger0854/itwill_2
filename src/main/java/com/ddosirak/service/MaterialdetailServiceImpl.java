@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.ddosirak.codeBulider.CodeBuilder;
+import com.ddosirak.codeBulider.CodeBuilder.ServiceName;
 import com.ddosirak.domain.MaterialdetailVO;
 import com.ddosirak.persistance.MaterialdetailDAO;
 
@@ -30,6 +32,8 @@ public class MaterialdetailServiceImpl implements MaterialdetailService {
 	@Override
 	public Integer insertMD(MaterialdetailVO vo) {
 		logger.debug("service : 자재 등록 호출");
+		CodeBuilder cb = new CodeBuilder();
+		vo.setMaterial_code(cb.FoundationCodeBuilder(ServiceName.MATERIALDETAIL));
 		logger.debug(vo+"");
 		int result=dao.insertMD(vo);
 		return result;

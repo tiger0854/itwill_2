@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.ddosirak.codeBulider.CodeBuilder;
+import com.ddosirak.codeBulider.CodeBuilder.ServiceName;
 import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.persistance.ItemdetailDAO;
 
@@ -27,6 +29,8 @@ public class ItemdetailServiceImpl implements ItemdetailService {
 	@Override
 	public Integer insertID(ItemdetailVO vo) {
 		logger.debug("service : insertMD 실행");
+		CodeBuilder cb= new CodeBuilder();
+		vo.setItem_code(cb.FoundationCodeBuilder(ServiceName.ITEMDETAIL));
 		return dao.insertID(vo);
 	}
 

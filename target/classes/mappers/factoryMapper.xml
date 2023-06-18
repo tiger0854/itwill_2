@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ddosirak.mapper.factoryMapper">
+<!-- Create (데이터 삽입) -->
+  <insert id="insertFactory" >
+    INSERT INTO factory (factory_code, factory_name)
+    VALUES (#{factory_code}, #{factory_name})
+  </insert>
+
+  <!-- Read (데이터 조회) -->
+  <!-- 모든 데이터 조회 -->
+  <select id="factoryList" resultType="com.ddosirak.domain.FactoryVO">
+    SELECT * FROM factory
+  </select>
+
+  <!-- 특정 조건에 맞는 데이터 조회 -->
+  <select id="selectFactory" resultType="com.ddosirak.domain.FactoryVO">
+    SELECT * FROM factory
+    WHERE factory_code = #{factory_code}
+  </select>
+
+  <!-- Update (데이터 수정) -->
+  <update id="updateFactory" >
+    UPDATE factory
+    SET factory_name = #{factory_name}
+    WHERE factory_code = #{factory_code}
+  </update>
+
+  <!-- Delete (데이터 삭제) -->
+  <delete id="deleteFactory">
+    DELETE FROM factory
+    WHERE factory_code = #{factory_code}
+  </delete>
+
+
+
+</mapper>

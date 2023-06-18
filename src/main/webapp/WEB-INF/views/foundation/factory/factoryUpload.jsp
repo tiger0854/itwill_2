@@ -13,8 +13,8 @@
 <link rel="stylesheet" type="text/css" href="../css/product.css">
 </head>
 <body>
-<!-- 상품등록 폼 -->
-<div class="black-bar"> <h4 style="text-align: center; color: white; padding-top: 8px">  <i class='bx bx-edit'></i>상품등록</h4></div>
+<!-- 창고등록 폼 -->
+<div class="black-bar"> <h4 style="text-align: center; color: white; padding-top: 8px">  <i class='bx bx-edit'></i>공장 등록</h4></div>
 		<div style="display: flex; justify-content: center; margin-bottom: 15px" >
 		  <img src="../../../resources/css/logo.png">
 		</div>
@@ -22,33 +22,25 @@
 <!--  		<hr width="100%" style="border: 2px solid black"> -->
 
 <!--         <hr width="100%" style="border: 2px solid black"> -->
-<!-- 품번, 품명, 자재유형(완제품,부자재), 재고단위, 사용여부,단가 등록 -->
+<!-- 창고코드(패턴자동생성), 창고명, 관리자명, 사용여부, 구분(냉장,냉동,상온) -->
 <form action="" method="post" >
 <table class="box" style="margin-top: 30px; width: 100%">
   <tbody>
     <tr>
-      <td>품번</td>
-      <td>품번은 I001 형식으로 자동으로 입력됩니다.</td>
+      <td>공장코드</td>
+<!--       <td><input type="text" name="factory_code" required="required"></td> -->
+      <td>공장 코드는 FAC001 형식으로 자동 입력됩니다.</td>
     </tr>
     <tr>
-      <td>품명</td>
-      <td><input type="text" name="item_name"></td>
-    </tr>
-    <tr>
-      <td>재고단위</td>
-      <td><input type="text" name="unit"></td>
-    </tr>
-    <tr>
-    <tr>
-      	<td>단가</td>
-      	<td><input type="text" name="item_price"></td>
+      <td>공장명</td>
+      <td><input type="text" name="factory_name" required="required"></td>
     </tr>
   </tbody>
 </table>
 <!--     <hr width="100%" style="border: 2px solid black"> -->
 
 
-<!-- 작업지시등록, 취소 버튼 -->
+<!-- 창고등록, 취소 버튼 -->
 <div style="text-align: center; margin-top: 50px">
 <button type="submit" class=btn-add> <i class='bx bx-edit'></i> 등록</button>
 <button class=btn-search onclick="window.close()">X 취소</button>
