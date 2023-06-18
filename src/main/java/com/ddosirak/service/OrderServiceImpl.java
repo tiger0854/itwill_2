@@ -27,4 +27,15 @@ public class OrderServiceImpl implements OrderService{
 		List<OrderVO> orderList = odao.orderAllList();
 		return orderList;
 	}
+
+	@Override
+	public Integer updateOrder(OrderVO vo) {
+		return  odao.updateOrder(vo);
+	}
+
+	@Override
+	public Integer deleteOrder(String order_number) {
+		// TODO Auto-generated method stub
+		return odao.deleteOrder(order_number);
+	}
 }

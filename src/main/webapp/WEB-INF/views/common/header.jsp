@@ -8,9 +8,11 @@
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <script type="text/javascript">
 function toggleDropdown() {
 	  const collapseSale = document.getElementById('collapseSale');
@@ -96,8 +98,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 <!--입출고-->
 		  			<a href="/inbound/orderWrite" class="nav_link"> - 발주등록</a><br>
 		  		    <a href="/inbound/orderList" class="nav_link"> - 발주현황</a><br>
-		  		    <a href="/emp/salary" class="nav_link"> - 입고등록</a><br>
-		  		    <a href="#" class="nav_link"> - 입고현황</a><br>
+		  		    <a href="/inbound/inboundWrite" class="nav_link"> - 입고등록</a><br>
+		  		    <a href="/inbound/inboundList" class="nav_link"> - 입고현황</a><br>
 		  		    <a href="/outbound/insert" class="nav_link"> - 출고등록</a><br>
 		  		    <a href="/outbound/list" class="nav_link"> - 출고현황</a><br>
 		  		<!--입출고-->

@@ -54,7 +54,9 @@
         data.push(cells[i].innerText);
       }
       // 정보를 부모 창으로 전달합니다.
-      window.opener.postMessage(data, "*");
+     window.opener.document.getElementById("material_code").value = data[0];
+     window.opener.document.getElementById("material_name").value = data[1];
+     window.opener.document.getElementById("material_price").value = data[2];
       window.close();
     }
   </script>

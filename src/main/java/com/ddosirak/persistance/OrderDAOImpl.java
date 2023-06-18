@@ -40,4 +40,16 @@ public class OrderDAOImpl implements OrderDAO{
 		return orderList;
 	}
 
+	@Override
+	public Integer updateOrder(OrderVO vo) {
+		logger.debug("발주서 수정 완료!");	
+		return sqlSession.update(NAMESPACE+".updateOrder",vo);
+	}
+
+	@Override
+	public Integer deleteOrder(String order_number) {
+		logger.debug("발주서 삭제 완료!");	
+		return sqlSession.delete(NAMESPACE+".deleteOrder",order_number);
+	}
+
 }

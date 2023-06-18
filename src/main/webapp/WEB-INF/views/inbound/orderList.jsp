@@ -13,17 +13,46 @@
 <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css.css">
-<script type="text/javascript">
-var openWin;
 
-function openChild()
-{
-    // window.name = "부모창 이름"; 
-    window.name = "parentForm";
-    // window.open("open할 window", "자식창 이름", "팝업창 옵션");
-    openWin = window.open("/inbound/productList",
-            "childForm", "width=570, height=350, resizable = no, scrollbars = no");    
-}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+<script type="text/javascript">
+
+function orderDelete(button) {
+		   var row = button.parentNode.parentNode;
+		   var cells = row.getElementsByTagName("td");
+		   var rowData = [];
+		   
+		   for (var i = 0; i < cells.length - 1; i++) {
+		     rowData.push(cells[i].innerText);
+		   }
+		  
+		   
+	      	Swal.fire({
+                title: "발주를 취소하겠습니까?",
+                text: "",
+				icon: "warning",
+	              
+	           	   showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+	           	   confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+	           	   cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+	           	   confirmButtonText: '예', // confirm 버튼 텍스트 지정
+	           	   cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
+	            }).then(result => {
+	                if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
+	                	location.href="/inbound/orderDelete?order_number="+rowData[0];
+	            	    
+	                } else if (result.isDismissed) { // 만약 모달창에서 cancel 버튼을 눌렀다면
+	                	// ...실행
+	                }
+	            });
+		   
+
+	 
+};
+	
+	
+
 </script>
 
 <!-- 판매목록 drop 기능 -->
@@ -36,11 +65,11 @@ height: 50px; vertical-align: middle;
 
 </head>
 <body id="body-pd" style="font-family: 'TheJamsil5';">
+
 	
-	<!-- header && sidebar include -->
+ 	<!-- header && sidebar include -->
     <jsp:include page="../common/header.jsp"></jsp:include>
-	<!-- header && sidebar include -->
-   
+	<!-- header && sidebar include -->  
 
 	
 	
@@ -72,7 +101,7 @@ height: 50px; vertical-align: middle;
   <option value="3">발주번호</option>
 	</select>
 	<input type="text" class="form-control" placeholder="검색어를 입력하세요">
-	 <button type="button" class="btn btn-primary" onclick="openChild();">검색</button>
+	 <button type="button" class="btn btn-primary">검색</button>
 	</div>
  <table class="table table-striped" style="width: 1200px;">
     <thead style="border-bottom: 1px solid">
@@ -88,16 +117,17 @@ height: 50px; vertical-align: middle;
         <th>담당자</th>
         <th>거래처</th>
         <th>진행상황</th>
-        <th>수정/취소</th>
+        <th>관리</th>
       </tr>
     </thead>
     <c:forEach var="vo" items="${orderList}">
     
       <tr>
+      	
         <td>${vo.order_number }</td>
         <td>${vo.material_code }</td>
         <td>${vo.material_name }</td>
-        <td>${vo.order_piece }개</td>
+        <td>${vo.order_piece }</td>
         <td>${vo.order_date }</td>
         <td>${vo.pay_date }</td>
         <td><fmt:formatNumber>${vo.material_price }</fmt:formatNumber>원</td>
@@ -115,11 +145,12 @@ height: 50px; vertical-align: middle;
          <td>
          <c:choose>
          <c:when test="${vo.order_state == 0 }">
-      <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" onclick="openModal()">수정</button>
-        <button type="button" class="btn btn-secondary btn-sm">취소</button>
+      <button type="button" class="btn btn-primary btn-sm" onclick="openChildWindow(this);" >수정</button>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="orderDelete(this);">취소</button>
         </c:when>
         <c:otherwise>
-        --
+       	<button type="button" class="btn btn-primary btn-sm" disabled="disabled">수정</button>
+        <button type="button" class="btn btn-secondary btn-sm" disabled="disabled">취소</button>
         </c:otherwise>
         </c:choose>
         </td>
@@ -142,8 +173,8 @@ height: 50px; vertical-align: middle;
 	<input type="text" class="form-control" placeholder="검색어를 입력하세요">
 	 <button type="button" class="btn btn-primary">검색</button>
 	</div>
-  <table class="table table-bordered" style="box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.2);width: 1100px;">
-    <thead style="background-color: #F3F2F2;">
+  <table class="table table-striped" style="width: 1200px;">
+    <thead >
       <tr>
         <th>발주번호</th>
         <th>상품코드</th>
@@ -154,26 +185,34 @@ height: 50px; vertical-align: middle;
         <th>물품단가</th>
         <th>총액</th>
         <th>담당자</th>
+        <th>거래처</th>
         <th>진행상황</th>
-        <th>수정/취소</th>
+        <th>관리</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td><a>13123414</a></td>
-        <td>1</td>
-        <td>이천쌀</td>
-        <td>14개</td>
-        <td>2023/06/06</td>
-        <td>2023/06/05</td>
-        <td>1,500원</td>
-        <td>2,500원</td>
-        <td>김동길</td>
+    <c:forEach var="vo" items="${orderList}">
+    <c:if test="${vo.order_state == 0 }">
+      <tr >
+ 		<td>${vo.order_number }</td>
+        <td>${vo.material_code }</td>
+        <td>${vo.material_name }</td>
+        <td>${vo.order_piece }</td>
+        <td>${vo.order_date }</td>
+        <td>${vo.pay_date }</td>
+        <td><fmt:formatNumber>${vo.material_price }</fmt:formatNumber>원</td>
+        <td><fmt:formatNumber>${vo.material_price*vo.order_piece }</fmt:formatNumber>원</td>
+        <td>${vo.order_resp }</td>
+        <td>${vo.order_trade }</td> 
         <td style="color: red;">발주대기</td>
-        <td><button type="button" class="btn btn-primary btn-sm">수정</button>
-        <button type="button" class="btn btn-secondary btn-sm">취소</button>
+        <td>    
+       	 <button type="button" class="btn btn-primary btn-sm" onclick="openChildWindow(this);">수정</button>
+       	 <button type="button" class="btn btn-secondary btn-sm">취소</button>
         </td>
       </tr>
+	  </c:if>
+      </c:forEach>
+
     </tbody>
   </table>
   </div>
@@ -190,8 +229,8 @@ height: 50px; vertical-align: middle;
 	<input type="text" class="form-control" placeholder="검색어를 입력하세요">
 	 <button type="button" class="btn btn-primary">검색</button>
 	</div>
-	 <table class="table table-bordered" style="box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.2);width: 1100px;">
-    <thead style="background-color: #F3F2F2;">
+	 <table class="table table-striped" style="width: 1200px;">
+    <thead >
       <tr>
         <th>발주번호</th>
         <th>상품코드</th>
@@ -202,33 +241,71 @@ height: 50px; vertical-align: middle;
         <th>물품단가</th>
         <th>총액</th>
         <th>담당자</th>
+        <th>거래처</th>
         <th>진행상황</th>
+        <th>관리</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-      <td>14123414</td>
-        <td>2</td>
-        <td>잡곡쌀</td>
-        <td>16개</td>
-        <td>2023/06/07</td>
-        <td>2023/06/05</td>
-        <td>2,500원</td>
-        <td>3,500원</td>
-        <td>김김이</td>
+      <c:forEach var="vo" items="${orderList}">
+    <c:if test="${vo.order_state == 1 }">
+      <tr >
+ 		<td>${vo.order_number }</td>
+        <td>${vo.material_code }</td>
+        <td>${vo.material_name }</td>
+        <td>${vo.order_piece }</td>
+        <td>${vo.order_date }</td>
+        <td>${vo.pay_date }</td>
+        <td><fmt:formatNumber>${vo.material_price }</fmt:formatNumber>원</td>
+        <td><fmt:formatNumber>${vo.material_price*vo.order_piece }</fmt:formatNumber>원</td>
+        <td>${vo.order_resp }</td>
+        <td>${vo.order_trade }</td> 
         <td style="color: blue;">발주완료</td>
+        <td>     	
+        <button type="button" class="btn btn-primary btn-sm" disabled="disabled">수정</button>
+        <button type="button" class="btn btn-secondary btn-sm" disabled="disabled">취소</button>
+        </td>
       </tr>
+	  </c:if>
+      </c:forEach>
 
     </tbody>
   </table>
-  
 </div>
   <!-- 발주완료 -->
     </div>
+     <div style="color: red;">*발주완료된 건은 수정/취소가 불가합니다.</div>
   <button type="button" class="btn btn-outline-primary"style="margin-bottom: 30px;margin-right:50px; float: right;" onclick="location.href='/inbound/orderWrite'">발주등록</button>
  
     </div>
-  </div>
+ 
+ <script type="text/javascript">
+ 
+ function openChildWindow(button) {
+   var row = button.parentNode.parentNode;
+   var cells = row.getElementsByTagName("td");
+   var rowData = [];
+   
+   for (var i = 0; i < cells.length - 1; i++) {
+     rowData.push(cells[i].innerText);
+   }
+   
+	var popupWidth = 600;
+	var popupHeight = 500;
+
+	var popupX = Math.ceil(( window.screen.width - popupWidth )/2);
+	var popupY = Math.ceil(( window.screen.height - popupHeight )/2); 
+    var childWindow = window.open("/inbound/orderModify", "orderModify",'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
+   
+   // 자식 창이 로드된 후에 데이터를 전송합니다.
+   childWindow.addEventListener("load", function() {
+     childWindow.postMessage(rowData, "*");
+   
+   });
+ }
+ 
+
+</script><!-- 수정창 부르기 -->
     
   
     

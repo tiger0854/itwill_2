@@ -9,8 +9,9 @@
   	<!-- 발주서 등록 -->
   	<insert id="insertOrder">
   		INSERT INTO ret_order 
-  		(order_id,order_number, material_code, material_name, material_price, order_piece, order_date, pay_date, order_resp, order_trade)
-		VALUES (null,CONCAT('ORD_',replace(#{order_date},'-','')),#{material_code},#{material_name},#{material_price},#{order_piece},#{order_date},#{pay_date},#{order_resp},#{order_trade})
+  		(order_number, material_code, material_name, material_price, order_piece, order_date, pay_date, order_resp, order_trade)
+		SELECT CONCAT('ORD', REPLACE(#{order_date}, '-', ''), count(*) + 1),#{material_code},#{material_name},#{material_price},#{order_piece},#{order_date},#{pay_date},#{order_resp},#{order_trade}
+		FROM ret_order
   	</insert>
   	<!-- 발주서 등록 -->
   	
@@ -19,5 +20,19 @@
   		SELECT * FROM ret_order 
   	</select>
   	<!-- 발주현황 리스트 -->
+  	
+  	<!-- 발주서 수정 -->
+  	<update id="updateOrder">
+  		UPDATE ret_order SET order_piece=#{order_piece},order_date=#{order_date},pay_date=#{pay_date},order_resp=#{order_resp},order_trade=#{order_trade}
+  		WHERE order_number=#{order_number}
+  	</update>
+  	<!-- 발주서 수정 -->
+  	
+  	<!-- 발주서 삭제 -->
+  	<delete id="deleteOrder">
+  		delete from ret_order where order_number = #{order_number}
+  	</delete>
+  	<!-- 발주서 삭제 -->
+
   	
   </mapper>
