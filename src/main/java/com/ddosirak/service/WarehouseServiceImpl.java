@@ -8,8 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.ddosirak.codeBulider.CodeBuilder;
-import com.ddosirak.codeBulider.CodeBuilder.ServiceName;
 import com.ddosirak.domain.WarehouseVO;
 import com.ddosirak.persistance.WarehouseDAO;
 
@@ -33,8 +31,15 @@ public class WarehouseServiceImpl implements WarehouseService {
 	@Override
 	public Integer insertwh(WarehouseVO vo) {
 		logger.debug("service : 창고 등록 호출");
-		CodeBuilder cb = new CodeBuilder();
-		vo.setWh_code(cb.FoundationCodeBuilder(ServiceName.WAREHOUSE));
+		if(dao.getMaxCode()!=null && dao.getMaxCode().contains("WARE")) {
+			int codeNum=Integer.parseInt(dao.getMaxCode().substring(4));
+			StringBuilder sb = new StringBuilder();
+			sb.append("WARE");
+			sb.append(String.format("%02d", ++codeNum));
+			vo.setWh_code(sb.toString());
+			}else {
+				vo.setWh_code("WARE01");
+			}
 		int result=dao.insertWh(vo);
 		logger.debug("sevice : 창고 등록 완료");
 		return result;
@@ -50,9 +55,9 @@ public class WarehouseServiceImpl implements WarehouseService {
 	}
 
 	@Override
-	public WarehouseVO editwh(String wh_code) {
+	public WarehouseVO selectwh(String wh_code) {
 		logger.debug("service : editwh 호출");
-		WarehouseVO result=dao.editwh(wh_code);
+		WarehouseVO result=dao.selectwh(wh_code);
 		logger.debug("result : "+result);
 		return result;
 	}

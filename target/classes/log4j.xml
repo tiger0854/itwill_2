@@ -17,6 +17,9 @@
 	<logger name="com.ddosirak.persistance">
 		<level value="debug" />
 	</logger>
+	<logger name="com.ddosirak.service">
+		<level value="debug" />
+	</logger>
 	
 
 	

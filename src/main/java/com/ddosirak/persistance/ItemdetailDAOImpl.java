@@ -43,9 +43,9 @@ public class ItemdetailDAOImpl implements ItemdetailDAO {
 		return sqlsession.update(NAMESPACE+".updateid",vo);
 	}
 	@Override
-	public ItemdetailVO editID(String item_code) {
+	public ItemdetailVO selectID(String item_code) {
 		logger.debug("dao : 상품 기초 수정 실행(edit)");
-		return sqlsession.selectOne(NAMESPACE+".editid", item_code);
+		return sqlsession.selectOne(NAMESPACE+".selectid", item_code);
 	}
 	
 	//자제 삭제
@@ -54,6 +54,12 @@ public class ItemdetailDAOImpl implements ItemdetailDAO {
 		logger.debug("dao : 자재 삭제 실행");
 		sqlsession.delete(NAMESPACE+".deleteid",item_code);
 
+	}
+
+	@Override
+	public String getMaxCode() {
+		logger.debug("dao : getMaxCode 호출");
+		return sqlsession.selectOne(NAMESPACE+".getMaxCode");
 	}
 
 }

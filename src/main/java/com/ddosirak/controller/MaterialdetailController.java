@@ -53,7 +53,7 @@ private static final Logger logger = LoggerFactory.getLogger(MaterialdetailContr
 	@RequestMapping(value = "/materialdetailUpdate", method= RequestMethod.GET)
 	public void materialdetailupdateGET(String material_code, Model model) {
 		logger.debug("materialdetailupdateGET 호출");
-		MaterialdetailVO resultvo=service.editMD(material_code);
+		MaterialdetailVO resultvo=service.selectMD(material_code);
 		logger.debug(resultvo+"");
 		model.addAttribute("resultvo", resultvo);
 	}

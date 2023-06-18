@@ -13,7 +13,7 @@ public interface WarehouseService {
 	
 	//창고 수정
 	public Integer updatewh(WarehouseVO vo);
-	public WarehouseVO editwh(String wh_code);
+	public WarehouseVO selectwh(String wh_code);
 	
 	//창고 삭제
 	public void deletewh(String wh_code);

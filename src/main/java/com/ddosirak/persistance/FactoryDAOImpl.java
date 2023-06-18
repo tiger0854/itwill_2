@@ -39,7 +39,7 @@ public class FactoryDAOImpl implements FactoryDAO {
 	}
 
 	@Override
-	public FactoryVO editFac(String factory_code) {
+	public FactoryVO selectFac(String factory_code) {
 		logger.debug("dao : 공장 수정 파라미터 들고 가기");
 		return sqlsession.selectOne(NAMESPACE+".selectFactory", factory_code);
 	}
@@ -48,6 +48,12 @@ public class FactoryDAOImpl implements FactoryDAO {
 	public void deleteF(String factory_code) {
 		logger.debug("dao : 공장 삭제");
 		sqlsession.delete(NAMESPACE+".deleteFactory",factory_code);
+	}
+
+	@Override
+	public String getMaxCode() {
+		logger.debug("dao : getMaxCode 호출");
+		return sqlsession.selectOne(NAMESPACE+".getMaxCode");
 	}
 
 }

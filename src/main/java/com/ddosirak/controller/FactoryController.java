@@ -50,7 +50,7 @@ public class FactoryController {
 	@RequestMapping(value="/factoryUpdate", method= RequestMethod.GET)
 	public void factoryUpdateGET(String factory_code, Model model) {
 		logger.debug("factoryUpdateGET 호출");
-		FactoryVO resultvo=service.editFac(factory_code);
+		FactoryVO resultvo=service.selectFac(factory_code);
 		logger.debug(resultvo+"");
 		model.addAttribute("vo", resultvo);
 	}

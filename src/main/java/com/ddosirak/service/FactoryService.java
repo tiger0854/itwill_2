@@ -14,7 +14,7 @@ public interface FactoryService {
 	// 공장 기초 수정
 	public Integer updateFac(FactoryVO vo);
 
-	public FactoryVO editFac(String factory_code);
+	public FactoryVO selectFac(String factory_code);
 
 	// 공장 삭제
 	public void deleteF(String factory_code);

@@ -25,7 +25,7 @@ public class MaterialdetailDAOImpl implements MaterialdetailDAO {
 	@Override
 	public List<MaterialdetailVO> mdList() {
 		logger.debug("dao : 자재 기초 목록 실행");
-		return sqlsession.selectList(NAMESPACE+".selectMaterialDetail");
+		return sqlsession.selectList(NAMESPACE+".MaterialDetailList");
 	}
 	
 	//자재 기초 등록
@@ -43,9 +43,9 @@ public class MaterialdetailDAOImpl implements MaterialdetailDAO {
 		return sqlsession.update(NAMESPACE+".updateMaterialDetail",vo);
 	}
 	@Override
-	public MaterialdetailVO editMD(String material_code) {
+	public MaterialdetailVO selectMD(String material_code) {
 		logger.debug("dao : 자재 기초 수정 실행(edit)");
-		return sqlsession.selectOne(NAMESPACE+".editMaterialDetail", material_code);
+		return sqlsession.selectOne(NAMESPACE+".selectMaterialDetail", material_code);
 	}
 
 	//자재 삭제
@@ -53,6 +53,12 @@ public class MaterialdetailDAOImpl implements MaterialdetailDAO {
 	public void deleteM(String material_code) {
 		logger.debug("dao : 자재 삭제 실행");
 		sqlsession.delete(NAMESPACE+".deleteMaterial",material_code);
+	}
+
+	@Override
+	public String getMaxCode() {
+		logger.debug("dao : getMaxCode 호출");
+		return sqlsession.selectOne(NAMESPACE+".getMaxCode");
 	}
 
 	

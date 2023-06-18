@@ -13,7 +13,7 @@ public interface MaterialdetailService {
 
 	// 자재 기초 수정
 	public Integer updateMD(MaterialdetailVO vo);
-	public MaterialdetailVO editMD(String material_code);
+	public MaterialdetailVO selectMD(String material_code);
 
 	// 자재 삭제
 	public void deleteM(String material_code);

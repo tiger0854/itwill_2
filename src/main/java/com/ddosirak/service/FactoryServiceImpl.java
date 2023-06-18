@@ -8,8 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.ddosirak.codeBulider.CodeBuilder;
-import com.ddosirak.codeBulider.CodeBuilder.ServiceName;
 import com.ddosirak.domain.FactoryVO;
 import com.ddosirak.persistance.FactoryDAO;
 
@@ -32,8 +30,16 @@ public class FactoryServiceImpl implements FactoryService {
 	@Override
 	public Integer insertFac(FactoryVO vo) {
 		logger.debug("service : 창고 등록");
-		CodeBuilder cb= new CodeBuilder();
-		vo.setFactory_code(cb.FoundationCodeBuilder(ServiceName.FACTORY));
+		if(dao.getMaxCode()!=null && dao.getMaxCode().contains("FAC")) {
+		int codeNum=Integer.parseInt(dao.getMaxCode().substring(3));
+		logger.debug("codenum : "+codeNum);
+		StringBuilder sb = new StringBuilder();
+		sb.append("FAC");
+		sb.append(String.format("%02d", ++codeNum));
+		vo.setFactory_code(sb.toString());
+		}else {
+			vo.setFactory_code("FAC01");
+		}
 		return dao.insertFac(vo);
 	}
 
@@ -44,9 +50,9 @@ public class FactoryServiceImpl implements FactoryService {
 	}
 
 	@Override
-	public FactoryVO editFac(String factory_code) {
+	public FactoryVO selectFac(String factory_code) {
 		logger.debug("service : 창고 수정 파라미터 출력");
-		return dao.editFac(factory_code);
+		return dao.selectFac(factory_code);
 	}
 
 	@Override
