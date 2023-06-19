@@ -5,40 +5,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>사원 리스트</title>
+<title>사원 급여관리</title>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 </head>
 <body id="body-pd" style="font-family: 'TheJamsil5';">
 <jsp:include page="../common/header.jsp"/>
-<div>
-	<br>
-	    <h1>사원 리스트</h1>
-	    <h2>대시보드</h2>
-	    <table class="table table-striped" style="margin-top: 10px;">
-	    	<tr>
-	    		<td>임직원 수</td>
-	    		<td>${empCount} 명</td>
-	    		<td>일용근로자 수</td>
-	    		<td>${alCount}명</td>
-	    		<td>전일근무자</td>
-	    		<td>${alCount_all}명</td>
-	    		<td>오전/오후근무자</td>
-	    		<td>${alCount_am} / ${alCount_pm}명</td>
-	    	</tr>
-	    	<tr>
-	    		<td>채용 공고</td>
-	    		<td>1건</td>
-	    		<td>지원자</td>
-	    		<td>10명</td>
-	    		<td>휴가자</td>
-	    		<td>3명</td>
-	    		<td>휴가신청자</td>
-	    		<td>1명</td>
-	    	</tr>
-	    </table>
-	    <!-- 권한제어 -->
-	    <input type="button" value="사원 정보등록" onclick="location.href='/emp/insert'">
-	    <input type="button" value="일용직 일괄등록" onclick="location.href='/emp/insert_al'">
+<!-- 사원 개인이 들어오는 경우 > 급여명세서 페이지 출력 -->
+<%-- ${empList } --%>
+<h1>사원 급여 지급</h1>
+
+<!-- 관리자가 들어오는 경우 > 사원리스트 + 급여 대시보드 출력 -->
+			<!-- 검색/필터용 -->
 		    <table class="table table-striped" style="margin-top: 10px;" >
 		        <tr>
 		            <td><select name="department_name">
@@ -73,28 +50,30 @@
 		            <td><input type="text" size="15" placeholder="이름"><input type="button" value="검색"></td>
 		        </tr>
 		    </table>
-	    
+		    <!-- 검색/필터용 -->
+<form action="" method="post">	
+	<input type="submit" value="급여 지급">
+	<input type="button" value="뒤로가기" onclick="location.href='/emp/salary'">	    
 		    <table class="table table-striped" style="margin-top: 10px;" >
-		
 		        <tr>
-		            <td>사원번호</td>
+		            <td>선택</td>
 		            <td>성명</td>
 		            <td>부서</td>
 		            <td>직급</td>
-		            <td>내선번호</td>
+		            <td>작업시간</td>
 		        </tr>
 		        <c:forEach var="vo" items="${empList }">
 		        <tr>
-		            <td>${vo.employee_id}</td>
-		            <td><a href="/emp/info?employee_id=${vo.employee_id}">${vo.employee_name }</a></td>
+		            <td><input type="checkbox" value="${vo.employee_id }" name="employee_id" ></td>
+		            <td><a href="/emp/salaryInfo?employee_id=${vo.employee_id}">${vo.employee_name }</a></td>
 		            <td>${vo.department_name }</td>
 		            <td>${vo.position }</td>
-		            <td>${vo.line_num }</td>
+		            <td>${vo.working_hours }</td>
 		        </tr>
 		        </c:forEach>
-		    </table>
-	 </div>
-    <div>
-    </div>
+		    </table> 
+</form>
+
+
 </body>
 </html>

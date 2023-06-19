@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                    <a href="#" class="nav_link" onclick="toggleDropdown()"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">인사관리  ></span> </a> 
                 <div class="nav_link collapse" id="collapseSale">
                 <!-- 0607 -->
-		  			<a href="/emp/list" class="nav_link"> - 사원리스트</a><br>
+		  			<a href="/emp/list" class="nav_link"> - 사원관리</a><br>
 		  		    <a href="#" class="nav_link"> - 휴가관리</a><br>
 		  		    <a href="/emp/salary" class="nav_link"> - 급여관리</a><br>
 		  		    <a href="#" class="nav_link"> - 이력관리</a><br>

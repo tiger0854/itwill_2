@@ -17,6 +17,7 @@
 	<tr>
 		<td><input type="button" value="월별 급여대장 조회"></td>
 		<td><input type="button" value="연별 급여대장 조회"></td>
+		<td><input type="button" value="급여 지급" onclick="location.href='/emp/salaryPay'"></td>
 	</tr>
 </table>
 <!-- 관리자가 들어오는 경우 > 사원리스트 + 급여 대시보드 출력 -->
@@ -61,7 +62,7 @@
 		            <td>성명</td>
 		            <td>부서</td>
 		            <td>직급</td>
-		            <td>입사일</td>
+		            <td>계좌번호</td>
 		        </tr>
 		        <c:forEach var="vo" items="${empList }">
 		        <tr>
@@ -69,7 +70,14 @@
 		            <td><a href="/emp/salaryInfo?employee_id=${vo.employee_id}">${vo.employee_name }</a></td>
 		            <td>${vo.department_name }</td>
 		            <td>${vo.position }</td>
-		            <td>${vo.emp_date }</td>
+		            <td>
+			            <c:if test="${empty vo.sal_account }">
+			           	 	미등록
+			            </c:if>
+			            <c:if test="${!empty vo.sal_account }">
+			            	${vo.sal_account }
+			            </c:if>
+		            </td>
 		        </tr>
 		        </c:forEach>
 		    </table>

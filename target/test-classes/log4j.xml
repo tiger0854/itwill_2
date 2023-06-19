@@ -11,10 +11,10 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.itwillbs.web">
+	<logger name="com.ddosirak.controller">
 		<level value="debug" />
 	</logger>
-	<logger name="com.itwillbs.persistance">
+	<logger name="com.ddosirak.persistance">
 		<level value="debug" />
 	</logger>
 	
@@ -34,7 +34,7 @@
 	<logger name="org.springframework.web">
 		<level value="info" />
 	</logger>
-
+s
 	<!-- Root Logger -->
 	<root>
 		<priority value="info" />

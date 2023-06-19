@@ -1,5 +1,6 @@
 package com.ddosirak.persistance;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.ddosirak.domain.EmployeeVO;
+import com.ddosirak.domain.SalaryVO;
 
 //@Repository : 스프링에 해당 파일이 DAO의 동작을 하는 객체라고 등록하는 것.
 
@@ -34,7 +36,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	
 	private static final Logger logger = LoggerFactory.getLogger(EmployeeDAOImpl.class);
 	
-	// C - 회원가입
+/////////////////////////////////////////사원동작////////////////////////////////////////////////////	
+	// C - 사원등록
 	@Override
 	public void insertEmployee(EmployeeVO vo) {
 		// 1,2 DB 연결
@@ -98,9 +101,58 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		return sqlSession.selectOne(NAMESPACE+".empCount");
 	}// empCount() method end
 	@Override
-	public Integer alCount() {
-		return sqlSession.selectOne(NAMESPACE+".alCount");
-	}// alCount() method end
+	public Integer alCount_all() {
+		return sqlSession.selectOne(NAMESPACE+".alCount_all");
+	}// alCount_all() method end
+	@Override
+	public Integer alCount_am() {
+		return sqlSession.selectOne(NAMESPACE+".alCount_am");
+	}// alCount_am() method end
+	@Override
+	public Integer alCount_pm() {
+		return sqlSession.selectOne(NAMESPACE+".alCount_pm");
+	}// alCount_pm() method end
+/////////////////////////////////////////사원동작////////////////////////////////////////////////////
+	
+	
+/////////////////////////////////////////급여동작////////////////////////////////////////////////////	
+	// 급여정보 조회
+	@Override
+	public List<SalaryVO> getSalaryInfo(int employee_id) {
+		logger.debug("getSalaryInfo() !");
+		List<SalaryVO> salaryList = sqlSession.selectList(NAMESPACE+".getSalaryinfo",employee_id);
+		return salaryList;
+	}// getSalaryInfo() method end
+	
+	// 급여 정보 등록
+	@Override
+	public void salaryInsert(EmployeeVO vo) {
+		logger.debug("salaryInsert() !");
+		sqlSession.update(NAMESPACE+".salaryInsert",vo);
+	}// getSalaryInfo() method end
+	
+	// 급여 지급
+	@Override
+	public void salaryPay(int employee_id) {
+		logger.debug("salaryPay() !");
+		sqlSession.insert(NAMESPACE+".salaryPay",employee_id);
+	}//salaryPay() method end
+	// 일용직 급여 지급
+	@Override
+	public void al_salaryPay(int employee_id) {
+		logger.debug("al_salaryPay() !");
+		sqlSession.insert(NAMESPACE+".al_salaryPay",employee_id);
+	}//al_salaryPay() method end
+	
+	// 사원 급여정보 조회
+	@Override
+	public SalaryVO getEmpSalaryInfo(SalaryVO vo) {
+		logger.debug("getEmpSalaryInfo() !");
+		SalaryVO svo = sqlSession.selectOne(NAMESPACE+".getEmpSalaryinfo",vo);
+		return svo;
+	}// getEmpSalaryInfo() method end
+	
+	
 	
 	
 	
