@@ -23,7 +23,11 @@ function orderedit() {
 	  window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 	}
 
-
+function materialDelete(material_code, material_name) {
+	  if (confirm("품명 : " + material_name + "를/을 정말로 삭제하시겠습니까?")) {
+	    location.href = 'materialDelete?material_code=' + material_code;
+	  }
+	}
 </script>
 
 
@@ -35,7 +39,7 @@ function orderedit() {
 <div class="height-100">
         <div class="container mt-3">
         
-<h4 style="margin-top: 150px;"><i class="bx bx-book"></i> 기초등록 - 자재</h4>
+<h4 style="margin-top: 150px;"><i class="bx bx-book"></i>자재 등록</h4>
 <div style="margin-top: 10px;">
 <hr width="100%" style="border: 2px solid black">
 <!-- 자재목록 검색, 등록버튼 -->
@@ -50,15 +54,15 @@ function orderedit() {
 <table class="product-box2"style="margin-top: 20px; width: 100%; " border="1">
  	
      <tr>
-        <th>품목코드</th>
+        <th>자재이름</th>
         <td>
-		<input type="text" value="" placeholder="품번">
+        <input type="text" value="" placeholder="자재명">
         </td>
-        <th>품목이름</th>
+        <th>자재코드</th>
         <td>
-        <input type="text" value="" placeholder="품명">
+		<input type="text" value="" placeholder="자재코드">
         </td>
-        <th>품목속성</th>
+        <th>자재속성</th>
         <td>
         <select>
         	<option>원자재</option>
@@ -85,20 +89,13 @@ function orderedit() {
     </thead>
     <tbody>
     <c:forEach var="vo" items="${mdList }">
-    <script>
-      function materialDelete(){
-    		if(confirm("자재명 : ${vo.material_code}를/을 정말로 삭제하시겠습니까?")){
-    			location.href='materialdetailUpdate?material_code=${vo.material_code}';
-    		}
-    	}
-      </script>
       <tr>
         <td>${vo.material_code }</a></td>
         <td>${vo.material_name }</td>
         <td>${vo.material_type }</td>
         <td><button class=btn-edit onclick="location.href='materialdetailUpdate?material_code=${dto.material_code}'"><i class='bx bx-edit'></i></button></td>
 <!--         <td><button class=btn-edit onclick="orderedit()"><i class='bx bx-edit'></i></button></td> -->
-        <td><button class=btn-delete onclick=materialDelete()><i class='bx bxs-trash'></i></button></td>
+        <td><button class=btn-delete onclick="materialDelete('${vo.materail_code}','${vo.materail__name }');"><i class='bx bxs-trash'></i></button></td>
       </tr>
       </c:forEach>
     </tbody>

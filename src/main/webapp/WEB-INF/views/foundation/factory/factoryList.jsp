@@ -8,22 +8,23 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
-function warehouseUpload() {
+function factoryUpload() {
   // 새 창을 열기 위한 URL
-  var popupUrl = '/foundation/warehouse/warehouseUpload';
+  var popupUrl = '/foundation/factory/factoryUpload';
   // 새 창 열기
   window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 }
 
-function warehouseUpdate() {
+function factoryUpdate() {
 	  // 새 창을 열기 위한 URL
-	  var popupUrl = '/foundation/warehouse/warehouseUpdate';
+	  var popupUrl = '/foundation/factory/factoryUpdate';
 	  // 새 창 열기
 	  window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 	}
-function warehouseDelete(warehouse_code, warehouse_name) {
-	  if (confirm("창고 코드 : "+warehouse_code+"공장명 : " + warehouse_name + "를/을 정말로 삭제하시겠습니까?")) {
-	    location.href = 'warehouseDelete?wh_code=' + warehouse_code;
+
+function factoryDelete(factory_code, factory_name) {
+	  if (confirm("공장명 : " + factory_name + "를/을 정말로 삭제하시겠습니까?")) {
+	    location.href = 'factoryDelete?factory_code=' + factory_code;
 	  }
 	}
 </script>
@@ -37,67 +38,47 @@ function warehouseDelete(warehouse_code, warehouse_name) {
 <div class="height-100">
         <div class="container mt-3">
         
-<h4 style="margin-top: 150px;"><i class="bx bx-book"></i> 창고관리</h4>
+<h4 style="margin-top: 150px;"><i class="bx bx-book"></i> 공장관리</h4>
 <div style="margin-top: 10px;">
 <hr width="100%" style="border: 2px solid black">
 <!-- 창고목록 검색, 등록버튼 -->
 <div class=btn-container>
-<button class=btn-search><i class='bx bx-search-alt-2'></i> 창고 조회</button>
+<button class=btn-search><i class='bx bx-search-alt-2'></i> 공장 조회</button>
 <!-- <button class=btn-add onclick="location.href='warehouseWrite'"><i class='bx bx-plus-medical'></i> 창고 추가</button> -->
-<button class=btn-add onclick=warehouseUpload()><i class='bx bx-plus-medical'></i> 창고 추가</button>
+<button class=btn-add onclick=factoryUpload()><i class='bx bx-plus-medical'></i> 공장 추가</button>
 </div>
 
 <!-- 창고목록 검색박스 -->
 <table class="product-box3"style="margin-top: 20px; width: 100%; " border="1">
  
      <tr>
-        <th>창고명</th>
+        <th>공장명</th>
         <td><input type="text" value="" placeholder="창고명"></td>
-        <th>창고 코드</th>
+        <th>공장 코드</th>
         <td><input type="text" value="" placeholder="창고코드"></td>
-        <th>재고/자재</th>
-        <td>
-        <select>
-        <option>전체</option>
-        <option>자재</option>
-        <option>재고</option>
-        </select>
-		</td>
-        <th>냉장/냉동/상온</th>
-        <td>
-        <select>
-        <option>냉장</option>
-        <option>냉동</option>
-        <option>상온</option>
-        </select>
-		</td>
       </tr>
   </table>
 </div>
 
 <!-- 창고 리스트 -->
-<!-- 	창고명, 창고코드, 자재/재고, 냉장/냉동/상온, 수정/삭제 표시 -->
- <h4 style="margin-top: 100px;"><i class='bx bx-list-ol icon'></i> 창고 목록</h4>     
+<!-- 	창고명, 창고코드, 관리자명, 사용여부, 구분 ,수정/삭제 표시 -->
+ <h4 style="margin-top: 100px;"><i class='bx bx-list-ol icon'></i> 공장 목록</h4>     
   <table class="product-table"style="margin-top: 20px;width: 100%;">
     <thead>
       <tr>
-        <th>창고코드</th>
-        <th>창고명</th>
-        <th>재고/자재</th>
-        <th>냉장/냉동/상온</th>
+        <th>공장코드</th>
+        <th>공장명</th>
         <th>수정</th>
         <th>삭제</th>
       </tr>
     </thead>
     <tbody>
-      <c:forEach var="vo" items="${whList }" >
+      <c:forEach var="vo" items="${factoryList }" >
       <tr>
-        <td>${vo.wh_code }</td>
-        <td>${vo.wh_name }</td>
-        <td>${vo.retail_code }</td>
-        <td>${vo.wh_type }</td>
-        <td><button class=btn-edit onclick="location.href='warehouseUpdate?wh_code=${vo.wh_code}';" ><i class='bx bx-edit'></i></button></td>
-        <td><button class=btn-delete onclick="warehouseDelete('${vo.wh_code}','${vo.wh_name }');" ><i class='bx bxs-trash'></i></button></td>
+        <td>${vo.factory_code }</td>
+        <td>${vo.factory_name }</td>
+        <td><button class=btn-edit onclick="location.href='factoryUpdate?factory_code=${vo.factory_code}';" ><i class='bx bx-edit'></i></button></td>
+        <td><button class=btn-delete onclick="factoryDelete('${vo.factory_code}', '${vo.factory_name}')" ><i class='bx bxs-trash'></i></button></td>
       </tr>
       </c:forEach>
       

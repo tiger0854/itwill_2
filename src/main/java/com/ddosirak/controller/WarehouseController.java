@@ -53,7 +53,7 @@ public class WarehouseController {
 	@RequestMapping(value = "/warehouseUpdate", method = RequestMethod.GET)
 	public void updateWhGET(String wh_code, Model model) {
 		logger.debug("updateWhget 호출");
-		WarehouseVO resultvo=service.editwh(wh_code);
+		WarehouseVO resultvo=service.selectwh(wh_code);
 		model.addAttribute("resultvo", resultvo);
 	}
 	@RequestMapping(value = "/warehouseUpdate", method = RequestMethod.POST)

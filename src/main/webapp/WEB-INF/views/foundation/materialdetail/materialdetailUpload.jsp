@@ -28,7 +28,7 @@
   <tbody>
     <tr>
       <td>자재코드</td>
-      <td><input type="text" name="material_code" required="required"></td>
+      <td>자재코드는 M0001 형식으로 자동으로 입력됩니다.</td>
     </tr>
     <tr>
       <td>자재명</td>

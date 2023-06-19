@@ -52,7 +52,7 @@ public class ItemdetailController {
 	@RequestMapping(value = "/itemdetailUpdate", method=RequestMethod.GET)
 	public void idUpdateGET(String item_code, Model model) {
 		logger.debug("idUploadGET 실행");
-		ItemdetailVO vo =service.editID(item_code);
+		ItemdetailVO vo =service.selectID(item_code);
 		model.addAttribute("vo", vo);
 	}
 	@RequestMapping(value = "/itemdetailUpdate", method=RequestMethod.POST)

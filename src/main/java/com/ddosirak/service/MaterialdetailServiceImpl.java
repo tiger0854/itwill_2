@@ -30,6 +30,15 @@ public class MaterialdetailServiceImpl implements MaterialdetailService {
 	@Override
 	public Integer insertMD(MaterialdetailVO vo) {
 		logger.debug("service : 자재 등록 호출");
+		if(dao.getMaxCode()!=null && dao.getMaxCode().contains("M")) {
+			int codeNum=Integer.parseInt(dao.getMaxCode().substring(1));
+			StringBuilder sb = new StringBuilder();
+			sb.append("M");
+			sb.append(String.format("%04d", ++codeNum));
+			vo.setMaterial_code(sb.toString());
+			}else {
+				vo.setMaterial_code("M0001");
+			}	
 		logger.debug(vo+"");
 		int result=dao.insertMD(vo);
 		return result;
@@ -43,10 +52,10 @@ public class MaterialdetailServiceImpl implements MaterialdetailService {
 	}
 
 	@Override
-	public MaterialdetailVO editMD(String material_code) {
+	public MaterialdetailVO selectMD(String material_code) {
 		logger.debug("service : 자재 수정 호출 (edit)");
 		logger.debug("service : 파라미터 확인 "+ material_code);
-		MaterialdetailVO resultvo=dao.editMD(material_code);
+		MaterialdetailVO resultvo=dao.selectMD(material_code);
 		return resultvo;
 	}
 

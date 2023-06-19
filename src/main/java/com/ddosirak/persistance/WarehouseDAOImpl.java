@@ -25,7 +25,7 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 	@Override
 	public List<WarehouseVO> whList() {
 		logger.debug("dao:warehouselist 호출");
-		return sqlsession.selectList(NAMESPACE+".selectWarehouse");
+		return sqlsession.selectList(NAMESPACE+".WarehouseList");
 	}
 
 	@Override
@@ -42,15 +42,21 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 	}
 
 	@Override
-	public WarehouseVO editwh(String wh_code) {
+	public WarehouseVO selectwh(String wh_code) {
 		logger.debug("dao: 창고 수정 호출");
-		return sqlsession.selectOne(NAMESPACE+".editWarehouse", wh_code);
+		return sqlsession.selectOne(NAMESPACE+".selectWarehouse", wh_code);
 	}
 
 	@Override
 	public void deletewh(String wh_code) {
 		logger.debug("dao: 창고 삭제 호출");
 		sqlsession.delete(NAMESPACE+".deleteWarehouse",wh_code);
+	}
+
+	@Override
+	public String getMaxCode() {
+		logger.debug("dao : getMaxCode 호출");
+		return sqlsession.selectOne(NAMESPACE+".getMaxCode");
 	}
 
 }

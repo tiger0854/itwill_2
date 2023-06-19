@@ -31,6 +31,15 @@ public class WarehouseServiceImpl implements WarehouseService {
 	@Override
 	public Integer insertwh(WarehouseVO vo) {
 		logger.debug("service : 창고 등록 호출");
+		if(dao.getMaxCode()!=null && dao.getMaxCode().contains("WARE")) {
+			int codeNum=Integer.parseInt(dao.getMaxCode().substring(4));
+			StringBuilder sb = new StringBuilder();
+			sb.append("WARE");
+			sb.append(String.format("%02d", ++codeNum));
+			vo.setWh_code(sb.toString());
+			}else {
+				vo.setWh_code("WARE01");
+			}
 		int result=dao.insertWh(vo);
 		logger.debug("sevice : 창고 등록 완료");
 		return result;
@@ -46,9 +55,9 @@ public class WarehouseServiceImpl implements WarehouseService {
 	}
 
 	@Override
-	public WarehouseVO editwh(String wh_code) {
+	public WarehouseVO selectwh(String wh_code) {
 		logger.debug("service : editwh 호출");
-		WarehouseVO result=dao.editwh(wh_code);
+		WarehouseVO result=dao.selectwh(wh_code);
 		logger.debug("result : "+result);
 		return result;
 	}
