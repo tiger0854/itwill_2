@@ -17,9 +17,6 @@
 	<logger name="com.ddosirak.persistance">
 		<level value="debug" />
 	</logger>
-	<logger name="com.ddosirak.service">
-		<level value="debug" />
-	</logger>
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
@@ -37,7 +34,7 @@
 	<logger name="org.springframework.web">
 		<level value="info" />
 	</logger>
-
+s
 	<!-- Root Logger -->
 	<root>
 		<priority value="info" />

@@ -5,14 +5,14 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.ddosirak.mapper.EmployeeMapper">
-  	
+  	<!-- 사원 동작 -->
   	<!-- 사원 추가 동작 -->
   	<insert id="insertEmployee">
   		insert into emp_main 
   		(employee_id, employee_name, jumin, department_name, position, phone_num, line_num, email, 
-  		address, extraaddress , post_num, marriage, emp_date, gender, employee_photo, employee_status) 
+  		address, extraaddress , post_num, marriage, emp_date, gender, employee_photo, employee_status, year_sal, sal_account, bank_name, working_hours) 
   		values (#{employee_id},#{employee_name},#{jumin},#{department_name},#{position},#{phone_num},#{line_num},#{email},
-  		#{address},#{extraaddress},#{post_num}, #{marriage},#{emp_date}, #{gender}, #{employee_photo}, #{employee_status} )
+  		#{address},#{extraaddress},#{post_num}, #{marriage},#{emp_date}, #{gender}, #{employee_photo}, #{employee_status}, #{year_sal}, #{sal_account}, #{bank_name}, #{working_hours} )
   	</insert>
   	<!-- 사원 추가 동작 -->
   	
@@ -48,8 +48,14 @@
   	
   	
   	<!-- 일용직 직원 수 -->
-  		<select id="alCount" resultType="Integer">
-  			SELECT COUNT(employee_id) FROM emp_main WHERE position='일용'  
+  		<select id="alCount_all" resultType="Integer">
+  			SELECT COUNT(employee_id) FROM emp_main WHERE position='일용' AND working_hours='전일반'  
+  		</select>
+  		<select id="alCount_am" resultType="Integer">
+  			SELECT COUNT(employee_id) FROM emp_main WHERE position='일용' AND working_hours='오전반'
+  		</select>
+  		<select id="alCount_pm" resultType="Integer">
+  			SELECT COUNT(employee_id) FROM emp_main WHERE position='일용' AND working_hours='오후반'
   		</select>
   	<!-- 일용직 직원 수 -->
   	<!-- 임직원 수 -->
@@ -57,20 +63,78 @@
   			SELECT COUNT(employee_id) FROM emp_main WHERE position != '일용' 
   		</select>
   	<!-- 임직원 수 -->
+  	<!-- 사원 동작 -->
   	
-  	
-  	<!-- 로그인 -->
-  	<select id="login" resultType="com.ddosirak.domain.EmployeeVO">
-  		select * from tbl_member 
-  		where user_id=#{user_id} and user_pw=#{user_pw}
-  	</select>
-  	<!-- 로그인 -->
-  	
-  	
-  	<!-- 회원정보 삭제 -->
-  	<delete id="delete">
-  		delete from tbl_member where user_id=#{user_id} and user_pw=#{user_pw} 
-  	</delete>
-  	<!-- 회원정보 삭제 -->
+  	<!-- 급여 동작 -->
   
+  	<!-- 휴가 목록 출력 -->
+  	<select id="vacationList" resultType="com.ddosirak.domain.EmployeevacationVO">
+		SELECT * FROM emp_vacation  
+  	</select>
+  	<!-- 휴가 목록 출력 -->
+  
+
+  	<!-- 사원 휴가 신청  -->
+  	<insert id="insertVacation">
+	insert into emp_vacation (employee_id, position, department_name, phone_num, vacation_management, vacation_start,vacation_finish)
+	values(#{employee_id},#{position},#{department_name},#{phone_num},#{vacation_management},#{vacation_start},#{vacation_finish})
+  	</insert>
+  	<!-- 사원 휴가 신청  -->
+  	
+  	<!-- 나의 휴가 목록 출력 -->
+  	<select id="myvacationList" resultType="com.ddosirak.domain.EmployeevacationVO">
+  		SELECT * FROM emp_vacation 
+  	</select>
+  	<!-- 나의 휴가 목록 출력 -->
+  	
+  	<!-- 휴가 수정 -->
+  	<update id="vacationmodify">
+  	UPDATE emp_vacation 
+  	SET employee_id=#{employee_id}, position=#{position}, department_name=#{department_name},
+  	phone_num=#{phone_num}, vacation_management=#{vacation_management}, vacation_start=#{vacation_start}, vacation_finish=#{vacation_finish}
+  	where vacation_id=#{vacation_id}
+  	</update>
+  	<!-- 휴가 수정 -->
+  	
+  	<!-- 휴가 수정 정보 조회 -->
+  	<select id="vacationim" resultType="com.ddosirak.domain.EmployeevacationVO">
+		SELECT * FROM emp_vacation WHERE vacation_id=#{vacation_id}
+  	</select>
+  	<!-- 휴가 수정 정보 조회 -->
+  	<!-- 급여 정보 등록 -->
+  	<update id="salaryInsert">
+		 UPDATE emp_main
+  		 SET sal_account = #{sal_account},bank_name=#{bank_name} , year_sal=#{year_sal} 
+  		 WHERE employee_id=#{employee_id}
+	</update>
+	<!-- 급여 정보 등록 -->
+	<!-- 급여 정보 조회 -->
+	<select id="getSalaryinfo" resultType="com.ddosirak.domain.SalaryVO">
+		SELECT * FROM emp_salary WHERE employee_id = #{employee_id}
+	</select>
+	<!-- 급여 정보 조회 -->
+	<!-- 급여 정보 조회 (명세서) -->
+	<select id="getEmpSalaryinfo" resultType="com.ddosirak.domain.SalaryVO">
+		SELECT * FROM emp_salary WHERE employee_id = #{employee_id} AND sal_date = #{sal_date} limit 1
+	</select>
+	<!-- 급여 정보 조회 (명세서) -->
+	<!-- 급여 지급 -->
+	<insert id="salaryPay">
+		INSERT IGNORE INTO emp_salary (employee_id, salary, sal_account, bank_name, sal_date)
+		SELECT m.employee_id, ROUND(m.year_sal/12*0.91, 2) AS salary, m.sal_account, m.bank_name, CURDATE() AS sal_date
+		FROM emp_main m
+		WHERE m.employee_id = #{employee_id}
+	</insert>
+	<!-- 급여 지급 -->
+	<!-- 일용직 급여 지급 -->
+	<insert id="al_salaryPay">
+		INSERT IGNORE INTO emp_salary (employee_id, salary, sal_account, bank_name, sal_date)
+		SELECT m.employee_id, m.year_sal AS salary, m.sal_account, m.bank_name, CURDATE() AS sal_date
+		FROM emp_main m
+		WHERE m.employee_id = #{employee_id}
+	</insert>
+	<!-- 일용직 급여 지급 -->
+
+	
+  	<!-- 급여 동작 -->
   </mapper>
