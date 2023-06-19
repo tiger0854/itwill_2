@@ -137,8 +137,8 @@ public class OutboundController {
 //		List<OutboundVO> outList = oService.getOutList();
 
 		model.addAttribute("outList", outList);
-		
-		return "/outbound/outboundList";
+		 
+		return "/outbound/outboundList";   
 
 	}
 	
