@@ -28,7 +28,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void employeeInsert(EmployeeVO vo) {
 		edao.insertEmployee(vo); // 사원정보 등록 동작	
 	}// employeeInsert() method end
-	
+	// 사원 아이디비밀번호 부여
+	@Override
+	public void setEmployeeIDPW(EmployeeVO vo) {
+		edao.setEmployeeIDPW(vo);
+	}// setEmployeeIDPW() method end
+
+
 	// 최대 사원번호 구하기
 	@Override
 	public Integer getMaxId() {
@@ -112,6 +118,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return edao.getEmpSalaryInfo(vo);
 	}//getEmpSalaryInfo() method end
 	
+	
+	
+/////////////////////////////////////////급여동작////////////////////////////////////////////////////
+	
+/////////////////////////////////////////휴가 동작////////////////////////////////////////////////////
+	
 	// 사원목록 출력
 	
 	// 사원휴가 리스트 출력(관리자)
@@ -119,10 +131,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<EmployeevacationVO> vacationList() {
 		return edao.vacationList();
 	} // vacationList() method end
-	
-	
-/////////////////////////////////////////급여동작////////////////////////////////////////////////////	
-	
 
 	// 사원휴가 신청
 	@Override
@@ -154,9 +162,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return resultEVO;
 	}
 	
+/////////////////////////////////////////휴가 동작////////////////////////////////////////////////////	
 
-	
-	
 	
 
 } // public class end

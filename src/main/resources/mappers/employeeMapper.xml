@@ -16,6 +16,14 @@
   	</insert>
   	<!-- 사원 추가 동작 -->
   	
+  	<!-- 사원 아이디 비밀번호 부여 -->
+  	<insert id="setEmployeeIDPW">
+  		INSERT INTO emp_login
+  		(employee_id, employee_pw, employee_name)
+  		VALUES (#{employee_id}, #{employee_pw}, #{employee_name})
+  	</insert>
+  	<!-- 사원 아이디 비밀번호 부여 -->
+  	
   	<!-- 사원번호 부여를 위한 계산 동작 -->
   	<select id="getMaxEmployee_id" resultType="Integer">
   		SELECT MAX(employee_id) FROM emp_main WHERE position != '일용' 

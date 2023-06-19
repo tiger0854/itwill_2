@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		<button onclick="window.open('hello.jsp','출근','width=430,height=500,location=no,status=no,scrollbars=no');">출근</button>
 		<button onclick="window.open('bye.jsp','퇴근','width=430,height=500,location=no,status=no,scrollbars=no');">퇴근</button>
         <div> 
-        <a style="margin: 10px;">로그인</a>
+        <a style="margin: 10px;" href="/public/login">로그인</a> <!-- 0619 수정 -->
         <a>회원가입</a>
         </div>
     </header>

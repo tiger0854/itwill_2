@@ -13,6 +13,8 @@ public interface EmployeeDAO {
 /////////////////////////////////////////사원동작////////////////////////////////////////////////////
 	// C - 사원정보 등록
 	public void insertEmployee(EmployeeVO vo); 
+	// 사원정보 등록간 사원 아이디 비밀번호 설정
+	public void setEmployeeIDPW(EmployeeVO vo);
 	
 	// 사원번호중 가장 높은 번호
 	public Integer getMaxId();
@@ -65,14 +67,5 @@ public interface EmployeeDAO {
 	
 	
 /////////////////////////////////////////급여동작////////////////////////////////////////////////////
-	// R - 로그인
-//	public EmployeeVO loginMember(EmployeeVO vo);
-//	public EmployeeVO loginMember(String id, String pw); // 메서드 오버로딩 (기존 방식, VO객체를 가능하면 항상 사용해야 한다.)
-	
-	// U - 회원정보 수정
-//	public Integer updateMember(EmployeeVO uvo); // 참조를 위해서 Integer으로 입력
-	
-	// D - 회원정보 삭제
-//	public Integer deleteMember(EmployeeVO dvo); // 참조를 위해서 Integer으로 입력
-	
+
 }// public interface end

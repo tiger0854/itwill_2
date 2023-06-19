@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.ddosirak.mapper.PublicMapper">
+	<!-- IDPW 비교 -->
+	<select id="" resultType="com.ddosirak.domain.LoginVO"> 
+		SELECT * FROM emp_login 
+		WHERE employee_id=#{employee_id} AND employee_pw=#{employee_pw} 
+	</select>
+	<!-- IDPW 비교 -->
+
+
+
+
+
+
+
+
+
+</mapper>

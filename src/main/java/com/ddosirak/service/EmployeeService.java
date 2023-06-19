@@ -12,6 +12,9 @@ public interface EmployeeService {
 /////////////////////////////////////////사원동작////////////////////////////////////////////////////
 	// 사원정보 등록
 	public void employeeInsert(EmployeeVO vo);
+	// 사원정보 등록간 사원 아이디 비밀번호 설정
+	public void setEmployeeIDPW(EmployeeVO vo);
+	
 	
 	// 최대 사원번호 구하기
 	public Integer getMaxId();
@@ -61,8 +64,5 @@ public interface EmployeeService {
 	
 	// 휴가 수정 정보 조회
 	public EmployeevacationVO vacationim(Integer vacation_id);
-		
-	// 로그인
-//	public EmployeeVO employeeLogin(EmployeeVO vo);// id,pw 들어감.
 
 } // interface end
