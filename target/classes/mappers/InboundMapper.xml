@@ -9,7 +9,7 @@
   	<!-- 입고서 등록 -->
   	<insert id="insertInbound">
   	INSERT INTO ret_in (in_number, order_number, in_piece, in_date, in_resp, wh_code, in_expir)
-	SELECT CONCAT('IN', REPLACE(#{in_date}, '-', ''), count(*) + 1), #{order_number},#{in_piece},#{in_date},#{in_resp},#{wh_code},#{in_expir}
+	SELECT CONCAT('IN', REPLACE(#{in_date}, '-', ''), MAX(in_id) + 1), #{order_number},#{in_piece},#{in_date},#{in_resp},#{wh_code},#{in_expir}
   	FROM ret_in
   	</insert>
   	<!-- 입고서 등록 -->

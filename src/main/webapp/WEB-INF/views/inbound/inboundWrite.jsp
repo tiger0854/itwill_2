@@ -40,7 +40,6 @@ window.onload = function() {
     
 </script>
 <style type="text/css">
-
 td{height: 80px !important; vertical-align: middle;}
 </style>
 </head>
