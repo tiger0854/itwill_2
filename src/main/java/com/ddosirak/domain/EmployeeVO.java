@@ -3,6 +3,7 @@ package com.ddosirak.domain;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+
 public class EmployeeVO {
 	private int employee_id;
 	private String employee_name;

@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.ddosirak.domain.EmployeeVO;
+import com.ddosirak.domain.EmployeevacationVO;
 
 //@Repository : 스프링에 해당 파일이 DAO의 동작을 하는 객체라고 등록하는 것.
 
@@ -101,7 +102,55 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	public Integer alCount() {
 		return sqlSession.selectOne(NAMESPACE+".alCount");
 	}// alCount() method end
+
+	// 사원 휴가 리스트 출력(관리자)
+	@Override
+	public List<EmployeevacationVO> vacationList() {
+		logger.debug("vacationList()!");
+		List<EmployeevacationVO> vacationList = sqlSession.selectList(NAMESPACE+".vacationList");
+		return vacationList;
+	}// vacationList() method end
+
+	// 사원휴가 신청
+	@Override
+	public void insertVacation(EmployeevacationVO vvo) {
+		// 1,2 DB 연결
+		// 3, SQL작성, pstmt
+		// 4. SQL 실행
+		sqlSession.insert(NAMESPACE+".insertVacation", vvo);
+		
+		logger.debug("휴가 신청 완료!");
+		logger.debug("휴가 신청 완료!"+vvo);
+	}// insertVacation() method end
+
 	
+	
+	// 나의 휴가 리스트 출력
+	@Override
+	public List<EmployeevacationVO> myvacationList() {
+		logger.debug("myvacationList()!");
+		List<EmployeevacationVO> myvacationList = sqlSession.selectList(NAMESPACE+".vacationList");
+		return myvacationList;
+	}// myvacationList() method end
+
+
+	
+	
+	// 휴가 수정
+	@Override
+	public Integer vacationmodify(EmployeevacationVO vvo) {
+		Integer result = sqlSession.selectOne(NAMESPACE+".vacationmodify",vvo);
+		return result;
+	}// vacationmodify() method end
+
+	
+	//휴가수정 정보 조회
+	@Override
+	public EmployeevacationVO vacationim(Integer vacation_id) {
+		logger.debug("vacationim()!");
+		EmployeevacationVO resultEVO = sqlSession.selectOne((NAMESPACE)+".vacationim", vacation_id);
+		return resultEVO;
+	}
 	
 	
 	
