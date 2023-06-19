@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.ddosirak.domain.EmployeeVO;
+import com.ddosirak.domain.EmployeevacationVO;
 import com.ddosirak.domain.SalaryVO;
 import com.ddosirak.persistance.EmployeeDAO;
 
@@ -111,28 +112,49 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return edao.getEmpSalaryInfo(vo);
 	}//getEmpSalaryInfo() method end
 	
+	// 사원목록 출력
 	
+	// 사원휴가 리스트 출력(관리자)
+	@Override
+	public List<EmployeevacationVO> vacationList() {
+		return edao.vacationList();
+	} // vacationList() method end
 	
 	
 /////////////////////////////////////////급여동작////////////////////////////////////////////////////	
 	
+
+	// 사원휴가 신청
+	@Override
+	public void insertVacation(EmployeevacationVO vvo) {
+		edao.insertVacation(vvo);
+	}// insertVacation() method end
+
 	
-	
-	
-	
-	
-	
+	// 나의 휴가 리스트 출력
+	@Override
+	public List<EmployeevacationVO> myvacationList() {	
+		return edao.myvacationList();
+	}// myvacationList() method end
 
 	
 	
+	// 휴가 수정
+	@Override
+	public Integer vacationmodify(EmployeevacationVO vvo) {
+		Integer result = edao.vacationmodify(vvo);
+		return result;
+	}
+
 	
+	// 휴가 수정 정보 조회
+	@Override
+	public EmployeevacationVO vacationim(Integer vacation_id) {
+		EmployeevacationVO resultEVO = edao.vacationim(vacation_id);
+		return resultEVO;
+	}
 	
 
-//	@Override
-//	public EmployeeVO employeeLogin(EmployeeVO vo) {
-//		EmployeeVO resultVO = mdao.loginEmployee(vo);
-//		return resultVO;
-//	}// employeeLogin() method end
 	
 	
 	

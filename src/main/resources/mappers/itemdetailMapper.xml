@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ddosirak.mapper.ItemdetailMapper">
+	<!-- 상품 기초 목록 -->
+	<select id="itemlist"
+		resultType="com.ddosirak.domain.ItemdetailVO">
+		SELECT * FROM item_detail
+	</select>
+	<!-- 상품 기초 목록 -->
+	<!-- 상품 기초 등록 -->
+	<insert id="insertid">
+		INSERT INTO item_detail (item_code, item_name, item_price, unit)
+		VALUES (#{item_code}, #{item_name}, #{item_price}, #{unit})
+	</insert>
+	<!-- 상품 기초 등록 -->
+	<!-- 특정 상품 조회 -->
+	<select id="selectid"
+		resultType="com.ddosirak.domain.ItemdetailVO">
+		SELECT * FROM item_detail where item_code = #{item_code}
+	</select>
+	<!-- 특정 상품 조회 -->
+	<!-- 상품 기초 수정 -->
+	<update id="updateid">
+		UPDATE item_detail
+		SET item_name = #{item_name}, item_price = #{item_price}, unit = #{unit}
+		WHERE item_code = #{item_code};
+	</update>
+	<!-- 상품 기초 수정 -->
+
+	<!-- 상품 삭제 -->
+	<delete id="deleteid">
+		DELETE FROM item_detail WHERE item_code = #{item_code};
+	</delete>
+	<!-- 상품 삭제 -->
+
+	<!-- max(코드) -->
+	<select id="getMaxCode" resultType="String">
+		select max(item_code) from
+		item_detail
+	</select>
+	<!-- max(코드) -->
+</mapper>

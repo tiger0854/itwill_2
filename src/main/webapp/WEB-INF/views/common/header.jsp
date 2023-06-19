@@ -11,9 +11,20 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <script type="text/javascript">
 function toggleDropdown() {
 	  const collapseSale = document.getElementById('collapseSale');
+	  collapseSale.classList.toggle('show');
+	}
+
+function proDropdown() {
+	  const collapseSale = document.getElementById('pro');
+	  collapseSale.classList.toggle('show');
+	}
+	
+function foundDropdown() {
+	  const collapseSale = document.getElementById('foundation');
 	  collapseSale.classList.toggle('show');
 	}
 
@@ -77,16 +88,36 @@ document.addEventListener("DOMContentLoaded", function(event) {
                    <a href="#" class="nav_link" onclick="toggleDropdown()"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">인사관리  ></span> </a> 
                 <div class="nav_link collapse" id="collapseSale">
                 <!-- 0607 -->
-		  			<a href="/emp/list" class="nav_link"> - 사원관리</a><br>
-		  		    <a href="#" class="nav_link"> - 휴가관리</a><br>
+					<a href="/emp/list" class="nav_link"> - 사원관리</a><br>
+		  		    <a href="/emp/vacationlist" class="nav_link" > - 휴가관리</a><br>
 		  		    <a href="/emp/salary" class="nav_link"> - 급여관리</a><br>
 		  		    <a href="#" class="nav_link"> - 이력관리</a><br>
 		  		<!-- 0607 -->
+		  		<!-- 0615 -->
+		  			<a href="/emp/myvacationList" class="nav_link" > - 나의 휴가내역</a><br>
+		  			<a href="/emp/vacationregist" class="nav_link" > - 휴가신청</a><br>
+		  		<!-- 0615 -->
 				</div>
 					</div>
                  <a href="#" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">구매관리</span> </a> </div>
-                 <a href="#" class="nav_link"> <i class='bx bx-bookmark nav_icon'></i> <span class="nav_name">창고관리</span> </a> 
+                <div class="nav_list">
+                  <a href="#" class="nav_link" onclick="foundDropdown()"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">기반관리 ></span> </a> 
+                <div class="nav_link collapse" id="foundation">
+		  			<a href="/foundation/warehouse/warehouseList" class="nav_link"> - 창고관리</a><br>
+		  		    <a href="/foundation/materialdetail/materialdetailList" class="nav_link"> - 자재관리</a><br>
+		  		    <a href="/foundation/itemdetail/itemdetailList" class="nav_link"> - 상품관리</a><br>
+		  		    <a href="/pro/oderList" class="nav_link"> - 재고관리</a><br>
+		  		    <a href="/line/lineList" class="nav_link"> - 라인관리</a><br>
+				</div>
+				</div>
                  <a href="#" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span class="nav_name">입/출고관리</span> </a> 
+                <div class="nav_list">
+                  <a href="#" class="nav_link" onclick="proDropdown()"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">생산관리 ></span> </a> 
+                <div class="nav_link collapse" id="pro">
+		  			<a href="/pro/oderList" class="nav_link"> - 작업지시</a><br>
+		  		    <a href="/pro/oderList" class="nav_link"> - 실적등록</a><br>
+				</div>
+				</div>
             </div> 
             <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a>
         </nav>

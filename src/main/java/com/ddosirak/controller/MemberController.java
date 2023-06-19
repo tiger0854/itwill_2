@@ -9,12 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import com.ddosirak.domain.EmployeeListVO;
 import com.ddosirak.domain.EmployeeVO;
@@ -58,9 +60,7 @@ public class MemberController {
 	@RequestMapping(value="/insert",method=RequestMethod.POST)
 	public String employeeInsertPOST(EmployeeVO vo) {	
 		logger.debug("employeeInsertPOST() 호출![]~(￣▽￣)~*");
-		
 		logger.debug(vo+" ");
-		
 		// 사원번호 부여 동작
 		logger.debug("!!!!"+vo.getPosition());
 		if(vo.getPosition().equals("일용")) {
@@ -78,6 +78,7 @@ public class MemberController {
 		// 페이지 이동
 		
 		return "redirect:/emp/list"; // 주소를 변경하면서 페이지 이동
+
 	}// employeeInsertPOST() method end
 	
 	// 일용직 일괄등록 > 페이지 이동
@@ -122,6 +123,7 @@ public class MemberController {
 		return "redirect:/emp/list"; // 주소를 변경하면서 페이지 이동
 	}// alInsertPOST() method end
 	// >> GET / POST 의 전달방식을 사용하여 하나의 메서드로 두가지 동작을 수행할 수 있다.
+
 	
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
 	public void employeeInfoGET(int employee_id, Model model) {
@@ -137,7 +139,6 @@ public class MemberController {
 		logger.debug("vo > "+vo);
 		
 		 eService.updateEmployee(vo);
-
 		return "redirect:/emp/info?employee_id="+vo.getEmployee_id();
 	}// employeeUpdate() method end
 	
@@ -286,6 +287,113 @@ public class MemberController {
 ////////////////////////////////////////////////////급여 관리//////////////////////////////////////////////////////////////////////////////
 	
 	
+	
+	
+	
+	
+////////////////////////////////////////////////////휴가 관리/////////////////////////////////////////////////////////////////////////////	
+	
+//	 http://localhost:8088/emp/vacationlist
+		// 휴가관리 리스트페이지(관리자)
+		@RequestMapping(value = "/vacationlist", method = RequestMethod.GET)
+		public void vacationGET(Model model) {
+			logger.debug("vacationGET() 호출![]~(￣▽￣)~*");
+			logger.debug("페이지 이동!");
+			
+			// 사원 목록 불러오기
+			List<EmployeevacationVO> vacationList = eService.vacationList();
+			model.addAttribute("vacationList",vacationList);
+			
+			
+		}// vacationGET() method end
+		
+		// http://localhost:8088/emp/myvacationList
+		// 나의 휴가내역 리스트 페이지
+		@RequestMapping(value = "/myvacationList", method = RequestMethod.GET)
+		public String myvacationList(Model model, @ModelAttribute("result")String result) {
+			logger.debug("myvacation() 호출!");
+			logger.debug("result :"+result);
+			
+			// 서비스 - DB에 저장된 글 정보를 가져오기
+			List<EmployeevacationVO> myvacationList = eService.myvacationList();
+			logger.debug("myvacationList", myvacationList);
+			// 연결된 뷰페이지로 전달(뷰-출력)
+			model.addAttribute("myvacationList", myvacationList);
+			return "/emp/myvacationList";
+		}
+		
+		
+		
+		// 나의 휴가내역 리스트 페이지
+	
+//	http://localhost:8088/emp/vacationregist
+		// 휴가 신청 페이지	
+		// 글쓰기 - /emp/regist (GET)
+		@RequestMapping(value = "/vacationregist", method = RequestMethod.GET)
+		public void vacationregist(Model model) throws Exception{
+			logger.debug("vacationregist() 호출!");
+			logger.debug("/emp/vacationregist.jsp페이지 이동");
+		}
+	
+		// 글쓰기 - /emp/regist (POST)
+		@RequestMapping(value= "/vacationregist",method = RequestMethod.POST)
+		public String vacationregistPOST(EmployeevacationVO vvo, RedirectAttributes rttr) throws Exception {
+			
+			logger.debug("registPOST() 호출!");
+			// 한글처리(필터를 만들어 놓아서 생략)
+			// 페이지 전달 데이터 저장
+			logger.debug("evo :",vvo);
+			
+			// 서비스 - 글쓰기 동작 호출
+			eService.insertVacation(vvo);
+			
+			// 리시트로 정보를 전달 (rttr)
+			rttr.addFlashAttribute("result", "CREATEOK");
+			
+			// 나의휴가 내역페이지로 이동
+			
+			
+			return "redirect:/emp/myvacationList";
+			
+		}
+		
+		// 휴가 수정하기
+		@RequestMapping(value = "/vacationmodify", method = RequestMethod.GET)
+		public void vacationmodify(Model model, Integer vacation_id) throws Exception {
+			// 수정하기 - /emp/modify (GET)
+			logger.debug("vacationmodify() 호출!");
+			logger.debug("/emp/vacationmodify.jsp페이지 이동");
+			
+			// 사원 휴가 정보 불러오기
+			EmployeevacationVO vvo = eService.vacationim(vacation_id);
+			model.addAttribute("vvo", vvo);
+		}
+		
+		@RequestMapping(value= "/vacationmodify",method = RequestMethod.POST)
+		public String vacationmodify(EmployeevacationVO vvo, RedirectAttributes rttr,Integer vacation_id) throws Exception {
+			
+			logger.debug("vacationmodify() 호출!");
+			// 한글처리(필터를 만들어 놓아서 생략)
+			// 페이지 전달 데이터 저장
+			logger.debug("vvo :",vvo);
+			
+			// 서비스 - 휴가수정 동작 호출
+			eService.vacationmodify(vvo);
+			
+			// 리시트로 정보를 전달 (rttr)
+			rttr.addFlashAttribute("result", "CREATEOK");
+			
+			// 나의휴가 내역페이지로 이동
+			
+			return "redirect:/emp/vacationmodify?vacation_id="+vvo.getVacation_id();
+		}
+		    // 수정하기 - /emp/modify (POST)
+		
+		
+		
+		
+	
+/////////////////////////////////////////////////////휴가 관리/////////////////////////////////////////////////////////////////////////////	
 	
 //	// 로그인 > 정보입력 (GET)
 //	@RequestMapping(value="/login", method=RequestMethod.GET)

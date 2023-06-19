@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+
 public class EmployeeVO  implements Serializable {
+	
 	private int employee_id;
 	private String employee_name;
 	private String jumin;

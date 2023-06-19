@@ -66,7 +66,42 @@
   	<!-- 사원 동작 -->
   	
   	<!-- 급여 동작 -->
+
+  
+  	<!-- 휴가 목록 출력 -->
+  	<select id="vacationList" resultType="com.ddosirak.domain.EmployeevacationVO">
+		SELECT * FROM emp_vacation  
+  	</select>
+  	<!-- 휴가 목록 출력 -->
+  
+
+  	<!-- 사원 휴가 신청  -->
+  	<insert id="insertVacation">
+	insert into emp_vacation (employee_id, position, department_name, phone_num, vacation_management, vacation_start,vacation_finish)
+	values(#{employee_id},#{position},#{department_name},#{phone_num},#{vacation_management},#{vacation_start},#{vacation_finish})
+  	</insert>
+  	<!-- 사원 휴가 신청  -->
   	
+  	<!-- 나의 휴가 목록 출력 -->
+  	<select id="myvacationList" resultType="com.ddosirak.domain.EmployeevacationVO">
+  		SELECT * FROM emp_vacation 
+  	</select>
+  	<!-- 나의 휴가 목록 출력 -->
+  	
+  	<!-- 휴가 수정 -->
+  	<update id="vacationmodify">
+  	UPDATE emp_vacation 
+  	SET employee_id=#{employee_id}, position=#{position}, department_name=#{department_name},
+  	phone_num=#{phone_num}, vacation_management=#{vacation_management}, vacation_start=#{vacation_start}, vacation_finish=#{vacation_finish}
+  	where vacation_id=#{vacation_id}
+  	</update>
+  	<!-- 휴가 수정 -->
+  	
+  	<!-- 휴가 수정 정보 조회 -->
+  	<select id="vacationim" resultType="com.ddosirak.domain.EmployeevacationVO">
+		SELECT * FROM emp_vacation WHERE vacation_id=#{vacation_id}
+  	</select>
+  	<!-- 휴가 수정 정보 조회 -->
   	<!-- 급여 정보 등록 -->
   	<update id="salaryInsert">
 		 UPDATE emp_main

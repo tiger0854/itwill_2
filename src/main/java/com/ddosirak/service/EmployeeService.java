@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 
 import com.ddosirak.domain.EmployeeVO;
+import com.ddosirak.domain.EmployeevacationVO;
 import com.ddosirak.domain.SalaryVO;
 
 public interface EmployeeService {
@@ -46,6 +47,21 @@ public interface EmployeeService {
 
 /////////////////////////////////////////급여동작////////////////////////////////////////////////////
 	
+	// 사원 휴가 목록 출력(관리자)
+	public List<EmployeevacationVO> vacationList();
+	
+	// 사원휴가 신청
+	public void insertVacation(EmployeevacationVO vvo);
+	
+	// 나의 휴가 리스트 출력
+	public List<EmployeevacationVO> myvacationList();
+	
+	// 휴가 수정
+	public Integer vacationmodify(EmployeevacationVO vvo);
+	
+	// 휴가 수정 정보 조회
+	public EmployeevacationVO vacationim(Integer vacation_id);
+		
 	// 로그인
 //	public EmployeeVO employeeLogin(EmployeeVO vo);// id,pw 들어감.
 
