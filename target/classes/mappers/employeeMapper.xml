@@ -66,6 +66,7 @@
   	<!-- 사원 동작 -->
   	
   	<!-- 급여 동작 -->
+
   
   	<!-- 휴가 목록 출력 -->
   	<select id="vacationList" resultType="com.ddosirak.domain.EmployeevacationVO">
