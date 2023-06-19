@@ -1,12 +1,15 @@
 package com.ddosirak.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.ddosirak.domain.EmployeeVO;
+import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.ProOrderVO;
 import com.ddosirak.persistance.EmployeeDAO;
 import com.ddosirak.persistance.ProOrderDAO;
@@ -34,6 +37,19 @@ public class ProOrderServiceImpl implements ProOrderService {
 		return odao.proOrderList();
 	}
 
+
+	@Override
+	public List<ProOrderVO> proOrderList(Map<String, Object> instrSearch, Model model) {
+		// 작업지시 검색 목록
+		System.out.println("InstructServiceImpl instrList 검색");
+		
+//		int totalCnt = instructDAO.instrCount(instrSearch);
+//		PageUtil.getPaging(pageDTO, model, totalCnt);
+		
+		return odao.proOrderList(instrSearch,model);
+	}
+	
+	
 	@Override
 	public ProOrderVO getProOder(String wo_code) {
 		ProOrderVO resultVO = odao.getProOrder(wo_code);
@@ -50,6 +66,24 @@ public class ProOrderServiceImpl implements ProOrderService {
 	public void deleteProOrder(String wo_code) {
 		odao.deleteProOrder(wo_code);
 	}
+
+//	@Override
+//	public Integer statusProOrder(String wo_code) {
+//		return odao.statusProOrder(wo_code);
+//	}
+
+	@Override
+	public List<ItemdetailVO> proitemList() {
+		// TODO Auto-generated method stub
+		return odao.proitemList();
+	}
+
+	@Override
+	public List<ItemdetailVO> proitemList(Map<String, Object> instrSearch, Model model) {
+		// TODO Auto-generated method stub
+		return odao.proitemList(instrSearch,model);
+	}
+
 	
 	
 	

@@ -71,15 +71,11 @@ public class ProductionPerformanceDAOImpl implements ProductionPerformanceDAO {
 
 	// 실적 삭제 동작
 	@Override
-	public Integer perfDeleteBoard(int perf_id) {
-		Integer perfDelete = sqlSession.update(NAMESPACE + ".perfDelete", perf_id);
-		logger.debug("@@@@@@@ perfDelete : " + perfDelete);
+	public void perfDeleteBoard(int perf_id) {
+		sqlSession.update(NAMESPACE + ".perfDelete", perf_id);
 		logger.debug("실적 삭제 완료");
-		return perfDelete;
 	}
 	
-	
-
 	
 	
 

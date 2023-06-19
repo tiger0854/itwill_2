@@ -24,14 +24,17 @@
 		window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 	}
 	
-	function etcRemove(perfId) {
-		location.href = '/pro/etcRemove?perf_id=' + perfId;
+	function etcRemove(perfId,wo_code) {
+		if(confirm("정말로 삭제하시겠습니까?")){
+		location.href = '/pro/etcRemove?perf_id='+perfId+'&wo_code='+wo_code;
+		alert("삭제완료!");
+		}
 	}
 </script>
 
 </head>
 
-<body>
+<body id="body-pd" style="font-family: 'TheJamsil5';">
 
 
 
@@ -65,6 +68,7 @@
 							<th>품명</th>
 							<th>단위</th>
 							<th>투입량</th>
+							<th>불량여부</th>
 							<th>수정</th>
 							<th>삭제</th>
 						</tr>
@@ -74,14 +78,16 @@
 							<tr>
 								<td>${prmList.item_code }</td>
 								<td>${prmList.item_name }</td>
-								<td>${prmList.unit }</td>
-								<td>${prmList.iQTY }</td>
+<%-- 								<td>${prmList.unit }</td> --%>
+								<td>EA</td>
+								<td>${prmList.pfQTY }</td>
+								<td>${prmList.perf_gobd }</td>
 								<td><button class="btn-edit"
 										onclick="etcEdit('${prmList.perf_id}');">
 										<i class="bx bx-edit"></i>
 									</button></td>
 								<td><button class="btn-delete"
-										onclick="etcRemove('${prmList.perf_id}')">
+										onclick="etcRemove('${prmList.perf_id}','${param.wo_code}')">
 										<i class="bx bxs-trash"></i>
 									</button></td>
 							</tr>

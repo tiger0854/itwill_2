@@ -48,8 +48,8 @@ public class ProductionPerformanceServiceImpl implements ProductionPerformanceSe
 
 	// 실적 삭제 동작
 	@Override
-	public Integer perfDeleteBoard(int perf_id) {
-		return null;
+	public void perfDeleteBoard(int perf_id) {
+		ppdao.perfDeleteBoard(perf_id);
 	}
 
 	

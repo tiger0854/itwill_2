@@ -1,9 +1,11 @@
 package com.ddosirak.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
@@ -16,8 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ddosirak.domain.ItemdetailVO;
+import com.ddosirak.domain.LineVO;
 import com.ddosirak.domain.ProOrderVO;
 import com.ddosirak.domain.ProductionPerformanceVO;
+import com.ddosirak.service.ItemdetailService;
+import com.ddosirak.service.LineService;
 import com.ddosirak.service.ProOrderService;
 import com.ddosirak.service.ProductionPerformanceService;
 
@@ -42,40 +48,81 @@ public class ProductController {
 	// 서비스의 정보가 필요함. > 의존관계
 	@Inject
 	private ProOrderService oService;
+	
+	@Inject
+	private ItemdetailService iservice;
+	
+	@Inject
+	private LineService lService;
 
 	// 동작 구현 > 메서드 설계
 
 ///////////////////////////////////////////////////생산관리//////////////////////////////////////////////////////////////////////////////
+	
+// --------------------- 예웡  (｡･∀･)ﾉﾞﾞ -----------------------------	
 	// http://localhost:8088/pro/oderList
-	// 회원가입 처리 - 정보 입력
+	// 작업지시 목록
 	@RequestMapping(value = "/oderList", method = RequestMethod.GET)
-	public void productListGET(Model model) {
+	public void productListGET(Model model,HttpServletRequest request) {
 		logger.debug("productListGET() 호출![]~(￣▽￣)~*");
 		logger.debug("/pro/oderList.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
-		List<ProOrderVO> proOrderList = oService.proOrderList();
+		
+		String line_code = request.getParameter("line_code");
+		String wo_date = request.getParameter("wo_date");
+		String item_code = request.getParameter("item_code");
+		String wo_status = request.getParameter("wo_status");
+		
+		Map<String, Object> instrSearch = new HashMap<String, Object>();
+		instrSearch.put("line_code", line_code);
+		instrSearch.put("wo_date", wo_date);
+		instrSearch.put("item_code", item_code);
+		instrSearch.put("wo_status", wo_status);
+		
+//		List<ProOrderVO> proOrderList = oService.proOrderList();
+		List<ProOrderVO> proOrderList;
+		if(line_code == null && wo_date == null && item_code == null && wo_status == null) {
+			// 작업지시 전체 조회
+			logger.debug("productList 전체 호출 ![]~(￣▽￣)~*");
+			proOrderList = oService.proOrderList();
+//			int instrSearchCount = instructService.instrCount(instrSearch);
+//			model.addAttribute("instrSearchCount", instrSearchCount);
+		
+		} else {
+			// 작업지시 검색 조회
+			logger.debug("productList 검색 호출 ![]~(￣▽￣)~*");
+//			proOrderList = oService.proOrderList();
+			proOrderList = oService.proOrderList(instrSearch, model);
+//			int instrSearchCount = instructService.instrCount(instrSearch);
+//			model.addAttribute("instrSearchCount", instrSearchCount);
+		}
+
 		model.addAttribute("oderList", proOrderList);
+		model.addAttribute("instrSearch", instrSearch);
+//		// 라인 이름 불러오기
+		List<LineVO> lineList = lService.LineList();
+		model.addAttribute("lineList", lineList);
 
 	}// productListGET() method end
 
+
 	// http://localhost:8088/pro/orderWrite
 	@RequestMapping(value = "/orderWrite", method = RequestMethod.GET)
-	public void productWriteGET(ProOrderVO vo) {
+	public void productWriteGET(ProOrderVO vo,Model model) {
 		logger.debug("orderWriteGET() 호출![]~(￣▽￣)~*");
 		logger.debug(vo + " ");
-		// >> DAO > 사원 추가 메서드 호출
-
-//		return "redirect:/emp/list"; // 주소를 변경하면서 페이지 이동
+		List<LineVO> lineList = lService.LineList();
+		model.addAttribute("lineList", lineList);
 	}
 
+	//작업지시 글작성
 	// http://localhost:8088/pro/orderWrite
 	@RequestMapping(value = "/orderWrite", method = RequestMethod.POST)
 	public void productWritePost(ProOrderVO vo) {
 		logger.debug("orderWritePOST() 호출![]~(￣▽￣)~*");
-
 		logger.debug(vo+" ");
 		oService.orderInsert(vo);
+		
 
-//		return "redirect:/emp/list"; // 주소를 변경하면서 페이지 이동
 	}// productWriteGET() method end
 		// 생산관리 - 작업지시글작성
 
@@ -92,14 +139,13 @@ public class ProductController {
 //	 생산관리 - 작업지시글수정
 
 	@RequestMapping(value = "/orderEdit", method = RequestMethod.POST) // 0609, 모르겠음. 일단 GET > POST로 시도 // 해결
-	public String eproductEditPOST(ProOrderVO vo ,RedirectAttributes rttr) { // (listPOST)
+	public void eproductEditPOST(ProOrderVO vo ,RedirectAttributes rttr) { // (listPOST)
 		logger.debug("productEditPOST() 호출![]~(￣▽￣)~*");
-
 		logger.debug("vo > "+vo);
 		oService.EditProOrder(vo);
 		// 리스트로 정보를 전달 (rttr)
 		rttr.addFlashAttribute("result", "CREATEOK");
-		return "redirect:/pro/orderEdit?wo_code="+vo.getWo_code();
+//		return "redirect:/pro/orderEdit?wo_code="+vo.getWo_code();
 	}// employeeUpdate() method end
 	
 	//작업지시 삭제
@@ -121,6 +167,43 @@ public class ProductController {
 	}// productStatusGET() method end
 		// 생산관리 - 작업지시현황
 
+	
+	// 생산관리 - 상품목록(팝업)
+	// http://localhost:8088/pro/itemList
+	@RequestMapping(value = "/itemList", method = RequestMethod.GET)
+	public void itemListGET(Model model,HttpServletRequest request) {
+		
+		String item_code = request.getParameter("item_code");
+		String item_name = request.getParameter("item_name");
+		Map<String, Object> instrSearch = new HashMap<String, Object>();
+		instrSearch.put("item_code", item_code);
+		instrSearch.put("item_name", item_name);
+//		List<ItemdetailVO> itemList=iservice.idList();
+		List<ItemdetailVO> itemList;
+		if(item_code == null && item_name == null) {
+			// 작업지시 전체 조회
+			logger.debug("productList 전체 호출 ![]~(￣▽￣)~*");
+			itemList = oService.proitemList();
+//			int instrSearchCount = instructService.instrCount(instrSearch);
+//			model.addAttribute("instrSearchCount", instrSearchCount);
+		
+		} else {
+			// 작업지시 검색 조회
+			logger.debug("productList 검색 호출 ![]~(￣▽￣)~*");
+//			proOrderList = oService.proOrderList();
+			itemList = oService.proitemList(instrSearch, model);
+//			int instrSearchCount = instructService.instrCount(instrSearch);
+//			model.addAttribute("instrSearchCount", instrSearchCount);
+		}
+		logger.debug("idlistGET 실행");
+		
+		model.addAttribute("itemList", itemList);
+	}// /itemListGET() method end
+	
+	
+	
+ // --------------------- 영신쿤  (｡･∀･)ﾉﾞﾞ -------------------------------------
+	
 	// http://localhost:8088/pro/etcstatusList
 	@RequestMapping(value = "/etcstatusList", method = RequestMethod.GET)
 	public void productEtclistGET(String wo_code, Model model) {
@@ -134,15 +217,16 @@ public class ProductController {
 
 	// http://localhost:8088/pro/etcWrite
 	@RequestMapping(value = "/etcWrite", method = RequestMethod.GET)
-	public void productEtcWriteGET() {
+	public void productEtcWriteGET(String wo_code,Model model) {
 		logger.debug("etcWriteGET() 호출![]~(￣▽￣)~*");
 		logger.debug("/pro/etcWrite.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
-
+		ProOrderVO pvo = oService.getProOder(wo_code);
+		model.addAttribute("pvo", pvo);
 	}// productEtcWriteGET() method end
 		// 생산관리 - 실적등록
 
 	@RequestMapping(value = "/etcWrite", method = RequestMethod.POST)
-	public void productEtcWritePOST(ProductionPerformanceVO ivo) {
+	public void productEtcWritePOST(ProductionPerformanceVO ivo,String wo_code,ProOrderVO vo ) {
 		logger.debug("etcWritePOST() 호출![]~(￣▽￣)~*");
 
 		logger.debug(ivo + "");
@@ -151,11 +235,16 @@ public class ProductController {
 
 		// 실적 등록 메서드 호출
 		ppService.insertProdPerf(ivo);
-
 		logger.debug("<ivo> : " + ivo);
+		
+		
+		// 작업지시 상태 변경 메서드 호출
+		logger.debug(vo.getWo_status() + "@@@@@@@@@@@");
 
+//		oService.statusProOrder(wo_code,ivo);
+		
 //		return "redirect:/pro/etcstatusList?wo_code=" + ivo.getWo_code();
-
+		
 	}// productEtcWritePost() method end
 		// 생산관리 - 실적등록
 
@@ -188,17 +277,16 @@ public class ProductController {
 		// 생산관리 - 실적 수정 동작
 
 	// http://localhost:8088/pro/etcRemove
-	@RequestMapping(value = "/etcRemove", method = RequestMethod.POST)
-	public String productEtcRemoveGET(HttpSession session, ProductionPerformanceVO dvo) {
+	@RequestMapping(value = "/etcRemove", method = RequestMethod.GET)
+	public String productEtcRemoveGET(ProductionPerformanceVO dvo,HttpServletRequest request) {
 		logger.debug("productEtcRemoveGET() 호출![]~(￣▽￣)~*");
-		
-		logger.debug(" @@@@@@@@@ session : " + session);
-		
-		session.invalidate();
+		String wo_code = request.getParameter("wo_code");
 		ppService.perfDeleteBoard(dvo.getPerf_id());
-		
-		return "redirect:/pro/etcstatusList?wo_code=" + dvo.getWo_code();
+		return "redirect:/pro/etcstatusList?wo_code="+wo_code;
 	}// productEtcWriteGET() method end
 		// 생산관리 - 실적 삭제
+	
+	
+	
 
 }// public class end

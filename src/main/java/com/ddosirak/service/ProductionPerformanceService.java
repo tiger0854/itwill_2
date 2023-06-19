@@ -19,5 +19,5 @@ public interface ProductionPerformanceService {
 	public Integer perfUpdateBoard(ProductionPerformanceVO uvo);
 	
 	// 실적삭제 동작
-	public Integer perfDeleteBoard(int perf_id);
+	public void perfDeleteBoard(int perf_id);
 }

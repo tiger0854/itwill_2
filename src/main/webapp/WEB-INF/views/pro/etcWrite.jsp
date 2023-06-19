@@ -87,11 +87,15 @@
 						name="${param.wo_code }">
 					<tr>
 						<td>품번</td>
-						<td><input type="text" name="item_code"></td>
+						<td><input type="text" name="item_code" value="${pvo.item_code }" readonly></td>
 					</tr>
 					<tr>
 						<td>품명</td>
-						<td><input type="text" name="item_name"></td>
+						<td><input type="text" name="item_name" value="${pvo.item_name }" readonly></td>
+					</tr>
+					<tr>
+						<td>지시수량</td>
+						<td><input type="number" name="oQTY" value="${pvo.oQTY }" readonly></td>
 					</tr>
 					<tr>
 						<td>실적수량</td>

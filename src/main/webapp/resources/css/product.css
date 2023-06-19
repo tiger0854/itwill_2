@@ -69,11 +69,6 @@ body{
   text-align: center;
 }
 
-.product-box {
-  border-radius: 5px;
-  border-collapse: separate;
-}
-
 .product-box th,
 .product-box td {
   padding: 5px;
@@ -81,19 +76,20 @@ body{
 
 /* Search box */
 .product-box select,
-.product-box input[type="date"] {
-  width: 67%;
-  padding: 5px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
+.product-box input[type="date"],
 .product-box input[type="text"] {
-  width: 30%;
+/*   width: calc(33.33% - 5px); 3개의 요소를 동일한 폭으로 나누고 간격을 5px로 설정 */
   padding: 5px;
   margin-right: 5px;
   border: 1px solid #ddd;
   border-radius: 5px;
+}
+
+.product-box select {
+	width: 60%;
+}
+.product-box input[type="text"]:last-child {
+  margin-right: 0; /* 마지막 입력란의 오른쪽 여백 제거 */
 }
 
 
@@ -296,4 +292,17 @@ h4 {
   margin-bottom: 20px;
   font-size: 10px;
 }
+
+
+<!-- 아이콘 -->
+  .input-with-icon {
+    position: relative;
+    display: inline-block;
+  }
+  .input-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+  }
 

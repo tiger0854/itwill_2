@@ -91,7 +91,6 @@ public class MemberController {
 		logger.debug("vo > "+vo);
 		
 		 eService.updateEmployee(vo);
-
 		return "redirect:/emp/info?employee_id="+vo.getEmployee_id();
 	}// employeeUpdate() method end
 	

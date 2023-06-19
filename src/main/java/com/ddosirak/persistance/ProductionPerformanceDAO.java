@@ -13,5 +13,5 @@ public interface ProductionPerformanceDAO {
 	
 	public Integer perfUpdateBoard(ProductionPerformanceVO uvo);
 	
-	public Integer perfDeleteBoard(int perf_id);
+	public void perfDeleteBoard(int perf_id);
 }
