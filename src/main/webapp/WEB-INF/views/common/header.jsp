@@ -8,15 +8,21 @@
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
-<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <script type="text/javascript">
 function toggleDropdown() {
 	  const collapseSale = document.getElementById('collapseSale');
 	  collapseSale.classList.toggle('show');
 	}
+	
+function toggleDropdown2() {
+	  const collapseSale = document.getElementById('collapseSale2');
+	  collapseSale.classList.toggle('show');
+	}	
 
 function proDropdown() {
 	  const collapseSale = document.getElementById('pro');
@@ -80,7 +86,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
         </div>
     </header>
     
-    <div class="l-navbar" id="nav-bar">
+  
+					
+      
+        
+	<div class="l-navbar" id="nav-bar">
         <nav class="nav">
             <div> <a href="#" class="nav_logo"> <i class='bx bx-layer nav_logo-icon'></i> <span class="nav_logo-name" style="font-size: 25px;">또시락🍱</span></a>
                 <div class="nav_list"> <a href="#" class="nav_link active"> <i class='bx bx-grid-alt nav_icon'></i> <span class="nav_name">HOME</span> </a>
@@ -110,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		  		    <a href="/line/lineList" class="nav_link"> - 라인관리</a><br>
 				</div>
 				</div>
-                 <a href="#" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span class="nav_name">입/출고관리</span> </a> 
+          
                 <div class="nav_list">
                   <a href="#" class="nav_link" onclick="proDropdown()"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">생산관리 ></span> </a> 
                 <div class="nav_link collapse" id="pro">
@@ -118,9 +128,26 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		  		    <a href="/pro/oderList" class="nav_link"> - 실적등록</a><br>
 				</div>
 				</div>
+
+				<div class="nav_list">
+					<a href="#" class="nav_link" onclick="toggleDropdown2()"> <i class="bx bxs-cart-alt nav_icon"></i> <span class="nav_name">입/출고관리  ></span> </a> 
+					<div class="nav_link collapse" id="collapseSale2">
+					<!--입출고-->
+						  <a href="/inbound/orderWrite" class="nav_link"> - 발주등록</a><br>
+						  <a href="/inbound/orderList" class="nav_link"> - 발주현황</a><br>
+						  <a href="/inbound/inboundWrite" class="nav_link"> - 입고등록</a><br>
+						  <a href="/inbound/inboundList" class="nav_link"> - 입고현황</a><br>
+						  <a href="/outbound/insert" class="nav_link"> - 출고등록</a><br>
+						  <a href="/outbound/list" class="nav_link"> - 출고현황</a><br>
+					  <!--입출고-->
+	
+				  </div>
+				  </div>
             </div> 
             <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a>
         </nav>
     </div>
+    
+          <!--   <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a> -->
 </body>
 </html>

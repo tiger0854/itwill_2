@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.ddosirak.mapper.InboundMapper">
+  
+  	<!-- 입고서 등록 -->
+  	<insert id="insertInbound">
+  	INSERT INTO ret_in (in_number, order_number, in_piece, in_date, in_resp, wh_code, in_expir)
+	SELECT CONCAT('IN', REPLACE(#{in_date}, '-', ''), MAX(in_id) + 1), #{order_number},#{in_piece},#{in_date},#{in_resp},#{wh_code},#{in_expir}
+  	FROM ret_in
+  	</insert>
+  	<!-- 입고서 등록 -->
+  	
+  	 <!-- 입고등록시 발주상태 update -->
+  	<update id="updateOrderState">
+ 	UPDATE ret_order set order_state = 1 where order_number=#{order_number}
+  	</update>
+  	<!-- 입고등록시 발주상태 update --> 	
+ 
+  	
+  	<!-- 입고리스트 불러오기 ret_order과 ret_in 테이블 조인 -->
+  	<resultMap type="com.ddosirak.domain.InboundVO" id="inboundVO">
+  	
+  		<result property="in_id" column="in_id"/>
+  		<result property="in_number" column="in_number"/>
+  		<result property="order_number" column="order_number"/>
+  		<result property="in_piece" column="in_piece"/>
+  		<result property="in_Epiece" column="in_Epiece"/>
+  		<result property="in_date" column="in_date"/>
+  		<result property="in_resp" column="in_resp"/>
+  		<result property="wh_code" column="wh_code"/>
+  		<result property="in_state" column="in_state"/>
+  		<result property="in_expir" column="in_expir"/>
+  		<result property="in_Edate" column="in_Edate"/>
+  		<collection property="orderVO" resultMap="orderVO"/>
+  	</resultMap>
+  	
+  	 <resultMap type="com.ddosirak.domain.OrderVO" id="orderVO">
+  		<result property="material_name" column="material_name"/>
+  		<result property="order_piece" column="order_piece"/>
+  	</resultMap>
+  	
+  	<select id="inboundAllList" resultMap="inboundVO">
+  	SELECT in_id,in_number,i.order_number, o.material_name,o.order_piece,in_piece,in_Epiece,in_date,in_resp,wh_code,in_state,in_expir,in_Edate
+  	FROM ret_in as i JOIN ret_order as o
+  	WHERE i.order_number = o.order_number
+  	</select>
+  	<!-- 입고리스트 불러오기 -->
+  	
+  	<!-- 입고처리 -->
+  	<update id="updateInProcess">
+  	UPDATE ret_in set in_Edate = #{in_Edate}, in_Epiece = #{in_Epiece} , in_state = 1
+  	WHERE in_number = #{in_number}
+  	</update>
+  	
+  	<!-- 입고처리 -->
+  	
+  	<!-- 입고삭제 -->
+  	<delete id="deleteInbound">
+  	DELETE from ret_in where in_id = #{in_id}
+  	</delete>
+  	<!-- 입고삭제 -->
+  	
+  	<!-- 입고취소시 발주상태 변경할 발주서 선택 -->
+  	<select id="selectOrderNumber" resultType="String">
+	SELECT order_number FROM ret_in
+	WHERE in_id = #{in_id}
+	</select>
+  	<!-- 입고취소시 발주상태 변경할 발주서 선택 -->
+  	
+  	<!-- 입고취소시 발주상태 변경 -->
+  	<update id="updateOrderStateToDefault">
+  	UPDATE ret_order set order_state = 0
+  	WHERE order_number = #{order_number}
+  	</update>
+  	<!-- 입고취소시 발주상태 변경 -->
+  	
+  	
+  
+  </mapper>
