@@ -71,9 +71,12 @@ public class MemberController {
 			// 임직원의 직번
 			vo.setEmployee_id(eService.getMaxId());
 		}// i-e end
-		// 서비스 > 사원 추가 메서드 호출
-		// >> DAO > 사원 추가 메서드 호출
 		eService.employeeInsert(vo);
+		
+		// 임직원인 경우만 추가된다.
+		if(vo.getEmployee_id() < 10000) {
+			eService.setEmployeeIDPW(vo); // 사원 추가간 아이디 / 비밀번호 추가 메서드
+		}// if end
 		
 		logger.debug(">> vo: "+vo);
 		// 페이지 이동

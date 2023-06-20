@@ -20,4 +20,24 @@
 
 
 </body>
+
+<script>
+$(document).ready(function(){
+	var data = "${result}";
+	
+	if(data == "LOGOUT" ){
+		alert('로그아웃 성공!');
+		hold();
+	}// if end
+
+	function hold(){
+		// 스택 추가
+		history.pushState(null, null, location.href); 
+		// 뒤로가기 이벤트감지 -> 현재페이지로 이동
+		window.onpopstate = function() { 
+			history.go(1); 
+		}// 뒤로가기막기
+	}
+});// jQ end
+</script>
 </html>

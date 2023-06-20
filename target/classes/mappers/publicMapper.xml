@@ -6,18 +6,18 @@
   
 <mapper namespace="com.ddosirak.mapper.PublicMapper">
 	<!-- IDPW 비교 -->
-	<select id="" resultType="com.ddosirak.domain.LoginVO"> 
+	<select id="checkIDPW" resultType="com.ddosirak.domain.LoginVO"> 
 		SELECT * FROM emp_login 
 		WHERE employee_id=#{employee_id} AND employee_pw=#{employee_pw} 
 	</select>
 	<!-- IDPW 비교 -->
-
-
-
-
-
-
-
-
+	
+	<!-- 게시판 업로드 -->
+	<insert id="writeBoard">
+		INSERT INTO emp_board 
+		(employee_id, title, content) 
+		VALUES (#{employee_id},#{title],#{content]) 
+	</insert>
+	<!-- 게시판 업로드 -->
 
 </mapper>

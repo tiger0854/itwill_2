@@ -30,3 +30,5 @@ a{text-decoration: none}
 .l-navbar{left: 0;padding: 1rem 1rem 0 0}
 .show{width: calc(var(--nav-width) + 156px)}
 .body-pd{padding-left: calc(var(--nav-width) + 188px)}}
+
+input[type=password] {font-family:'Malgun gothic', dotum, sans-serif;}

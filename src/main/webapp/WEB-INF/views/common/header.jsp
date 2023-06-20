@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,8 +82,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		<button onclick="window.open('hello.jsp','출근','width=430,height=500,location=no,status=no,scrollbars=no');">출근</button>
 		<button onclick="window.open('bye.jsp','퇴근','width=430,height=500,location=no,status=no,scrollbars=no');">퇴근</button>
         <div> 
-        <a style="margin: 10px;" href="/public/login">로그인</a> <!-- 0619 수정 -->
-        <a>회원가입</a>
+        <c:if test="${empty login_id }">
+        	<a style="margin: 10px;" href="/public/login">로그인</a> <!-- 0619 추가 -->
+        </c:if>
+        <c:if test="${!empty login_id }">
+        	<a style="margin: 10px;" href="/public/logout">로그아웃</a> <!-- 0619 추가 -->
+        </c:if>
         </div>
     </header>
     
@@ -142,7 +147,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					  <!--입출고-->
 	
 				  </div>
-				  </div>
+				</div>
+				<div>
+				 <!-- 0619 -->
+                 <a href="/public/write" class="nav_link"> <i class='bx bx-folder nav_icon'></i><span class="nav_name">공지사항/게시판</span></a> 
+                 <!-- 이후 write > boardList 로 변경해야 함. -->
+                 <!-- 0619 -->
+				</div>
             </div> 
             <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a>
         </nav>

@@ -11,9 +11,10 @@
 <jsp:include page="../common/header.jsp"/>
 <h1>게시판 글쓰기</h1>
 
-<form action="">
-	
-	
+<form action="" method="post">
+	<input type="text" name="title" placeholder="제목"><br>
+	<textarea rows="5" cols="10"></textarea>
+	<input type="submit" value="등록">
 </form>
 
 
