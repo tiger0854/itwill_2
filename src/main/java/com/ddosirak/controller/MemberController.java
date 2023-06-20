@@ -15,11 +15,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddosirak.domain.EmployeeListVO;
 import com.ddosirak.domain.EmployeeVO;
+import com.ddosirak.domain.EmployeevacationVO;
 import com.ddosirak.domain.SalaryVO;
 import com.ddosirak.service.EmployeeService;
 
@@ -389,6 +391,16 @@ public class MemberController {
 		}
 		    // 수정하기 - /emp/modify (POST)
 		
+		// 휴가 삭제하기
+		@RequestMapping(value = "/vacationdelete", method = RequestMethod.GET)
+		public String vacationdelete(Model model,Integer vacation_id) throws Exception {
+			// 수정하기 - /emp/modify (GET)
+			logger.debug("vacationdelete() 호출!");
+			logger.debug("/emp/vacationdelete.jsp페이지 이동");
+			// 서비스 - 휴가 삭제 동작 호출
+			eService.vacationdelete(vacation_id);
+			return "redirect:/emp/vacationlist?vacation_id="+vacation_id;
+		}
 		
 		
 		

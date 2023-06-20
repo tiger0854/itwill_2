@@ -47,7 +47,12 @@ public interface EmployeeDAO {
 	
 	// 휴가 수정 정보 조회
 	public EmployeevacationVO vacationim(Integer vacation_id);
-
+	
+	// 휴가 삭제
+	public void vacationdelete(Integer vacation_id);
+	
+	
+	
 /////////////////////////////////////////사원동작////////////////////////////////////////////////////
 	
 	

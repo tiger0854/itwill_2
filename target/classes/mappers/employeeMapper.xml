@@ -66,6 +66,7 @@
   	<!-- 사원 동작 -->
   	
   	<!-- 급여 동작 -->
+
   
   	<!-- 휴가 목록 출력 -->
   	<select id="vacationList" resultType="com.ddosirak.domain.EmployeevacationVO">
@@ -101,6 +102,13 @@
 		SELECT * FROM emp_vacation WHERE vacation_id=#{vacation_id}
   	</select>
   	<!-- 휴가 수정 정보 조회 -->
+  	
+  	<!-- 휴가 삭제 -->
+  	<delete id="vacationdelete" parameterType="Integer">
+  		DELETE FROM emp_vacation WHERE vacation_id=#{vacation_id}
+  	</delete>
+  	<!-- 휴가 삭제 -->
+  	
   	<!-- 급여 정보 등록 -->
   	<update id="salaryInsert">
 		 UPDATE emp_main

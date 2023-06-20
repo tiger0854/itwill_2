@@ -13,6 +13,13 @@ function vacationmodify(vacation_id) {
 	  window.open(popupUrl, '_blank', 'width=500,height=600,left=100, top=100');
 	}
 </script>
+<script>
+function vacationdelete(vacation_id) {
+	if(confirm("정말로 삭제하시겠습니까?")){
+		location.href='/emp/vacationdelete?vacation_id='+vacation_id;
+	}
+}
+</script>
 </head>
 <body id="body-pd" style="font-family: 'TheJamsil5';">
 <jsp:include page="../common/header.jsp"/>
@@ -49,7 +56,7 @@ function vacationmodify(vacation_id) {
 				<td>${vc.approve_emp }</td>
 				<td>${vc.subsitute }</td>
 				<td><button onclick="vacationmodify('${vc.vacation_id}')">수정하기</button></td>
-				<td><button onclick="vacationmodify('${vo.wo_code}')">삭제하기</button></td>
+				<td><button onclick="vacationdelete('${vc.vacation_id}')">삭제하기</button></td>
 				
 			</tr>
 		</c:forEach>

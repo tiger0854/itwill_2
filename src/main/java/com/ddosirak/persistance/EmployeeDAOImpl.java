@@ -174,7 +174,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}// getEmpSalaryInfo() method end
 	
 	
-	
+/////////////////////////////////////////사원휴가////////////////////////////////////////////////////
 	
 	// 나의 휴가 리스트 출력
 	@Override
@@ -201,8 +201,24 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		logger.debug("vacationim()!");
 		EmployeevacationVO resultEVO = sqlSession.selectOne((NAMESPACE)+".vacationim", vacation_id);
 		return resultEVO;
-	}
+	}// vacationim() method end
 
 
 
+	// 휴가 삭제
+	@Override
+	public void vacationdelete(Integer vacation_id) {
+		logger.debug("vacationdelete()!");
+		sqlSession.delete(NAMESPACE + ".vacationdelete", vacation_id);
+	}// vacationdelete() method end
+
+	
+	
+	
+	
+	
+
+	
+
+/////////////////////////////////////////사원휴가////////////////////////////////////////////////////
 }// public class end
