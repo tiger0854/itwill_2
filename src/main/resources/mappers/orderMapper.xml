@@ -10,7 +10,7 @@
   	<insert id="insertOrder">
   		INSERT INTO ret_order 
   		(order_number, material_code, material_name, material_price, order_piece, order_date, pay_date, order_resp, order_trade)
-		SELECT CONCAT('ORD', REPLACE(#{order_date}, '-', ''), count(*) + 1),#{material_code},#{material_name},#{material_price},#{order_piece},#{order_date},#{pay_date},#{order_resp},#{order_trade}
+		SELECT CONCAT('ORD', REPLACE(#{order_date}, '-', ''), IFNULL(max(order_id)+1,1)),#{material_code},#{material_name},#{material_price},#{order_piece},#{order_date},#{pay_date},#{order_resp},#{order_trade}
 		FROM ret_order
   	</insert>
   	<!-- 발주서 등록 -->

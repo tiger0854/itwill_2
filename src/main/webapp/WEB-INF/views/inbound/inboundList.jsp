@@ -67,7 +67,7 @@ height: 50px; vertical-align: middle;
  <table class="table table-striped" style="width: 1250px;">
     <thead style="border-bottom: 1px solid">
       <tr>
-   		<th><input type="checkbox" disabled="disabled"  class="form-check-input" ></th>
+   		<th><input type="checkbox"  class="form-check-input" name='allCheck'value='selectall' onclick="selectAll(this);"></th>
         <th>입고예정번호</th>
         <th>품목명</th>
         <th>발주수량</th>
@@ -285,6 +285,16 @@ height: 50px; vertical-align: middle;
    });
  }//입고처리 팝업 
  
+ function selectAll(selectAll)  {
+	  const checkboxes 
+	       = document.getElementsByName('rowCheck');
+	  
+	  checkboxes.forEach((checkbox) => {
+	    checkbox.checked = selectAll.checked;
+	  })
+	}
+ 
+ 
  function deleteInbound() {
 	var valArr = new Array();
 	var list = $("input[name='rowCheck']");
@@ -343,7 +353,7 @@ height: 50px; vertical-align: middle;
 	}
 }// 입고취소
 
-</script><  
+</script>
   
     
     
