@@ -7,9 +7,7 @@
 <head>
 <title>사원 정보</title>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
-
-<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<jsp:include page="../common/header.jsp"/>
 <script type="text/javascript">
 $(document).ready(function(){
 	$('#update').on('click',function(){
@@ -49,7 +47,7 @@ $(document).ready(function(){
 </script>
 </head>
 <body id="body-pd" style="font-family: 'TheJamsil5';">
-<jsp:include page="../common/header.jsp"/>
+
 	<div>
 	<br>
 	    <h1>사원 정보</h1>

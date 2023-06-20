@@ -31,6 +31,7 @@ $(document).ready(function(){
 	}// if end
 	if(data == "LOGFAIL" ){
 		alert('로그인 실패!');
+		hold();
 	}// if end
 
 	function hold(){

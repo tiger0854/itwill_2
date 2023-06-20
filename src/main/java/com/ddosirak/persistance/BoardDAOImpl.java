@@ -48,6 +48,23 @@ public class BoardDAOImpl implements BoardDAO {
 		logger.debug("getContent() 메서드 호출!");
 		return sqlSession.selectOne(NAMESPACE+".getContent", emp_bno);
 	}// getContent() method end
+
+	// 글 정보 수정
+	@Override
+	public void contentUpdate(BoardVO vo) {
+		logger.debug("contentUpdate() 메서드 호출!");
+		sqlSession.selectOne(NAMESPACE+".updateContent", vo);
+	}// contentUpdate() method end
+
+	// 글 삭제
+	@Override
+	public void deleteContent(int emp_bno) {
+		logger.debug("deleteContent() 메서드 호출!");
+		sqlSession.delete(NAMESPACE+".deleteContent", emp_bno);
+	}// deleteContent() method end
+	
+	
+	
 	
 	
 

@@ -9,7 +9,8 @@
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
@@ -86,6 +87,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         	<a style="margin: 10px;" href="/public/login">로그인</a> <!-- 0619 추가 -->
         </c:if>
         <c:if test="${!empty login_id }">
+        	<button onclick='location.href="/emp/info?employee_id=${login_id}"'>사원번호 ${login_id }님, 반갑습니다.</button><!-- 0620 추가 -->
         	<a style="margin: 10px;" href="/public/logout">로그아웃</a> <!-- 0619 추가 -->
         </c:if>
         </div>
@@ -150,8 +152,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				</div>
 				<div>
 				 <!-- 0619 -->
-                 <a href="/public/write" class="nav_link"> <i class='bx bx-folder nav_icon'></i><span class="nav_name">공지사항/게시판</span></a> 
-                 <!-- 이후 write > boardList 로 변경해야 함. -->
+                 <a href="/public/boardList" class="nav_link"> <i class='bx bx-folder nav_icon'></i><span class="nav_name">공지사항/게시판</span></a> 
+                 <!-- 이후 write > boardList 로 변경해야 함. >> 변경 완 -->
                  <!-- 0619 -->
 				</div>
             </div> 

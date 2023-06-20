@@ -31,5 +31,17 @@
 		SELECT * FROM emp_board WHERE emp_bno=#{emp_bno}
 	</select>
 	<!-- 글 정보 조회 -->
+	
+	<!-- 글 정보 수정 -->
+	<update id="updateContent">
+		UPDATE emp_board SET title=#{title}, content=#{content} WHERE emp_bno=#{emp_bno}
+	</update>
+	<!-- 글 정보 수정 -->
+	
+	<!-- 글 삭제 -->
+	<delete id="deleteContent">
+		DELETE FROM emp_board WHERE emp_bno=#{emp_bno}
+	</delete>
+	<!-- 글 삭제 -->
 
 </mapper>

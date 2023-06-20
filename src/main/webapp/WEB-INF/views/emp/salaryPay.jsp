@@ -64,7 +64,14 @@
 		        </tr>
 		        <c:forEach var="vo" items="${empList }">
 		        <tr>
-		            <td><input type="checkbox" value="${vo.employee_id }" name="employee_id" ></td>
+		            <td>
+		            <c:if test="${empty vo.sal_account }">
+			            <input type="checkbox" value="${vo.employee_id }" name="employee_id" disabled>
+		            </c:if>
+		          	<c:if test="${!empty vo.sal_account }">
+			            <input type="checkbox" value="${vo.employee_id }" name="employee_id" >
+		            </c:if>
+		            </td>
 		            <td><a href="/emp/salaryInfo?employee_id=${vo.employee_id}">${vo.employee_name }</a></td>
 		            <td>${vo.department_name }</td>
 		            <td>${vo.position }</td>

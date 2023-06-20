@@ -11,8 +11,8 @@
 <body id="body-pd" style="font-family: 'TheJamsil5';">
 <jsp:include page="../common/header.jsp"/>
 <h1>사내 게시판</h1>
-
-<table>
+<button onclick="location.href='/public/write'">글쓰기</button>
+<table class="table table-striped" style="margin-top: 10px;" >
 	<thead>
 		<tr>
 			<td>작성일시</td>

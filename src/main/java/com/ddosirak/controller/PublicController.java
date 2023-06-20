@@ -71,6 +71,25 @@ public class PublicController {
 		
 		model.addAttribute("boardContent", bService.getContent(emp_bno));
 	}// contentGET() method end
+	// 게시판 글 수정 > POST
+	@RequestMapping(value = "/content", method = RequestMethod.POST)
+	public String contentPOST(BoardVO vo, RedirectAttributes rttr) {
+		logger.debug("contentPOST() 호출!(((o(*ﾟ▽ﾟ*)o)))");
+		
+		bService.contentUpdate(vo);
+		
+		rttr.addFlashAttribute("result","UPDSUC");
+		return "redirect:/public/boardList";
+	}// contentPOST() method end
+	// 게시판 글 삭제
+	@RequestMapping(value = "/contentDelete")
+	public String contentDelete(int emp_bno) {
+		logger.debug("contentDelete() 호출!(((o(*ﾟ▽ﾟ*)o)))");
+		
+		bService.deleteContent(emp_bno);
+		
+		return "redirect:/public/boardList";
+	}// contentDelete() method end
 	
 	
 /////////////////////////////////게시판///////////////////////////////////
@@ -94,8 +113,13 @@ public class PublicController {
 			rttr.addFlashAttribute("result","LOGFAIL");
 			return "redirect:/public/login";
 		}// if end
-		session.setAttribute("login_id", lvo.getEmployee_id());
-		logger.debug(session.getAttribute("login_id")+"번 사원, 로그인 성공!!!");
+	
+		session.setAttribute("login_id", lvo.getEmployee_id()); // 세션에 사원 id 저장
+		EmployeeVO evo = eService.getEmployee(Integer.parseInt(session.getAttribute("login_id").toString()));
+		session.setAttribute("dept_name", evo.getDepartment_name()); // 세션에 사원 부서 저장 >> 인사관리 권한 제어
+		
+		logger.debug(session.getAttribute("dept_name")+"의 "+
+				session.getAttribute("login_id")+"번 사원, 로그인 성공!!!");
 		return "redirect:/emp/list";
 		
 	}//loginGET() method end

@@ -125,7 +125,7 @@ $(document).ready(function(){
 			</tr>
 			<c:if test="${empty salaryList }">
 			<tr>
-				<td>지급내역 없음</td>
+				<td colspan="4">지급내역 없음</td>
 			</tr>
 			</c:if>
 				<c:if test="${!empty salaryList }">

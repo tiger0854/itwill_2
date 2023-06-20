@@ -193,16 +193,6 @@ public class MemberController {
 		model.addAttribute("salaryList",salaryList);
 		
 	}//  salaryInfoGET() method end
-//	// 사원 급여조회 페이지 POST
-//	@RequestMapping(value = "/salaryInfo", method = RequestMethod.POST)
-//	public void salaryInfoPOST(Model model, int employee_id, EmployeeVO evo) {
-//		logger.debug("salaryInfoPOST() 호출![]~(￣▽￣)~*");
-//
-//		model.addAttribute("evo",evo);
-//		SalaryVO svo = eService.getSalaryInfo(employee_id);
-//		model.addAttribute("svo",svo);
-//	}//  salaryInfoPOST() method end
-	
 	
 	// 사원 급여 등록 및 수정 페이지 GET
 	@RequestMapping(value = "/salaryInsert", method = RequestMethod.GET)

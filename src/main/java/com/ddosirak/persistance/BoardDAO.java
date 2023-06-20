@@ -16,5 +16,9 @@ public interface BoardDAO {
 	public List<BoardVO> getBoardList();
 	//게시판 글 정보 조회
 	public BoardVO getContent(int emp_bno);
+	//게시판 글 정보 수정
+	public void contentUpdate(BoardVO vo);
+	//게시판 글 삭제
+	public void deleteContent(int emp_bno);
 
 } // public interface end

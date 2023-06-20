@@ -12,9 +12,20 @@
 <h1>게시판 글쓰기</h1>
 
 <form action="" method="post">
-	<input type="text" name="title" placeholder="제목"><br>
-	<textarea name="content" rows="5" cols="10"></textarea>
-	<input type="submit" value="등록">
+	<table class="table table-striped" style="margin-top: 10px;" >
+		<tr>
+			<td>제목</td>
+			<td><input type="text" name="title" size="40"  placeholder="제목"></td>
+		</tr>
+		<tr>
+			<td>내용</td>
+			<td><textarea name="content" cols="180" rows="20"></textarea></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><input type="submit" value="등록"> <input type="button" value="목록으로" onclick='location.href="/public/boardList"'></td>
+		</tr>
+	</table>
 </form>
 
 
