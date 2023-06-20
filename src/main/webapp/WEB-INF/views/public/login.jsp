@@ -29,6 +29,9 @@ $(document).ready(function(){
 		alert('로그아웃 성공!');
 		hold();
 	}// if end
+	if(data == "LOGFAIL" ){
+		alert('로그인 실패!');
+	}// if end
 
 	function hold(){
 		// 스택 추가

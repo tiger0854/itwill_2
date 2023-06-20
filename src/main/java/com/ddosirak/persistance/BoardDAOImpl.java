@@ -1,5 +1,7 @@
 package com.ddosirak.persistance;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -29,10 +31,26 @@ public class BoardDAOImpl implements BoardDAO {
 	// 게시판 업로드
 	@Override
 	public void writeBoard(BoardVO vo) {
+		logger.debug("writeBoard() 메서드 호출!");
 		sqlSession.insert(NAMESPACE+".writeBoard",vo);
 	}// writeBoard() method end
+
+	// 게시판 리스트 가져오기
+	@Override
+	public List<BoardVO> getBoardList() {
+		logger.debug("getBoardList() 메서드 호출!");
+		return sqlSession.selectList(NAMESPACE+".getBoardList");
+	}// getBoardList() method end
+
+	//글 정보 가져오기
+	@Override
+	public BoardVO getContent(int emp_bno) {
+		logger.debug("getContent() 메서드 호출!");
+		return sqlSession.selectOne(NAMESPACE+".getContent", emp_bno);
+	}// getContent() method end
 	
 	
+
 	
 	
 	

@@ -1,5 +1,7 @@
 package com.ddosirak.service;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -26,6 +28,22 @@ public class BoardServiceImpl implements BoardService {
 	public void writeBoard(BoardVO vo) {
 		bdao.writeBoard(vo);
 	}// writeBoard() method end
+
+	// 게시판 리스트 조회
+	@Override
+	public List<BoardVO> getBoardList() {
+		return bdao.getBoardList();
+	}// getBoardList() method end
+	
+	// 글 정보 조회
+	@Override
+	public BoardVO getContent(int emp_bno) {
+		return bdao.getContent(emp_bno);
+	}// getContent() method end
+	
+	
+	
+	
 	
 	
 	

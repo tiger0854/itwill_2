@@ -15,9 +15,21 @@
 	<!-- 게시판 업로드 -->
 	<insert id="writeBoard">
 		INSERT INTO emp_board 
-		(employee_id, title, content) 
-		VALUES (#{employee_id},#{title],#{content]) 
+		(employee_id, title, content, employee_name, position, department_name) 
+		VALUES (#{employee_id}, #{title}, #{content}, #{employee_name}, #{position}, #{department_name}) 
 	</insert>
 	<!-- 게시판 업로드 -->
+	
+	<!-- 게시판 리스트 조회 -->
+	<select id="getBoardList" resultType="com.ddosirak.domain.BoardVO">
+		SELECT * FROM emp_board
+	</select>
+	<!-- 게시판 리스트 조회 -->
+	
+	<!-- 글 정보 조회 -->
+	<select id="getContent" resultType="com.ddosirak.domain.BoardVO">
+		SELECT * FROM emp_board WHERE emp_bno=#{emp_bno}
+	</select>
+	<!-- 글 정보 조회 -->
 
 </mapper>

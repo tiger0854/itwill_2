@@ -1,6 +1,6 @@
 package com.ddosirak.domain;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class BoardVO {
 
@@ -14,7 +14,7 @@ public class BoardVO {
 	private String position;
 	private String department_name;
 	
-	private Date regdate;
+	private Timestamp regdate;
 
 	
 	// getter / setter
@@ -82,11 +82,11 @@ public class BoardVO {
 		this.department_name = department_name;
 	}
 
-	public Date getRegdate() {
+	public Timestamp getRegdate() {
 		return regdate;
 	}
 
-	public void setRegdate(Date regdate) {
+	public void setRegdate(Timestamp regdate) {
 		this.regdate = regdate;
 	}
 

@@ -13,7 +13,7 @@
 
 <form action="" method="post">
 	<input type="text" name="title" placeholder="제목"><br>
-	<textarea rows="5" cols="10"></textarea>
+	<textarea name="content" rows="5" cols="10"></textarea>
 	<input type="submit" value="등록">
 </form>
 

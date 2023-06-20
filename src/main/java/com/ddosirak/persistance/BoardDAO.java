@@ -1,5 +1,7 @@
 package com.ddosirak.persistance;
 
+import java.util.List;
+
 import com.ddosirak.domain.BoardVO;
 import com.ddosirak.domain.LoginVO;
 
@@ -10,5 +12,9 @@ public interface BoardDAO {
 	
 	// 게시판 업로드
 	public void writeBoard(BoardVO vo);
+	//게시판 리스트 가져오기
+	public List<BoardVO> getBoardList();
+	//게시판 글 정보 조회
+	public BoardVO getContent(int emp_bno);
 
 } // public interface end
