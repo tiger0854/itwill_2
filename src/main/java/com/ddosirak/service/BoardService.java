@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ddosirak.domain.BoardVO;
 import com.ddosirak.domain.LoginVO;
+import com.ddosirak.domain.PageVO;
 
 public interface BoardService {
 	// 로그인 > IDPW Check
@@ -12,7 +13,7 @@ public interface BoardService {
 	// 게시판 업로드
 	public void writeBoard(BoardVO vo);
 	//게시판 리스트 가져오기
-	public List<BoardVO> getBoardList();
+	public List<BoardVO> getBoardList(PageVO pageVO);
 	//게시판 글 정보 조회
 	public BoardVO getContent(int emp_bno);
 	//게시판 글 정보 수정

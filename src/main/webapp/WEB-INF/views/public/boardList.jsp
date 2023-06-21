@@ -32,7 +32,29 @@
 		</c:forEach>
 	</tbody>
 </table>
-
+<!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
+	 	<div class="pagination">			
+			<c:choose>
+				<c:when test="${pageVO.startPage > pageVO.pageBlock}">
+					<a href="/public/boardList?pageNum=${pageVO.startPage - pageVO.pageBlock}" style="margin: 0.5em;">◀</a>
+				</c:when>
+				<c:otherwise>
+				</c:otherwise>
+			</c:choose>
+			
+			<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
+				<a href="/public/boardList?pageNum=${i}" <c:if test="${pageVO.pageNum eq i}">class="active"</c:if> style="margin: 0.5em;">${i}</a>
+			</c:forEach>
+			
+			<c:choose>
+				<c:when test="${pageVO.endPage < pageVO.pageCount}">
+					<a href="/public/boardList?pageNum=${pageVO.startPage + pageVO.pageBlock}" style="margin: 0.5em;">▶</a>
+				</c:when>
+				<c:otherwise>
+				</c:otherwise>
+			</c:choose>
+		</div>
+<!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
 
 
 </body>

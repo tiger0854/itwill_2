@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ddosirak.domain.BoardVO;
 import com.ddosirak.domain.LoginVO;
+import com.ddosirak.domain.PageVO;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -37,9 +38,9 @@ public class BoardDAOImpl implements BoardDAO {
 
 	// 게시판 리스트 가져오기
 	@Override
-	public List<BoardVO> getBoardList() {
+	public List<BoardVO> getBoardList(PageVO pageVO) {
 		logger.debug("getBoardList() 메서드 호출!");
-		return sqlSession.selectList(NAMESPACE+".getBoardList");
+		return sqlSession.selectList(NAMESPACE+".getBoardList",pageVO);
 	}// getBoardList() method end
 
 	//글 정보 가져오기

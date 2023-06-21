@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ddosirak.domain.BoardVO;
 import com.ddosirak.domain.LoginVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.persistance.BoardDAO;
 
 @Service
@@ -31,8 +32,8 @@ public class BoardServiceImpl implements BoardService {
 
 	// 게시판 리스트 조회
 	@Override
-	public List<BoardVO> getBoardList() {
-		return bdao.getBoardList();
+	public List<BoardVO> getBoardList(PageVO pageVO) {
+		return bdao.getBoardList(pageVO);
 	}// getBoardList() method end
 	
 	// 글 정보 조회

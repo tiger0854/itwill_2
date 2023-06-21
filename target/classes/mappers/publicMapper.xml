@@ -20,11 +20,15 @@
 	</insert>
 	<!-- 게시판 업로드 -->
 	
+<!-- 페이징 구현부 참고 -->	
 	<!-- 게시판 리스트 조회 -->
 	<select id="getBoardList" resultType="com.ddosirak.domain.BoardVO">
-		SELECT * FROM emp_board
+		SELECT * FROM emp_board 
+		ORDER BY emp_bno
+		LIMIT #{startRow}, #{pageSize}
 	</select>
 	<!-- 게시판 리스트 조회 -->
+<!-- 페이징 구현부 참고 -->	
 	
 	<!-- 글 정보 조회 -->
 	<select id="getContent" resultType="com.ddosirak.domain.BoardVO">
@@ -43,5 +47,6 @@
 		DELETE FROM emp_board WHERE emp_bno=#{emp_bno}
 	</delete>
 	<!-- 글 삭제 -->
+
 
 </mapper>
