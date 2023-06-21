@@ -38,7 +38,7 @@ public class InboundController {
 	public String inboundWritePOST(InboundVO vo) {
 		logger.debug("inboundWritePOST() 호출!");
 		logger.debug("입고서 정보 = "+vo);
-		
+		 
 		iService.insertInbound(vo);
 		
 		int result = iService.updateOrderState(vo.getOrder_number());

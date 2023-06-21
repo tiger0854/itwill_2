@@ -64,7 +64,7 @@ td{height: 80px !important; vertical-align: middle;}
 <form action="" method="POST" id="fr">
 <table class="table table-borderless" style="margin-top: 30px;">
   <tr>
-    <td>상품코드</td>
+    <td>자재코드</td>
     <td>
     <div class="input-group">
     <input type="text"placeholder="상품코드 검색하기" class="form-control" name="material_code" id="material_code" readonly="readonly">
@@ -72,7 +72,7 @@ td{height: 80px !important; vertical-align: middle;}
 
     </div>
     </td>
-    <td>상품명</td>
+    <td>자재이름</td>
     <td><input type="text" placeholder="코드검색시 자동입력" class="form-control" name="material_name" id="material_name" readonly="readonly"></td>
   </tr>
   <tr>

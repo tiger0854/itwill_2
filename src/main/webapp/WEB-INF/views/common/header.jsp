@@ -143,6 +143,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	
 				  </div>
 				  </div>
+				  <a href="/customer/customerList" class="nav_link"> <i class="bx bxs-cart-alt nav_icon"></i> <span class="nav_name">거래처관리</span> </a> 
             </div> 
             <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a>
         </nav>
