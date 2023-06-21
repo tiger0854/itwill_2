@@ -1,11 +1,19 @@
 package com.ddosirak.service;
 
+import java.io.File;
 import java.sql.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.EmployeevacationVO;
@@ -17,6 +25,7 @@ import com.ddosirak.persistance.EmployeeDAO;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 	
+	private static final Logger logger = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 	// DAO-Controller 연결
 	
 	// DAO 객체 접근 필요 > 의존관계!
@@ -33,8 +42,34 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void setEmployeeIDPW(EmployeeVO vo) {
 		edao.setEmployeeIDPW(vo);
 	}// setEmployeeIDPW() method end
-
-
+	
+	// 사원 프로필사진 등록
+	@Override
+	public void setEmployee_photo(int employee_id, 
+			MultipartFile file, HttpServletRequest request) throws Exception{
+	//  ====================사진 업로드 동작=============================
+		logger.debug("controller" + file.getOriginalFilename());
+		String saveName = Integer.toString(employee_id)+".png";
+//		UUID uuid = UUID.randomUUID();
+		
+//		String picURL = uuid+"_"+saveName;
+		String picURL = saveName;
+		
+		// 현재 프로젝트 경로 가져오기
+		String absolutePath = request.getSession().getServletContext().getRealPath("/"); // 서버경로 ..
+		String picPath = absolutePath+"resources\\employee_photo\\";
+		
+		logger.debug("picURL: "+picURL);
+		logger.debug("picPath: "+picPath);
+		
+		String finalURL = picPath+picURL;
+		File file_send = new File(finalURL);
+		file.transferTo(file_send);
+		
+		edao.setEmployee_photo_URL(employee_id,finalURL);
+	//  ====================사진 업로드 동작============================= >> 중복사용이 있기때문에 서비스단 구현으로 변경하였음.
+	}// setEmployee_photo() method end
+	
 	// 최대 사원번호 구하기
 	@Override
 	public Integer getMaxId() {

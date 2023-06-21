@@ -15,6 +15,8 @@ public interface EmployeeDAO {
 	public void insertEmployee(EmployeeVO vo); 
 	// 사원정보 등록간 사원 아이디 비밀번호 설정
 	public void setEmployeeIDPW(EmployeeVO vo);
+	// 사원 프로필사진 경로 업로드
+	public void setEmployee_photo_URL(int employee_id, String finalURL);
 	
 	// 사원번호중 가장 높은 번호
 	public Integer getMaxId();

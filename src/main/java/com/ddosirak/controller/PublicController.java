@@ -121,7 +121,6 @@ public class PublicController {
 		logger.debug(session.getAttribute("dept_name")+"의 "+
 				session.getAttribute("login_id")+"번 사원, 로그인 성공!!!");
 		return "redirect:/emp/list";
-		
 	}//loginGET() method end
 	// 로그아웃 동작
 	@RequestMapping(value = "/logout")
@@ -133,7 +132,6 @@ public class PublicController {
 		session.invalidate();
 
 		return "redirect:/public/login";
-		
 	}//logout() method end
 /////////////////////////////////로그인///////////////////////////////////
 	

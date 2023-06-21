@@ -16,6 +16,12 @@
   	</insert>
   	<!-- 사원 추가 동작 -->
   	
+  	<!-- 사원 프로필 사진 추가 동작 -->
+  	<update id="setEmployee_photo_URL">
+  		UPDATE emp_main SET employee_photo=#{employee_photo} WHERE employee_id = #{employee_id}
+  	</update>
+  	<!-- 사원 프로필 사진 추가 동작 -->
+  	
   	<!-- 사원 아이디 비밀번호 부여 -->
   	<insert id="setEmployeeIDPW">
   		INSERT INTO emp_login

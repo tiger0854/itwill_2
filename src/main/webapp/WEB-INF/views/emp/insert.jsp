@@ -42,16 +42,16 @@
 	
 // 	}// if end
 	
-// 	$(function(){
-// 		$("#file1").on("change", function(event) {
-// 	    var file = event.target.files[0];
-// 	    var reader = new FileReader(); 
-// 	    reader.onload = function(e) {
-// 	        $("#preview1").attr("src", e.target.result);
-// 	   		}
-// 	    reader.readAsDataURL(file);
-// 		});
-// 	});	
+	$(function(){
+		$("#file1").on("change", function(event) {
+	    var file = event.target.files[0];
+	    var reader = new FileReader(); 
+	    reader.onload = function(e) {
+	        $("#preview1").attr("src", e.target.result);
+	   		}
+	    reader.readAsDataURL(file);
+		});
+	});	
 
 </script>
 </head>
@@ -61,16 +61,18 @@
 	<br>
 	    <h1>사원 추가</h1>
 	    <!-- 권한제어 -->
-<!-- 		<form action="" method="post" enctype="multipart/form-data"> -->
-		<form action="" method="post" >
+		<form action="" method="post" enctype="multipart/form-data">
+<!-- 		<form action="/emp/insert" method="post"> -->
 	    <input type="submit" value="등록" >
 	    <input type="button" value="뒤로가기" onclick="location.href='/emp/list'">
-<!--         <input type="file" name="file_front"  placeholder="사원 사진" onchange="checkFile(this)"  onsubmit="checkFile2(this)" id= "file1"> -->
+	    <input type="file" name="employee_photo_link" id= "file1">
+        
 	    
 		    <table class="table table-striped" style="margin-top: 10px;" >
 		
 		        <tr>
 		            <td rowspan="4"><img src="../../resources/default_profile_photo.png" alt="default_image" width="150" height="150" id="preview1"></td>
+		            
 		            <td>성명</td>
 		            <td><input type="text" size="50" name="employee_name"></td>
 		            <td>주민등록번호</td>

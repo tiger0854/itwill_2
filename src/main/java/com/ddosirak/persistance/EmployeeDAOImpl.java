@@ -50,6 +50,16 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		logger.debug("사원 등록 완료!");
 
 	}//insertMember() method end
+	
+	// 사원 프로필사진 등록
+	@Override
+	public void setEmployee_photo_URL(int employee_id, String finalURL) {
+		EmployeeVO vo = new EmployeeVO();
+		vo.setEmployee_id(employee_id);
+		vo.setEmployee_photo(finalURL);
+		sqlSession.update(NAMESPACE+".setEmployee_photo_URL", vo); 
+	}// setEmployee_photo_URL() method end
+
 	// 사원 아이디비밀번호 설정
 	@Override
 	public void setEmployeeIDPW(EmployeeVO vo) {

@@ -1,21 +1,23 @@
 package com.ddosirak.controller;
 
-import java.sql.Date;
-import java.util.ArrayList;
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddosirak.domain.EmployeeListVO;
@@ -59,10 +61,11 @@ public class MemberController {
 	}// employeeInsertGET() method end
 	// 사원등록 - 정보 처리
 	@RequestMapping(value="/insert",method=RequestMethod.POST)
-	public String employeeInsertPOST(EmployeeVO vo) {	
+	public String employeeInsertPOST(EmployeeVO vo,@RequestParam("employee_photo_link")MultipartFile file ,HttpServletRequest request) throws Exception{	
 		logger.debug("employeeInsertPOST() 호출![]~(￣▽￣)~*");
+		
 		logger.debug(vo+" ");
-		// 사원번호 부여 동작
+		// =====================사원번호 부여 동작===========================
 		logger.debug("!!!!"+vo.getPosition());
 		if(vo.getPosition().equals("일용")) {
 			// 일용직 사원의 직번
@@ -71,18 +74,22 @@ public class MemberController {
 			// 임직원의 직번
 			vo.setEmployee_id(eService.getMaxId());
 		}// i-e end
-		eService.employeeInsert(vo);
+		// ====================사원번호 부여 동작=============================
 		
+		eService.employeeInsert(vo);// 사원정보 DB 저장 동작
+		
+		// ====================사원 IDPW 부여 동작=============================
 		// 임직원인 경우만 추가된다.
 		if(vo.getEmployee_id() < 10000) {
 			eService.setEmployeeIDPW(vo); // 사원 추가간 아이디 / 비밀번호 추가 메서드
 		}// if end
+		// ====================사원 IDPW 부여 동작=============================
 		
+		eService.setEmployee_photo(vo.getEmployee_id(), file, request);
+				
 		logger.debug(">> vo: "+vo);
-		// 페이지 이동
-		
+		// 페이지 이동	
 		return "redirect:/emp/list"; // 주소를 변경하면서 페이지 이동
-
 	}// employeeInsertPOST() method end
 	
 	// 일용직 일괄등록 > 페이지 이동
@@ -90,36 +97,31 @@ public class MemberController {
 	public void alInsertGET() {
 		logger.debug("alInsertGET() 호출![]~(￣▽￣)~*");
 		logger.debug("/emp/emp_add.jsp로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
-		
-//		return "/emp/emp_add";
+
 	}// alInsertGET() method end
 	// 일용직 일괄등록 > 동작
-	@RequestMapping(value="/insert_al",method=RequestMethod.POST)
-//	public String alInsertPOST(ArrayList<EmployeeVO> vo) {	
-	public String alInsertPOST(@ModelAttribute(value="EmployeeListVO") EmployeeListVO voList) {	
+	@RequestMapping(value="/insert_al",method=RequestMethod.POST)	
+	public String alInsertPOST(@ModelAttribute(value="EmployeeListVO") EmployeeListVO voList) {	 // List로 여러 내용을 받아오는 방법.
 		logger.debug("alInsertPOST() 호출![]~(￣▽￣)~*");
-
 		// 사원번호 부여 동작
 		for(int i=0;i<voList.getEmployeelist().size();i++) {
-			logger.debug("!!!!"+voList.getEmployeelist().get(i).getPosition());
-			if(voList.getEmployeelist().get(i).getPosition().equals("일용")) {
-				// 일용직 사원의 직번
-				voList.getEmployeelist().get(i).setEmployee_id(eService.getMaxId_al());
-				if(voList.getEmployeelist().get(i).getWorking_hours().equals("전일반")) {
-					voList.getEmployeelist().get(i).setYear_sal(10);
-				}else if(voList.getEmployeelist().get(i).getWorking_hours().equals("오전반")){
-					voList.getEmployeelist().get(i).setYear_sal(5);
-				}else if(voList.getEmployeelist().get(i).getWorking_hours().equals("오후반")) {
-					voList.getEmployeelist().get(i).setYear_sal(5);
+			EmployeeVO emp = voList.getEmployeelist().get(i);
+			logger.debug("!!!!"+emp.getPosition());
+			if(emp.getPosition().equals("일용")) {
+				emp.setEmployee_id(eService.getMaxId_al());// 일용직 사원의 직번
+				// 일용직 직원의 일급을 나누기 위한 제어문
+				if(emp.getWorking_hours().equals("전일반")) {
+					emp.setYear_sal(10);
+				}else if(emp.getWorking_hours().equals("오전반")){
+					emp.setYear_sal(5);
+				}else if(emp.getWorking_hours().equals("오후반")) {
+					emp.setYear_sal(5);
 				} // i-e-e end
 			}else {
-				// 임직원의 직번
-				voList.getEmployeelist().get(i).setEmployee_id(eService.getMaxId());
+				// 직번
+				emp.setEmployee_id(eService.getMaxId());
 			}// i-e end
-			
-			// 서비스 > 사원 추가 메서드 호출
-			// >> DAO > 사원 추가 메서드 호출
-			eService.employeeInsert(voList.getEmployeelist().get(i));
+			eService.employeeInsert(emp); // 일용직 사원 정보 DB 등록
 		}// for end
 		logger.debug(">> vo: "+voList);
 		// 페이지 이동
@@ -148,7 +150,7 @@ public class MemberController {
 	
 	// http://localhost:8088/emp/list
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public void listGET(Model model) {
+	public void listGET(Model model) throws Exception{
 		logger.debug("listGET() 호출![]~(￣▽￣)~*");
 		
 		List<EmployeeVO> empList = eService.empList();
@@ -163,7 +165,6 @@ public class MemberController {
 		model.addAttribute("alCount_am",alCount_am);
 		model.addAttribute("alCount_pm",alCount_pm);
 		model.addAttribute("alCount",alCount);
-		
 	}//listGET() method end
 	
 ////////////////////////////////////////////////////사원 관리//////////////////////////////////////////////////////////////////////////////
