@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.EmployeevacationVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.SalaryVO;
 import com.ddosirak.persistance.EmployeeDAO;
 
@@ -93,8 +94,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	// 사원목록 출력
 	@Override
-	public List<EmployeeVO> empList() {
-		return edao.empList();
+	public List<EmployeeVO> empList(PageVO pageVO) {
+		return edao.empList(pageVO);
 	}//empList() method end
 	
 	// 사원 정보 수정

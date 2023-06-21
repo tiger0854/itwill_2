@@ -108,7 +108,7 @@ public class PublicController {
 		model.addAttribute("pageVO", pageVO);
 		//================================페이징 처리를 위한 값 받아오기 동작========================================
 		
-		model.addAttribute("boardList", bService.getBoardList(pageVO));
+		model.addAttribute("boardList", bService.getBoardList(pageVO)); // 리스트반환 동작에 pageVO 넣기.
 	}//boardListGET() method end
 	
 	// 게시판 글 조회

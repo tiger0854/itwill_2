@@ -22,6 +22,14 @@ public class PageServiceImpl implements PageService {
 		logger.debug("service: countBoard()");
 		return pdao.countBoard();
 	}// countBoard() method end
+	// 사원목록 페이징 처리
+	@Override
+	public Integer countEmpList() {
+		logger.debug("service: countEmpList()");
+		return pdao.countEmpList();
+	}// countEmpList() method end
+	
+	
 	
 	
 

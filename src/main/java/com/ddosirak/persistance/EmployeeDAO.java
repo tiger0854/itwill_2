@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.EmployeevacationVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.SalaryVO;
 // persistance 영속성 > DB관련 처리
 
@@ -32,7 +33,7 @@ public interface EmployeeDAO {
 	public EmployeeVO getEmployee(int employee_id);
 	
 	// 사원 리스트 출력
-	public List<EmployeeVO> empList();
+	public List<EmployeeVO> empList(PageVO pageVO);
 	
 	// 사원정보 수정
 	public Integer updateEmployee(EmployeeVO vo);

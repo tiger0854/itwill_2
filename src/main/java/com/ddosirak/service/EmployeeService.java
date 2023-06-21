@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.EmployeevacationVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.SalaryVO;
 
 public interface EmployeeService {
@@ -35,7 +36,7 @@ public interface EmployeeService {
 	public EmployeeVO getEmployee(int employee_id);
 	
 	// 사원 목록 출력
-	public List<EmployeeVO> empList();
+	public List<EmployeeVO> empList(PageVO pageVO);
 	
 	// 사원 정보 수정
 	public Integer updateEmployee(EmployeeVO vo);

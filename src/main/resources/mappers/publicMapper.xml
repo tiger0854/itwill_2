@@ -24,7 +24,7 @@
 	<!-- 게시판 리스트 조회 -->
 	<select id="getBoardList" resultType="com.ddosirak.domain.BoardVO">
 		SELECT * FROM emp_board 
-		ORDER BY emp_bno
+		ORDER BY emp_bno DESC
 		LIMIT #{startRow}, #{pageSize}
 	</select>
 	<!-- 게시판 리스트 조회 -->

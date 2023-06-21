@@ -42,13 +42,16 @@
 
   	<!-- 사원 정보 조회 -->
   	<select id="getEmployee" resultType="com.ddosirak.domain.EmployeeVO">
-		SELECT * FROM emp_main WHERE employee_id=#{employee_id}  	
+		SELECT * FROM emp_main WHERE employee_id=#{employee_id}
+		  	
   	</select>
   	<!-- 사원 정보 조회 -->
   	
   	<!-- 사원 목록 출력-->
   	<select id="empList" resultType="com.ddosirak.domain.EmployeeVO">
 		SELECT * FROM emp_main
+		ORDER BY emp_date DESC
+		LIMIT #{startRow}, #{pageSize}
   	</select>
   	<!-- 사원 목록 출력 -->
   	

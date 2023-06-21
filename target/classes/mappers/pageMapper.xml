@@ -9,5 +9,11 @@
 		SELECT COUNT(*) FROM emp_board
 	</select>
 	<!-- 게시판 페이징 처리를 위한 쿼리 -->
+	
+	<!-- 사원목록 페이징 처리를 위한 쿼리 -->
+	<select id="countEmpList" resultType="Integer">
+		SELECT COUNT(*) FROM emp_main
+	</select>
+	<!-- 사원목록 페이징 처리를 위한 쿼리 -->
   
   </mapper>

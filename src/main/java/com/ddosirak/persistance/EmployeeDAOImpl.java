@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.EmployeevacationVO;
 import com.ddosirak.domain.LoginVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.SalaryVO;
 
 //@Repository : 스프링에 해당 파일이 DAO의 동작을 하는 객체라고 등록하는 것.
@@ -102,9 +103,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	// 사원목록 출력
 	@Override
-	public List<EmployeeVO> empList() {
+	public List<EmployeeVO> empList(PageVO pageVO) {
 		logger.debug("empList()!");
-		List<EmployeeVO> empList = sqlSession.selectList(NAMESPACE+".empList");
+		List<EmployeeVO> empList = sqlSession.selectList(NAMESPACE+".empList",pageVO);
 		return empList;
 	}// empList() method end
 
