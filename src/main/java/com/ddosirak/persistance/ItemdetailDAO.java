@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.ui.Model;
 
 import com.ddosirak.domain.ItemdetailVO;
+import com.ddosirak.domain.MaterialdetailVO;
 
 
 public interface ItemdetailDAO {
@@ -24,4 +25,7 @@ public interface ItemdetailDAO {
 
 	// 자재 삭제
 	public void deleteI(String item_code);
+
+
+
 }

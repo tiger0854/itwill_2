@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.ddosirak.domain.ItemdetailVO;
+import com.ddosirak.domain.MaterialdetailVO;
 
 @Repository
 public class ItemdetailDAOImpl implements ItemdetailDAO {
@@ -63,6 +64,8 @@ public class ItemdetailDAOImpl implements ItemdetailDAO {
 		sqlsession.delete(NAMESPACE+".deleteid",item_code);
 
 	}
+	
+	
 
 	@Override
 	public String getMaxCode() {
