@@ -19,7 +19,19 @@ public interface OutboundService {
 	public List<OutboundVO> getCompletedOutList();
 	
 	// 출고 버튼 클릭시 out_state 업데이트
-	public void updateOutState(Integer outNum, int newState);
+	public void updateOutState(String outNum, int newState);
+	
+	// 출고 번호에 따른 출고 상품 리스트
+	public List<OutboundVO> getOutProductList(String outNum);
+	
+	// 상품 이름 외 n건 
+	public int getOutNumCount(String outNum);
+	
+	// 출고 수정
+	public Integer outboundUpdate(OutboundVO vo);
+	
+	// 출고 삭제
+	public Integer outboundDelete(String out_num);
 	
 	
 	// 거래처 리스트

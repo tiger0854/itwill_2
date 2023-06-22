@@ -5,56 +5,87 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.ddosirak.mapper.outboundMapper">
+ 	<!-- 가져올 VO객체 정보 매핑 -->
+	<resultMap type="com.ddosirak.domain.OutboundVO" id="outbound">
+		<result property="item_name" column="item_name"/>
+		<result property="standard" column="standard"/>
+	</resultMap>
+  
+  
   	<!-- SQL 쿼리 적는 곳 -->
   	
   	<!-- 출고 등록 -->
 	<insert id="outInsert">
-		insert into outbound(out_id,out_num,customer_code,employee_id,item_code,item_name,out_notes,standard,out_qty,price,stock_code,factory_code,due_date,out_date,create_date) 
-		values (#{out_id},#{out_num},#{customer_code},#{employee_id},#{item_code},#{item_name},#{out_notes},#{standard},#{out_qty},#{price},#{stock_code},#{factory_code},#{due_date},now(),now())
+		insert into outbound (out_num,customer_code,employee_id,item_code,item_name,out_notes,standard,out_qty,price,stock_code,factory_code,due_date,create_date) 
+		SELECT CONCAT('OUT', REPLACE(current_date(), '-', ''), nullif(MAX(out_id)+1, 1)),#{customer_code},#{employee_id},#{item_code},#{item_name},#{out_notes},#{standard},#{out_qty},#{price},#{stock_code},#{factory_code},#{due_date},now()
+		from outbound
 	</insert>
   	<!-- 출고 등록 -->
+
+  	
   	
   	<!-- 출고 리스트 -->
   	<select id="outList" resultType="com.ddosirak.domain.OutboundVO">
-  		select out_num, customer_code, item_name, out_qty, stock_code, due_date, out_state, out_date, employee_id
+  		select out_num, customer_code, item_name, standard, out_qty, stock_code, due_date, out_state, out_date, employee_id
 		from outbound
   	</select>
   	<!-- 출고 리스트 -->
   	
+  	
   	<!-- 진행중인 출고 리스트 -->
 	<select id="getOngoingOutList" resultType="com.ddosirak.domain.OutboundVO">
-	    SELECT out_num, customer_code, item_name, out_qty, stock_code, due_date, out_state, out_date, employee_id
-	    FROM outbound
-	    WHERE out_state = 1
+	    select out_num, customer_code, item_name, out_qty, stock_code, due_date, out_state, out_date, employee_id
+	    from outbound
+	    where out_state = 1
 	</select>
+  	<!-- 진행중인 출고 리스트 -->
+  	
 
 	<!-- 완료된 출고 리스트 -->
 	<select id="getCompletedOutList" resultType="com.ddosirak.domain.OutboundVO">
-	    SELECT out_num, customer_code, item_name, out_qty, stock_code, due_date, out_state, out_date, employee_id
-	    FROM outbound
-	    WHERE out_state = 0
+	    select out_num, customer_code, item_name, out_qty, stock_code, due_date, out_state, out_date, employee_id
+	    from outbound
+	    where out_state = 0
 	</select>
+	<!-- 완료된 출고 리스트 -->
 	
+	
+	 <!-- 출고 상태 업데이트 (진행중, 출고 완료) -->
 	 <update id="updateOutState" parameterType="map">
-        UPDATE outbound
-        SET out_state = #{newState}
-        WHERE out_num = #{outNum}
+        update outbound
+        set out_state = #{newState}
+        where out_num = #{outNum}
     </update>
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	<!-- 거래처 리스트 -->
-  	<select id="customerList" resultType="com.ddosirak.domain.OutboundVO">
-  		select distinct c.customer_code, c.customer_name
-		from customer c 
-		join outbound o on c.customer_code = o.customer_code
+	 <!-- 출고 상태 업데이트 (진행중, 출고 완료) -->
+	 
+ 	
+ 	
+ 	
+  	<!-- 출고 번호에 따른 출고 상품 리스트 -->
+  	<select id="outProductList" resultType="com.ddosirak.domain.OutboundVO">
+  		select item_code, item_name, standard, out_qty, due_date, out_notes
+		from outbound
+		where out_num=#{outNum}
   	</select>
-  	<!-- 거래처 리스트 -->
+  	<!-- 출고 번호에 따른 출고 상품 리스트 -->
+  	
+  	<!-- 상품 이름 외 n건 -->
+  	<select id="getOutNumCount" parameterType="string" resultType="int">
+  	  SELECT COUNT(out_num) FROM outbound WHERE out_num = #{outNum}
+	</select>
+  	
+  	<!-- 출고 수정 -->
+  	<update id="outboundUpdate">	
+  		UPDATE outbound SET out_qty=#{out_qty}
+  		WHERE out_num=#{out_num}
+  	</update>
+  	<!-- 출고 수정 -->
+  	
+  	<!-- 출고 삭제 -->
+  	<delete id="outboundDelete">
+  		delete from outbound where out_num = #{out_num}
+  	</delete>
+  	<!-- 출고 삭제 -->
   	
   	
   	

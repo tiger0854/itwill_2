@@ -2,6 +2,9 @@ package com.ddosirak.persistance;
 
 import java.util.List;
 
+import org.apache.jasper.tagplugins.jstl.core.Out;
+
+import com.ddosirak.domain.OrderVO;
 import com.ddosirak.domain.OutboundVO;
 
 public interface OutboundDAO {
@@ -23,12 +26,21 @@ public interface OutboundDAO {
 	// 출고 리스트 출력(완료)
 	
 	// 출고 버튼 클릭시 out_state 업데이트
-	public void updateOutState(Integer outNum, int newState);
+	public void updateOutState(String outNum, int newState);
 	// 출고 버튼 클릭시 out_state 업데이트
 	
+	// 출고 번호에 따른 출고 상품 리스트
+	public List<OutboundVO> getOutProductList(String outNum);
+	// 출고 번호에 따른 출고 상품 리스트
 	
+	// 상품 이름 외 n 건 
+	public int getOutNumCount(String outNum);
 	
-	
+	// 출고 수정
+	public Integer outboundUpdate(OutboundVO vo);
+
+	// 출고 삭제
+	public Integer outboundDelete(String out_num); 
 	
 	
 	// 거래처 리스트 출력

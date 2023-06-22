@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ddosirak.mapper.ItemRecipeMapper">
+	<!-- 아이템 코드 목록 -->
+	<select id="itemlist"
+		resultType="com.ddosirak.domain.ItemdetailVO">
+		SELECT item_code, item_name FROM item_detail
+	</select>
+	<!-- 아이템 코드 목록 -->
+	
+	<!-- 레시피 목록 출력 -->
+	<select id="itemRecipeList" resultType="com.ddosirak.domain.ItemRecipeListVO">
+		select i.item_code, i.material_code, i.material_con, id.item_name,
+		md.material_code
+		from item_recipe i
+		join item_detail id
+		on i.item_code= id.item_name
+		join material_detail md
+		on i.material_code = md.material_code
+	</select>
+	<!-- 레시피 목록 출력 -->
+	
+	<!-- 레시피 등록 -->
+	<insert id="insertItemRecipe">
+		insert into item_recipe
+		values(#{item_code}, #{material_code}, #{material_con})
+	</insert>
+	<!-- 레시피 등록 -->
+	
+	<!-- 레시피 수정 -->
+	<select id="selectItemRecipe">
+		select * from item_recipe
+		where item_code=#{item_code}
+	</select>
+	<update id="updateItemRecipe">
+		update item_recipe
+		set item_code=#{item_code}, material_code=#{material_code}, material_con=#{material_con}	
+	</update>
+	<!-- 레시피 수정 -->
+	
+	<!-- 레시피 삭제 -->
+	<delete id="deleteItemRecipe">
+		delete from item_recipe 
+		where item_code=#{item_code}
+	</delete>
+	<!-- 레시피 삭제 -->
+	
+	<!-- 자재 검색 -->
+	<select id="materialList" resultType="com.ddosirak.domain.MaterialdetailVO">
+		SELECT * FROM material_detail
+	</select>
+	
+	<select id="materialSearch" resultType="com.ddosirak.domain.MaterialdetailVO">
+	  select * from material_detail
+	  WHERE material_code LIKE CONCAT('%', #{material_code}, '%')
+	  AND material_name LIKE CONCAT('%', #{material_name}, '%')
+	  AND material_type LIKE CONCAT('%', #{material_type}, '%')
+	</select>
+	<!-- 자재 검색 -->
+</mapper>

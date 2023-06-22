@@ -7,97 +7,105 @@
 <jsp:include page="../../common/header.jsp"/>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 <script>
-function orderwrite() {
+function itemUpload() {
   // 새 창을 열기 위한 URL
-  var popupUrl = 'productorderWrite.jsp';
+  var popupUrl = 'itemdetailUpload';
   // 새 창 열기
   window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 }
 
-function orderedit() {
+function itemUpdate() {
 	  // 새 창을 열기 위한 URL
-	  var popupUrl = 'productorderEdit.jsp';
+	  var popupUrl = 'itemUpdate.jsp';
 	  // 새 창 열기
 	  window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 	}
-
-function materialDelete(material_code, material_name) {
-	  if (confirm("품명 : " + material_name + "를/을 정말로 삭제하시겠습니까?")) {
-	    location.href = 'materialDelete?material_code=' + material_code;
+	
+function itemDelete(item_code, item_name) {
+	  if (confirm("품명 : " + item_name + "를/을 정말로 삭제하시겠습니까?")) {
+	    location.href = 'itemDelete?item_code=' + item_code;
 	  }
 	}
 </script>
 
 
+
 </head>
 
 <body>
+   
+   
+   
 
 
 <div class="height-100">
         <div class="container mt-3">
         
-<h4 style="margin-top: 150px;"><i class="bx bx-book"></i>자재 등록</h4>
+<h4 style="margin-top: 150px;"><i class="bx bx-book"></i> 품목정보 관리</h4>
 <div style="margin-top: 10px;">
 <hr width="100%" style="border: 2px solid black">
-<!-- 자재목록 검색, 등록버튼 -->
+<!-- 상품목록 검색, 등록버튼 -->
 <div class=btn-container>
 <button class=btn-search><i class='bx bx-search-alt-2'></i> 조회</button>
-<!-- <button class=btn-add onclick="orderwrite()"><i class='bx bx-plus-medical'></i> 추가</button> -->
-<button class=btn-add onclick="location.href='materialdetailUpload';"><i class='bx bx-plus-medical'></i> 추가</button>
+<button class=btn-add onclick="location.href='itemrecipeUpload';"><i class='bx bx-plus-medical'></i> 추가</button>
 </div>
 
-
-<!-- 작업지시목록 검색박스 -->
-<table class="product-box2"style="margin-top: 20px; width: 100%; " border="1">
- 	
+<!-- 품목 검색박스 -->
+<table class="product-box3"style="margin-top: 20px; width: 100%; " border="1">
+<!--  품번, 품명, 자재유형(완제품,부자재), 재고단위, 사용여부,단가 등록	 -->
      <tr>
-        <th>자재이름</th>
+        <th>품명</th>
+        <td><input type="text" value="" placeholder="품명"><td>
+        <th>품번</th>
         <td>
-        <input type="text" value="" placeholder="자재명">
+        <input type="text" value="" placeholder="품번">
         </td>
-        <th>자재코드</th>
-        <td>
-		<input type="text" value="" placeholder="자재코드">
-        </td>
-        <th>자재속성</th>
+        <th>자재유형</th>
         <td>
         <select>
-        	<option>원자재</option>
-        	<option>부자재</option>
+        <option>전체</option>
+        <option>완제품</option>
+        <option>부자재</option>
         </select>
+        </td>
+        <th>사용여부</th>
         <td>
+        <select>
+        <option>전체</option>
+        <option>Y</option>
+        <option>N</option>
+        </select>
 		</td>
       </tr>
   </table>
 </div>
 
-<!-- 작업지시목록 리스트 -->
-<!-- 품목코드 , 식자재이름, 수량, 창고코드(냉장,냉동,상온) (페이징처리,검색기능)  -->
- <h4 style="margin-top: 100px;"><i class='bx bx-list-ol icon'></i> 자재 목록</h4>     
+<!-- 품목 리스트 -->
+<!--  품번, 품명, 자재유형(완제품,부자재), 재고단위, 사용여부,단가 등록	 -->
+ <h4 style="margin-top: 50px;"><i class='bx bx-list-ol icon'></i> 품목 목록</h4>     
   <table class="product-table"style="margin-top: 20px;width: 100%;">
     <thead>
       <tr>
-        <th>품목코드</th>
-        <th>품목이름</th>
-        <th>품목속성</th>
+        <th>품번</th>
+        <th>품명</th>
+        <th>필요 자재/소모량</th>
         <th>수정</th>
         <th>삭제</th>
       </tr>
     </thead>
     <tbody>
-    <c:forEach var="vo" items="${mdList }">
+    <c:forEach var="vo" items="${resultlist}">
       <tr>
-        <td>${vo.material_code }</td>
-        <td>${vo.material_name }</td>
-        <td>${vo.material_type }</td>
-        <td><button class=btn-edit onclick="location.href='materialdetailUpdate?material_code=${dto.material_code}'"><i class='bx bx-edit'></i></button></td>
-<!--         <td><button class=btn-edit onclick="orderedit()"><i class='bx bx-edit'></i></button></td> -->
-        <td><button class=btn-delete onclick="materialDelete('${vo.material_code}','${vo.material_name }');"><i class='bx bxs-trash'></i></button></td>
+        <td>${vo.item_code}</td>
+        <td>${vo.item_name}</td>
+        <td>${vo.material_name },${vo.material_con }</td>
+        <td><button class=btn-edit onclick="location.href='itemdetailUpdate?item_code=${vo.item_code}';"><i class='bx bx-edit'></i></button></td>
+        <td><button class=btn-delete onclick="itemDelete('${vo.item_code},'${vo.item_name }');"><i class='bx bxs-trash'></i></button></td>
       </tr>
-      </c:forEach>
+     </c:forEach>
+        
+      
     </tbody>
   </table>
   
