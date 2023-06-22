@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.LineVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.ProOrderVO;
 import com.ddosirak.domain.ProductionPerformanceVO;
 import com.ddosirak.service.ItemdetailService;
@@ -60,13 +61,13 @@ public class ProductController {
 ///////////////////////////////////////////////////생산관리//////////////////////////////////////////////////////////////////////////////
 	
 // --------------------- 예웡  (｡･∀･)ﾉﾞﾞ -----------------------------	
-	// http://localhost:8088/pro/oderList
+	// http://localhost:8088/pro/orderList
 	// 작업지시 목록
-	@RequestMapping(value = "/oderList", method = RequestMethod.GET)
-	public void productListGET(Model model,HttpServletRequest request) {
+	@RequestMapping(value = "/orderList", method = RequestMethod.GET)
+	public void productListGET(Model model,HttpServletRequest request,PageVO pageVO) {
 		logger.debug("productListGET() 호출![]~(￣▽￣)~*");
 		logger.debug("/pro/oderList.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
-		
+	
 		String line_code = request.getParameter("line_code");
 		String wo_date = request.getParameter("wo_date");
 		String item_code = request.getParameter("item_code");
@@ -78,12 +79,52 @@ public class ProductController {
 		instrSearch.put("item_code", item_code);
 		instrSearch.put("wo_status", wo_status);
 		
+		//================================페이징 처리를 위한 값 받아오기 동작========================================
+		// 준비물 : Inject > PageVO , 파라미터값 PageVO pageVO, HttpServletRequest request
+		//   		리스트를 반환하는 DAO - Service 메서드에 PageVO 추가, 쿼리에 LIMIT #{startRow}, #{pageSize} 추가.
+		// 페이징 처리
+		// 한 화면에 보여줄 글 개수 설정
+		int pageSize = 5; // sql문에 들어가는 항목
+		// 현페이지 번호 가져오기
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum==null) {
+			pageNum="1";
+		}
+		// 페이지번호를 정수형으로 변경
+		int currentPage=Integer.parseInt(pageNum);
+		pageVO.setPageSize(pageSize);
+		pageVO.setPageNum(pageNum);
+		pageVO.setCurrentPage(currentPage);
+		int startRow=(pageVO.getCurrentPage()-1)*pageVO.getPageSize()+1; // sql문에 들어가는 항목
+		int endRow = startRow+pageVO.getPageSize()-1;
+		
+		pageVO.setStartRow(startRow-1); // limit startRow (0이 1열이기 때문 1을 뺌)
+		pageVO.setEndRow(endRow);
+		int count = oService.ProOrdercount(instrSearch); 
+		logger.debug("글갯수 @@@@@@@@@@2"+count);
+		// 게시글 개수 가져오기
+		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
+		int startPage=(currentPage-1)/pageBlock*pageBlock+1;
+		int endPage=startPage+pageBlock-1;
+		int pageCount=count/pageSize+(count%pageSize==0?0:1);
+		if(endPage > pageCount){
+		 	endPage = pageCount;
+		 }
+		pageVO.setCount(count);
+		pageVO.setPageBlock(pageBlock);
+		pageVO.setStartPage(startPage);
+		pageVO.setEndPage(endPage);
+		pageVO.setPageCount(pageCount);
+		
+		model.addAttribute("pageVO", pageVO);
+		logger.debug("startRow @@@@@@@@@@2"+startRow);
+		logger.debug("pageSize @@@@@@@@@@2"+pageSize);
 //		List<ProOrderVO> proOrderList = oService.proOrderList();
 		List<ProOrderVO> proOrderList;
 		if(line_code == null && wo_date == null && item_code == null && wo_status == null) {
 			// 작업지시 전체 조회
 			logger.debug("productList 전체 호출 ![]~(￣▽￣)~*");
-			proOrderList = oService.proOrderList();
+			proOrderList = oService.proOrderList(pageVO);
 //			int instrSearchCount = instructService.instrCount(instrSearch);
 //			model.addAttribute("instrSearchCount", instrSearchCount);
 		
@@ -91,13 +132,13 @@ public class ProductController {
 			// 작업지시 검색 조회
 			logger.debug("productList 검색 호출 ![]~(￣▽￣)~*");
 //			proOrderList = oService.proOrderList();
-			proOrderList = oService.proOrderList(instrSearch, model);
+			proOrderList = oService.proOrderList(instrSearch, model,pageVO);
 //			int instrSearchCount = instructService.instrCount(instrSearch);
 //			model.addAttribute("instrSearchCount", instrSearchCount);
 		}
 
 		model.addAttribute("oderList", proOrderList);
-		model.addAttribute("instrSearch", instrSearch);
+		model.addAttribute("Search", instrSearch);
 //		// 라인 이름 불러오기
 		List<LineVO> lineList = lService.LineList();
 		model.addAttribute("lineList", lineList);
@@ -209,7 +250,6 @@ public class ProductController {
 	public void productEtclistGET(String wo_code, Model model) {
 		logger.debug("productEtclistGET() 호출![]~(￣▽￣)~*");
 		logger.debug("/pro/etcstatusList.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
-
 		List<ProductionPerformanceVO> prodPerfList = ppService.prodPerfList(wo_code);
 		model.addAttribute("prodPerfList", prodPerfList);
 	}// productEtclistGET()
@@ -228,21 +268,14 @@ public class ProductController {
 	@RequestMapping(value = "/etcWrite", method = RequestMethod.POST)
 	public void productEtcWritePOST(ProductionPerformanceVO ivo,String wo_code,ProOrderVO vo ) {
 		logger.debug("etcWritePOST() 호출![]~(￣▽￣)~*");
-
 		logger.debug(ivo + "");
-
 		logger.debug(ivo.getPerf_id() + "@@@@");
-
+		// 작업지시 생산수량 증가
+		oService.addpQTY(ivo);
 		// 실적 등록 메서드 호출
 		ppService.insertProdPerf(ivo);
 		logger.debug("<ivo> : " + ivo);
-		
-		
-		// 작업지시 상태 변경 메서드 호출
 		logger.debug(vo.getWo_status() + "@@@@@@@@@@@");
-
-//		oService.statusProOrder(wo_code,ivo);
-		
 //		return "redirect:/pro/etcstatusList?wo_code=" + ivo.getWo_code();
 		
 	}// productEtcWritePost() method end
@@ -277,7 +310,7 @@ public class ProductController {
 		// 생산관리 - 실적 수정 동작
 
 	// http://localhost:8088/pro/etcRemove
-	@RequestMapping(value = "/etcRemove", method = RequestMethod.GET)
+	@RequestMapping(value = "/etcRemove", method = RequestMethod.POST)
 	public String productEtcRemoveGET(ProductionPerformanceVO dvo,HttpServletRequest request) {
 		logger.debug("productEtcRemoveGET() 호출![]~(￣▽￣)~*");
 		String wo_code = request.getParameter("wo_code");
@@ -287,6 +320,14 @@ public class ProductController {
 		// 생산관리 - 실적 삭제
 	
 	
+	// http://localhost:8088/pro/wostatusEnd
+	@RequestMapping(value = "/wostatusEnd", method = RequestMethod.GET)
+	public String wostatusEndGET(HttpServletRequest request) {
+		logger.debug("productEtcRemoveGET() 호출![]~(￣▽￣)~*");
+		String wo_code = request.getParameter("wo_code");
+		ppService.wostatusEnd(wo_code);
+		return "redirect:/pro/etcstatusList?wo_code="+wo_code;
+	}// productEtcWriteGET() method end
 	
 
 }// public class end

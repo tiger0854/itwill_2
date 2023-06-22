@@ -47,19 +47,64 @@
 	</delete>
   	<!-- 실적 삭제 동작 -->
   	
-  	
-  	<!-- 로그인 -->
-  	<select id="login" resultType="com.ddosirak.domain.EmployeeVO">
-  		select * from tbl_member 
-  		where user_id=#{user_id} and user_pw=#{user_pw}
-  	</select>
-  	<!-- 로그인 -->
-  	
-  	<!-- 회원정보 삭제 -->
-  	<delete id="delete">
-  		delete from tbl_member where user_id=#{user_id} and user_pw=#{user_pw} 
-  	</delete>
-  	<!-- 회원정보 삭제 -->
+  	<!-- checkY 양품체크 --> 
+	<select id="checkY"  resultType="boolean">
+	    select
+		count(*)
+		from
+		(select
+		it.oQTY,
+	    sum(if(p.perf_gobd='n',p.pfQTY,0)) as "n"
+		from prod_perf_add p join prod it
+		on it.wo_code = p.wo_code
+	    where it.wo_code = #{wo_code}
+	    group by it.wo_code
+		having it.oQTY &lt;= sum(if(p.perf_gobd='n',p.pfQTY,0))) as table1
+	</select>  
+	
+	<!-- 지시상태 체크 -->
+	<select id="getInstrMap" resultType="String">
+		  SELECT
+		    wo_status
+		  FROM
+		    prod
+		  WHERE
+		    wo_code = #{wo_code}
+	</select>
+	
+	<!-- 작업지시의 실적등록 갯수 -->
+  	<select id="prefcount" resultType="Integer">
+  	select count(perf_id)
+  	from prod_perf_add
+  	where wo_code=#{wo_code}
+  	</select> 
   	  
+  	<!-- pqtydel --> 
+  	<update id="pqtydel">
+	  UPDATE prod
+	  SET pQTY = pQTY - #{pfQTY}
+	  WHERE wo_code = #{wo_code}
+  	</update>
+  	 
+  	 
+  	<update id="turnclose"> <!-- 지시상태 마감으로 변경 -->
+	update prod
+	set wo_status = '마감'
+	where wo_code = #{wo_code}
+	</update>
+	
+	<update id="turnstart"> <!-- 지시상태 시작으로 변경 -->
+	update prod
+	set wo_status = '시작'
+	where wo_code = #{wo_code}
+	</update>
+
+  	<update id="turnwork"> <!-- 지시상태 지시로 변경 -->
+	update prod
+	set wo_status = '지시'
+	where wo_code = #{wo_code}
+	</update>
+  	
+  	
   </mapper>
   
