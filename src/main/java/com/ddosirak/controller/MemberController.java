@@ -16,10 +16,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddosirak.domain.EmployeeListVO;
 import com.ddosirak.domain.EmployeeVO;
+import com.ddosirak.domain.EmployeevacationVO;
 import com.ddosirak.domain.SalaryVO;
 import com.ddosirak.service.EmployeeService;
 
@@ -376,15 +377,11 @@ public class MemberController {
 			// 한글처리(필터를 만들어 놓아서 생략)
 			// 페이지 전달 데이터 저장
 			logger.debug("vvo :",vvo);
-			
 			// 서비스 - 휴가수정 동작 호출
 			eService.vacationmodify(vvo);
-			
 			// 리시트로 정보를 전달 (rttr)
 			rttr.addFlashAttribute("result", "CREATEOK");
-			
 			// 나의휴가 내역페이지로 이동
-			
 			return "redirect:/emp/vacationmodify?vacation_id="+vvo.getVacation_id();
 		}
 		    // 수정하기 - /emp/modify (POST)

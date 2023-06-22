@@ -11,6 +11,7 @@
  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <script type="text/javascript">
@@ -124,8 +125,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 <div class="nav_list">
                   <a href="#" class="nav_link" onclick="proDropdown()"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">생산관리 ></span> </a> 
                 <div class="nav_link collapse" id="pro">
-		  			<a href="/pro/oderList" class="nav_link"> - 작업지시</a><br>
-		  		    <a href="/pro/oderList" class="nav_link"> - 실적등록</a><br>
+		  			<a href="/pro/orderList" class="nav_link"> - 작업지시</a><br>
+		  		    <a href="/pro/orerList" class="nav_link"> - 실적등록</a><br>
 				</div>
 				</div>
 

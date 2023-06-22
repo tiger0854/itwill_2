@@ -26,7 +26,7 @@
   	
   	<!-- 작업지시 목록 출력-->
   	<select id="proOrderList" resultType="com.ddosirak.domain.ProOrderVO">
-		SELECT * FROM prod
+		SELECT * FROM prod LIMIT #{startRow}, #{pageSize}
   	</select>
   	
   	<!-- 작업지시 검색목록 -->
@@ -35,9 +35,8 @@
 		<include refid="Search" />
   	</select>
 
-	
 	<sql id="List">
-		SELECT * FROM prod
+	SELECT * FROM prod
 	</sql>
 	
 	<sql id="Search">
@@ -46,15 +45,15 @@
 	    AND wo_date = #{wo_date}
 	  </if>
 	  <choose>
-	    <when test="(wo_status == null) or (wo_status == '')">
-	    </when>
+	    <when test="wo_status == null or wo_status == ''"></when>
 	    <otherwise>
 	      AND wo_status = #{wo_status}
-	    </otherwise>	  
-	   </choose>
+	    </otherwise>
+	  </choose>
 	  AND item_code LIKE CONCAT('%', #{item_code}, '%')
+	  LIMIT #{startRow}, #{pageSize}
 	</sql>
-
+<!-- 	  LIMIT #{startRow}, #{pageSize} -->
   	<!-- 작업지시 정보 -->
   	<select id="getProOrder" resultType="com.ddosirak.domain.ProOrderVO">
 		SELECT * FROM prod WHERE wo_code=#{wo_code}
@@ -85,20 +84,20 @@
   	<!-- 실적등록에 따라 생산수량 증가구현-->
 	<!--   	statusProOrder -->
 	<update id="statusProOrder" parameterType="map">
-		  UPDATE prod
-		  SET pQTY = pQTY + (
-		    SELECT pfQTY
-		    FROM prod_perf_add
-		    WHERE wo_code = #{woCode}
-		      AND perf_gobd = 'Y'
-		  )
-		  WHERE wo_code IN (
-		    SELECT wo_code
-		    FROM prod_perf_add
-		    WHERE pfQTY > 0
-		      AND wo_code = #{woCode}
-		      AND perf_gobd = 'Y'
-		  )
+	  UPDATE prod
+	  SET pQTY = pQTY + #{pfQTY}
+	  WHERE wo_code IN (
+	    SELECT wo_code
+	    FROM prod_perf_add
+	    WHERE pfQTY > 0
+	      AND wo_code = #{wo_code}
+	      AND EXISTS (
+	        SELECT 1
+	        FROM prod_perf_add
+	        WHERE wo_code = prod.wo_code
+	          AND perf_gobd = '#{perf_gobd}'
+	      )
+	  )
 	</update>
   		<!-- 작업지시 상태변경 -->
   	
@@ -134,5 +133,44 @@
 	  AND item_name LIKE CONCAT('%', #{item_name}, '%')
 	</sql>
   	
-  
+  	<!-- addQTY -->
+  	<update id="addQTY">
+	  UPDATE prod
+	  SET pQTY = pQTY + #{pfQTY}
+	  WHERE wo_code = #{wo_code}
+	  AND #{perf_gobd} = 'n'
+  	</update>
+  	
+  	<!-- procount -->
+	
+  	<!-- 작업지시 검색갯수 -->
+  	<select id="procount" resultType="java.lang.Integer">
+		<include refid="count" />
+		<include refid="Search2" />
+  	</select>
+	
+	<!--  -->
+	<sql id="count">
+		SELECT count(*) FROM prod
+	</sql>
+	
+	<sql id="Search2">
+			
+	<if test="wo_date != null and wo_status != null and
+		 line_code != null and item_code != null">
+	  WHERE line_code LIKE CONCAT('%', #{line_code}, '%')
+	  <if test="wo_date != null and wo_date != ''">
+	    AND wo_date = #{wo_date}
+	  </if>
+	  <choose>
+	    <when test="wo_status == null or wo_status == ''"></when>
+	    <otherwise>
+	      AND wo_status = #{wo_status}
+	    </otherwise>
+	  </choose>
+	  AND item_code LIKE CONCAT('%', #{item_code}, '%')
+	  </if>
+	</sql>
+  	
+  	
   </mapper>

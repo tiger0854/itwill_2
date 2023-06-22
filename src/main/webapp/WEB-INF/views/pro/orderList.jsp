@@ -54,7 +54,6 @@ function ProOrderDelete(wo_code){
 <!-- 작업지시목록 검색박스 -->
 
 <form id="instr">
-
 <!-- 작업지시목록 검색, 등록버튼 -->
 <div class=btn-container>
 <button type="submit" class=btn-search><i class='bx bx-search-alt-2'></i> 조회</button>
@@ -80,7 +79,6 @@ function ProOrderDelete(wo_code){
 				  <input type="text" id="item_code" name="item_code" placeholder="품번" onclick="openItem()" width="100%" readonly>
 				  <i class='bx bx-search-alt-2'></i>  
 				  <input type="text" id="item_name" placeholder="품명" style="border:1px solid" readonly></td>
-				  
 				</label>
 				<td>지시상태</td>
 				<td colspan="8">
@@ -112,7 +110,7 @@ function ProOrderDelete(wo_code){
         <th>품목코드</th>
         <th>지시수량</th>
         <th>생산수량</th>
-        <th>수정</th>
+<!--         <th>수정</th> -->
         <th>삭제</th>
       </tr>
     </thead>
@@ -144,7 +142,7 @@ function ProOrderDelete(wo_code){
         <td>${vo.pQTY}</td>
 		<c:choose>
 		  <c:when test="${vo.wo_status eq '지시'}">
-		    <td><button class="btn-edit" onclick="orderedit('${vo.wo_code}')"><i class="bx bx-edit"></i></button></td>
+<%-- 		    <td><button class="btn-edit" onclick="orderedit('${vo.wo_code}')"><i class="bx bx-edit"></i></button></td> --%>
 		    <td><button class="btn-delete" onclick="ProOrderDelete('${vo.wo_code}')"><i class="bx bxs-trash"></i></button></td>
 		  </c:when>
 		  <c:otherwise>
@@ -159,34 +157,21 @@ function ProOrderDelete(wo_code){
 
   
   <!-- 페이징처리 -->
-  
-<!--   		  	<div class="container" style="margin-top: 30px; margin-bottom: 30px"> -->
-<!-- 			  <ul class="pagination justify-content-center" id="pagination" style="margin-top: 20px;"> -->
-<%-- 		  <c:if test="${startPage > pageBlock }">  --%>
-<%-- 			<li class="page-item"><a class="page-link" href="./AdminQNAList.qn?pageNum=${startPage-pageBlock} "><sapn> < </sapn></a></li> --%>
-<%-- 			</c:if> --%>
-<%-- 		    <c:forEach var="i" begin="1" end="5" step="1"> --%>
-<%-- 			<li class="page-item"><a class="page-link" href="./AdminQNAList.qn?pageNum=${i }"><span>${i }</span></a></li> --%>
-<%-- 			</c:forEach> --%>
-<%-- 		    <c:if test="${endPage<pageCount }"> --%>
-<%-- 			<li class="page-item"><a class="page-link" href="./AdminQNAList.qn?pageNum=${startPage+pageBlock} "><span> > </span></a></li> --%>
-<%-- 			</c:if> --%>
-<!-- 		  </ul> -->
-<!--   		</div> -->
+<%--   		${Search} --%>
+	<div class="container" style="margin-top: 30px; margin-bottom: 30px">
+	  <ul class="pagination justify-content-center" id="pagination" style="margin-top: 20px;">
+	    <c:if test="${pageVO.startPage > pageVO.pageBlock}"> 
+	      <li class="page-item"><a class="page-link" href="/pro/orderList?line_code=${Search.line_code}&wo_date=${Search.wo_date}&pid=${Search.pid}&item_code=${Search.item_code}&wo_status=${Search.wo_status}&pageNum=${pageVO.startPage - pageVO.pageBlock}"><sapn> < </sapn></a></li>
+	    </c:if>
+	    <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
+	      <li class="page-item"><a class="page-link" href="/pro/orderList?line_code=${Search.line_code}&wo_date=${Search.wo_date}&pid=${Search.pid}&item_code=${Search.item_code}&wo_status=${Search.wo_status}&pageNum=${i}"><span>${i}</span></a></li>
+	    </c:forEach>
+	    <c:if test="${pageVO.endPage < pageVO.pageCount}">
+	      <li class="page-item"><a class="page-link" href="/pro/orderList?line_code=${Search.line_code}&wo_date=${Search.wo_date}&pid=${Search.pid}&item_code=${Search.item_code}&wo_status=${Search.wo_status}&pageNum=${pageVO.startPage + pageVO.pageBlock}"><span> > </span></a></li>
+	    </c:if>
+	  </ul>
+	</div>
   		
-  		
-  	<!-- 임시 페이징처리 출력용 -->
-  		<div class="container" style="margin-top: 40px; margin-bottom: 30px">
-  		<ul class="pagination justify-content-center" id="pagination" style="margin-top: 20px;">
-  			<li class="page-item"><a class="page-link" href="#"><sapn> < </sapn></a></li>
-  			<c:forEach var="i" begin="1" end="5" step="1">
-			<li class="page-item"><a class="page-link" href="#"><span>${i }</span></a></li>
-			</c:forEach>
-			<li class="page-item"><a class="page-link" href="#"><span> > </span></a></li>
-		 </ul>
-  		</div>
-  		
-  		<br>
 </div>
 </div>
 

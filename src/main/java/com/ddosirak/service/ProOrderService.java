@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 
 import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.ItemdetailVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.ProOrderVO;
 import com.ddosirak.domain.ProductionPerformanceVO;
 
@@ -16,9 +17,9 @@ public interface ProOrderService {
 	public void orderInsert(ProOrderVO vo);
 	
 	// 작업지시 목록 출력
-	public List<ProOrderVO> proOrderList();
+	public List<ProOrderVO> proOrderList(PageVO pageVO);
 	// 작업지시 검색
-	public List<ProOrderVO> proOrderList(Map<String, Object> instrSearch, Model model);
+	public List<ProOrderVO> proOrderList(Map<String, Object> instrSearch, Model model, PageVO pageVO);
 
 	
 	// 작업지시 조회
@@ -31,12 +32,18 @@ public interface ProOrderService {
 	public void deleteProOrder(String wo_code);
 	
 	// 작업지시 상태 변경
-//	public Integer statusProOrder(String wo_code,ProductionPerformanceVO ivo);
+//	public Integer statusProOrder(ProductionPerformanceVO ivo);
 	
 	// 상품목록
 	public List<ItemdetailVO> proitemList();
 	
 	// 상품목록 검색
 	public List<ItemdetailVO> proitemList(Map<String, Object> instrSearch, Model model);
+
+	public void addpQTY(ProductionPerformanceVO ivo);
+	
+	// 작업지시 검색 갯수
+	public Integer ProOrdercount(Map<String, Object> instrSearch);
+	
 	
 } // interface end

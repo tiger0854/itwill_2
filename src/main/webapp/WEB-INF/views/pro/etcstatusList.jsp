@@ -30,6 +30,13 @@
 		alert("삭제완료!");
 		}
 	}
+	
+// 	wostatus
+	function wostatus(wo_code) {
+		if(confirm("수동 마감하 시겠습니까?")){
+			location.href = '/pro/wostatusEnd?wo_code='+wo_code;
+		}
+	}
 </script>
 
 </head>
@@ -51,7 +58,7 @@
 
 				<!-- 작업지시목록 검색, 등록버튼 -->
 				<div class=btn-container>
-					<button class=btn-search onclick="">수동마감</button>
+					<button class=btn-search onclick="wostatus('${param.wo_code }')">수동마감</button>
 					<button class=btn-add onclick="etcwrite('${param.wo_code }')">
 						<i class='bx bx-plus-medical'></i> 실적등록
 					</button>
@@ -60,8 +67,7 @@
 				<!-- 품번, 품명, 단위 , 투입량 -->
 				<table class="product-table"
 					style="margin-top: 20px; width: 100%; text-align: center;">
-					<br> 작업지시번호 :
-					<span style="color: blue"><b>${param.wo_code }</b></span>
+					<br> 작업지시번호 : <span style="color: blue"><b>${param.wo_code }</b></span>
 					<thead>
 						<tr>
 							<th>품번</th>

@@ -109,7 +109,6 @@ public class OrderController {
 		logger.debug(" orderModifyGET() 호출!");
 		Integer result = oService.deleteOrder(order_number);
 		logger.info("result="+result);
-		
 		return "redirect:/inbound/orderList";
 		
 	}//발주삭제
