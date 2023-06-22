@@ -1,6 +1,7 @@
 package com.ddosirak.persistance;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -8,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.ddosirak.domain.ItemdetailVO;
 
@@ -28,6 +30,12 @@ public class ItemdetailDAOImpl implements ItemdetailDAO {
 		return sqlsession.selectList(NAMESPACE+".itemlist");
 	}
 	
+	@Override
+	public List<ItemdetailVO> idList(Map<String, Object> instrSearch, Model model) {
+		logger.debug("dao : 상품 기초 목록 검색기능 실행");
+		return sqlsession.selectList(NAMESPACE+".itemDetailSearch", instrSearch);
+	}
+
 	//상품 기초 등록
 	@Override
 	public Integer insertID(ItemdetailVO vo) {

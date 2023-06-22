@@ -1,12 +1,14 @@
 package com.ddosirak.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.persistance.ItemdetailDAO;
@@ -22,6 +24,12 @@ public class ItemdetailServiceImpl implements ItemdetailService {
 	public List<ItemdetailVO> idList() {
 		logger.debug("service : mdlist 실행");
 		return dao.idList();
+	}
+	
+	@Override
+	public List<ItemdetailVO> idList(Map<String, Object> instrSearch, Model model) {
+		// TODO Auto-generated method stub
+		return dao.idList(instrSearch, model);
 	}
 
 	@Override
