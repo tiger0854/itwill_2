@@ -20,9 +20,11 @@ public class OutboundVO {
 	private Date due_date; // 납기일자
 	private Date out_date; // 출고일자
 	private Date create_date; // 작성일자
+	private int outNumCount; // outNum 카운트
 
 	
 
+	
 	public int getOut_id() {
 		return out_id;
 	}
@@ -119,6 +121,16 @@ public class OutboundVO {
 	public void setCreate_date(Date create_date) {
 		this.create_date = create_date;
 	}
+	
+	
+	// out_num 카운트
+	public int getOutNumCount() {
+		return outNumCount;
+	}
+	public void setOutNumCount(int count) {
+		 this.outNumCount = count;		
+	}
+	
 	
 	
 	@Override

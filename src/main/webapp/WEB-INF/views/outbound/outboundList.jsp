@@ -5,7 +5,7 @@
 <html lang="ko">
 <meta charset="UTF-8"> 
 <head>
-<title>출고 예정 등록</title>
+<title>출고 리스트</title>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -21,10 +21,7 @@
 	      method: "GET",
 	      data: { out_num: outNum, out_state: newState },
 	      success: function(response) {
-	    	  
-	    	
-	    	  
-	    	  
+	  
 //     	  // 출고 완료 여부를 컨펌 창으로 확인
 //     	    var confirmMessage = "출고 완료하시겠습니까?";
 //     	    if (confirm(confirmMessage)) {
@@ -90,9 +87,30 @@
 		    });
 		  }
 		});
+	
+	// 수정
+	 function openChildWindow(button) {
+		   var row = button.parentNode.parentNode;
+		   var cells = row.getElementsByTagName("td");
+		   var rowData = [];
+		   
+		   for (var i = 0; i < cells.length - 1; i++) {
+		     rowData.push(cells[i].innerText);
+		   }
+		   
+			var popupWidth = 600;
+			var popupHeight = 500;
 
-
-
+			var popupX = Math.ceil(( window.screen.width - popupWidth )/2);
+			var popupY = Math.ceil(( window.screen.height - popupHeight )/2); 
+		    var childWindow = window.open("/outbound/outboundUpdate", "outboundUpdate",'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
+		   
+		   // 자식 창이 로드된 후에 데이터를 전송합니다.
+		   childWindow.addEventListener("load", function() {
+		     childWindow.postMessage(rowData, "*");
+		   
+		   });
+		 }
 
 </script>
 </head>
@@ -100,7 +118,12 @@
 <jsp:include page="../common/header.jsp"/>
 
   <h3>outboundList.jsp</h3>
-  <h1>출고 관리</h1>
+  <h1>출고 리스트</h1>
+  	<!-- 팝업창 정보 전달용 form -->
+		<form role="form" id="fr"> 
+			<input type="hidden" name="out_num" value="'${vo.out_num }'">
+			
+		</form>
   
   <div >
   출고번호 <input type="text" style="width:50px;">
@@ -127,34 +150,43 @@
   <td>출고일자</td> 
   <td>담당자</td>
   <td>출고처리</td>  
+  <td>수정</td>  
   </tr>
   <hr>
   <c:forEach var="vo" items="${outList }">
   <tr>
-  <td onclick="location.href='outboundUpdate.jsp';">${vo.out_num }</td>
+  <td onclick="location.href='/outbound/outProductList?out_num=${vo.out_num}'">${vo.out_num }</td>
   <td>${vo.customer_code }</td>
-  <td onclick="location.href='outProduct.jsp';">${vo.item_name }</td>
+  <c:choose>
+     <c:when test="${vo.outNumCount > 1}">
+        <td> ${vo.item_name} 외 ${vo.outNumCount - 1} 건 </td>
+     </c:when>
+     <c:otherwise>
+       <td> ${vo.item_name} </td>
+     </c:otherwise>
+  </c:choose>
+<%--   <td>${vo.item_name }</td> --%>
   <td>${vo.out_qty }</td>
-  <td onclick="location.href='outboundStock.jsp';">출고불가능</td> <!-- 출고 총 수량이 재고 수량보다 많을 경우 불가능, 적을경우 가능 -->
+  <td onclick="location.href='/outbound/outboundStock';">출고불가능</td> <!-- 출고 총 수량이 재고 수량보다 많을 경우 불가능, 적을경우 가능 -->
   <td>${vo.due_date }</td> 
  <c:choose>
     <c:when test="${vo.out_state==1 }">
    		<td>진행중</td>
     </c:when>
     <c:otherwise>
-		 <td><font color="red">완료</font></td>
+		 <td><font color="red">출고완료</font></td>
     </c:otherwise>
  </c:choose>
   <td>${vo.out_date }</td>
   <td>${vo.employee_id }</td>
  <c:choose>
     <c:when test="${vo.out_state==1 }">
-   		<td><button onclick="updateOutState(${vo.out_num}, 0)">출고</button></td> 
-   		<td><button>수정</button></td> 
+   		<td><button onclick="updateOutState('${vo.out_num}', 0)">출고</button></td> 
+   		<td><button type="button" class="del-btn" onclick="openChildWindow(this);">수정</button></td> 
     </c:when>
     <c:otherwise>
    		 <td></td>
-		 <td><button>수정</button></td>
+		 <td></td>
     </c:otherwise>
  </c:choose>
   
@@ -162,6 +194,8 @@
   </tr>
   </c:forEach>
   </table>
+  <hr>
+  <button>등록</button>
   
   <!-- 진행상태 체크한것 일괄 변경 셀렉트버튼 추가 -->
   

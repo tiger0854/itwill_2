@@ -10,28 +10,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
 
-  $(document).on("click","input[name=addProduct]", function(){
-	  var addProduct = ' <tr name="trProduct">'+
-		'  <td><input type="text" name="code" placeholder="품목코드" readonly onclick=""></td>' +
-		'  <td><input type="text" name="name" placeholder="품목명" readonly> </td>' +
-		'  <td><input type="text" name="standard" placeholder="규격"> </td>' +
-		'  <td><input type="text" name="count" placeholder="수량"></td>' +
-		'  <td><input type="text" name="price" placeholder="단가"></td>' +
-		'  <td><input type="text" name="date" placeholder="년-월-일"></td>' +
-		'  <td><input type="text" name="notes" placeholder="적요"></td>' +
-		'  <td><input type="button" value="del" id="delProduct"></td>' +
-		' </tr>';
-	  var trHtml = $( "tr[name=trProduct]:last" );
-	  trHtml.after(addProduct);
-	 
-  });//on
-  
-  
- 	 //삭제 버튼
-	  $(document).on("click", "#delProduct", function() {
-	  var trHtml = $(this).closest("tr");
-	  trHtml.remove();
-	});
+
 	      
 	  </script>
 	  </head>

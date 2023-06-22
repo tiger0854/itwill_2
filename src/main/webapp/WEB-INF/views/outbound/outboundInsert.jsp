@@ -10,9 +10,29 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript">
 
-  
-  
-  
+  $(document).ready(function() {
+	  // 가격과 수량이 입력될 때 호출될 함수
+	  function calculateTotal() {
+	    var sumQty = 0;
+	    var sumPrice = 0;
+	    
+	    // 모든 행을 순회하면서 각 행의 가격과 수량 값을 가져와 합계 계산
+	    $("tr[name=trProduct]").each(function() {
+	      var qty = parseInt($(this).find("input[name=out_qty]").val()) || 0;
+	      var price = parseFloat($(this).find("input[name=price]").val()) || 0;
+	      
+	      sumQty += qty;
+	      sumPrice += qty * price;
+	    });
+	    
+	    // 합계를 "총수량"과 "합계" 입력 필드에 업데이트
+	    $("input[name=sum_out_qty]").val(sumQty);
+	    $("input[name=sum_price]").val(sumPrice);
+	  }
+	  
+	  // 가격과 수량 입력 필드에 이벤트 리스너 등록
+	  $(document).on("input", "input[name=out_qty], input[name=price]", calculateTotal);
+
  	  // 품목 행 추가 
 //  	  function addProductRow(){
  	  $(document).ready(function(){
@@ -29,7 +49,11 @@
 			' </tr>';
 		  var trHtml = $( "tr[name=trProduct]:last" );
 		  trHtml.after(addProduct);
+		  
+		// 추가된 행의 가격과 수량 입력 필드에 이벤트 리스너 등록
+		    trHtml.next().find("input[name=out_qty], input[name=price]").on("input", calculateTotal);
 	  
+  			});
   		});
 //  	  } // 품목 행 추가 
  	  
@@ -120,8 +144,8 @@
 	  <td></td>
 	  <td></td>
 	  <td></td>
-	  <td><input type="text" name="sum_out_qty" placeholder="총수량"></td>
-	  <td><input type="text" name="sum_price" placeholder="합계"></td>
+	  <td><input type="text" name="sum_out_qty" id="sum_out_qty" placeholder="총수량"></td>
+	  <td><input type="text" name="sum_price" id="sum_price" placeholder="합계"></td>
 	  <td></td>
     </tr>  
   </table>
