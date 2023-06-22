@@ -20,4 +20,6 @@ public interface InboundDAO {
 	public String getOrderNumber (String in_id); //in_id로 발주번호 가져오기
 	
 	public int updateOrderStateToDefault(String order_number); //입고취소시, 발주상태 변경
+	
+	public void updateInbount(InboundVO vo);// 입고수정
 }

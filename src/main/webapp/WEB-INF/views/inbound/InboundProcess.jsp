@@ -14,16 +14,36 @@
 		    var rowData = event.data;
 		    
 		    document.getElementById("in_number").value = rowData[0];
+		    document.getElementById("in_piece").value = rowData[3];
 		
 		  });
+		
+		window.onload = function() {
+		 $('#in_Epiece').keyup(function() {
+		     var in_piece = parseInt($('#in_piece').val());
+		     var in_Epiece = parseInt($('#in_Epiece').val());
+			
+			  if(in_piece < in_Epiece){
+				  $('#ipmsg').show();
+				  $('#ipmsg').css('color','red');
+				  $('#ipmsg').text("입고예정 수량보다 많은 수량 입력불가. 입고예정수량:"+in_piece);  
+				  $('#confirm').attr('disabled','disabled'); 
+			  }else{
+				  $('#ipmsg').hide();
+				  $('#confirm').removeAttr('disabled');
+			  }
+			   
+			});//입고수량이 발주수량보다 많을 수 없음 
+			}
 </script>
 	
 </head>
 <body>
+		<input type="hidden" id="in_piece">
 	<form id="fr" role="form">
-		
 		입고번호<input type="text" id="in_number"  name="in_number" class="form-control" readonly="readonly"> <br>
-		입고 완료 수량<input type="number" id="in_Epiece"  name="in_Epiece" class="form-control"> <br>
+		입고 완료 수량<input type="number" id="in_Epiece"  name="in_Epiece" class="form-control"><span id="ipmsg"></span> <br>
+		
 		입고 완료일 <input type="date" id="in_Edate" name="in_Edate" class="form-control"><br>
 
     

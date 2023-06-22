@@ -31,7 +31,7 @@ window.onload = function() {
 			  $('#submit').removeAttr('disabled');
 		  }
 		   
-		});//비밀번호 일치불일치 체크
+		});//입고수량이 발주수량보다 많을 수 없음 
 	
     };
     

@@ -58,4 +58,10 @@ public class InboundServiceImpl implements InboundService {
 		return idao.updateOrderStateToDefault(order_number);
 	}
 
+	@Override
+	public void updateInbound(InboundVO vo) {
+		idao.updateInbount(vo);
+		
+	}
+
 }

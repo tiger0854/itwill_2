@@ -157,6 +157,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
                  <!-- 이후 write > boardList 로 변경해야 함. >> 변경 완 -->
                  <!-- 0619 -->
 				</div>
+				<a href="/customer/customerList" class="nav_link"> <i class="bx bxs-cart-alt nav_icon"></i> <span class="nav_name">거래처관리</span> </a> 
+				  </div>
+				  
             </div> 
             <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a>
         </nav>
