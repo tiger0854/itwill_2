@@ -39,4 +39,10 @@ public class CustomerServiceImpl implements CustomerService {
 		
 	}
 
+	@Override
+	public CustomerVO customerDetail(String cus_id) {
+		// TODO Auto-generated method stub
+		return cdao.customerDetail(cus_id);
+	}
+
 }

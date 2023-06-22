@@ -43,5 +43,11 @@ public class CustomerDAOImpl implements CustomerDAO {
 	public void deleteCustomer(String cus_id) {
 		sqlSession.delete(NAMESPACE+".deleteCustomer",cus_id);	
 	}
+
+	@Override
+	public CustomerVO customerDetail(String cus_id) {
+		
+		return sqlSession.selectOne(NAMESPACE+".selectCustomerDetail",cus_id);
+	}
 	
 }

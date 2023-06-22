@@ -14,6 +14,8 @@
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css.css">
 
+
+
 <!-- 판매목록 drop 기능 -->
 <style type="text/css">
 td{
@@ -62,10 +64,11 @@ height: 50px; vertical-align: middle;
 	<input type="text" class="form-control" placeholder="검색어를 입력하세요">
 	 <button type="button" class="btn btn-primary" onclick="openChild();">검색</button>
 	</div>
- <table class="table table-striped" style="width: 1250px;">
+ <table class="table table-hover" style="width: 1250px; cursor: pointer;">
     <thead style="border-bottom: 1px solid">
       <tr>
    		<th><input type="checkbox"  class="form-check-input" name='allCheck'value='selectall' onclick="selectAll(this);"></th>
+   		<th>번호</th>
         <th>거래처코드</th>
         <th>거래처분류</th>
         <th>대표자명</th>
@@ -74,6 +77,7 @@ height: 50px; vertical-align: middle;
         <th>주소</th>
         <th>업태</th>
         <th>종목</th>
+
       </tr>
       
       
@@ -81,12 +85,11 @@ height: 50px; vertical-align: middle;
     
 </tbody>
       <c:forEach var="vo" items="${customerList}">
-      <tr>
+      <tr onclick="openChildWindow2(${vo.cus_id});">
         <td><input type="checkbox"  class="form-check-input" name='rowCheck' value="${vo.cus_id}" ></td>
-	      <td>${vo.cus_code}</td>
-	     
-		
-			<c:choose>
+        <td>${vo.cus_id}</td>
+	    <td>${vo.cus_code}</td>
+		<c:choose>
        		<c:when test="${vo.cus_stat == 1}">
        		  <td>납입처</td>
        		</c:when>
@@ -94,13 +97,13 @@ height: 50px; vertical-align: middle;
   			 <td>납품처</td>	
     		 </c:otherwise>
         </c:choose>
-	
 	      <td>${vo.cus_rep}</td>
 	      <td>${vo.cus_resp}</td>
 	      <td>${vo.cus_phone}</td>
 	      <td>${vo.cus_address}</td>
 	      <td>${vo.cus_business}</td>
 	      <td>${vo.cus_event}</td>
+	   
       </tr>
    	</c:forEach>
     </tbody>
@@ -172,6 +175,7 @@ height: 50px; vertical-align: middle;
     <thead style="border-bottom: 1px solid">
       <tr>
    		<th><input type="checkbox"  class="form-check-input" ></th>
+   		<th></th>
         <th>거래처코드</th>
         <th>거래처분류</th>
         <th>대표자명</th>
@@ -189,6 +193,7 @@ height: 50px; vertical-align: middle;
       <c:forEach var="vo" items="${customerList}">
       <tr>
         <td><input type="checkbox"  class="form-check-input" ></td>
+          <td>${vo.cus_id}</td>
 	      <td>${vo.cus_code}</td>
 	      <td>${vo.cus_stat}</td>
 	      <td>${vo.cus_rep}</td>
@@ -207,24 +212,32 @@ height: 50px; vertical-align: middle;
   
 </div>
   <!-- 납품처 -->
-      <div style="color: red; margin-bottom: 10px;">삭제할 거래처를 선택해주세요</div>
+      <div style="color: red; margin-bottom: 10px;">*원하는 목록을 선택하면 상세보기 및 수정페이지가 열립니다.</div>
   <button type="button" class="btn btn-danger"style="margin-bottom: 30px;" onclick="deleteInbound();">선택삭제</button>
  </div>
  </div>
     
  
  <script type="text/javascript">
- 
- function openChildWindow(button) {
-   
 	var popupWidth = 600;
 	var popupHeight = 600;
 
 	var popupX = Math.ceil(( window.screen.width - popupWidth )/2);
 	var popupY = Math.ceil(( window.screen.height - popupHeight )/2); 
+ function openChildWindow(button) {
+   
     var childWindow = window.open("/customer/customerWrite", "customerWrite", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
    
  }// 거래처등록 팝업 
+ 
+ function openChildWindow2(cus_id) {
+		var popupWidth = 800;
+		var popupHeight = 500;
+	   
+	    var childWindow = window.open("/customer/customerDetail?cus_id="+cus_id, "customerDetail", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
+	   
+	 }// 거래처등록 팝업
+
  	
  function selectAll(selectAll)  {
 	  const checkboxes 

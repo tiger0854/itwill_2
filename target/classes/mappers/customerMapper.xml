@@ -12,6 +12,13 @@
   	</select>	
    	<!-- 거래처목록  -->
    	
+   	<!-- 거래처 상세목록  -->
+  	<select id="selectCustomerDetail" resultType="com.ddosirak.domain.CustomerVO">
+  		SELECT * FROM ret_customer
+  		WHERE cus_id = #{cus_id}
+  	</select>	
+   	<!-- 거래처목록  -->
+   	
    	<!-- 거래처등록 -->
    	<insert id="insertCustomer">
    		INSERT INTO ret_customer (cus_code, cus_name, cus_stat, cus_number, cus_rep, cus_resp, cus_phone, cus_call, cus_fax, cus_address, cus_business, cus_event, cus_memo)

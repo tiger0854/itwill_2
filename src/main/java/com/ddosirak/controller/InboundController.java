@@ -91,11 +91,26 @@ public class InboundController {
 		String order_number = iService.getOrderNumber(idArr[i]); //선택된 in_id의 발주서 번호 선택
 			iService.updateOrderStateToDefault(order_number); // 선택된 발주서 번호 발주상태 변경
 			result = iService.deleteInbound(idArr[i]); //입고취소 
+			
+			logger.debug("입고취소 완료!!༼ つ ◕_◕ ༽つ");
 	}
 		return "redirect:/inbound/inboundList";
 		
 		
 		
-	}
+	}//입고삭제
 	
-}//컨트롤러 끝 
+	@RequestMapping(value = "/inbountModify")
+	public void InboundModifyGET() {
+		logger.info("@@@@@@@@@InboundModifyGET()호출!");
+	}//입고수정get
+	
+	@RequestMapping(value = "/inbountModify",method = RequestMethod.POST)
+	public void InboundModifyGET(InboundVO vo) {
+		logger.info("@@@@@@@@@InboundModifyPOST()호출!");
+		
+		iService.updateInbound(vo);
+		
+		logger.info("입고서 수정완료!༼ つ ◕_◕ ༽つ");
+	}
+}

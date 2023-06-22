@@ -1,7 +1,9 @@
 package com.ddosirak.controller;
 
 import javax.inject.Inject;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddosirak.domain.CustomerVO;
@@ -29,6 +32,16 @@ public class CustomerController {
 		logger.debug("customerGET() 호출!");
 		model.addAttribute("customerList",cService.customerList());
 	}//거래처 리스트로 이동
+	
+	@RequestMapping(value = "/customerDetail",method=RequestMethod.GET) 
+	public void customerDetailGET(@RequestParam("cus_id") String cus_id, Model model)throws Exception {
+		logger.debug("customerDetailGET() 호출!");
+		
+		model.addAttribute("cus",cService.customerDetail(cus_id));
+		
+		
+		
+	}//거래처 상세목록으로 이동
 	
 	
 //	http://localhost:8088/customer/customerWrite

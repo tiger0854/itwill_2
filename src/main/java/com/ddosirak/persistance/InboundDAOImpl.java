@@ -67,4 +67,9 @@ public class InboundDAOImpl implements InboundDAO {
 		return sqlSession.update(NAMESPACE+".updateOrderStateToDefault",order_number);
 	}
 
+	@Override
+	public void updateInbount(InboundVO vo) {
+		 sqlSession.update(NAMESPACE+".updateInbound",vo);
+	}
+
 }

@@ -6,6 +6,8 @@ import com.ddosirak.domain.CustomerVO;
 
 public interface CustomerDAO {
 	public List<CustomerVO> customerList(); //거래처목록
+	
+	public CustomerVO customerDetail(String cus_id); //거래처 상세목록
 
 	public void insertCustomer(CustomerVO vo); //거래처등록
 	
@@ -13,5 +15,5 @@ public interface CustomerDAO {
 	
 	public void deleteCustomer(String cus_id); //거래처 삭제
 	
-
+	
 }
