@@ -24,7 +24,7 @@ function itemUpdate() {
 	
 function itemDelete(item_code, item_name) {
 	  if (confirm("품명 : " + item_name + "를/을 정말로 삭제하시겠습니까?")) {
-	    location.href = 'itemDelete?item_code=' + item_code;
+	    location.href = 'itemDelete?item_code='+item_code;
 	  }
 	}
 </script>
@@ -103,7 +103,7 @@ function itemDelete(item_code, item_name) {
         <td>${vo.unit }</td>
         <td>${vo.item_price }</td>
         <td><button class=btn-edit onclick="location.href='itemdetailUpdate?item_code=${vo.item_code}';"><i class='bx bx-edit'></i></button></td>
-        <td><button class=btn-delete onclick="itemDelete('${vo.item_code},'${vo.item_name }');"><i class='bx bxs-trash'></i></button></td>
+        <td><button class=btn-delete onclick="itemDelete('${vo.item_code}','${vo.item_name }');"><i class='bx bxs-trash'></i></button></td>
       </tr>
      </c:forEach>
         
