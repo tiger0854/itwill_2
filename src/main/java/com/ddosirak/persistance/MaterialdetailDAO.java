@@ -1,7 +1,11 @@
 package com.ddosirak.persistance;
 
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.ui.Model;
+
+import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.MaterialdetailVO;
 
 public interface MaterialdetailDAO {
@@ -15,4 +19,8 @@ public interface MaterialdetailDAO {
 		public MaterialdetailVO selectMD(String material_code);
 		//자재 삭제
 		public void deleteM(String material_code);
+		//자재 검색(전체조회 검색)
+		public List<MaterialdetailVO> materialItemList();
+		//자재 검색(부분 검색)
+		public List<MaterialdetailVO> materialItemList(Map<String, Object> instrSearch, Model model);
 }
