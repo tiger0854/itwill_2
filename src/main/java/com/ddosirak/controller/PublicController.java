@@ -174,13 +174,21 @@ public class PublicController {
 	@RequestMapping(value = "/logout")
 	public String logout(HttpSession session, RedirectAttributes rttr) throws Exception{
 		logger.debug("logout() 호출!(((o(*ﾟ▽ﾟ*)o)))");
-		logger.debug(session.getAttribute("login_id")+" 번 사원 로그아웃!");
 		
 		rttr.addFlashAttribute("result", "LOGOUT");
+		logger.debug(session.getAttribute("login_id")+" 번 사원 로그아웃!");
 		session.invalidate();
 
 		return "redirect:/public/login";
 	}//logout() method end
+	
+	//비밀번호 찾기
+	@RequestMapping(value = "/findPw", method = RequestMethod.GET)
+	public void findPWGET() {
+		logger.debug("findPWGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
+		
+		
+	}//findPWGET() method end
 /////////////////////////////////로그인///////////////////////////////////
 	
 }// public class end

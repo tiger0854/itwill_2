@@ -7,8 +7,31 @@
 <title>로그인</title>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 </head>
-<body id="body-pd" style="font-family: 'TheJamsil5';">
 <jsp:include page="../common/header.jsp"/>
+<script type="text/javascript">
+$(document).ready(function(){
+
+	// 	CheckSession();
+	var data = "${result}";
+	var idData = "${login_id}";
+	console.log("id: "+idData);
+	if(idData == ""){
+// 		hold()
+	};// if end
+	if(data == "LOGOUT" ){
+		alert('로그아웃 성공!');
+// 		hold()
+	}// if end
+	if(data == "LOGFAIL" ){
+		alert('로그인 실패!');
+// 		hold()
+	}// if end
+	
+});// jQ end
+
+</script>
+<body id="body-pd" style="font-family: 'TheJamsil5';">
+
 <h1>로그인</h1>
 
 <form action="" method="post">
@@ -21,27 +44,4 @@
 
 </body>
 
-<script>
-$(document).ready(function(){
-	var data = "${result}";
-	
-	if(data == "LOGOUT" ){
-		alert('로그아웃 성공!');
-		hold();
-	}// if end
-	if(data == "LOGFAIL" ){
-		alert('로그인 실패!');
-		hold();
-	}// if end
-
-	function hold(){
-		// 스택 추가
-		history.pushState(null, null, location.href); 
-		// 뒤로가기 이벤트감지 -> 현재페이지로 이동
-		window.onpopstate = function() { 
-			history.go(1); 
-		}// 뒤로가기막기
-	}
-});// jQ end
-</script>
 </html>
