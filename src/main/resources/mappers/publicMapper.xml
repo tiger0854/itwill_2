@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.ddosirak.mapper.PublicMapper">
+	<!-- IDPW 비교 -->
+	<select id="checkIDPW" resultType="com.ddosirak.domain.LoginVO"> 
+		SELECT * FROM emp_login 
+		WHERE employee_id=#{employee_id} AND employee_pw=#{employee_pw} 
+	</select>
+	<!-- IDPW 비교 -->
+	
+	<!-- 게시판 업로드 -->
+	<insert id="writeBoard">
+		INSERT INTO emp_board 
+		(employee_id, title, content, employee_name, position, department_name) 
+		VALUES (#{employee_id}, #{title}, #{content}, #{employee_name}, #{position}, #{department_name}) 
+	</insert>
+	<!-- 게시판 업로드 -->
+	
+<!-- 페이징 구현부 참고 -->	
+	<!-- 게시판 리스트 조회 -->
+	<select id="getBoardList" resultType="com.ddosirak.domain.BoardVO">
+		SELECT * FROM emp_board 
+		ORDER BY emp_bno DESC
+		LIMIT #{startRow}, #{pageSize}
+	</select>
+	<!-- 게시판 리스트 조회 -->
+<!-- 페이징 구현부 참고 -->	
+	
+	<!-- 글 정보 조회 -->
+	<select id="getContent" resultType="com.ddosirak.domain.BoardVO">
+		SELECT * FROM emp_board WHERE emp_bno=#{emp_bno}
+	</select>
+	<!-- 글 정보 조회 -->
+	
+	<!-- 글 정보 수정 -->
+	<update id="updateContent">
+		UPDATE emp_board SET title=#{title}, content=#{content} WHERE emp_bno=#{emp_bno}
+	</update>
+	<!-- 글 정보 수정 -->
+	
+	<!-- 글 삭제 -->
+	<delete id="deleteContent">
+		DELETE FROM emp_board WHERE emp_bno=#{emp_bno}
+	</delete>
+	<!-- 글 삭제 -->
+
+
+</mapper>

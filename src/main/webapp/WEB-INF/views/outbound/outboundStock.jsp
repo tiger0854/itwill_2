@@ -1,108 +1,59 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
+<meta charset="UTF-8"> 
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="../css/css.css">
-<script type="../js/jquery-3.6.4.js"></script>
+<title>재고</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
+<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.min.css">
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.all.min.js"></script>
 <script type="text/javascript">
 
-function toggleDropdown() {
-	  const collapseSale = document.getElementById('collapseSale');
-	  collapseSale.classList.toggle('show');
-	}
-
-document.addEventListener("DOMContentLoaded", function(event) {
-	
-
-	   
-	const showNavbar = (toggleId, navId, bodyId, headerId) =>{
-	const toggle = document.getElementById(toggleId),
-	nav = document.getElementById(navId),
-	bodypd = document.getElementById(bodyId),
-	headerpd = document.getElementById(headerId)
-
-	// Validate that all variables exist
-	if(toggle && nav && bodypd && headerpd){
-	toggle.addEventListener('click', ()=>{
-	// show navbar
-	nav.classList.toggle('show')
-	// change icon
-	toggle.classList.toggle('bx-x')
-	// add padding to body
-	bodypd.classList.toggle('body-pd')
-	// add padding to header
-	headerpd.classList.toggle('body-pd')
-	})
-	}
-	}
-
-	showNavbar('header-toggle','nav-bar','body-pd','header')
-
-	/*===== LINK ACTIVE =====*/
-	const linkColor = document.querySelectorAll('.nav_link')
-
-	function colorLink(){
-	if(linkColor){
-	linkColor.forEach(l=> l.classList.remove('active'))
-	this.classList.add('active')
-	}
-	}
-	linkColor.forEach(l=> l.addEventListener('click', colorLink))
-
-	 // Your code to run since DOM is loaded and ready
-	});
 </script>
 </head>
-<body>
 <body id="body-pd" style="font-family: 'TheJamsil5';">
-    <header class="header" id="header" style="background-color: white; box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.2);" >
-        <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
-        <div> 
-        <a style="margin: 10px;">로그인</a>
-        <a>회원가입</a>
-        </div>
-    </header>
-   
-    <div class="l-navbar" id="nav-bar">
-        <nav class="nav">
-            <div> <a href="#" class="nav_logo"> <i class='bx bx-layer nav_logo-icon'></i> <span class="nav_logo-name" style="font-size: 25px;">또시락🍱<span></a>
-                <div class="nav_list"> <a href="#" class="nav_link active"> <i class='bx bx-grid-alt nav_icon'></i> <span class="nav_name">HOME</span> </a>
-                  <div class="nav_list">
-                   <a href="#" class="nav_link" onclick="toggleDropdown()"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">인사관리  ></span> </a> 
-                <div class="nav_link collapse" id="collapseSale">
-                
-		  			<a href="#" class="nav_link"> -사원등록</a><br>
-		  		    <a href="#" class="nav_link">-사원관리</a>
-				</div>
-					</div>
-                 <a href="#" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">구매관리</span> </a> </div>
-                 <a href="#" class="nav_link"> <i class='bx bx-bookmark nav_icon'></i> <span class="nav_name">창고관리</span> </a> 
-                 <a href="#" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span class="nav_name">입/출고관리</span> </a> 
-            </div> 
-            <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a>
-        </nav>
-    </div>
-  <h1>outboundState.jsp</h1>
+<jsp:include page="../common/header.jsp"/>
   
-  <table border="1">
+  <h1>outboundStock.jsp</h1>
+  <h1>출고 재고 관리</h1>
+  
+  <table border="1" class="table table-bordered">
   <tr>
-  <td>출고번호</td>
-  <td>품목코드</td>
-  <td>품목명[규격]</td>
-  <td>총출고예정수량</td>
-  <td>미출고수량</td>
-  <td>창고재고</td>
+  <th>작업지시번호</th>
+  <td>I001-20230618</td>
+  <th>납기일</th>
+  <td>2023-06-18</td>
+  <th>작업지시일자</th>
+  <td>2023-06-18</td>
+  <th>작업지시 담당자</th>
+  <td>002</td>
   </tr>
-  <hr>
   <tr>
-  <td>20230607-000001</td>
+  <th>출고진행현황</th>
+  <td>진행중</td>
+  <th>출고일자</th>
+  <td>2023-08-08</td>
+  <th>출고 담당자</th>
+  <td>003</td>
+  </tr>
+  </table>
+  
+  <table border="1" class="table table-bordered">
+  <tr>
+  <th>출고번호</th>
+  <th>상품명</th> 
+  <th>거래처명</th>
+  <th>총출고예정수량</th>
+  <th>미출고수량</th>
+  <th>창고재고</th>
+  </tr>
+
+  <tr>
+  <td>OUT2023060723</td>
   <td>1234</td>
   <td>스팸마요도시락[box]</td>
   <td>20</td>
@@ -110,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   <td>0</td>
   </tr>
   <tr>
-   <td>20230607-000002</td>
+  <td>OUT2023060723</td>
   <td>1111</td>
   <td>참치마요도시락[box]</td>
   <td>50</td>

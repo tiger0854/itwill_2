@@ -3,8 +3,13 @@ package com.ddosirak.service;
 import java.sql.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.EmployeevacationVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.SalaryVO;
 
 public interface EmployeeService {
@@ -12,6 +17,10 @@ public interface EmployeeService {
 /////////////////////////////////////////사원동작////////////////////////////////////////////////////
 	// 사원정보 등록
 	public void employeeInsert(EmployeeVO vo);
+	// 사원정보 등록간 사원 아이디 비밀번호 설정
+	public void setEmployeeIDPW(EmployeeVO vo);
+	// 사원 사진 등록
+	public void setEmployee_photo(int employee_id, MultipartFile employee_photo_link, HttpServletRequest request) throws Exception;
 	
 	// 최대 사원번호 구하기
 	public Integer getMaxId();
@@ -27,7 +36,7 @@ public interface EmployeeService {
 	public EmployeeVO getEmployee(int employee_id);
 	
 	// 사원 목록 출력
-	public List<EmployeeVO> empList();
+	public List<EmployeeVO> empList(PageVO pageVO);
 	
 	// 사원 정보 수정
 	public Integer updateEmployee(EmployeeVO vo);
@@ -61,8 +70,5 @@ public interface EmployeeService {
 	
 	// 휴가 수정 정보 조회
 	public EmployeevacationVO vacationim(Integer vacation_id);
-		
-	// 로그인
-//	public EmployeeVO employeeLogin(EmployeeVO vo);// id,pw 들어감.
 
 } // interface end

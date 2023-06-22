@@ -1,8 +1,7 @@
 package com.ddosirak.domain;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.sql.Date;	
 
 
 public class EmployeeVO  implements Serializable {
