@@ -75,6 +75,7 @@ public class MaterialdetailController {
 	public void materialdetailupdateGET(String material_code, Model model) {
 		logger.debug("materialdetailupdateGET 호출");
 		MaterialdetailVO resultvo = service.selectMD(material_code);
+		logger.debug("@@@@@@resultvo" + resultvo);
 		logger.debug(resultvo + "");
 		model.addAttribute("resultvo", resultvo);
 
@@ -107,12 +108,12 @@ public class MaterialdetailController {
 		instrSearch.put("material_name", material_name);
 		List<MaterialdetailVO> materialList;
 		if (material_code == null && material_name == null) {
-			// 작업지시 전체 조회
+			// 전체 조회
 			logger.debug("materialdetailList.jsp 전체 호출 ![]~(￣▽￣)~*");
 			materialList = service.materialItemList();
 
 		} else {
-			// 작업지시 검색 조회
+			// 검색 조회
 			logger.debug("materialdetailList.jsp 검색 호출 ![]~(￣▽￣)~*");
 //				proOrderList = oService.proOrderList();
 			materialList = service.materialItemList(instrSearch, model);

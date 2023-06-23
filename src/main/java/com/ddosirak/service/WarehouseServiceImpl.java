@@ -1,12 +1,14 @@
 package com.ddosirak.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.ddosirak.domain.WarehouseVO;
 import com.ddosirak.persistance.WarehouseDAO;
@@ -68,5 +70,13 @@ public class WarehouseServiceImpl implements WarehouseService {
 		dao.deletewh(wh_code);
 		
 	}
+
+	@Override
+	public List<WarehouseVO> warehouseItemList(Map<String, Object> instrSearch, Model model) {
+		logger.debug("service : 창고 검색");
+		return dao.warehouseItemList(instrSearch, model);
+	}
+	
+	
 
 }

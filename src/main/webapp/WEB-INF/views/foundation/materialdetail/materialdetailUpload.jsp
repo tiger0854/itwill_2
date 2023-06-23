@@ -68,10 +68,10 @@
 						<td><input type="text" name="material_name"
 							required="required"></td>
 					</tr>
-					<tr>
-						<td>관리자명</td>
-						<td><input type="text"></td>
-					</tr>
+<!-- 					<tr> -->
+<!-- 						<td>관리자명</td> -->
+<!-- 						<td><input type="text"></td> -->
+<!-- 					</tr> -->
 					<tr>
 						<td>자재구분</td>
 						<td><select name="material_type">

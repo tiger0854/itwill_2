@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 
 import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.MaterialdetailVO;
+import com.ddosirak.domain.PageVO;
 
 @Repository
 public class ItemdetailDAOImpl implements ItemdetailDAO {
@@ -26,14 +27,17 @@ public class ItemdetailDAOImpl implements ItemdetailDAO {
 	
 	//상품 기초 목록
 	@Override
-	public List<ItemdetailVO> idList() {
+	public List<ItemdetailVO> idList(PageVO pageVO) {
 		logger.debug("dao : 상품 기초 목록 실행");
-		return sqlsession.selectList(NAMESPACE+".itemlist");
+		return sqlsession.selectList(NAMESPACE+".itemlist", pageVO);
 	}
 	
 	@Override
-	public List<ItemdetailVO> idList(Map<String, Object> instrSearch, Model model) {
+	public List<ItemdetailVO> idList(PageVO pageVO, Map<String, Object> instrSearch, Model model) {
 		logger.debug("dao : 상품 기초 목록 검색기능 실행");
+		instrSearch.put("startRow", pageVO.getStartRow());
+		instrSearch.put("pageSize", pageVO.getPageSize());
+		logger.debug("@@@@페이징 :" + instrSearch);
 		return sqlsession.selectList(NAMESPACE+".itemDetailSearch", instrSearch);
 	}
 
@@ -65,12 +69,18 @@ public class ItemdetailDAOImpl implements ItemdetailDAO {
 
 	}
 	
-	
-
 	@Override
 	public String getMaxCode() {
 		logger.debug("dao : getMaxCode 호출");
 		return sqlsession.selectOne(NAMESPACE+".getMaxCode");
 	}
+
+	@Override
+	public Integer itemCount(Map<String, Object> instrSearch) {
+		logger.debug("dao : itemCount 호출");
+		return sqlsession.selectOne(NAMESPACE + ".itemCount", instrSearch);
+	}
+	
+	
 
 }

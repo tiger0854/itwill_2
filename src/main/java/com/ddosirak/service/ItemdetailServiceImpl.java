@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.ddosirak.domain.ItemdetailVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.persistance.ItemdetailDAO;
 
 @Service
@@ -21,15 +22,15 @@ public class ItemdetailServiceImpl implements ItemdetailService {
 	public static final Logger logger = LoggerFactory.getLogger(ItemdetailServiceImpl.class);
 	
 	@Override
-	public List<ItemdetailVO> idList() {
+	public List<ItemdetailVO> idList(PageVO pageVO) {
 		logger.debug("service : mdlist 실행");
-		return dao.idList();
+		return dao.idList(pageVO);
 	}
 	
 	@Override
-	public List<ItemdetailVO> idList(Map<String, Object> instrSearch, Model model) {
+	public List<ItemdetailVO> idList(PageVO pageVO, Map<String, Object> instrSearch, Model model) {
 		// TODO Auto-generated method stub
-		return dao.idList(instrSearch, model);
+		return dao.idList(pageVO, instrSearch, model);
 	}
 
 	@Override
@@ -64,5 +65,13 @@ public class ItemdetailServiceImpl implements ItemdetailService {
 		logger.debug("service : deletemd 실행");
 		dao.deleteI(item_code);
 	}
+
+	@Override
+	public Integer itemCount(Map<String, Object> instrSearch) {
+		logger.debug("service : itemCount 실행");
+		return dao.itemCount(instrSearch);
+	}
+	
+	
 
 }

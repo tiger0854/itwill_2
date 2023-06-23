@@ -1,13 +1,16 @@
 package com.ddosirak.persistance;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
+import org.springframework.ui.Model;
 
+import com.ddosirak.domain.FactoryVO;
 import com.ddosirak.domain.WarehouseVO;
 
 @Repository
@@ -58,5 +61,14 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 		logger.debug("dao : getMaxCode 호출");
 		return sqlsession.selectOne(NAMESPACE+".getMaxCode");
 	}
+
+	@Override
+	public List<WarehouseVO> warehouseItemList(Map<String, Object> instrSearch, Model model) {
+		logger.debug("dao : 창고 검색 호출");
+		List<WarehouseVO> warehouseItemList = sqlsession.selectList(NAMESPACE + ".warehouseItemSearch", instrSearch);
+		return warehouseItemList;
+	}
+	
+	
 
 }

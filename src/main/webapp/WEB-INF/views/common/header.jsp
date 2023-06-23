@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-
-    pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html>
@@ -12,15 +9,26 @@
 <title>Insert title here</title>
 </head>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
-<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
+	rel="stylesheet">
+<link rel="stylesheet" type="text/css"
+	href="../../resources/css/css.css">
+<link rel="stylesheet" type="text/css"
+	href="../../resources/css/product.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
@@ -104,25 +112,34 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 <body>
 
-	<header class="header" id="header" style="background-color: white; box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.2);" >
-        <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
-		<button onclick="window.open('hello.jsp','출근','width=430,height=500,location=no,status=no,scrollbars=no');">출근</button>
-		<button onclick="window.open('bye.jsp','퇴근','width=430,height=500,location=no,status=no,scrollbars=no');">퇴근</button>
-        <div> 
-        <c:if test="${empty login_id }">
-        	<a style="margin: 10px;" href="/public/login">로그인</a> <!-- 0619 추가 -->
-        </c:if>
-        <c:if test="${!empty login_id }">
-        	<button onclick='location.href="/emp/info?employee_id=${login_id}"'>사원번호 ${login_id }님, 반갑습니다.</button><!-- 0620 추가 -->
-        	<a style="margin: 10px;" href="/public/logout">로그아웃</a> <!-- 0619 추가 -->
-        </c:if>
-        </div>
-    </header>
-    
-  
-					
-      
-        
+	<header class="header" id="header"
+		style="background-color: white; box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.2);">
+		<div class="header_toggle">
+			<i class='bx bx-menu' id="header-toggle"></i>
+		</div>
+		<button
+			onclick="window.open('hello.jsp','출근','width=430,height=500,location=no,status=no,scrollbars=no');">출근</button>
+		<button
+			onclick="window.open('bye.jsp','퇴근','width=430,height=500,location=no,status=no,scrollbars=no');">퇴근</button>
+		<div>
+			<c:if test="${empty login_id }">
+				<a style="margin: 10px;" href="/public/login">로그인</a>
+				<!-- 0619 추가 -->
+			</c:if>
+			<c:if test="${!empty login_id }">
+				<button onclick='location.href="/emp/info?employee_id=${login_id}"'>사원번호
+					${login_id }님, 반갑습니다.</button>
+				<!-- 0620 추가 -->
+				<a style="margin: 10px;" href="/public/logout">로그아웃</a>
+				<!-- 0619 추가 -->
+			</c:if>
+		</div>
+	</header>
+
+
+
+
+
 
 	<header class="header" id="header"
 		style="background-color: white; box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.2);">
@@ -161,8 +178,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 						<div class="nav_link collapse" id="collapseSale">
 							<!-- 0607 -->
 							<a href="/emp/list" class="nav_link"> - 사원관리</a><br> <a
-								href="/emp/vacationlist" class="nav_link"> - 휴가관리</a><br>
-							<a href="/emp/salary" class="nav_link"> - 급여관리</a><br> <a
+								href="/emp/vacationlist" class="nav_link"> - 휴가관리</a><br> <a
+								href="/emp/salary" class="nav_link"> - 급여관리</a><br> <a
 								href="#" class="nav_link"> - 이력관리</a><br>
 							<!-- 0607 -->
 							<!-- 0615 -->
@@ -172,28 +189,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 						</div>
 					</div>
 
-                 <a href="#" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">구매관리</span> </a> </div>
-                <div class="nav_list">
-                  <a href="#" class="nav_link" onclick="foundDropdown()"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">기반관리 ></span> </a> 
-                <div class="nav_link collapse" id="foundation">
-		  			<a href="/foundation/warehouse/warehouseList" class="nav_link"> - 창고관리</a><br>
-		  		    <a href="/foundation/materialdetail/materialdetailList" class="nav_link"> - 자재관리</a><br>
-		  		    <a href="/foundation/itemdetail/itemdetailList" class="nav_link"> - 상품관리</a><br>
-		  		    <a href="/pro/oderList" class="nav_link"> - 재고관리</a><br>
-		  		    <a href="/line/lineList" class="nav_link"> - 라인관리</a><br>
-				</div>
-				</div>
-          
-                <div class="nav_list">
-                  <a href="#" class="nav_link" onclick="proDropdown()"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">생산관리 ></span> </a> 
-                <div class="nav_link collapse" id="pro">
-		  			<a href="/pro/orderList" class="nav_link"> - 작업지시</a><br>
-		  		    <a href="/pro/orerList" class="nav_link"> - 실적등록</a><br>
-
 					<a href="#" class="nav_link"> <i
 						class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">구매관리</span>
 					</a>
-
 				</div>
 				<div class="nav_list">
 					<a href="#" class="nav_link" onclick="foundDropdown()"> <i
@@ -202,7 +200,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					</a>
 					<div class="nav_link collapse" id="foundation">
 						<a href="/foundation/warehouse/warehouseList" class="nav_link">
-							- 창고관리</a><br> <a href="/materials/materialsReceivingList"
+							- 창고관리</a><br> <a
+							href="/foundation/materialdetail/materialdetailList"
 							class="nav_link"> - 자재관리</a><br> <a
 							href="/foundation/itemdetail/itemdetailList" class="nav_link">
 							- 상품관리</a><br> <a href="/pro/oderList" class="nav_link"> -
@@ -217,57 +216,70 @@ document.addEventListener("DOMContentLoaded", function(event) {
 							></span>
 					</a>
 					<div class="nav_link collapse" id="pro">
-						<a href="/pro/oderList" class="nav_link"> - 작업지시</a><br> <a
-							href="/pro/oderList" class="nav_link"> - 실적등록</a><br>
-					</div>
-				</div>
-
-				<div class="nav_list">
-					<a href="#" class="nav_link" onclick="toggleDropdown2()"> <i
-						class="bx bxs-cart-alt nav_icon"></i> <span class="nav_name">입/출고관리
-							></span>
-					</a>
-					<div class="nav_link collapse" id="collapseSale2">
-
-					<!--입출고-->
-						  <a href="/inbound/orderWrite" class="nav_link"> - 발주등록</a><br>
-						  <a href="/inbound/orderList" class="nav_link"> - 발주현황</a><br>
-						  <a href="/inbound/inboundWrite" class="nav_link"> - 입고등록</a><br>
-						  <a href="/inbound/inboundList" class="nav_link"> - 입고현황</a><br>
-						  <a href="/outbound/insert" class="nav_link"> - 출고등록</a><br>
-						  <a href="/outbound/list" class="nav_link"> - 출고현황</a><br>
-					  <!--입출고-->
-	
-				  </div>
-				</div>
-				<div>
-				 <!-- 0619 -->
-                 <a href="/public/boardList" class="nav_link"> <i class='bx bx-folder nav_icon'></i><span class="nav_name">공지사항/게시판</span></a> 
-                 <!-- 이후 write > boardList 로 변경해야 함. >> 변경 완 -->
-                 <!-- 0619 -->
-				</div>
-            </div> 
-            <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a>
-        </nav>
-    </div>
-    
-          <!--   <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a> -->
-
-						<!--입출고-->
-						<a href="/inbound/orderWrite" class="nav_link"> - 발주등록</a><br>
-						<a href="/inbound/orderList" class="nav_link"> - 발주현황</a><br>
-						<a href="/inbound/inboundWrite" class="nav_link"> - 입고등록</a><br>
-						<a href="/inbound/inboundList" class="nav_link"> - 입고현황</a><br>
-						<a href="/outbound/insert" class="nav_link"> - 출고등록</a><br> <a
-							href="/outbound/list" class="nav_link"> - 출고현황</a><br>
-						<!--입출고-->
+						<a href="/pro/orderList" class="nav_link"> - 작업지시</a><br> <a
+							href="/pro/orerList" class="nav_link"> - 실적등록</a><br> <a
+							href="#" class="nav_link"> <i
+							class='bx bx-bar-chart-alt-2 nav_icon'></i> <span
+							class="nav_name">구매관리</span>
+						</a>
 
 					</div>
+					<div class="nav_list">
+						<a href="#" class="nav_link" onclick="foundDropdown()"> <i
+							class='bx bx-user nav_icon'></i> <span class="nav_name">기반관리
+								></span>
+						</a>
+						<div class="nav_link collapse" id="foundation">
+							<a href="/foundation/warehouse/warehouseList" class="nav_link">
+								- 창고관리</a><br> <a href="/materials/materialsReceivingList"
+								class="nav_link"> - 자재관리</a><br> <a
+								href="/foundation/itemdetail/itemdetailList" class="nav_link">
+								- 상품관리</a><br> <a href="/pro/oderList" class="nav_link"> -
+								재고관리</a><br> <a href="/line/lineList" class="nav_link"> -
+								라인관리</a><br>
+						</div>
+					</div>
+
+					<div class="nav_list">
+						<a href="#" class="nav_link" onclick="proDropdown()"> <i
+							class='bx bx-user nav_icon'></i> <span class="nav_name">생산관리
+								></span>
+						</a>
+						<div class="nav_link collapse" id="pro">
+							<a href="/pro/oderList" class="nav_link"> - 작업지시</a><br> <a
+								href="/pro/oderList" class="nav_link"> - 실적등록</a><br>
+						</div>
+					</div>
+
+					<div class="nav_list">
+						<a href="#" class="nav_link" onclick="toggleDropdown2()"> <i
+							class="bx bxs-cart-alt nav_icon"></i> <span class="nav_name">입/출고관리
+								></span>
+						</a>
+						<div class="nav_link collapse" id="collapseSale2">
+
+							<!--입출고-->
+							<a href="/inbound/orderWrite" class="nav_link"> - 발주등록</a><br>
+							<a href="/inbound/orderList" class="nav_link"> - 발주현황</a><br>
+							<a href="/inbound/inboundWrite" class="nav_link"> - 입고등록</a><br>
+							<a href="/inbound/inboundList" class="nav_link"> - 입고현황</a><br>
+							<a href="/outbound/insert" class="nav_link"> - 출고등록</a><br>
+							<a href="/outbound/list" class="nav_link"> - 출고현황</a><br>
+							<!--입출고-->
+
+						</div>
+					</div>
+					<div>
+						<!-- 0619 -->
+						<a href="/public/boardList" class="nav_link"> <i
+							class='bx bx-folder nav_icon'></i><span class="nav_name">공지사항/게시판</span></a>
+						<!-- 이후 write > boardList 로 변경해야 함. >> 변경 완 -->
+						<!-- 0619 -->
+					</div>
 				</div>
-			</div>
-			<a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i>
-				<span class="nav_name">SignOut</span>
-			</a>
+				<a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i>
+					<span class="nav_name">SignOut</span>
+				</a>
 		</nav>
 	</div>
 

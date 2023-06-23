@@ -78,7 +78,7 @@
 							<td><input type="text" id="material_code"
 								name="material_code" placeholder="자재코드" readonly></td>
 							<th>자재속성</th>
-							<td><select id="material_type" name="material_type">
+							<td><select id="material_type" name="material_type" disabled>
 									<option value=""></option>
 									<option value="원자재">원자재</option>
 									<option value="부자재">부자재</option>

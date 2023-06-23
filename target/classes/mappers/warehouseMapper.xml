@@ -17,15 +17,16 @@
 	</insert>
 	<!-- 창고 등록 -->
 	<!-- 특정 창고 조회 -->
-	<select id="seleteWarehouse"
+	<select id="selectWarehouse"
 		resultType="com.ddosirak.domain.WarehouseVO">
 		select * from warehouse where wh_code=#{wh_code}
 	</select>
 	<!-- 특정 창고 조회 -->
 	<!-- 창고 수정 -->
 	<update id="updateWarehouse">
-		UPDATE warehouse 
-		SET wh_name = #{wh_name}, retail_code = #{retail_code}, wh_type = #{wh_type}
+		UPDATE warehouse
+		SET wh_name = #{wh_name}, retail_code = #{retail_code}, wh_type =
+		#{wh_type}
 		WHERE wh_code = #{wh_code}
 	</update>
 	<!-- 창고 수정 -->
@@ -35,10 +36,22 @@
 	</delete>
 	<!-- 창고 삭제 -->
 
+	<!-- 상품 검색 (팝업창) -->
+	<select id="warehouseItemSearch"
+		resultType="com.ddosirak.domain.WarehouseVO">
+		SELECT * FROM warehouse
+		WHERE wh_code LIKE CONCAT('%',
+		#{wh_code}, '%')
+		AND wh_name LIKE CONCAT('%',
+		#{wh_name}, '%')
+	</select>
+	<!-- 상품 검색 (팝업창) -->
+
 	<!-- max(코드) -->
 	<select id="getMaxCode" resultType="String">
 		select max(wh_code)
-		from warehouse
+		from
+		warehouse
 	</select>
 	<!-- max(코드) -->
 

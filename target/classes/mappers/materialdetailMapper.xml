@@ -21,7 +21,7 @@
 	<!-- 특정 물품 기초 조회 -->
 	<select id="selectMaterialDetail"
 		resultType="com.ddosirak.domain.MaterialdetailVO">
-		select material_code, material_name from material_detail
+		select material_code, material_name, material_type from material_detail
 		where material_code = #{material_code}
 	</select>
 	<!-- 특정 물품 기초 조회 -->
