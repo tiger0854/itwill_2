@@ -54,9 +54,9 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 	}
 
 	@Override
-	public String getMaxCode() {
+	public String getMaxCode(WarehouseVO vo) {
 		logger.debug("dao : getMaxCode 호출");
-		return sqlsession.selectOne(NAMESPACE+".getMaxCode");
+		return sqlsession.selectOne(NAMESPACE+".getMaxCode",vo);
 	}
 
 }

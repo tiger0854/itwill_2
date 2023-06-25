@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,26 +12,38 @@
 <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 <!-- <link rel="stylesheet" type="text/css" href="../css/css.css"> -->
 <link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
+  $(document).ready(function() {
+    $(".btn-add").click(function() {
+      var frObj = $("#fr");
+      var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
+      $.ajax({
+        url: "/pro/orderWrite", // 요청을 보낼 서버의 URL
+        type: "POST", // HTTP 요청 방식 (POST)
+        data: formData, // 전송할 데이터 (직렬화된 폼 데이터)
+        success: function(response) {
+		 alert("작성 성공!");
+		 opener.location.reload();
+         window.close(); // 윈도우 창을 닫습니다.
+        },
+        error: function(xhr, status, error) {
+          console.error("에러 발생:", error);
+        }
+      });
+    });
+  });
+  
+//품명 검색 팝업창
+  function openItem(){
+      window.open("/pro/itemList","popup", "width=500, height=600,left=100, top=100");
+  }
 
-// $(document).ready(function() {
-//     generateWorkOrderNumber(); // 페이지 로드 시 작업지시 번호 생성
-    
-//     function generateWorkOrderNumber() {
-//         $.ajax({
-//             url: '/workorder/generate',
-//             success: function(data) {
-//                 $('[name="wo_code"]').val(data.wo_code);
-//             },
-//             error: function() {
-//                 alert('작업지시 번호 생성에 실패했습니다.');
-//             }
-//         });
-//     }
-// });
-
-</script> 
+  
+</script>
 
 
 </head>
@@ -45,28 +58,11 @@
        
 <!--         <hr width="100%" style="border: 2px solid black"> -->
 
-<form action="/pro/orderWrite" method="post" >
+<form role="form" id="fr">
 <table class="box" style="margin-top: 30px; width: 100%">
   <tbody>
-    <tr>
-    
-<!--     CREATE TABLE `springdb`.`prod` ( -->
-<!--   `wo_code` VARCHAR(30) NOT NULL, -->
-<!--   `so_code` VARCHAR(45) NULL, -->
-<!--   `employee_id` INT NULL, -->
-<!--   `factory_code` VARCHAR(45) NULL, -->
-<!--   `line_code` VARCHAR(45) NULL, -->
-<!--   `item_code` VARCHAR(45) NULL, -->
-<!--   `oQTY` INT NULL, -->
-<!--   `pQTY` INT NULL, -->
-<!--   `sQTY` INT NULL, -->
-<!--   `wo_status` VARCHAR(45) NULL, -->
-<!--   `wo_date` VARCHAR(45) NULL, -->
-<!--   `remark` VARCHAR(45) NULL, -->
-<!--   PRIMARY KEY (`wo_code`)); -->
-<!--     <td>작업지시 번호</td> -->
-<!--       <td><input type="text" name="wo_code"></td> -->
-    </tr>
+<%-- ${lineList} --%>
+<td><input type="hidden" name="pQTY" value=0></td>
     <tr>
       <td>수주번호</td>
       <td><input type="text" name="so_code"></td>
@@ -84,20 +80,28 @@
       <td><input type="date" name="delivery_date"></td>
     </tr>
     <tr>
-      <td>라인코드</td>
-      <td><input type="text" name="line_code"></td>
+      <td>라인명</td>
+      <td><select name="line_code" class="line_code">
+		<c:forEach var="line" items="${lineList}">
+			<option value="${line.line_code}">${line.line_name}</option>
+		</c:forEach>
+		</select></td>
     </tr>
     <tr>
-      <td>품목코드</td>
-      <td><input type="text" name="item_code"></td>
+    	<td>품목코드</td>
+  		<td>
+		<input type="text" id="item_code" name="item_code" placeholder="품번검색" onclick="openItem()" width="50%" readonly> 
+		</td>
+    </tr>
+     <tr>
+    	<td>품명</td>
+  		<td>
+		<input type="text" id="item_name" name="item_name" placeholder="품명" style="border:1px solid" width="50%" readonly></td>
+		</td>
     </tr>
     <tr>
       <td>지시수량</td>
-      <td><input type="text" name="oQTY"></td>
-    </tr>
-    <tr>
-      <td>생산수량</td>
-      <td><input type="text" name="pQTY"></td>
+      <td><input type="number" name="oQTY" ></td>
     </tr>
   </tbody>
 </table>
@@ -106,7 +110,7 @@
 
 <!-- 작업지시등록, 취소 버튼 -->
 <div style="text-align: center; margin-top: 50px">
-<button type="submit" class=btn-add> <i class='bx bx-edit'></i> 등록</button>
+<button type="button" class=btn-add> <i class='bx bx-edit'></i> 등록</button>
 <button class=btn-search onclick="window.close()">X 취소</button>
 </div>
 

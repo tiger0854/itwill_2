@@ -1,65 +1,81 @@
 package com.ddosirak.persistance;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
+import org.springframework.ui.Model;
 
 import com.ddosirak.domain.MaterialdetailVO;
 
 @Repository
 public class MaterialdetailDAOImpl implements MaterialdetailDAO {
-	
+
 	@Inject
 	SqlSession sqlsession;
-	
-	private static final String NAMESPACE="com.ddosirak.mapper.MaterialdetailMapper";
-	
-	
-	private static final Logger logger=org.slf4j.LoggerFactory.getLogger(MaterialdetailDAOImpl.class);
-	
-	//자재 기초 목록
+
+	private static final String NAMESPACE = "com.ddosirak.mapper.MaterialdetailMapper";
+
+	private static final Logger logger = org.slf4j.LoggerFactory.getLogger(MaterialdetailDAOImpl.class);
+
+	// 자재 기초 목록
 	@Override
 	public List<MaterialdetailVO> mdList() {
 		logger.debug("dao : 자재 기초 목록 실행");
-		return sqlsession.selectList(NAMESPACE+".MaterialDetailList");
+		return sqlsession.selectList(NAMESPACE + ".MaterialDetailList");
 	}
-	
-	//자재 기초 등록
+
+	// 자재 기초 등록
 	@Override
 	public Integer insertMD(MaterialdetailVO vo) {
 		logger.debug("dao : 자재 기초 등록 실행");
-		logger.debug(vo+"");
-		return sqlsession.insert(NAMESPACE+".insertMaterialDetail",vo);
+		logger.debug(vo + "");
+		return sqlsession.insert(NAMESPACE + ".insertMaterialDetail", vo);
 	}
-	
-	//자재 기초 수정
+
+	// 자재 기초 수정
 	@Override
 	public Integer updateMD(MaterialdetailVO vo) {
 		logger.debug("dao : 자재 기초 수정 실행(update)");
-		return sqlsession.update(NAMESPACE+".updateMaterialDetail",vo);
+		return sqlsession.update(NAMESPACE + ".updateMaterialDetail", vo);
 	}
+
 	@Override
 	public MaterialdetailVO selectMD(String material_code) {
 		logger.debug("dao : 자재 기초 수정 실행(edit)");
-		return sqlsession.selectOne(NAMESPACE+".selectMaterialDetail", material_code);
+		return sqlsession.selectOne(NAMESPACE + ".selectMaterialDetail", material_code);
 	}
 
-	//자재 삭제
+	// 자재 삭제
 	@Override
 	public void deleteM(String material_code) {
 		logger.debug("dao : 자재 삭제 실행");
-		sqlsession.delete(NAMESPACE+".deleteMaterial",material_code);
+		sqlsession.delete(NAMESPACE + ".deleteMaterial", material_code);
 	}
 
 	@Override
 	public String getMaxCode() {
 		logger.debug("dao : getMaxCode 호출");
-		return sqlsession.selectOne(NAMESPACE+".getMaxCode");
+		return sqlsession.selectOne(NAMESPACE + ".getMaxCode");
+	}
+	
+	// 상품목록 검색 (팝업창)
+	@Override
+	public List<MaterialdetailVO> materialItemList() {
+		logger.debug("dao : materialItemList 전체호출");
+		List<MaterialdetailVO> materialItemList = sqlsession.selectList(NAMESPACE + ".materialItemList");
+		return materialItemList;
+	}
+	
+	@Override
+	public List<MaterialdetailVO> materialItemList(Map<String, Object> instrSearch, Model model) {
+		logger.debug("dao : materialItemList 부분호출");
+		List<MaterialdetailVO> materialItemList = sqlsession.selectList(NAMESPACE + ".materialItemSearch", instrSearch);
+		return materialItemList;
 	}
 
-	
 }

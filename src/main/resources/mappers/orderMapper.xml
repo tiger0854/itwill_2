@@ -4,121 +4,35 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<!--   CREATE TABLE `springdb`.`prod` ( -->
-<!--   `wo_code` VARCHAR(30) NOT NULL, -->
-<!--   `so_code` VARCHAR(45) NULL, -->
-<!--   `employee_id` INT NULL, -->
-<!--   `factory_code` VARCHAR(45) NULL, -->
-<!--   `line_code` VARCHAR(45) NULL, -->
-<!--   `item_code` VARCHAR(45) NULL, -->
-<!--   `oQTY` INT NULL, -->
-<!--   `pQTY` INT NULL, -->
-<!--   `wo_status` VARCHAR(45) NULL, -->
-<!--   `wo_date` VARCHAR(45) NULL, -->
-<!--   `remark` VARCHAR(45) NULL, -->
-<!--   PRIMARY KEY (`wo_code`)); -->
-  
-<!--        <td>작업지시 번호</td> -->
-<!--       <td><input type="text" name="wo_code"></td> -->
-<!--     </tr> -->
-<!--     <tr> -->
-<!--       <td>수주번호</td> -->
-<!--       <td><input type="text" name="so_code"></td> -->
-<!--     </tr> -->
-<!--     <tr> -->
-<!--       <td>수주수량</td> -->
-<!--       <td><input type="text" name="sQTY"></td> -->
-<!--     </tr> -->
-<!--     <tr> -->
-<!--       <td>작업지시자</td> -->
-<!--       <td><input type="text" name="employee_id"></td> -->
-<!--     </tr> -->
-<!--     <tr> -->
-<!--       <td>납품예정일</td> -->
-<!--       <td><input type="date" name="delivery_date"></td> -->
-<!--     </tr> -->
-<!--     <tr> -->
-<!--       <td>라인코드</td> -->
-<!--       <td><input type="text" name="line_code"></td> -->
-<!--     </tr> -->
-<!--     <tr> -->
-<!--       <td>품목코드</td> -->
-<!--       <td><input type="text" name="item_code"></td> -->
-<!--     </tr> -->
-<!--     <tr> -->
-<!--       <td>지시일자</td> -->
-<!--       <td><input type="date" name="wo_date"></td> -->
-<!--     </tr> -->
-<!--     <tr> -->
-<!--       <td>지시수량</td> -->
-<!--       <td><input type="text" name="oQTY"></td> -->
-<!--     </tr> -->
-<!--     <tr> -->
-<!--       <td>생산수량</td> -->
-<!--       <td><input type="text" name="pQTY"></td> -->
-<!--     </tr> -->
-  
   <mapper namespace="com.ddosirak.mapper.OrderMapper">
+  
+  	<!-- 발주서 등록 -->
+  	<insert id="insertOrder">
+  		INSERT INTO ret_order 
+  		(order_number, material_code, material_name, material_price, order_piece, order_date, pay_date, order_resp, order_trade)
+		SELECT CONCAT('ORD', REPLACE(#{order_date}, '-', ''), IFNULL(max(order_id)+1,1)),#{material_code},#{material_name},#{material_price},#{order_piece},#{order_date},#{pay_date},#{order_resp},#{order_trade}
+		FROM ret_order
+  	</insert>
+  	<!-- 발주서 등록 -->
   	
-  	<!-- 작업지시 등록 -->
-	<insert id="insertOrder">
-	  <selectKey keyProperty="wo_code" resultType="String" order="BEFORE">
-	    SELECT CONCAT('WO', DATE_FORMAT(NOW(), '%Y%m%d'), 
-	      (SELECT COUNT(*) + 1 FROM prod)) AS wo_code
-	  </selectKey>
-		  INSERT INTO prod
-		  (wo_code, so_code, sQTY, employee_id, delivery_date, line_code, item_code, wo_date, oQTY, pQTY)
-		  VALUES (
-		    #{wo_code}, #{so_code}, #{sQTY}, #{employee_id}, #{delivery_date}, #{line_code}, #{item_code},
-		    CURDATE(), #{oQTY}, #{pQTY}
-		  )
-	</insert>
-  	<!-- 작업지시 등록 -->
-  	
-  	<!-- 작업지시 목록 출력-->
-  	<select id="proOrderList" resultType="com.ddosirak.domain.ProOrderVO">
-		SELECT * FROM prod
+  	<!-- 발주현황 리스트 -->
+  	<select id="orderAllList" resultType="com.ddosirak.domain.OrderVO">
+  		SELECT * FROM ret_order 
   	</select>
+  	<!-- 발주현황 리스트 -->
   	
-  	<!-- 작업지시 정보 -->
-  	<select id="getProOrder" resultType="com.ddosirak.domain.ProOrderVO">
-		SELECT * FROM prod WHERE wo_code=#{wo_code}
-  	</select>
+  	<!-- 발주서 수정 -->
+  	<update id="updateOrder">
+  		UPDATE ret_order SET order_piece=#{order_piece},order_date=#{order_date},pay_date=#{pay_date},order_resp=#{order_resp},order_trade=#{order_trade}
+  		WHERE order_number=#{order_number}
+  	</update>
+  	<!-- 발주서 수정 -->
+  	
+  	<!-- 발주서 삭제 -->
+  	<delete id="deleteOrder">
+  		delete from ret_order where order_number = #{order_number}
+  	</delete>
+  	<!-- 발주서 삭제 -->
 
   	
-  	<!-- 작업지시  수정 -->
-  	<update id="editProOrder">
-  		UPDATE prod SET so_code=#{so_code}, sQTY=#{sQTY},employee_id=#{employee_id},delivery_date=#{delivery_date},line_code=#{line_code},item_code=#{item_code}, 
-  		oQTY=#{oQTY},pQTY=#{pQTY} 
-  		WHERE wo_code=#{wo_code}
-  	</update>
-  	<!-- 작업지시  수정 -->
-  	
-  	
-  	<!-- 일용직 직원 수 -->
-  		<select id="alCount" resultType="Integer">
-  			SELECT COUNT(employee_id) FROM emp_main WHERE position='일용'  
-  		</select>
-  	<!-- 일용직 직원 수 -->
-  	<!-- 임직원 수 -->
-  	  	<select id="empCount" resultType="Integer">
-  			SELECT COUNT(employee_id) FROM emp_main WHERE position != '일용' 
-  		</select>
-  	<!-- 임직원 수 -->
-  	
-  	
-  	<!-- 로그인 -->
-  	<select id="login" resultType="com.ddosirak.domain.EmployeeVO">
-  		select * from tbl_member 
-  		where user_id=#{user_id} and user_pw=#{user_pw}
-  	</select>
-  	<!-- 로그인 -->
-  	
-  	
-  	<!-- 회원정보 삭제 -->
-  	<delete id="delete">
-  		delete from tbl_member where user_id=#{user_id} and user_pw=#{user_pw} 
-  	</delete>
-  	<!-- 회원정보 삭제 -->
-  
   </mapper>

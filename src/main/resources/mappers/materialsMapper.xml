@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ddosirak.mapper.MaterialsMapper">
+
+	<!-- 자재입고 등록 -->
+	<insert id="insertMatInput">
+		insert into material (employee_id, rvDate, material_code, material_name, cus_code, cus_name, wh_code, wh_name, rvQTY, rvBOX, remark)
+		values (#{employee_id}, #{rvDate}, #{material_code}, #{material_name}, #{cus_code}, #{cus_name}, #{wh_code}, #{wh_name}, #{rvQTY}, #{rvBOX}, #{remark})
+	</insert>
+	<!-- 자재입고 등록 -->
+	
+	<!-- 자재입고 목록 -->
+	<select id="materialInputList" resultType="com.ddosirak.domain.MaterialsVO">
+		select * from material
+	</select>	
+	<!-- 자재입고 목록 -->
+	
+	<!-- 자재 입고 특정 게시물 불러오기 -->
+	<select id="getMatInput" resultType="com.ddosirak.domain.MaterialsVO">
+		select * from material where material_code=#{material_code}
+	</select>
+	<!-- 자재 입고 특정 게시물 불러오기 -->
+	
+	<!-- 자재입고 수정 -->
+	<update id="updateMatInput">
+		update material set material_code=#{material_code}, material_name=#{material_name}, cus_code=#{cus_code}, cus_name=#{cus_name}, wh_code=#{wh_code}, wh_name=#{wh_name}, rvQTY=#{rvQTY}, rvBOX=#{rvBOX}, remark=#{remark}
+		where material_code=#{material_code}
+	</update>	
+	<!-- 자재입고 수정 -->
+	
+	<!-- 자재입고 삭제 -->
+	<delete id="deleteMatInput">
+		delete from material
+		where material_code=#{material_code}
+	</delete>
+	<!-- 자재입고 삭제 -->
+	
+	<!-- 특정 상품목록 -->
+	<select id="itemList" resultType="com.ddosirak.domain.IntegrationCodeVO">
+		select * from material
+	</select>
+	<!-- 특정 상품목록 -->
+
+	<!-- max(코드) -->
+	<select id="getMaxCode" resultType="String">
+		select max(material_code)
+		from material_detail
+	</select>
+	<!-- max(코드) -->
+
+</mapper>

@@ -1,20 +1,47 @@
 package com.ddosirak.controller;
 
+
+import java.io.File;
+
+
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
+
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.ddosirak.domain.EmployeeListVO;
 import com.ddosirak.domain.EmployeeVO;
+import com.ddosirak.domain.EmployeevacationVO;
+
+import com.ddosirak.domain.PageVO;
+
+
+import com.ddosirak.domain.SalaryVO;
 import com.ddosirak.service.EmployeeService;
+import com.ddosirak.service.PageService;
 
 // 컨트롤러 구현 전 정하면 좋은 것들.
 // - 컨트롤러별 공통 주소 (URI) 설계
@@ -35,29 +62,29 @@ public class MemberController {
 	// 서비스의 정보가 필요함. > 의존관계
 	@Inject
 	private EmployeeService eService;
+	@Inject
+	private PageService pService;
 	
 	// 동작 구현 > 메서드 설계
 	
 	
 ////////////////////////////////////////////////////사원 관리//////////////////////////////////////////////////////////////////////////////
-	// http://localhost:8088/member/MemberJoin.me
 	// http://localhost:8088/emp/insert
-	// 회원가입 처리 - 정보 입력
+	// 사원등록 - 정보 입력
 	@RequestMapping(value="/insert",method=RequestMethod.GET)
 	public void employeeInsertGET() {
 		logger.debug("employeeInsertGET() 호출![]~(￣▽￣)~*");
-		logger.debug("/emp/emp_add.jsp로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
+		logger.debug("/emp/insert.jsp로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
 		
 //		return "/emp/emp_add";
 	}// employeeInsertGET() method end
-	// 회원가입 처리 - 정보 처리
+	// 사원등록 - 정보 처리
 	@RequestMapping(value="/insert",method=RequestMethod.POST)
-	public String employeeInsertPOST(EmployeeVO vo) {	
+	public String employeeInsertPOST(EmployeeVO vo,@RequestParam("employee_photo_link")MultipartFile file ,HttpServletRequest request) throws Exception{	
 		logger.debug("employeeInsertPOST() 호출![]~(￣▽￣)~*");
 		
 		logger.debug(vo+" ");
-		
-		// 사원번호 부여 동작
+		// =====================사원번호 부여 동작===========================
 		logger.debug("!!!!"+vo.getPosition());
 		if(vo.getPosition().equals("일용")) {
 			// 일용직 사원의 직번
@@ -66,16 +93,62 @@ public class MemberController {
 			// 임직원의 직번
 			vo.setEmployee_id(eService.getMaxId());
 		}// i-e end
-		// 서비스 > 사원 추가 메서드 호출
-		// >> DAO > 사원 추가 메서드 호출
-		eService.employeeInsert(vo);
+		// ====================사원번호 부여 동작=============================
 		
+		eService.employeeInsert(vo);// 사원정보 DB 저장 동작
+		
+		// ====================사원 IDPW 부여 동작=============================
+		// 임직원인 경우만 추가된다.
+		if(vo.getEmployee_id() < 10000) {
+			eService.setEmployeeIDPW(vo); // 사원 추가간 아이디 / 비밀번호 추가 메서드
+		}// if end
+		// ====================사원 IDPW 부여 동작=============================
+		
+		eService.setEmployee_photo(vo.getEmployee_id(), file, request);
+				
 		logger.debug(">> vo: "+vo);
+		// 페이지 이동	
+		return "redirect:/emp/list"; // 주소를 변경하면서 페이지 이동
+	}// employeeInsertPOST() method end
+	
+	// 일용직 일괄등록 > 페이지 이동
+	@RequestMapping(value="/insert_al",method=RequestMethod.GET)
+	public void alInsertGET() {
+		logger.debug("alInsertGET() 호출![]~(￣▽￣)~*");
+		logger.debug("/emp/emp_add.jsp로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
+
+	}// alInsertGET() method end
+	// 일용직 일괄등록 > 동작
+	@RequestMapping(value="/insert_al",method=RequestMethod.POST)	
+	public String alInsertPOST(@ModelAttribute(value="EmployeeListVO") EmployeeListVO voList) {	 // List로 여러 내용을 받아오는 방법.
+		logger.debug("alInsertPOST() 호출![]~(￣▽￣)~*");
+		// 사원번호 부여 동작
+		for(int i=0;i<voList.getEmployeelist().size();i++) {
+			EmployeeVO emp = voList.getEmployeelist().get(i);
+			logger.debug("!!!!"+emp.getPosition());
+			if(emp.getPosition().equals("일용")) {
+				emp.setEmployee_id(eService.getMaxId_al());// 일용직 사원의 직번
+				// 일용직 직원의 일급을 나누기 위한 제어문
+				if(emp.getWorking_hours().equals("전일반")) {
+					emp.setYear_sal(10);
+				}else if(emp.getWorking_hours().equals("오전반")){
+					emp.setYear_sal(5);
+				}else if(emp.getWorking_hours().equals("오후반")) {
+					emp.setYear_sal(5);
+				} // i-e-e end
+			}else {
+				// 직번
+				emp.setEmployee_id(eService.getMaxId());
+			}// i-e end
+			eService.employeeInsert(emp); // 일용직 사원 정보 DB 등록
+		}// for end
+		logger.debug(">> vo: "+voList);
 		// 페이지 이동
 		
 		return "redirect:/emp/list"; // 주소를 변경하면서 페이지 이동
-	}// employeeInsertPOST() method end
+	}// alInsertPOST() method end
 	// >> GET / POST 의 전달방식을 사용하여 하나의 메서드로 두가지 동작을 수행할 수 있다.
+
 	
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
 	public void employeeInfoGET(int employee_id, Model model) {
@@ -91,22 +164,69 @@ public class MemberController {
 		logger.debug("vo > "+vo);
 		
 		 eService.updateEmployee(vo);
-
 		return "redirect:/emp/info?employee_id="+vo.getEmployee_id();
 	}// employeeUpdate() method end
 	
 	// http://localhost:8088/emp/list
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public void listGET(Model model) {
+	public void listGET(Model model,PageVO pageVO, HttpServletRequest request) throws Exception{
 		logger.debug("listGET() 호출![]~(￣▽￣)~*");
 		
-		List<EmployeeVO> empList = eService.empList();
+		//================================페이징 처리를 위한 값 받아오기 동작========================================
+		// 준비물 : Inject > PageVO , 파라미터값 PageVO pageVO, HttpServletRequest request
+		//   		리스트를 반환하는 DAO - Service 메서드에 PageVO 추가, 쿼리에 LIMIT #{startRow}, #{pageSize} 추가.
+		// 페이징 처리
+		// 한 화면에 보여줄 글 개수 설정
+		int pageSize = 5; // sql문에 들어가는 항목
+		
+		// 현페이지 번호 가져오기
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum==null) {
+			pageNum="1";
+		}
+		// 페이지번호를 정수형으로 변경
+		int currentPage=Integer.parseInt(pageNum);
+		pageVO.setPageSize(pageSize);
+		pageVO.setPageNum(pageNum);
+		pageVO.setCurrentPage(currentPage);
+		int startRow=(pageVO.getCurrentPage()-1)*pageVO.getPageSize()+1; // sql문에 들어가는 항목
+		int endRow = startRow+pageVO.getPageSize()-1;
+		
+		pageVO.setStartRow(startRow-1); // limit startRow (0이 1열이기 때문 1을 뺌)
+		pageVO.setEndRow(endRow);
+		
+		// 게시글 개수 가져오기
+		int count = pService.countEmpList(); // 요 동작만 각자 페이지에 맞게 수정하면 됨!!
+
+		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
+		int startPage=(currentPage-1)/pageBlock*pageBlock+1;
+		int endPage=startPage+pageBlock-1;
+		int pageCount=count/pageSize+(count%pageSize==0?0:1);
+		if(endPage > pageCount){
+		 	endPage = pageCount;
+		 }
+		pageVO.setCount(count);
+		pageVO.setPageBlock(pageBlock);
+		pageVO.setStartPage(startPage);
+		pageVO.setEndPage(endPage);
+		pageVO.setPageCount(pageCount);
+		
+		model.addAttribute("pageVO", pageVO);
+		//================================페이징 처리를 위한 값 받아오기 동작========================================
+		
+		List<EmployeeVO> empList = eService.empList(pageVO); // 리스트를 반환하는 메서드의 파라미터 값으로 pageVO 넣기
+		
 		int empCount = eService.empCount();
-		int alCount = eService.alCount();
+		int alCount_all = eService.alCount_all();
+		int alCount_am = eService.alCount_am();
+		int alCount_pm = eService.alCount_pm();
+		int alCount = alCount_all+alCount_am+alCount_pm;
 		model.addAttribute("empList",empList);
 		model.addAttribute("empCount",empCount);
+		model.addAttribute("alCount_all",alCount_all);
+		model.addAttribute("alCount_am",alCount_am);
+		model.addAttribute("alCount_pm",alCount_pm);
 		model.addAttribute("alCount",alCount);
-		
 	}//listGET() method end
 	
 ////////////////////////////////////////////////////사원 관리//////////////////////////////////////////////////////////////////////////////
@@ -115,33 +235,192 @@ public class MemberController {
 	// http://localhost:8088/emp/salary
 	// 급여관리 메인페이지
 	@RequestMapping(value = "/salary", method = RequestMethod.GET)
-	public void salaryGET(Model model) {
+	public void salaryGET(Model model, PageVO pageVO, HttpServletRequest request) {
 		logger.debug("salaryGET() 호출![]~(￣▽￣)~*");
 		logger.debug("페이지 이동!");
 		
+		//================================페이징 처리를 위한 값 받아오기 동작========================================
+		// 준비물 : Inject > PageVO , 파라미터값 PageVO pageVO, HttpServletRequest request
+		//   		리스트를 반환하는 DAO - Service 메서드에 PageVO 추가, 쿼리에 LIMIT #{startRow}, #{pageSize} 추가.
+		// 페이징 처리
+		// 한 화면에 보여줄 글 개수 설정
+		int pageSize = 5; // sql문에 들어가는 항목
+		
+		// 현페이지 번호 가져오기
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum==null) {
+			pageNum="1";
+		}
+		// 페이지번호를 정수형으로 변경
+		int currentPage=Integer.parseInt(pageNum);
+		pageVO.setPageSize(pageSize);
+		pageVO.setPageNum(pageNum);
+		pageVO.setCurrentPage(currentPage);
+		int startRow=(pageVO.getCurrentPage()-1)*pageVO.getPageSize()+1; // sql문에 들어가는 항목
+		int endRow = startRow+pageVO.getPageSize()-1;
+		
+		pageVO.setStartRow(startRow-1); // limit startRow (0이 1열이기 때문 1을 뺌)
+		pageVO.setEndRow(endRow);
+		
+		// 게시글 개수 가져오기
+		int count = pService.countEmpList(); // 요 동작만 각자 페이지에 맞게 수정하면 됨!!
+
+		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
+		int startPage=(currentPage-1)/pageBlock*pageBlock+1;
+		int endPage=startPage+pageBlock-1;
+		int pageCount=count/pageSize+(count%pageSize==0?0:1);
+		if(endPage > pageCount){
+		 	endPage = pageCount;
+		 }
+		pageVO.setCount(count);
+		pageVO.setPageBlock(pageBlock);
+		pageVO.setStartPage(startPage);
+		pageVO.setEndPage(endPage);
+		pageVO.setPageCount(pageCount);
+		
+		model.addAttribute("pageVO", pageVO);
+		//================================페이징 처리를 위한 값 받아오기 동작========================================
+		
 		// 사원 목록 불러오기
-		List<EmployeeVO> empList = eService.empList();
+		List<EmployeeVO> empList = eService.empList(pageVO);
 		model.addAttribute("empList",empList);
 		
 	}// salaryGET() method end
 	
-	// 사원 급여조회 페이지
+	// 사원 급여조회 페이지 GET
 	@RequestMapping(value = "/salaryInfo", method = RequestMethod.GET)
 	public void salaryInfoGET(Model model, int employee_id) {
 		logger.debug("salaryInfoGET() 호출![]~(￣▽￣)~*");
 
 		EmployeeVO evo = eService.getEmployee(employee_id);
 		model.addAttribute("evo",evo);
+		List<SalaryVO> salaryList = eService.getSalaryInfo(employee_id);
+		model.addAttribute("salaryList",salaryList);
 		
 	}//  salaryInfoGET() method end
 	
-	// 사원 급여 등록 및 수정 페이지
+	// 사원 급여 등록 및 수정 페이지 GET
 	@RequestMapping(value = "/salaryInsert", method = RequestMethod.GET)
-	public void salaryInsertGET(Model model) {
+	public void salaryInsertGET(Model model, int employee_id) {
 		logger.debug("salaryInsertGET() 호출![]~(￣▽￣)~*");
 		logger.debug("페이지 이동!");
 		
+		EmployeeVO evo = eService.getEmployee(employee_id);
+		model.addAttribute("evo",evo);
+		
 	}// salaryInsertGET() method end
+	// 사원 급여 등록 및 수정 페이지 POST
+	@RequestMapping(value = "/salaryInsert", method = RequestMethod.POST)
+	public String salaryInsertPOST(Model model, int employee_id,EmployeeVO vo) {
+		logger.debug("salaryInsertPOST() 호출![]~(￣▽￣)~*");
+		logger.debug("페이지 이동!");
+		eService.salaryInsert(vo);
+		
+		EmployeeVO evo = eService.getEmployee(employee_id);
+		model.addAttribute("evo",evo);
+		
+		return "redirect:/emp/salaryInfo?employee_id="+employee_id;
+	}// salaryInsertPOST() method end
+	
+	// 사원 급여 명세서 조회 페이지
+	@RequestMapping(value = "/salaryDetail", method = RequestMethod.GET)
+	public void salaryDetailGET(Model model, int employee_id ,SalaryVO vo) {
+		logger.debug("salaryDetailGET() 호출![]~(￣▽￣)~*");
+		logger.debug("페이지 이동!");
+		
+		EmployeeVO evo = eService.getEmployee(employee_id);
+		model.addAttribute("evo",evo);
+		SalaryVO svo = eService.getEmpSalaryInfo(vo);
+		model.addAttribute("svo",svo);
+		
+		// 급여정보 가져오는 메서드 있어야함
+		
+	}// salaryDetailGET() method end
+	
+	// 급여 지급 페이지 GET
+	@RequestMapping(value = "/salaryPay", method = RequestMethod.GET)
+	public void salaryPayGET(Model model,SalaryVO vo, PageVO pageVO, HttpServletRequest request) {
+		logger.debug("salaryPayGET() 호출![]~(￣▽￣)~*");
+		logger.debug("페이지 이동!");
+		
+		//================================페이징 처리를 위한 값 받아오기 동작========================================
+		// 준비물 : Inject > PageVO , 파라미터값 PageVO pageVO, HttpServletRequest request
+		//   		리스트를 반환하는 DAO - Service 메서드에 PageVO 추가, 쿼리에 LIMIT #{startRow}, #{pageSize} 추가.
+		// 페이징 처리
+		// 한 화면에 보여줄 글 개수 설정
+		int pageSize = 5; // sql문에 들어가는 항목
+		
+		// 현페이지 번호 가져오기
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum==null) {
+			pageNum="1";
+		}
+		// 페이지번호를 정수형으로 변경
+		int currentPage=Integer.parseInt(pageNum);
+		pageVO.setPageSize(pageSize);
+		pageVO.setPageNum(pageNum);
+		pageVO.setCurrentPage(currentPage);
+		int startRow=(pageVO.getCurrentPage()-1)*pageVO.getPageSize()+1; // sql문에 들어가는 항목
+		int endRow = startRow+pageVO.getPageSize()-1;
+		
+		pageVO.setStartRow(startRow-1); // limit startRow (0이 1열이기 때문 1을 뺌)
+		pageVO.setEndRow(endRow);
+		
+		// 게시글 개수 가져오기
+		int count = pService.countEmpList(); // 요 동작만 각자 페이지에 맞게 수정하면 됨!!
+
+		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
+		int startPage=(currentPage-1)/pageBlock*pageBlock+1;
+		int endPage=startPage+pageBlock-1;
+		int pageCount=count/pageSize+(count%pageSize==0?0:1);
+		if(endPage > pageCount){
+		 	endPage = pageCount;
+		 }
+		pageVO.setCount(count);
+		pageVO.setPageBlock(pageBlock);
+		pageVO.setStartPage(startPage);
+		pageVO.setEndPage(endPage);
+		pageVO.setPageCount(pageCount);
+		
+		model.addAttribute("pageVO", pageVO);
+		//================================페이징 처리를 위한 값 받아오기 동작========================================
+		
+		// 사원 목록 불러오기
+		List<EmployeeVO> empList = eService.empList(pageVO);
+		model.addAttribute("empList",empList);
+		// 최종 급여지급일 정보 가져오는 메서드 필요.
+		SalaryVO svo = eService.getEmpSalaryInfo(vo);
+		model.addAttribute("svo",svo);
+		
+	}// salaryPayGET() method end
+	// 급여 지급 페이지 POST
+	@RequestMapping(value = "/salaryPay", method = RequestMethod.POST)
+	public String salaryPayPOST(Model model, int[] employee_id) {
+		logger.debug("salaryPayPOST() 호출![]~(￣▽￣)~*");
+		logger.debug("페이지 이동!");
+		if(employee_id != null) {
+			for(int i=0;i<employee_id.length;i++) {
+				logger.debug(employee_id[i]+"번 사원에게 급여 지급!");
+				
+				int idLength = Integer.toString(employee_id[i]).length();
+				logger.debug("employee_id - length : "+ idLength);
+				
+				if(idLength <= 4) { // 임직원, 코드 4자리
+					// 급여지급 동작
+					eService.salaryPay(employee_id[i]);
+				}else if(idLength >= 4) { // 일용직, 코드 5자리
+					// 일용직 급여지급 동작
+					eService.al_salaryPay(employee_id[i]);
+				}// i-ei end
+			}// for end
+		}else {
+			logger.debug("ids에 값 없음!");
+		} // i-e end
+		return "redirect:/emp/salary";
+	}// salaryPayPOST() method end
+	
+	
+	
 	
 	
 	
@@ -149,6 +428,113 @@ public class MemberController {
 ////////////////////////////////////////////////////급여 관리//////////////////////////////////////////////////////////////////////////////
 	
 	
+	
+	
+	
+	
+////////////////////////////////////////////////////휴가 관리/////////////////////////////////////////////////////////////////////////////	
+	
+//	 http://localhost:8088/emp/vacationlist
+		// 휴가관리 리스트페이지(관리자)
+		@RequestMapping(value = "/vacationlist", method = RequestMethod.GET)
+		public void vacationGET(Model model) {
+			logger.debug("vacationGET() 호출![]~(￣▽￣)~*");
+			logger.debug("페이지 이동!");
+			
+			// 사원 목록 불러오기
+			List<EmployeevacationVO> vacationList = eService.vacationList();
+			model.addAttribute("vacationList",vacationList);
+			
+			
+		}// vacationGET() method end
+		
+		// http://localhost:8088/emp/myvacationList
+		// 나의 휴가내역 리스트 페이지
+		@RequestMapping(value = "/myvacationList", method = RequestMethod.GET)
+		public String myvacationList(Model model, @ModelAttribute("result")String result) {
+			logger.debug("myvacation() 호출!");
+			logger.debug("result :"+result);
+			
+			// 서비스 - DB에 저장된 글 정보를 가져오기
+			List<EmployeevacationVO> myvacationList = eService.myvacationList();
+			logger.debug("myvacationList", myvacationList);
+			// 연결된 뷰페이지로 전달(뷰-출력)
+			model.addAttribute("myvacationList", myvacationList);
+			return "/emp/myvacationList";
+		}
+		
+		
+		
+		// 나의 휴가내역 리스트 페이지
+	
+//	http://localhost:8088/emp/vacationregist
+		// 휴가 신청 페이지	
+		// 글쓰기 - /emp/regist (GET)
+		@RequestMapping(value = "/vacationregist", method = RequestMethod.GET)
+		public void vacationregist(Model model) throws Exception{
+			logger.debug("vacationregist() 호출!");
+			logger.debug("/emp/vacationregist.jsp페이지 이동");
+		}
+	
+		// 글쓰기 - /emp/regist (POST)
+		@RequestMapping(value= "/vacationregist",method = RequestMethod.POST)
+		public String vacationregistPOST(EmployeevacationVO vvo, RedirectAttributes rttr) throws Exception {
+			
+			logger.debug("registPOST() 호출!");
+			// 한글처리(필터를 만들어 놓아서 생략)
+			// 페이지 전달 데이터 저장
+			logger.debug("evo :",vvo);
+			
+			// 서비스 - 글쓰기 동작 호출
+			eService.insertVacation(vvo);
+			
+			// 리시트로 정보를 전달 (rttr)
+			rttr.addFlashAttribute("result", "CREATEOK");
+			
+			// 나의휴가 내역페이지로 이동
+			
+			
+			return "redirect:/emp/myvacationList";
+			
+		}
+		
+		// 휴가 수정하기
+		@RequestMapping(value = "/vacationmodify", method = RequestMethod.GET)
+		public void vacationmodify(Model model, Integer vacation_id) throws Exception {
+			// 수정하기 - /emp/modify (GET)
+			logger.debug("vacationmodify() 호출!");
+			logger.debug("/emp/vacationmodify.jsp페이지 이동");
+			
+			// 사원 휴가 정보 불러오기
+			EmployeevacationVO vvo = eService.vacationim(vacation_id);
+			model.addAttribute("vvo", vvo);
+		}
+		
+		@RequestMapping(value= "/vacationmodify",method = RequestMethod.POST)
+		public String vacationmodify(EmployeevacationVO vvo, RedirectAttributes rttr,Integer vacation_id) throws Exception {
+			
+			logger.debug("vacationmodify() 호출!");
+			// 한글처리(필터를 만들어 놓아서 생략)
+			// 페이지 전달 데이터 저장
+			logger.debug("vvo :",vvo);
+			
+			// 서비스 - 휴가수정 동작 호출
+			eService.vacationmodify(vvo);
+			
+			// 리시트로 정보를 전달 (rttr)
+			rttr.addFlashAttribute("result", "CREATEOK");
+			
+			// 나의휴가 내역페이지로 이동
+			
+			return "redirect:/emp/vacationmodify?vacation_id="+vvo.getVacation_id();
+		}
+		    // 수정하기 - /emp/modify (POST)
+		
+		
+		
+		
+	
+/////////////////////////////////////////////////////휴가 관리/////////////////////////////////////////////////////////////////////////////	
 	
 //	// 로그인 > 정보입력 (GET)
 //	@RequestMapping(value="/login", method=RequestMethod.GET)

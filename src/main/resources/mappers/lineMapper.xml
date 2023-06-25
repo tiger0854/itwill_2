@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  
+  <mapper namespace="com.ddosirak.mapper.LineMapper">
+  	
+		<insert id="lineAdd">
+		  <selectKey keyProperty="line_code" resultType="String" order="BEFORE">
+		    SELECT CONCAT('LINE', LPAD((SELECT COUNT(line_code) + 1 FROM pro_line), 3, '0')) AS line_code
+		  </selectKey>
+		  INSERT INTO pro_line
+		  (line_code, line_name, factory_code, remark)
+		  VALUES (
+		    #{line_code}, #{line_name}, #{factory_code}, #{remark}
+		  )
+		</insert>
+
+  	<!-- 작업지시 등록 -->
+  	
+  	<!-- 작업지시 목록 출력-->
+  	<select id="LineList" resultType="com.ddosirak.domain.LineVO">
+		SELECT * FROM pro_line
+  	</select>
+  	
+  	<!-- 작업지시 검색목록 -->
+  	<select id="lineSearch" resultType="com.ddosirak.domain.LineVO">
+		SELECT * FROM pro_line
+		WHERE line_code LIKE CONCAT('%', #{line_code}, '%')
+		AND line_name LIKE CONCAT('%', #{line_name}, '%')
+  	</select>
+
+
+  	<!-- 라인 정보 -->
+  	<select id="getLine" resultType="com.ddosirak.domain.LineVO">
+		SELECT * FROM pro_line WHERE line_code=#{line_code}
+  	</select>
+  	<!-- 라인  수정 -->
+	<update id="editLine">
+	  UPDATE pro_line
+	  SET line_name=#{line_name},
+	      factory_code=#{factory_code},
+	      remark=#{remark}
+	  WHERE line_code=#{line_code}
+	</update>
+  	<!-- 라인  수정 -->
+  	
+  	<!-- 라인 삭제 -->
+  	<delete id="deleteLine">
+  		delete from pro_line WHERE line_code=#{line_code}
+  	</delete>
+  	<!-- 라인 삭제 -->
+  	
+  	
+  	<!-- 작업지시 상태변경 -->
+	<!--   	statusProOrder -->
+	<update id="statusProOrder">
+	  UPDATE prod
+	  SET wo_status = CASE
+	    WHEN (wo_status != "마감" AND (SELECT COUNT(wo_code) FROM prod_perf_add WHERE wo_code = #{wo_code}) > 0) THEN "시작"
+	    ELSE wo_status
+	  END
+	  WHERE wo_code = #{wo_code}
+	</update>
+  		<!-- 작업지시 상태변경 -->
+  	
+  	
+  	<!-- 상품목록 -->
+  	<select id="proitemList" resultType="com.ddosirak.domain.ItemdetailVO">
+		SELECT * FROM item_detail
+  	</select>
+  	
+  	<!-- 상품검색 -->
+<!--   	proitemSearch -->
+  	  	<!-- 작업지시 검색목록 -->
+  	<select id="proitemSearch" resultType="com.ddosirak.domain.ItemdetailVO">
+		<include refid="itemList" />
+		<include refid="itemSearch" />
+  	</select>
+
+	
+	<sql id="itemList">
+		SELECT * FROM item_detail
+	</sql>
+	
+	<sql id="itemSearch">
+	  WHERE item_code LIKE CONCAT('%', #{item_code}, '%')
+	  AND item_name LIKE CONCAT('%', #{item_name}, '%')
+	</sql>
+  	
+  
+  </mapper>

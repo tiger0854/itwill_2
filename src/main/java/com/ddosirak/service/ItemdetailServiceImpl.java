@@ -1,12 +1,14 @@
 package com.ddosirak.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.persistance.ItemdetailDAO;
@@ -19,13 +21,19 @@ public class ItemdetailServiceImpl implements ItemdetailService {
 	public static final Logger logger = LoggerFactory.getLogger(ItemdetailServiceImpl.class);
 	
 	@Override
-	public List<ItemdetailVO> idList() {
+	public List<ItemdetailVO> idList() throws Exception {
 		logger.debug("service : mdlist 실행");
 		return dao.idList();
 	}
+	
+	@Override
+	public List<ItemdetailVO> idList(Map<String, Object> instrSearch, Model model) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.idList(instrSearch, model);
+	}
 
 	@Override
-	public Integer insertID(ItemdetailVO vo) {
+	public Integer insertID(ItemdetailVO vo) throws Exception {
 		logger.debug("service : insertMD 실행");
 		if(dao.getMaxCode()!=null && dao.getMaxCode().contains("I")) {
 			int codeNum=Integer.parseInt(dao.getMaxCode().substring(1));
@@ -40,19 +48,19 @@ public class ItemdetailServiceImpl implements ItemdetailService {
 	}
 
 	@Override
-	public Integer updateID(ItemdetailVO vo) {
+	public Integer updateID(ItemdetailVO vo) throws Exception {
 		logger.debug("service : updateMD 실행");
 		return dao.updateID(vo);
 	}
 
 	@Override
-	public ItemdetailVO selectID(String item_code) {
+	public ItemdetailVO selectID(String item_code) throws Exception {
 		logger.debug("service : editmd  실행");
 		return dao.selectID(item_code);
 	}
 
 	@Override
-	public void deleteI(String item_code) {
+	public void deleteI(String item_code) throws Exception {
 		logger.debug("service : deletemd 실행");
 		dao.deleteI(item_code);
 	}

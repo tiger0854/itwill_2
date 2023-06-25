@@ -1,8 +1,14 @@
 package com.ddosirak.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,11 +16,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ddosirak.domain.ProductionPerformanceVO;
-import com.ddosirak.service.ProductionPerformanceService;
+import com.ddosirak.domain.ItemdetailVO;
+import com.ddosirak.domain.LineVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.ProOrderVO;
+import com.ddosirak.domain.ProductionPerformanceVO;
+import com.ddosirak.service.ItemdetailService;
+import com.ddosirak.service.LineService;
 import com.ddosirak.service.ProOrderService;
+import com.ddosirak.service.ProductionPerformanceService;
 
 // 컨트롤러 구현 전 정하면 좋은 것들.
 // - 컨트롤러별 공통 주소 (URI) 설계
@@ -25,138 +37,297 @@ import com.ddosirak.service.ProOrderService;
 // - 결과처리, 페이지 이동 설계
 // - 예외처리
 
-
 @Controller
-@RequestMapping(value="/pro/*")
+@RequestMapping(value = "/pro/*")
 public class ProductController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
-	
+
 	@Inject
 	private ProductionPerformanceService ppService;
-	
+
 	// 서비스의 정보가 필요함. > 의존관계
 	@Inject
 	private ProOrderService oService;
 	
-	// 동작 구현 > 메서드 설계
+	@Inject
+	private ItemdetailService iservice;
 	
+	@Inject
+	private LineService lService;
+
+	// 동작 구현 > 메서드 설계
+
 ///////////////////////////////////////////////////생산관리//////////////////////////////////////////////////////////////////////////////
-	// http://localhost:8088/pro/oderList
-	// 회원가입 처리 - 정보 입력
-	@RequestMapping(value="/oderList",method=RequestMethod.GET)
-	public void productListGET(Model model) {
+	
+// --------------------- 예웡  (｡･∀･)ﾉﾞﾞ -----------------------------	
+	// http://localhost:8088/pro/orderList
+	// 작업지시 목록
+	@RequestMapping(value = "/orderList", method = RequestMethod.GET)
+	public void productListGET(Model model,HttpServletRequest request,PageVO pageVO) {
 		logger.debug("productListGET() 호출![]~(￣▽￣)~*");
 		logger.debug("/pro/oderList.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
-		List<ProOrderVO> proOrderList = oService.proOrderList();
-		model.addAttribute("oderList",proOrderList);
+	
+		String line_code = request.getParameter("line_code");
+		String wo_date = request.getParameter("wo_date");
+		String item_code = request.getParameter("item_code");
+		String wo_status = request.getParameter("wo_status");
 		
+		Map<String, Object> instrSearch = new HashMap<String, Object>();
+		instrSearch.put("line_code", line_code);
+		instrSearch.put("wo_date", wo_date);
+		instrSearch.put("item_code", item_code);
+		instrSearch.put("wo_status", wo_status);
+		
+		//================================페이징 처리를 위한 값 받아오기 동작========================================
+		// 준비물 : Inject > PageVO , 파라미터값 PageVO pageVO, HttpServletRequest request
+		//   		리스트를 반환하는 DAO - Service 메서드에 PageVO 추가, 쿼리에 LIMIT #{startRow}, #{pageSize} 추가.
+		// 페이징 처리
+		// 한 화면에 보여줄 글 개수 설정
+		int pageSize = 5; // sql문에 들어가는 항목
+		// 현페이지 번호 가져오기
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum==null) {
+			pageNum="1";
+		}
+		// 페이지번호를 정수형으로 변경
+		int currentPage=Integer.parseInt(pageNum);
+		pageVO.setPageSize(pageSize);
+		pageVO.setPageNum(pageNum);
+		pageVO.setCurrentPage(currentPage);
+		int startRow=(pageVO.getCurrentPage()-1)*pageVO.getPageSize()+1; // sql문에 들어가는 항목
+		int endRow = startRow+pageVO.getPageSize()-1;
+		
+		pageVO.setStartRow(startRow-1); // limit startRow (0이 1열이기 때문 1을 뺌)
+		pageVO.setEndRow(endRow);
+		int count = oService.ProOrdercount(instrSearch); 
+		logger.debug("글갯수 @@@@@@@@@@2"+count);
+		// 게시글 개수 가져오기
+		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
+		int startPage=(currentPage-1)/pageBlock*pageBlock+1;
+		int endPage=startPage+pageBlock-1;
+		int pageCount=count/pageSize+(count%pageSize==0?0:1);
+		if(endPage > pageCount){
+		 	endPage = pageCount;
+		 }
+		pageVO.setCount(count);
+		pageVO.setPageBlock(pageBlock);
+		pageVO.setStartPage(startPage);
+		pageVO.setEndPage(endPage);
+		pageVO.setPageCount(pageCount);
+		
+		model.addAttribute("pageVO", pageVO);
+		logger.debug("startRow @@@@@@@@@@2"+startRow);
+		logger.debug("pageSize @@@@@@@@@@2"+pageSize);
+//		List<ProOrderVO> proOrderList = oService.proOrderList();
+		List<ProOrderVO> proOrderList;
+		if(line_code == null && wo_date == null && item_code == null && wo_status == null) {
+			// 작업지시 전체 조회
+			logger.debug("productList 전체 호출 ![]~(￣▽￣)~*");
+			proOrderList = oService.proOrderList(pageVO);
+//			int instrSearchCount = instructService.instrCount(instrSearch);
+//			model.addAttribute("instrSearchCount", instrSearchCount);
+		
+		} else {
+			// 작업지시 검색 조회
+			logger.debug("productList 검색 호출 ![]~(￣▽￣)~*");
+//			proOrderList = oService.proOrderList();
+			proOrderList = oService.proOrderList(instrSearch, model,pageVO);
+//			int instrSearchCount = instructService.instrCount(instrSearch);
+//			model.addAttribute("instrSearchCount", instrSearchCount);
+		}
+
+		model.addAttribute("oderList", proOrderList);
+		model.addAttribute("Search", instrSearch);
+//		// 라인 이름 불러오기
+		List<LineVO> lineList = lService.LineList();
+		model.addAttribute("lineList", lineList);
+
 	}// productListGET() method end
 
-	
-	
-	
+
 	// http://localhost:8088/pro/orderWrite
-	@RequestMapping(value="/orderWrite",method=RequestMethod.GET)
-	public void productWriteGET(ProOrderVO vo) {
+	@RequestMapping(value = "/orderWrite", method = RequestMethod.GET)
+	public void productWriteGET(ProOrderVO vo,Model model) {
 		logger.debug("orderWriteGET() 호출![]~(￣▽￣)~*");
-		logger.debug(vo+" ");
-		// >> DAO > 사원 추가 메서드 호출
-    
-   
-//		return "redirect:/emp/list"; // 주소를 변경하면서 페이지 이동
+		logger.debug(vo + " ");
+		List<LineVO> lineList = lService.LineList();
+		model.addAttribute("lineList", lineList);
 	}
+
+	//작업지시 글작성
 	// http://localhost:8088/pro/orderWrite
-	@RequestMapping(value="/orderWrite",method=RequestMethod.POST)
+	@RequestMapping(value = "/orderWrite", method = RequestMethod.POST)
 	public void productWritePost(ProOrderVO vo) {
 		logger.debug("orderWritePOST() 호출![]~(￣▽￣)~*");
 		logger.debug(vo+" ");
-		
 		oService.orderInsert(vo);
-
-//		return "redirect:/emp/list"; // 주소를 변경하면서 페이지 이동
-	}// productWriteGET() method end
-	// 생산관리 - 작업지시글작성
-	
-//	 http://localhost:8088/pro/orderEdit
-	@RequestMapping(value="/orderEdit",method=RequestMethod.GET)
-	public void productEditGET(String wo_code, Model model) {
 		
+
+	}// productWriteGET() method end
+		// 생산관리 - 작업지시글작성
+
+//	 http://localhost:8088/pro/orderEdit
+	@RequestMapping(value = "/orderEdit", method = RequestMethod.GET)
+	public void productEditGET(String wo_code, Model model) {
+
 		ProOrderVO pvo = oService.getProOder(wo_code);
-		model.addAttribute("pvo",pvo);
+		model.addAttribute("pvo", pvo);
 		logger.debug("productWriteGET() 호출![]~(￣▽￣)~*");
 		logger.debug("/pro/orderEdit.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
-		
+
 	}// productEditGET() method end
 //	 생산관리 - 작업지시글수정
-	
+
 	@RequestMapping(value = "/orderEdit", method = RequestMethod.POST) // 0609, 모르겠음. 일단 GET > POST로 시도 // 해결
-	public String eproductEditPOST(ProOrderVO vo) { // (listPOST)
+	public void eproductEditPOST(ProOrderVO vo ,RedirectAttributes rttr) { // (listPOST)
 		logger.debug("productEditPOST() 호출![]~(￣▽￣)~*");
 		logger.debug("vo > "+vo);
-		 oService.EditProOrder(vo);
-
-		return "redirect:/pro/orderEdit?wo_code="+vo.getWo_code();
+		oService.EditProOrder(vo);
+		// 리스트로 정보를 전달 (rttr)
+		rttr.addFlashAttribute("result", "CREATEOK");
+//		return "redirect:/pro/orderEdit?wo_code="+vo.getWo_code();
 	}// employeeUpdate() method end
+	
+	//작업지시 삭제
+	@RequestMapping(value = "/proOrderDelete", method = RequestMethod.GET)
+	public String deleteWhGET(String wo_code,RedirectAttributes rttr) {
+		logger.debug("deleteWhGET 호출");
+		oService.deleteProOrder(wo_code);
+		rttr.addFlashAttribute("result", "CREATEOK");
+		return "redirect:/pro/oderList";
+	}
 	
 	
 	// http://localhost:8088/pro/orderstatusList
-	@RequestMapping(value="/orderstatusList",method=RequestMethod.GET)
+	@RequestMapping(value = "/orderstatusList", method = RequestMethod.GET)
 	public void productStatusGET() {
 		logger.debug("productStatusGET() 호출![]~(￣▽￣)~*");
 		logger.debug("/pro/orderstatusList.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
-		
-		
+
 	}// productStatusGET() method end
-	// 생산관리 - 작업지시현황
+		// 생산관리 - 작업지시현황
+
+	
+	// 생산관리 - 상품목록(팝업)
+	// http://localhost:8088/pro/itemList
+	@RequestMapping(value = "/itemList", method = RequestMethod.GET)
+	public void itemListGET(Model model,HttpServletRequest request) {
+		
+		String item_code = request.getParameter("item_code");
+		String item_name = request.getParameter("item_name");
+		Map<String, Object> instrSearch = new HashMap<String, Object>();
+		instrSearch.put("item_code", item_code);
+		instrSearch.put("item_name", item_name);
+//		List<ItemdetailVO> itemList=iservice.idList();
+		List<ItemdetailVO> itemList;
+		if(item_code == null && item_name == null) {
+			// 작업지시 전체 조회
+			logger.debug("productList 전체 호출 ![]~(￣▽￣)~*");
+			itemList = oService.proitemList();
+//			int instrSearchCount = instructService.instrCount(instrSearch);
+//			model.addAttribute("instrSearchCount", instrSearchCount);
+		
+		} else {
+			// 작업지시 검색 조회
+			logger.debug("productList 검색 호출 ![]~(￣▽￣)~*");
+//			proOrderList = oService.proOrderList();
+			itemList = oService.proitemList(instrSearch, model);
+//			int instrSearchCount = instructService.instrCount(instrSearch);
+//			model.addAttribute("instrSearchCount", instrSearchCount);
+		}
+		logger.debug("idlistGET 실행");
+		
+		model.addAttribute("itemList", itemList);
+	}// /itemListGET() method end
+	
+	
+	
+ // --------------------- 영신쿤  (｡･∀･)ﾉﾞﾞ -------------------------------------
 	
 	// http://localhost:8088/pro/etcstatusList
-	@RequestMapping(value="/etcstatusList",method=RequestMethod.GET)
-	public void productEtclistGET(Model model) {
+	@RequestMapping(value = "/etcstatusList", method = RequestMethod.GET)
+	public void productEtclistGET(String wo_code, Model model) {
 		logger.debug("productEtclistGET() 호출![]~(￣▽￣)~*");
 		logger.debug("/pro/etcstatusList.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
-		
-		List<ProductionPerformanceVO> prodPerfList = ppService.prodPerfList();
+		List<ProductionPerformanceVO> prodPerfList = ppService.prodPerfList(wo_code);
 		model.addAttribute("prodPerfList", prodPerfList);
 	}// productEtclistGET()
-	// 생산관리 - 실적목록
-	
-	
+		// 생산관리 - 실적목록
+
 	// http://localhost:8088/pro/etcWrite
-	@RequestMapping(value="/etcWrite",method=RequestMethod.GET)
-	public void productEtcWriteGET() {
+	@RequestMapping(value = "/etcWrite", method = RequestMethod.GET)
+	public void productEtcWriteGET(String wo_code,Model model) {
 		logger.debug("etcWriteGET() 호출![]~(￣▽￣)~*");
 		logger.debug("/pro/etcWrite.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
-
+		ProOrderVO pvo = oService.getProOder(wo_code);
+		model.addAttribute("pvo", pvo);
 	}// productEtcWriteGET() method end
-	// 생산관리 - 실적등록
-	
-	@RequestMapping(value="/etcWrite",method=RequestMethod.POST)
-	public String productEtcWritePOST(ProductionPerformanceVO ivo) {
-		logger.debug("etcWritePOST() 호출![]~(￣▽￣)~*");
+		// 생산관리 - 실적등록
 
+	@RequestMapping(value = "/etcWrite", method = RequestMethod.POST)
+	public void productEtcWritePOST(ProductionPerformanceVO ivo,String wo_code,ProOrderVO vo ) {
+		logger.debug("etcWritePOST() 호출![]~(￣▽￣)~*");
 		logger.debug(ivo + "");
-		
 		logger.debug(ivo.getPerf_id() + "@@@@");
-		
+		// 작업지시 생산수량 증가
+		oService.addpQTY(ivo);
 		// 실적 등록 메서드 호출
 		ppService.insertProdPerf(ivo);
-		
 		logger.debug("<ivo> : " + ivo);
+		logger.debug(vo.getWo_status() + "@@@@@@@@@@@");
+//		return "redirect:/pro/etcstatusList?wo_code=" + ivo.getWo_code();
 		
-		return "redirect:/pro/etcstatusList";
-
 	}// productEtcWritePost() method end
-	// 생산관리 - 실적등록
+		// 생산관리 - 실적등록
+
+	// http://localhost:8088/pro/etcEdit
+	@RequestMapping(value = "/etcEdit", method = RequestMethod.GET)
+	public void productEtcEditGET(Model model, int perf_id) {
+		logger.debug("productEtcEditGET() 호출![]~(￣▽￣)~*");
+		logger.debug("/pro/etcEdit.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
+
+		ProductionPerformanceVO updatePerfList = ppService.perfUpdateList(perf_id);
+
+		logger.debug("@@@@@@@@ updatelist" + updatePerfList);
+
+		model.addAttribute("updatelist", updatePerfList);
+	}// productEtcWriteGET() method end
+		// 생산관리 - 실적 수정 조회
+
+	@RequestMapping(value = "/etcEdit", method = RequestMethod.POST)
+	public String productEtcEditPOST(Model model, int perf_id, ProductionPerformanceVO uvo, RedirectAttributes rttr) {
+		logger.debug("productEtcEditPOST() 호출![]~(￣▽￣)~*");
+
+		ppService.perfUpdateBoard(uvo);
+
+		rttr.addFlashAttribute("result", "CREATEOK");
+
+		model.addAttribute("updatelist", uvo);
+
+		return "redirect:/pro/etcEdit?perf_id=" + uvo.getPerf_id();
+	}// productEtcWriteGET() method end
+		// 생산관리 - 실적 수정 동작
+
+	// http://localhost:8088/pro/etcRemove
+	@RequestMapping(value = "/etcRemove", method = RequestMethod.POST)
+	public String productEtcRemoveGET(ProductionPerformanceVO dvo,HttpServletRequest request) {
+		logger.debug("productEtcRemoveGET() 호출![]~(￣▽￣)~*");
+		String wo_code = request.getParameter("wo_code");
+		ppService.perfDeleteBoard(dvo.getPerf_id());
+		return "redirect:/pro/etcstatusList?wo_code="+wo_code;
+	}// productEtcWriteGET() method end
+		// 생산관리 - 실적 삭제
 	
 	
+	// http://localhost:8088/pro/wostatusEnd
+	@RequestMapping(value = "/wostatusEnd", method = RequestMethod.GET)
+	public String wostatusEndGET(HttpServletRequest request) {
+		logger.debug("productEtcRemoveGET() 호출![]~(￣▽￣)~*");
+		String wo_code = request.getParameter("wo_code");
+		ppService.wostatusEnd(wo_code);
+		return "redirect:/pro/etcstatusList?wo_code="+wo_code;
+	}// productEtcWriteGET() method end
 	
 
 }// public class end
-
-
-
-
-
-
-

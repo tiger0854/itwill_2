@@ -7,9 +7,7 @@
 <head>
 <title>사원 정보</title>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
-
-<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<jsp:include page="../common/header.jsp"/>
 <script type="text/javascript">
 $(document).ready(function(){
 	$('#update').on('click',function(){
@@ -49,7 +47,7 @@ $(document).ready(function(){
 </script>
 </head>
 <body id="body-pd" style="font-family: 'TheJamsil5';">
-<jsp:include page="../common/header.jsp"/>
+
 	<div>
 	<br>
 	    <h1>사원 정보</h1>
@@ -66,7 +64,7 @@ $(document).ready(function(){
 		    <table class="table table-striped" style="margin-top: 10px;" >
 		
 		        <tr>
-		            <td rowspan="4"><img src="../../resources/css/test.png" alt="profile_photo" width="150" height="150"></td>
+		            <td rowspan="4"><img src="/img/employee_photo/${evo.employee_id}.png" alt="profile_photo" width="150" height="150"></td>
 		            <td>성명</td>
 		            <td><input type="text" size="50" value="${evo.employee_name }" id="employee_name" name="employee_name" readonly></td>
 		            <td>주민등록번호</td>

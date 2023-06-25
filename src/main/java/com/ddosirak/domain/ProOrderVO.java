@@ -32,6 +32,8 @@ public class ProOrderVO {
 	private String remark;
 	private Date delivery_date;
 	private int sQTY;
+	private String item_name;
+	private String line_name;
 	public String getWo_code() {
 		return wo_code;
 	}
@@ -111,13 +113,25 @@ public class ProOrderVO {
 		this.sQTY = sQTY;
 	}
 	
+	public String getItem_name() {
+		return item_name;
+	}
+	public void setItem_name(String item_name) {
+		this.item_name = item_name;
+	}
 	@Override
 	public String toString() {
-		return "OrderVO [wo_code=" + wo_code + ", so_code=" + so_code + ", employee_id=" + employee_id
+		return "ProOrderVO [wo_code=" + wo_code + ", so_code=" + so_code + ", employee_id=" + employee_id
 				+ ", factory_code=" + factory_code + ", line_code=" + line_code + ", item_code=" + item_code + ", oQTY="
 				+ oQTY + ", pQTY=" + pQTY + ", wo_status=" + wo_status + ", wo_date=" + wo_date + ", remark=" + remark
-				+ ", delivery_date=" + delivery_date + ", sQTY=" + sQTY + "]";
+				+ ", delivery_date=" + delivery_date + ", sQTY=" + sQTY + ", item_name=" + item_name + ", line_name="
+				+ line_name + "]";
 	}
+	
+	
+	
+
+
 
 	
 	

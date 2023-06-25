@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  
+  <mapper namespace="com.ddosirak.mapper.ProOrderMapper">
+  	
+  	<!-- 작업지시 등록 -->
+	<insert id="insertOrder">
+	  <selectKey keyProperty="wo_code" resultType="String" order="BEFORE">
+	    SELECT CONCAT('WO', DATE_FORMAT(NOW(), '%Y%m%d'),
+	      (SELECT count(wo_code) + 1 FROM prod)) AS wo_code
+	  </selectKey>
+		  INSERT INTO prod
+		  (wo_code, so_code, sQTY, employee_id, delivery_date, line_code, item_code, wo_date, oQTY, pQTY,item_name)
+		  VALUES (
+		    #{wo_code}, #{so_code}, #{sQTY}, #{employee_id}, #{delivery_date}, #{line_code}, #{item_code},
+		    CURDATE(), #{oQTY}, #{pQTY}, #{item_name}
+		  )
+	</insert>
+	
+	
+  	<!-- 작업지시 등록 -->
+  	
+  	<!-- 작업지시 목록 출력-->
+  	<select id="proOrderList" resultType="com.ddosirak.domain.ProOrderVO">
+		SELECT * FROM prod LIMIT #{startRow}, #{pageSize}
+  	</select>
+  	
+  	<!-- 작업지시 검색목록 -->
+  	<select id="proOrderSearch" resultType="com.ddosirak.domain.ProOrderVO">
+		<include refid="List" />
+		<include refid="Search" />
+  	</select>
+
+	<sql id="List">
+	SELECT * FROM prod
+	</sql>
+	
+	<sql id="Search">
+	  WHERE line_code LIKE CONCAT('%', #{line_code}, '%')
+	  <if test="wo_date != null and wo_date != ''">
+	    AND wo_date = #{wo_date}
+	  </if>
+	  <choose>
+	    <when test="wo_status == null or wo_status == ''"></when>
+	    <otherwise>
+	      AND wo_status = #{wo_status}
+	    </otherwise>
+	  </choose>
+	  AND item_code LIKE CONCAT('%', #{item_code}, '%')
+	  LIMIT #{startRow}, #{pageSize}
+	</sql>
+<!-- 	  LIMIT #{startRow}, #{pageSize} -->
+  	<!-- 작업지시 정보 -->
+  	<select id="getProOrder" resultType="com.ddosirak.domain.ProOrderVO">
+		SELECT * FROM prod WHERE wo_code=#{wo_code}
+  	</select>
+  	<!-- 작업지시  수정 -->
+	<update id="editProOrder">
+	  UPDATE prod
+	  SET so_code=#{so_code},
+	      sQTY=#{sQTY},
+	      employee_id=#{employee_id},
+	      delivery_date=#{delivery_date},
+	      line_code=#{line_code},
+	      item_code=#{item_code},
+	      oQTY=#{oQTY},
+	      pQTY=#{pQTY},
+	      wo_status=#{wo_status}
+	  WHERE wo_code=#{wo_code}
+	</update>
+  	<!-- 작업지시  수정 -->
+  	
+  	<!-- 작업지시 삭제 -->
+  	<delete id="deleteProOrder">
+  		delete from prod where wo_code=#{wo_code}
+  	</delete>
+  	<!-- 작업지시 삭제 -->
+  	
+  	
+  	<!-- 실적등록에 따라 생산수량 증가구현-->
+	<!--   	statusProOrder -->
+	<update id="statusProOrder" parameterType="map">
+	  UPDATE prod
+	  SET pQTY = pQTY + #{pfQTY}
+	  WHERE wo_code IN (
+	    SELECT wo_code
+	    FROM prod_perf_add
+	    WHERE pfQTY > 0
+	      AND wo_code = #{wo_code}
+	      AND EXISTS (
+	        SELECT 1
+	        FROM prod_perf_add
+	        WHERE wo_code = prod.wo_code
+	          AND perf_gobd = '#{perf_gobd}'
+	      )
+	  )
+	</update>
+  		<!-- 작업지시 상태변경 -->
+  	
+<!--   	<update id="statusProOrder"> -->
+<!-- 	  UPDATE prod -->
+<!-- 	  SET wo_status = CASE -->
+<!-- 	    WHEN (wo_status != "마감" AND (SELECT COUNT(wo_code) FROM prod_perf_add WHERE wo_code = #{wo_code}) > 0) THEN "시작" -->
+<!-- 	    ELSE wo_status -->
+<!-- 	  END -->
+<!-- 	  WHERE wo_code = #{wo_code} -->
+<!-- 	</update> -->
+  	
+  	<!-- 상품목록 -->
+  	<select id="proitemList" resultType="com.ddosirak.domain.ItemdetailVO">
+		SELECT * FROM item_detail
+  	</select>
+  	
+  	<!-- 상품검색 -->
+<!--   	proitemSearch -->
+  	  	<!-- 작업지시 검색목록 -->
+  	<select id="proitemSearch" resultType="com.ddosirak.domain.ItemdetailVO">
+		<include refid="itemList" />
+		<include refid="itemSearch" />
+  	</select>
+
+	
+	<sql id="itemList">
+		SELECT * FROM item_detail
+	</sql>
+	
+	<sql id="itemSearch">
+	  WHERE item_code LIKE CONCAT('%', #{item_code}, '%')
+	  AND item_name LIKE CONCAT('%', #{item_name}, '%')
+	</sql>
+  	
+  	<!-- addQTY -->
+  	<update id="addQTY">
+	  UPDATE prod
+	  SET pQTY = pQTY + #{pfQTY}
+	  WHERE wo_code = #{wo_code}
+	  AND #{perf_gobd} = 'n'
+  	</update>
+  	
+  	<!-- procount -->
+	
+  	<!-- 작업지시 검색갯수 -->
+  	<select id="procount" resultType="java.lang.Integer">
+		<include refid="count" />
+		<include refid="Search2" />
+  	</select>
+	
+	<!--  -->
+	<sql id="count">
+		SELECT count(*) FROM prod
+	</sql>
+	
+	<sql id="Search2">
+			
+	<if test="wo_date != null and wo_status != null and
+		 line_code != null and item_code != null">
+	  WHERE line_code LIKE CONCAT('%', #{line_code}, '%')
+	  <if test="wo_date != null and wo_date != ''">
+	    AND wo_date = #{wo_date}
+	  </if>
+	  <choose>
+	    <when test="wo_status == null or wo_status == ''"></when>
+	    <otherwise>
+	      AND wo_status = #{wo_status}
+	    </otherwise>
+	  </choose>
+	  AND item_code LIKE CONCAT('%', #{item_code}, '%')
+	  </if>
+	</sql>
+  	
+  	
+  </mapper>

@@ -39,6 +39,7 @@
 	<select id="getMaxCode" resultType="String">
 		select max(wh_code)
 		from warehouse
+		where wh_type=#{wh_type} and retail_code=#{retail_code}
 	</select>
 	<!-- max(코드) -->
 
