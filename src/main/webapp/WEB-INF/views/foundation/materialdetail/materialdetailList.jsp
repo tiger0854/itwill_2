@@ -59,8 +59,7 @@
 							<i class='bx bx-search-alt-2'></i> 조회
 						</button>
 						<!-- <button class=btn-add onclick="orderwrite()"><i class='bx bx-plus-medical'></i> 추가</button> -->
-						<button class=btn-add
-							onclick="materialUpload();">
+						<button class=btn-add onclick="materialUpload();">
 							<i class='bx bx-plus-medical'></i> 추가
 						</button>
 					</div>
@@ -109,7 +108,7 @@
 					<td>${vo.material_code }</td>
 					<td>${vo.material_name }</td>
 					<td>${vo.material_type }</td>
-					<td><button class=btn-edit
+					<td><button class=btn-edit type="button"
 							onclick="materialUpdate('${vo.material_code}');">
 							<i class='bx bx-edit'></i>
 						</button></td>
@@ -125,33 +124,25 @@
 
 
 	<!-- 페이징처리 -->
-
-	<!--   		  	<div class="container" style="margin-top: 30px; margin-bottom: 30px"> -->
-	<!-- 			  <ul class="pagination justify-content-center" id="pagination" style="margin-top: 20px;"> -->
-	<%-- 		  <c:if test="${startPage > pageBlock }">  --%>
-	<%-- 			<li class="page-item"><a class="page-link" href="./AdminQNAList.qn?pageNum=${startPage-pageBlock} "><sapn> < </sapn></a></li> --%>
-	<%-- 			</c:if> --%>
-	<%-- 		    <c:forEach var="i" begin="1" end="5" step="1"> --%>
-	<%-- 			<li class="page-item"><a class="page-link" href="./AdminQNAList.qn?pageNum=${i }"><span>${i }</span></a></li> --%>
-	<%-- 			</c:forEach> --%>
-	<%-- 		    <c:if test="${endPage<pageCount }"> --%>
-	<%-- 			<li class="page-item"><a class="page-link" href="./AdminQNAList.qn?pageNum=${startPage+pageBlock} "><span> > </span></a></li> --%>
-	<%-- 			</c:if> --%>
-	<!-- 		  </ul> -->
-	<!--   		</div> -->
-
-
-	<!-- 임시 페이징처리 출력용 -->
-	<div class="container" style="margin-top: 40px; margin-bottom: 30px">
+	<%--   		${Search} --%>
+	<div class="container" style="margin-top: 30px; margin-bottom: 30px">
 		<ul class="pagination justify-content-center" id="pagination"
 			style="margin-top: 20px;">
-			<li class="page-item"><a class="page-link" href="#"><sapn>
-					< </sapn></a></li>
-			<c:forEach var="i" begin="1" end="5" step="1">
-				<li class="page-item"><a class="page-link" href="#"><span>${i }</span></a></li>
+			<c:if test="${pageVO.startPage > pageVO.pageBlock}">
+				<li class="page-item"><a class="page-link"
+					href="/foundation/materialdetail/materialdetailList?material_code=${Search.material_code }&material_name=${Search.material_name }&pageNum=${pageVO.startPage - pageVO.pageBlock}"><sapn>
+						< </sapn></a></li>
+			</c:if>
+			<c:forEach var="i" begin="${pageVO.startPage}"
+				end="${pageVO.endPage}" step="1">
+				<li class="page-item"><a class="page-link"
+					href="/foundation/materialdetail/materialdetailList?material_code=&material_name=&pageNum=${i}"><span>${i}</span></a></li>
 			</c:forEach>
-			<li class="page-item"><a class="page-link" href="#"><span>
-						> </span></a></li>
+			<c:if test="${pageVO.endPage < pageVO.pageCount}">
+				<li class="page-item"><a class="page-link"
+					href="/foundation/materialdetail/materialdetailList?material_code=${Search.material_code }&material_name=${Search.material_name }&pageNum=${pageVO.startPage + pageVO.pageBlock}"><span>
+							> </span></a></li>
+			</c:if>
 		</ul>
 	</div>
 

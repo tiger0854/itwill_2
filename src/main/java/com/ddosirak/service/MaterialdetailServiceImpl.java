@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.ddosirak.domain.MaterialdetailVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.persistance.MaterialdetailDAO;
 
 @Service
@@ -22,9 +23,17 @@ public class MaterialdetailServiceImpl implements MaterialdetailService {
 	public static final Logger logger = LoggerFactory.getLogger(MaterialdetailServiceImpl.class);
 	
 	@Override
-	public List<MaterialdetailVO> mdList() {
+	public List<MaterialdetailVO> mdList(PageVO pageVO) {
 		logger.debug("service : 자재 목록 호출");
-		List<MaterialdetailVO> resultlist=dao.mdList();
+		List<MaterialdetailVO> resultlist=dao.mdList(pageVO);
+		logger.debug("service : 자재 목록 완료");
+		return resultlist;
+	}
+	
+	@Override
+	public List<MaterialdetailVO> mdList(PageVO pageVO, Map<String, Object> instrSearch, Model model) {
+		logger.debug("service : 자재 목록 호출");
+		List<MaterialdetailVO> resultlist=dao.mdList(pageVO, instrSearch, model);
 		logger.debug("service : 자재 목록 완료");
 		return resultlist;
 	}
@@ -78,6 +87,14 @@ public class MaterialdetailServiceImpl implements MaterialdetailService {
 		logger.debug("service : 자재 목록 검색 호출");
 		return dao.materialItemList(instrSearch, model);
 	}
+
+	@Override
+	public Integer materialCount(Map<String, Object> instrSearch) {
+		logger.debug("service : 자재 검색 갯수 호출");
+		return dao.materialCount(instrSearch);
+	}
+	
+	
 	
 	
 
