@@ -56,7 +56,7 @@
             <td id="con">${vo.item_code}</td>
             <td id="con">${vo.item_name}</td>
         </tr>
-     <script>
+    <script>
 	    function selectItem(a, b) {
 	        // 부모 창으로 값 전달하기
 	        opener.document.getElementById("item_code").value = a;

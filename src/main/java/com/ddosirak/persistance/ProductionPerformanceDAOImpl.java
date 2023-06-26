@@ -1,6 +1,7 @@
 package com.ddosirak.persistance;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -75,8 +76,53 @@ public class ProductionPerformanceDAOImpl implements ProductionPerformanceDAO {
 		sqlSession.update(NAMESPACE + ".perfDelete", perf_id);
 		logger.debug("실적 삭제 완료");
 	}
+
+	@Override
+	public boolean checkY(String  wo_code) {
+		System.out.println("ProductionPerformanceDAOImpl checkY()");
+		return sqlSession.selectOne(NAMESPACE+".checkY", wo_code);
+	}
+
+	@Override
+	public void updateClose(String wo_code) { // 지시수량 채우면 상태 마감으로 변경
+		System.out.println("PerformDAOImpl updateClose()");
+		sqlSession.update(NAMESPACE+".turnclose", wo_code);
+		
+	}
+
+	@Override
+	public void updateStart(String  wo_code) { // 실적 등록 시작하면 상태 시작으로 변경
+		System.out.println("PerformDAOImpl updateStart()");
+		sqlSession.update(NAMESPACE+".turnstart", wo_code);
+	}
 	
-	
+	@Override
+	public void updateInstr(String wo_code) { // 실적전부 삭제하면 상태 지시로 변경
+		System.out.println("PerformDAOImpl updateStart()");
+		sqlSession.update(NAMESPACE+".turnwork", wo_code);
+	}
+
+	@Override
+	public String getWoMap(String wo_code) { // 실적등록에 보여지는 지시 목록 하나 불러오기
+		System.out.println("PerformDAOImpl getPfLiMap()");
+		return sqlSession.selectOne(NAMESPACE+".getInstrMap",wo_code);
+	}
+
+	@Override
+	public Integer getPrefCount(String wo_code) {
+		Integer result = sqlSession.selectOne(NAMESPACE+".prefcount", wo_code);
+		return result;
+	}
+
+	@Override
+	public void pfQTYDel(ProductionPerformanceVO pvo) {
+		sqlSession.update(NAMESPACE + ".pqtydel", pvo);
+		logger.debug("실적 생산량 삭제 완료");
+	}
+
+
+
+
 	
 
 	

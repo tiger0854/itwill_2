@@ -62,6 +62,7 @@
 <table class="box" style="margin-top: 30px; width: 100%">
   <tbody>
 <%-- ${lineList} --%>
+<td><input type="hidden" name="pQTY" value=0></td>
     <tr>
       <td>수주번호</td>
       <td><input type="text" name="so_code"></td>

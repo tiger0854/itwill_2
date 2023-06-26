@@ -22,13 +22,13 @@ public class FactoryServiceImpl implements FactoryService {
 	
 	
 	@Override
-	public List<FactoryVO> facList() {
+	public List<FactoryVO> facList() throws Exception {
 		logger.debug("service : 창고 목록 출력");
 		return dao.facList();
 	}
 
 	@Override
-	public Integer insertFac(FactoryVO vo) {
+	public Integer insertFac(FactoryVO vo) throws Exception {
 		logger.debug("service : 창고 등록");
 		if(dao.getMaxCode()!=null && dao.getMaxCode().contains("FAC")) {
 		int codeNum=Integer.parseInt(dao.getMaxCode().substring(3));
@@ -44,19 +44,19 @@ public class FactoryServiceImpl implements FactoryService {
 	}
 
 	@Override
-	public Integer updateFac(FactoryVO vo) {
+	public Integer updateFac(FactoryVO vo) throws Exception {
 		logger.debug("service : 창고 수정");
 		return dao.updateFac(vo);
 	}
 
 	@Override
-	public FactoryVO selectFac(String factory_code) {
+	public FactoryVO selectFac(String factory_code) throws Exception {
 		logger.debug("service : 창고 수정 파라미터 출력");
 		return dao.selectFac(factory_code);
 	}
 
 	@Override
-	public void deleteF(String factory_code) {
+	public void deleteF(String factory_code) throws Exception {
 		logger.debug("service : 창고 삭제");
 		dao.deleteF(factory_code);
 	}

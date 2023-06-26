@@ -58,7 +58,7 @@ $(document).ready(function(){
 		    <table class="table table-striped" style="margin-top: 10px;" >
 		
 		        <tr>
-		            <td rowspan="4"><img src="../../resources/css/test.png" alt="profile_photo" width="150" height="150"></td>
+		            <td rowspan="4"><img src="/img/employee_photo/${evo.employee_id}.png" alt="profile_photo" width="150" height="150"></td>
 		            <td>성명</td>
 		            <td><input type="text" size="50" value="${evo.employee_name }" id="employee_name" name="employee_name" readonly></td>
 		            <td>주민등록번호</td>
@@ -125,7 +125,7 @@ $(document).ready(function(){
 			</tr>
 			<c:if test="${empty salaryList }">
 			<tr>
-				<td>지급내역 없음</td>
+				<td colspan="4">지급내역 없음</td>
 			</tr>
 			</c:if>
 				<c:if test="${!empty salaryList }">

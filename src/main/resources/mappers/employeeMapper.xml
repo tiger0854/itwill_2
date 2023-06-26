@@ -16,6 +16,20 @@
   	</insert>
   	<!-- 사원 추가 동작 -->
   	
+  	<!-- 사원 프로필 사진 추가 동작 -->
+  	<update id="setEmployee_photo_URL">
+  		UPDATE emp_main SET employee_photo=#{employee_photo} WHERE employee_id = #{employee_id}
+  	</update>
+  	<!-- 사원 프로필 사진 추가 동작 -->
+  	
+  	<!-- 사원 아이디 비밀번호 부여 -->
+  	<insert id="setEmployeeIDPW">
+  		INSERT INTO emp_login
+  		(employee_id, employee_pw, employee_name)
+  		VALUES (#{employee_id}, #{employee_pw}, #{employee_name})
+  	</insert>
+  	<!-- 사원 아이디 비밀번호 부여 -->
+  	
   	<!-- 사원번호 부여를 위한 계산 동작 -->
   	<select id="getMaxEmployee_id" resultType="Integer">
   		SELECT MAX(employee_id) FROM emp_main WHERE position != '일용' 
@@ -28,13 +42,16 @@
 
   	<!-- 사원 정보 조회 -->
   	<select id="getEmployee" resultType="com.ddosirak.domain.EmployeeVO">
-		SELECT * FROM emp_main WHERE employee_id=#{employee_id}  	
+		SELECT * FROM emp_main WHERE employee_id=#{employee_id}
+		  	
   	</select>
   	<!-- 사원 정보 조회 -->
   	
   	<!-- 사원 목록 출력-->
   	<select id="empList" resultType="com.ddosirak.domain.EmployeeVO">
 		SELECT * FROM emp_main
+		ORDER BY emp_date DESC
+		LIMIT #{startRow}, #{pageSize}
   	</select>
   	<!-- 사원 목록 출력 -->
   	

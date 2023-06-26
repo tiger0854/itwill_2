@@ -12,30 +12,51 @@
 	<!-- 물품 조회 -->
 	<!-- 물품 기초 등록 -->
 	<insert id="insertMaterialDetail">
-		insert into material_detail (material_code, material_name, material_type)
-		values (#{material_code}, #{material_name}, #{material_type})
+		insert into material_detail (material_code,
+		material_name, material_type)
+		values (#{material_code},
+		#{material_name}, #{material_type})
 	</insert>
 	<!-- 물품 기초 등록 -->
 	<!-- 특정 물품 기초 조회 -->
 	<select id="selectMaterialDetail"
 		resultType="com.ddosirak.domain.MaterialdetailVO">
-		select material_code, material_name from material_detail 
+		select material_code, material_name from material_detail
 		where material_code = #{material_code}
 	</select>
 	<!-- 특정 물품 기초 조회 -->
 	<!-- 물품 기초 수정 -->
 	<update id="updateMaterialDetail">
-		UPDATE material_detail 
-		SET material_name = #{material_name}, material_type = #{material_type}
-		WHERE material_code = #{material_code}
+		UPDATE material_detail
+		SET material_name =
+		#{material_name}, material_type = #{material_type}
+		WHERE material_code
+		= #{material_code}
 	</update>
 	<!-- 물품 기초 수정 -->
 	<!-- 물품 삭제 -->
 	<delete id="deleteMaterial">
-		delete from material_detail 
-		where material_code = #{material_code}
+		delete from material_detail
+		where material_code =
+		#{material_code}
 	</delete>
 	<!-- 물품 삭제 -->
+
+	<!-- 상품 검색 (팝업창) -->
+	<!-- 전체 -->
+	<select id="materialItemList" resultType="com.ddosirak.domain.MaterialdetailVO">
+		select * from material_detail
+	</select>
+
+	<!-- 검색 -->
+	<select id="materialItemSearch"
+		resultType="com.ddosirak.domain.MaterialdetailVO">
+		SELECT * FROM material_detail
+		WHERE material_code LIKE CONCAT('%',
+		#{material_code}, '%')
+		AND material_name LIKE CONCAT('%', #{material_name}, '%')
+	</select>
+	<!-- 상품 검색 (팝업창) -->
 
 	<!-- max(코드) -->
 	<select id="getMaxCode" resultType="String">

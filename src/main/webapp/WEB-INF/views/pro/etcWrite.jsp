@@ -5,29 +5,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-	rel="stylesheet">
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
-	rel="stylesheet">
-<link
-	href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
-	rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 <!-- <link rel="stylesheet" type="text/css" href="../css/css.css"> -->
-<link rel="stylesheet" type="text/css"
-	href="../../resources/css/product.css">
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript">
 	function handlegobdchange() {
-		if (document.querySelector('.gobd').value === "y") {
+		if (document.querySelector('.gobd').value === "n") {
 			document.querySelector('.gobd-reason').disabled = true;
 		} else {
 			document.querySelector('.gobd-reason').disabled = false;
@@ -109,8 +98,8 @@
 						<td>불량여부</td>
 						<td><select class="gobd" name="perf_gobd"
 							onchange="handlegobdchange();">
-								<option value="n">불량</option>
-								<option value="y">정상</option>
+								<option value="n">정상</option>
+								<option value="y">불량</option>
 						</select></td>
 					</tr>
 					<tr>

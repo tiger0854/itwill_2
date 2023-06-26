@@ -20,4 +20,6 @@ public interface ProductionPerformanceService {
 	
 	// 실적삭제 동작
 	public void perfDeleteBoard(int perf_id);
+
+	public void wostatusEnd(String wo_code);
 }

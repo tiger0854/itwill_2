@@ -18,6 +18,31 @@
 </head>
 <body>
 	<script>
+		// 상품 검색 후 자재 가져오기
+		function getRelatedMaterials() {
+			var itemCode = document.getElementById("item_code").value;
+
+			$.ajax({
+				url : "/foundation/itemrecipe/getMaterials",
+				method : "GET",
+				data : {
+					item_code : itemCode
+				},
+				success : function(response) {
+					var materials = response;
+					if (materials.length > 0) {
+						receiveCheckboxValues(materials); // 자재 배열 업데이트
+					} else {
+						alert("해당 상품에 관련된 자재가 없습니다.");
+					}
+				},
+				error : function(xhr, status, error) {
+					alert("자재 가져오기 실패: " + error);
+				}
+			});
+
+		}
+
 		//상품 검색 
 		function itemSearch() {
 			window.open("/pro/itemList", "popup",
@@ -26,44 +51,81 @@
 
 		//자재 검색
 		function materialSearch() {
-			window.open("/foundation/itemrecipe/materialSearch", "popup",
-					"width=500, height=600,left=100, top=100");
+			var itemCode = $("#item_code").val();
+			if (itemCode !== null && itemCode !== "") {
+				window.open("/foundation/itemrecipe/materialSearch", "popup",
+						"width=500, height=600,left=100, top=100");
+			} else {
+				alert("상품 코드 부터 검색해주세요");
+				return false;
+			}
 		}
-
-		//자재 추가
-		$(function() {
-			$("#Madd").on("click",function() {
-				$("#material").append("<td><input type='text' name='material_code' readonly='readonly'></td>");
-			});
-		});
 
 		//자재 배열
-		var materialArray = [];
+
 		//자재 파라미터로 받아옴
 		function receiveCheckboxValues(checkedValues) {
-			// 전달받은 데이터 처리 로직
-			console.log(checkedValues);
-			materialArray = checkedValues;
-			changeArraySize(materialArray.length);
+			  // 전달받은 데이터 처리 로직
+			  console.log(checkedValues);
+			  materialArray = JSON.parse(checkedValues);
+			  changeArraySize(materialArray.length);
 		}
 
+
 		//자재 배열만큼 .append 시키는 함수
-		function appendParamater() {
-			for (i = 0; i < materialArray.length; i++) {
-				$("#material").append(
-				"<td><input type='text' name='ItemRecipeUploadList"+i+".material_code' value='"+materialArray[i]+"' readonly='readonly'></td>");
-				$("#materialCon").append(
-				"<td><input type='text' name='ItemRecipeUploadList"+i+".material_con'></td>");
+	
+// 		function appendParameter() {
+// 			var existingElements = $("#material").children().length; // 이미 .append된 요소의 개수
+
+// 			for (var i = existingElements; i < materialArray.length+ existingElements; i++) {
+
+// 				$("#material")
+// 						.append(
+// 								"<td><input type='text' name='itemRecipeUploadvo[" + i + "].material_code' value='" + materialArray[i - existingElements].material_code + "' readonly='readonly'></td>");
+// 				$("#materialCon")
+// 						.append(
+// 								"<td><input type='text' name='itemRecipeUploadvo[" + i + "].material_con' value='" + materialArray[i - existingElements].material_con + "' placeholder='" + materialArray[i - existingElements].material_code + "의 소모량' ></td>");
+// 			}
+// 		}
+	
+		var appendedMaterialCodes = []; // 이미 .append된 material_code 저장 배열
+
+		function appendParameter() {
+			var existingElements = $("#material").children().length; // 이미 .append된 요소의 개수
+
+			for (var i = existingElements; i < materialArray.length
+					+ existingElements; i++) {
+				var currentMaterial = materialArray[i - existingElements]; // 현재 처리 중인 자재
+
+				if (appendedMaterialCodes
+						.includes(currentMaterial.material_code)) {
+					continue; // 이미 .append된 material_code인 경우 건너뛰기
+				}
+
+				// 중복되지 않은 경우 HTML 요소 생성
+				$("#material")
+						.append(
+								"<td><input type='text' name='itemRecipeUploadvo[" + i + "].material_code' value='" + currentMaterial.material_code + "' readonly='readonly'></td>");
+				$("#materialCon")
+						.append(
+								"<td><input type='text' name='itemRecipeUploadvo[" + i + "].material_con' value='" + currentMaterial.material_con + "' placeholder='" + currentMaterial.material_code + "의 소모량'></td>");
+
+				appendedMaterialCodes.push(currentMaterial.material_code); // .append된 material_code 추가
+			}
 		}
+
+		//배열 사이즈를 받아와서 배열 크기 만큼 .append 해줌
+
 		function changeArraySize(newSize) {
-			materialArray.length = newSize;
-			appendParamater(); // .append 실행
+			materialArray = materialArray.slice(0, newSize);
+			console.log(materialArray.length);
+			appendParameter(); //.append 실행
 		}
 	</script>
 
 	<div class="black-bar">
 		<h4 style="text-align: center; color: white; padding-top: 8px">
-			<i class='bx bx-edit'></i>상품등록
+			<i class='bx bx-edit'></i>레시피등록
 		</h4>
 	</div>
 
@@ -79,13 +141,13 @@
 					<tr>
 						<td>품번</td>
 						<td>
-							<input type="button" value="상품 검색" onclick="itemSearch()">
+							<input type="button" value="상품 검색" onclick="itemSearch();">
 						</td>
 					</tr>
 					<tr>
 						<td></td>
 						<td>
-							<input type="text" name="item_code" id="item_code" readonly="readonly"> 
+							<input type="text" name="item_code" id="item_code" onclick="getRelatedMaterials();" readonly="readonly" placeholder="검색 후 클릭"> 
 						</td>
 					</tr>
 					<tr>

@@ -1,14 +1,23 @@
 package com.ddosirak.service;
 
+import java.io.File;
 import java.sql.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.EmployeevacationVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.SalaryVO;
 import com.ddosirak.persistance.EmployeeDAO;
 
@@ -17,6 +26,7 @@ import com.ddosirak.persistance.EmployeeDAO;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 	
+	private static final Logger logger = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 	// DAO-Controller 연결
 	
 	// DAO 객체 접근 필요 > 의존관계!
@@ -28,6 +38,38 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void employeeInsert(EmployeeVO vo) {
 		edao.insertEmployee(vo); // 사원정보 등록 동작	
 	}// employeeInsert() method end
+	// 사원 아이디비밀번호 부여
+	@Override
+	public void setEmployeeIDPW(EmployeeVO vo) {
+		edao.setEmployeeIDPW(vo);
+	}// setEmployeeIDPW() method end
+	
+	// 사원 프로필사진 등록
+	@Override
+	public void setEmployee_photo(int employee_id, 
+			MultipartFile file, HttpServletRequest request) throws Exception{
+	//  ====================사진 업로드 동작=============================
+		logger.debug("controller" + file.getOriginalFilename());
+		String saveName = Integer.toString(employee_id)+".png";
+//		UUID uuid = UUID.randomUUID();
+		
+//		String picURL = uuid+"_"+saveName;
+		String picURL = saveName;
+		
+		// 현재 프로젝트 경로 가져오기
+		String absolutePath = request.getSession().getServletContext().getRealPath("/"); // 서버경로 ..
+		String picPath = absolutePath+"resources\\employee_photo\\";
+		
+		logger.debug("picURL: "+picURL);
+		logger.debug("picPath: "+picPath);
+		
+		String finalURL = picPath+picURL;
+		File file_send = new File(finalURL);
+		file.transferTo(file_send);
+		
+		edao.setEmployee_photo_URL(employee_id,finalURL);
+	//  ====================사진 업로드 동작============================= >> 중복사용이 있기때문에 서비스단 구현으로 변경하였음.
+	}// setEmployee_photo() method end
 	
 	// 최대 사원번호 구하기
 	@Override
@@ -52,8 +94,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	// 사원목록 출력
 	@Override
-	public List<EmployeeVO> empList() {
-		return edao.empList();
+	public List<EmployeeVO> empList(PageVO pageVO) {
+		return edao.empList(pageVO);
 	}//empList() method end
 	
 	// 사원 정보 수정
@@ -112,6 +154,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return edao.getEmpSalaryInfo(vo);
 	}//getEmpSalaryInfo() method end
 	
+	
+	
+/////////////////////////////////////////급여동작////////////////////////////////////////////////////
+	
+/////////////////////////////////////////휴가 동작////////////////////////////////////////////////////
+	
 	// 사원목록 출력
 	
 	// 사원휴가 리스트 출력(관리자)
@@ -119,10 +167,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<EmployeevacationVO> vacationList() {
 		return edao.vacationList();
 	} // vacationList() method end
-	
-	
-/////////////////////////////////////////급여동작////////////////////////////////////////////////////	
-	
 
 	// 사원휴가 신청
 	@Override
@@ -154,9 +198,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return resultEVO;
 	}
 	
+/////////////////////////////////////////휴가 동작////////////////////////////////////////////////////	
 
-	
-	
 	
 
 } // public class end

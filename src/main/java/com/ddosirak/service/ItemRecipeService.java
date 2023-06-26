@@ -12,18 +12,20 @@ import com.ddosirak.domain.MaterialdetailVO;
 public interface ItemRecipeService {
 	
 	//레시피 목록 출력
-	public List<ItemRecipeListVO> ItemRecipeList();
+	public List<ItemRecipeListVO> ItemRecipeList() throws Exception;
 	
 	//레시피 등록
-	public void insertItemRecipe(ItemRecipeVO vo, ItemRecipeUploadVO uvo);
+	public void insertItemRecipe(ItemRecipeVO vo, ItemRecipeUploadVO uvo) throws Exception;
 	
 	//레시피 수정
-	public ItemRecipeVO selectItemRecipe(String item_code);
-	public Integer updateItemRecipe(ItemRecipeVO vo);
+	public List<ItemRecipeVO> selectItemRecipe(String item_code) throws Exception;
+	public Integer updateItemRecipe(ItemRecipeVO vo) throws Exception;
 	
 	//레시피 삭제
-	public void deleteItemRecipe(String item_code);
+	public void deleteItemRecipe(String item_code) throws Exception;
+	//레피시 개별 삭제
+	public void deleteItemRecipeMaterial(ItemRecipeVO vo) throws Exception;
 	
 	// 상품목록 검색
-	public List<MaterialdetailVO> materialList(MaterialdetailVO vo);
+	public List<MaterialdetailVO> materialList(MaterialdetailVO vo) throws Exception;
 }

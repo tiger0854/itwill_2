@@ -1,12 +1,14 @@
 package com.ddosirak.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.ddosirak.domain.MaterialdetailVO;
 import com.ddosirak.persistance.MaterialdetailDAO;
@@ -64,5 +66,19 @@ public class MaterialdetailServiceImpl implements MaterialdetailService {
 		logger.debug("service : 자재 삭제 호출");
 		dao.deleteM(material_code);
 	}
+
+	@Override
+	public List<MaterialdetailVO> materialItemList() {
+		logger.debug("service : 자재 목록 전체 호출");
+		return dao.materialItemList();
+	}
+
+	@Override
+	public List<MaterialdetailVO> materialItemList(Map<String, Object> instrSearch, Model model) {
+		logger.debug("service : 자재 목록 검색 호출");
+		return dao.materialItemList(instrSearch, model);
+	}
+	
+	
 
 }

@@ -27,8 +27,6 @@ public class OutboundDAOImpl implements OutboundDAO {
 	@Override
 	public void outInsert(OutboundVO vo) {
 		sqlSession.insert(NAMESPACE + ".outInsert", vo);
-		
-		logger.debug("출고 예정 등록 완료");
 	}
 
 
@@ -52,7 +50,7 @@ public class OutboundDAOImpl implements OutboundDAO {
 	
 
 	@Override
-	public void updateOutState(Integer outNum, int newState) {
+	public void updateOutState(String outNum, int newState) {
 		  Map<String, Object> paramMap = new HashMap<>();
 	        paramMap.put("outNum", outNum);
 	        paramMap.put("newState", newState);
@@ -60,7 +58,30 @@ public class OutboundDAOImpl implements OutboundDAO {
 	}
 
 	
+	// 출고 번호에 따른 출고 상품 리스트
+	@Override
+	public List<OutboundVO> getOutProductList(String outNum) {
+		return sqlSession.selectList(NAMESPACE + ".outProductList", outNum);
+	}
+	// 출고 번호에 따른 출고 상품 리스트
 	
+	// 상품이름 외 n 건 
+	  @Override
+	    public int getOutNumCount(String outNum) {
+	        return sqlSession.selectOne(NAMESPACE + ".getOutNumCount", outNum);
+	    }
+
+	  
+	  @Override
+	  public Integer outboundUpdate(OutboundVO vo) {
+		  return sqlSession.update(NAMESPACE + ".outboundUpdate", vo);
+	  }
+
+
+	  @Override
+	  public Integer outboundDelete(String out_num) {
+		  return sqlSession.delete(NAMESPACE + ".outboundDelete", out_num);
+	  }
 	
 	
 	
@@ -75,6 +96,11 @@ public class OutboundDAOImpl implements OutboundDAO {
 		return sqlSession.selectOne(NAMESPACE + ".count");
 	}
 
+
+
+
+
+	
 
 
 	

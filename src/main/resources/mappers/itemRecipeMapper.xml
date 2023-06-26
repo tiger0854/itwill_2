@@ -4,35 +4,37 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ddosirak.mapper.ItemRecipeMapper">
-	<!-- 아이템 코드 목록 -->
-	<select id="itemlist"
+	<!-- 아이템 레시피 -->
+	<select id="itemrecipe"
 		resultType="com.ddosirak.domain.ItemdetailVO">
-		SELECT item_code, item_name FROM item_detail
+		SELECT material_code, material_con FROM item_recipe
+		where item_code=#{item_code}
 	</select>
-	<!-- 아이템 코드 목록 -->
+	<!-- 아이템 레시피 -->
 	
 	<!-- 레시피 목록 출력 -->
 	<select id="itemRecipeList" resultType="com.ddosirak.domain.ItemRecipeListVO">
 		select i.item_code, i.material_code, i.material_con, id.item_name,
-		md.material_code
+		md.material_name
 		from item_recipe i
 		join item_detail id
-		on i.item_code= id.item_name
+		on i.item_code= id.item_code
 		join material_detail md
 		on i.material_code = md.material_code
+		order by item_code
 	</select>
 	<!-- 레시피 목록 출력 -->
 	
 	<!-- 레시피 등록 -->
 	<insert id="insertItemRecipe">
-		insert into item_recipe
+		insert into item_recipe (item_code, material_code, material_con)
 		values(#{item_code}, #{material_code}, #{material_con})
 	</insert>
 	<!-- 레시피 등록 -->
 	
 	<!-- 레시피 수정 -->
-	<select id="selectItemRecipe">
-		select * from item_recipe
+	<select id="selectItemRecipe" resultType="com.ddosirak.domain.ItemRecipeVO">
+		select material_code, material_con from item_recipe
 		where item_code=#{item_code}
 	</select>
 	<update id="updateItemRecipe">
@@ -45,6 +47,10 @@
 	<delete id="deleteItemRecipe">
 		delete from item_recipe 
 		where item_code=#{item_code}
+	</delete>
+	<delete id="deleteItemRecipeMaterial">
+		delete from item_recipe 
+		where item_code=#{item_code} and material_code=#{material_code}
 	</delete>
 	<!-- 레시피 삭제 -->
 	
@@ -60,4 +66,13 @@
 	  AND material_type LIKE CONCAT('%', #{material_type}, '%')
 	</select>
 	<!-- 자재 검색 -->
+	
+	<!-- 등록/추가 -->
+	<insert id="insertOrUpdateItemRecipe">
+		INSERT INTO item_recipe (item_code, material_code,material_con)
+		VALUES (#{item_code}, #{material_code}, #{material_con})
+		ON DUPLICATE KEY UPDATE
+		material_con = VALUES(material_con)
+	</insert>
+	<!-- 등록/추가 -->
 </mapper>

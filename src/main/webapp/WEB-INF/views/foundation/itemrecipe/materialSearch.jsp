@@ -18,46 +18,51 @@
 </head>
 <body>
 	<script>
-	 var checkedValues = [];
-		
-	 	//부모창으로 배열을 전달함
-		function postParam(){
-			// 부모 창으로 체크된 값 전달
-			window.opener.receiveCheckboxValues(checkedValues);
-			
-// 			alert(checkedValues);
+	var checkedValues = [];
 
-			// 창 닫기
-			window.close();
-		}
-		
-		//체크박스 온오프 시 배열에 담고 출력
+	// 체크된 값들을 JSON 배열로 전달
+	function postParam() {
+	  // JSON 배열 생성
+	  var jsonValues = JSON.stringify(checkedValues);
+
+	  // 부모 창으로 JSON 배열 전달
+	  window.opener.receiveCheckboxValues(jsonValues);
+
+	  // 창 닫기
+	  window.close();
+	}
+
+	// 체크박스 온오프 시 배열에 담고 출력
+
 		$(function() {
-
 			$("input[type='checkbox']").change(
 					function() {
 						if ($(this).is(":checked")) {
 							var checkboxName = $(this).attr("name");
 							var checkboxValue = $(this).val();
-							checkedValues.push(checkboxValue);
-							
+							checkedValues.push({
+								"material_code" : checkboxValue,
+								"material_con" : "" // material_con을 공백으로 설정
+							});
+
 							$("#checkParameter").append(
 									"<tr id='" + checkboxName + "'><td>"
 											+ checkboxName + "번 자재 </td><td>"
 											+ checkboxValue + "</td></tr>");
-							
 						} else {
 							var checkboxName = $(this).attr("name");
 							var checkboxValue = $(this).val();
-							var removeIdx = checkedValues.findIndex(checkboxValue);
-						
+							var removeIdx = checkedValues.findIndex(function(item) {
+								return item.name === checkboxName
+										&& item.value === checkboxValue;
+							});
+
 							if (removeIdx !== -1) {
 								checkedValues.splice(removeIdx, 1);
 							}
-							$("#" + checkboxName).remove();
+								$("#" + checkboxName).remove();
 						}
 					});
-		
 		});
 	</script>
 	<div class="black-bar">

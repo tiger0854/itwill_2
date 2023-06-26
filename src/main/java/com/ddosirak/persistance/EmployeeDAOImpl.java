@@ -15,6 +15,8 @@ import org.springframework.stereotype.Repository;
 
 import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.EmployeevacationVO;
+import com.ddosirak.domain.LoginVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.SalaryVO;
 
 //@Repository : 스프링에 해당 파일이 DAO의 동작을 하는 객체라고 등록하는 것.
@@ -49,6 +51,25 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		logger.debug("사원 등록 완료!");
 
 	}//insertMember() method end
+	
+	// 사원 프로필사진 등록
+	@Override
+	public void setEmployee_photo_URL(int employee_id, String finalURL) {
+		EmployeeVO vo = new EmployeeVO();
+		vo.setEmployee_id(employee_id);
+		vo.setEmployee_photo(finalURL);
+		sqlSession.update(NAMESPACE+".setEmployee_photo_URL", vo); 
+	}// setEmployee_photo_URL() method end
+
+	// 사원 아이디비밀번호 설정
+	@Override
+	public void setEmployeeIDPW(EmployeeVO vo) {
+		LoginVO lvo = new LoginVO();
+		lvo.setEmployee_id(Integer.toString(vo.getEmployee_id()));
+		lvo.setEmployee_pw(Integer.toString(vo.getEmployee_id()));
+		lvo.setEmployee_name(vo.getEmployee_name());
+		sqlSession.insert(NAMESPACE+".setEmployeeIDPW", lvo); 
+	}// setEmployeeIDPW() method end
 
 	// 사원번호중 가장 큰 번호
 	@Override
@@ -82,9 +103,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	// 사원목록 출력
 	@Override
-	public List<EmployeeVO> empList() {
+	public List<EmployeeVO> empList(PageVO pageVO) {
 		logger.debug("empList()!");
-		List<EmployeeVO> empList = sqlSession.selectList(NAMESPACE+".empList");
+		List<EmployeeVO> empList = sqlSession.selectList(NAMESPACE+".empList",pageVO);
 		return empList;
 	}// empList() method end
 
@@ -172,10 +193,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		SalaryVO svo = sqlSession.selectOne(NAMESPACE+".getEmpSalaryinfo",vo);
 		return svo;
 	}// getEmpSalaryInfo() method end
+/////////////////////////////////////////급여동작////////////////////////////////////////////////////	
 	
-	
-	
-	
+/////////////////////////////////////////휴가동작////////////////////////////////////////////////////	
 	// 나의 휴가 리스트 출력
 	@Override
 	public List<EmployeevacationVO> myvacationList() {
@@ -184,9 +204,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		return myvacationList;
 	}// myvacationList() method end
 
-
-	
-	
 	// 휴가 수정
 	@Override
 	public Integer vacationmodify(EmployeevacationVO vvo) {
@@ -202,6 +219,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		EmployeevacationVO resultEVO = sqlSession.selectOne((NAMESPACE)+".vacationim", vacation_id);
 		return resultEVO;
 	}
+/////////////////////////////////////////휴가동작////////////////////////////////////////////////////	
 
 
 
