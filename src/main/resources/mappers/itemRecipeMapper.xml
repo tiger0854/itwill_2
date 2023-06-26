@@ -112,15 +112,7 @@
 	<!-- 등록/추가 -->
 
 	<!-- 레시피 검색 갯수 -->
-	<resultMap type="com.ddosirak.domain.MaterialdetailVO" id="il">
-		<result column="item_code" property="item_code" />
-		<result column="material_code" property="material_code" />
-		<result column="material_name" property="material_name" />
-		<result column="material_con" property="material_con" />
-		<result column="item_name" property="item_name" />
-	</resultMap>
-
-	<select id="recipeCount"  resultType="java.lang.Integer">
+	<select id="recipeCount" resultType="java.lang.Integer">
 		SELECT COUNT(*)
 		FROM item_recipe i
 		JOIN item_detail id ON
@@ -135,9 +127,6 @@
 			id.item_name LIKE CONCAT('%',
 			#{item_name}, '%')
 		</if>
-		GROUP BY i.item_code, i.material_code, i.material_con,
-		id.item_name,
-		md.material_name
 	</select>
 	<!-- 레시피 검색 갯수 -->
 </mapper>
