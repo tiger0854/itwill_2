@@ -155,4 +155,71 @@
 
 	
   	<!-- 급여 동작 -->
+  	
+  	<!-- 사원 일자별 출퇴근현황 출력 동작 -->
+  	<select id="getCheckList" resultType="com.ddosirak.domain.EmployeeCheckVO">
+  		SELECT * FROM emp_check WHERE DATE(date_time) = DATE(#{date_time}) AND employee_id = #{employee_id}
+  	</select>
+  	<!-- 사원 일자별 출퇴근현황 출력 동작 -->
+  	<!-- 출근사원수 -->
+  	<select id="getInEmp" resultType="com.ddosirak.domain.EmployeeCheckVO">
+  		SELECT * FROM emp_check 
+  		WHERE DATE(date_time) = DATE(NOW()) AND emp_in IS NOT NULL 
+  		ORDER BY date_time DESC 
+  	</select>
+  	<!-- 출근사원수 -->
+  	<!-- 퇴근사원수 -->
+  	<select id="getOutEmp" resultType="com.ddosirak.domain.EmployeeCheckVO">
+  		SELECT * FROM emp_check  
+  		WHERE DATE(date_time) = DATE(NOW()) AND emp_out IS NOT NULL 
+  		ORDER BY date_time DESC 
+  	</select>
+  	<!-- 퇴근사원수 -->
+  	
+<!-- 페이징 -->
+  	<!-- 출근사원수 -->
+  	<select id="getInEmpPage" resultType="com.ddosirak.domain.EmployeeCheckVO">
+  		SELECT * FROM emp_check 
+  		WHERE DATE(date_time) = DATE(NOW()) AND emp_in IS NOT NULL 
+  		ORDER BY date_time DESC 
+  		LIMIT #{startRow}, #{pageSize}
+  	</select>
+  	<!-- 출근사원수 -->
+  	<!-- 퇴근사원수 -->
+  	<select id="getOutEmpPage" resultType="com.ddosirak.domain.EmployeeCheckVO">
+  		SELECT * FROM emp_check  
+  		WHERE DATE(date_time) = DATE(NOW()) AND emp_out IS NOT NULL 
+  		ORDER BY date_time DESC 
+  		LIMIT #{startRow}, #{pageSize}
+  	</select>
+  	<!-- 퇴근사원수 -->
+  <!-- 페이징 -->
+  
+  <!-- 필터링 -->
+   <!-- 부서 -->
+   	<select id="getEmpList_department_name" resultType="com.ddosirak.domain.EmployeeVO">
+   		SELECT * FROM emp_main
+   		WHERE department_name = #{department_name}
+   	</select>
+   <!-- 부서 -->
+   <!-- 직위 -->
+   	<select id="getEmpList_position" resultType="com.ddosirak.domain.EmployeeVO">
+   		SELECT * FROM emp_main
+   		WHERE position = #{position}
+   	</select>
+   <!-- 직위 -->
+   <!-- 재직현황 -->
+   	<select id="getEmpList_employee_status" resultType="com.ddosirak.domain.EmployeeVO">
+   		SELECT * FROM emp_main
+   		WHERE employee_status = #{employee_status}
+   	</select>
+   <!-- 재직현황 -->
+   <!-- 재직현황 -->
+   	<select id="getEmpList_employee_name" resultType="com.ddosirak.domain.EmployeeVO">
+   		SELECT * FROM emp_main
+   		WHERE employee_name = #{employee_name}
+   	</select>
+   <!-- 재직현황 -->
+   
+  <!-- 필터링 --> 
   </mapper>

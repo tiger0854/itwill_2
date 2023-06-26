@@ -1,8 +1,10 @@
 package com.ddosirak.persistance;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
+import com.ddosirak.domain.EmployeeCheckVO;
 import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.EmployeevacationVO;
 import com.ddosirak.domain.PageVO;
@@ -70,5 +72,22 @@ public interface EmployeeDAO {
 	
 	
 /////////////////////////////////////////급여동작////////////////////////////////////////////////////
-
+	
+/////////////////////////////////////////AJAX동작////////////////////////////////////////////////////
+	
+	// 일자별 사원 출근 현황 출력
+	public List<EmployeeCheckVO> getCheckList(Timestamp date_time, int employee_id);
+	// 전체사원 근태현황 출력
+	public List<EmployeeCheckVO> getInEmp();// 출근
+	public List<EmployeeCheckVO> getOutEmp();// 퇴근
+	public List<EmployeeCheckVO> getInEmp(PageVO vo);// 출근 페이징
+	public List<EmployeeCheckVO> getOutEmp(PageVO vo);// 퇴근 페이징
+	
+	// 필터링
+	public List<EmployeeVO> getEmpList_department_name(String department_name);// 부서
+	public List<EmployeeVO> getEmpList_position(String position);// 직위
+	public List<EmployeeVO> getEmpList_employee_status(String employee_status);// 재직현황
+	public List<EmployeeVO> getEmpList_employee_name(String employee_name);// 이름
+	
+/////////////////////////////////////////AJAX동작////////////////////////////////////////////////////
 }// public interface end

@@ -21,11 +21,27 @@ public class PageDAOImpl implements PageDAO {
 		return sqlSession.selectOne(NAMESPACE+".countBoard");
 	}// countBoard() method end
 
+	// 사원정보조회 리스트 페이징 처리
 	@Override
 	public Integer countEmpList() {
 		logger.debug("countEmpList() 메서드 호출");
 		return sqlSession.selectOne(NAMESPACE+".countEmpList");
 	}//countEmpList() method end
+
+	// 출근자 목록 페이징 처리
+	@Override
+	public Integer countInEmp() {
+		return sqlSession.selectOne(NAMESPACE+".countInEmp");
+	}// countInEmp() method end
+	// 퇴근자 목록 페이징 처리
+	@Override
+	public Integer countOutEmp() {
+		return sqlSession.selectOne(NAMESPACE+".countOutEmp");
+	}// countOutEmp() method end
+	
+	
+	
+	
 	
 	
 

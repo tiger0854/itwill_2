@@ -43,12 +43,72 @@ $(document).ready(function(){
 	$("#department_name").val("${evo.department_name}").prop("selected", true); 
 	$("#employee_status").val("${evo.employee_status}").prop("selected", true); 
 	
+	
+	// 원하는 날의 출퇴근 정보를 확인할 수 있도록 하는 기능
+	$('#checkDate').change(function(){
+		var dateData = $('#checkDate').val() + ' 00:00:00';
+		var employee_id = '${evo.employee_id}';
+		var formdata = {'date_time': dateData, 'employee_id': employee_id};
+		var thead = '<tr><td>일자</td>';
+			thead += '<td>시간</td>';
+			thead += '<td>사유</td></tr>';
+			
+// 		console.log(formdata);
+		$.ajax({
+			url: '/emp_ajax/check', // 클라이언트가 요청을 보낼 서버의 URL 주소
+			data: formdata,        // HTTP 요청과 함께 서버로 보낼 데이터
+			type: 'POST',          // HTTP 요청 방식(GET, POST)
+// 			dataType: 'html',      // 호출 했을 때 결과타입
+			success : function(voList) {
+				console.log(voList)
+				var table = '';
+				if(voList.length !== 0){
+					for(var i = 0; i< voList.length;i++){
+						var timeMS = new Date(voList[i].date_time)
+						  const year = timeMS.getFullYear();    //0000년 가져오기
+						  const month = timeMS.getMonth() + 1;  //월은 0부터 시작하니 +1하기
+						  const date = timeMS.getDate();        //일자 가져오기
+						  const hour = timeMS.getHours();
+						  const min = timeMS.getMinutes();
+	
+						table += '<tr>';
+						table += '<td>';
+						table += year +'년 '+month+'월 '+date+'일';					
+						table += '</td>';
+						table += '<td>';
+						table += hour +'시 '+ min+'분 ';
+						table += '</td>';
+						table += '<td>';
+						if(voList[i].emp_in == null){
+							table += voList[i].emp_out;
+						}else{
+							table += voList[i].emp_in;
+						}
+						table += '</td>';
+						table += '</tr>';
+					} // for end
+				} // if end
+				else{
+					table += '<tr>';
+					table += '<td colspan="4">';
+					table += '내용이 없습니다.';
+					table += '</td>';
+					table += '</tr>';
+				}// else end
+					$('#theadHere').html(thead);
+					$('#checkResultHere').html(table);
+			}// success end
+		}); // ajax end
+		
+	}); // check end
+	
+	
 	});// jQ end
+	
 
 </script>
 </head>
 <body id="body-pd" style="font-family: 'TheJamsil5';">
-
 	<div>
 	<br>
 	    <h1>사원 정보</h1>
@@ -65,7 +125,7 @@ $(document).ready(function(){
 		    <table class="table table-striped" style="margin-top: 10px;" >
 		
 		        <tr>
-		            <td rowspan="4"><img src="/img/employee_photo/${evo.employee_id}.png" alt="profile_photo" width="150" height="150"></td>
+		            <td rowspan="4"><img src="/img/${evo.employee_id}.png" alt="profile_photo" width="150" height="150"></td>
 		            <td>성명</td>
 		            <td><input type="text" size="50" value="${evo.employee_name }" id="employee_name" name="employee_name" readonly></td>
 		            <td>주민등록번호</td>
@@ -138,27 +198,12 @@ $(document).ready(function(){
 	 </div>
 
 	<div>
-		<input type="date" name="checkDate">
+		<p>출퇴근 확인</p><input type="date" id="checkDate">
 		<table class="table table-striped" style="margin-top: 10px;">
-			<tr>
-				<td>일자</td>
-				<td>사유</td>
-				<td>시간</td>
-			</tr>
-			<c:forEach var="chkvo" items="${chkVO }">
-				<tr>
-					<c:set var="dateDATA" value="${chkvo.date_time }"/>
-						<td>${fn:substring(dateDATA,0,11) }</td>
-					<c:if test="${empty chkvo.emp_out }">
-						<td>${chkvo.emp_in }</td>
-					</c:if>
-					<c:if test="${empty chkvo.emp_in }">
-						<td>${chkvo.emp_out }</td>
-					</c:if>					
-					<td>${fn:substring(dateDATA,11,16) }</td>
-					
-				</tr>
-			</c:forEach>
+		<thead id="theadHere">
+		</thead>
+		<tbody id="checkResultHere">
+		</tbody>
 		</table>
 	</div>
 

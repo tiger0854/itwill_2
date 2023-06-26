@@ -15,5 +15,20 @@
 		SELECT COUNT(*) FROM emp_main
 	</select>
 	<!-- 사원목록 페이징 처리를 위한 쿼리 -->
+	
+	<!-- 출근사원수 -->
+  	<select id="countInEmp" resultType="Integer">
+  		SELECT COUNT(*) FROM emp_check 
+  		WHERE DATE(date_time) = DATE(NOW()) AND emp_in IS NOT NULL 
+  		ORDER BY date_time DESC 
+  	</select>
+  	<!-- 출근사원수 -->
+  	<!-- 퇴근사원수 -->
+  	<select id="countOutEmp" resultType="Integer">
+  		SELECT COUNT(*) FROM emp_check  
+  		WHERE DATE(date_time) = DATE(NOW()) AND emp_out IS NOT NULL 
+  		ORDER BY date_time DESC 
+  	</select>
+  	<!-- 퇴근사원수 -->
   
   </mapper>

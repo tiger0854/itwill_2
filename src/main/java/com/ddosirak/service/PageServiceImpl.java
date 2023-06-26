@@ -28,6 +28,18 @@ public class PageServiceImpl implements PageService {
 		logger.debug("service: countEmpList()");
 		return pdao.countEmpList();
 	}// countEmpList() method end
+	// 출근자 페이징처리
+	@Override
+	public Integer countInEmp() {
+		logger.debug("service: countInEmp()");
+		return pdao.countInEmp();
+	}// countInEmp() method end
+	// 퇴근자 페이징처리
+	@Override
+	public Integer countOutEmp() {
+		logger.debug("service: countOutEmp()");
+		return pdao.countOutEmp();
+	}// countOutEmp() method end
 	
 	
 	

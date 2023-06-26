@@ -238,6 +238,109 @@ public class MemberController {
 		model.addAttribute("alCount",alCount);
 	}//listGET() method end
 	
+	// 출퇴근 조회
+	// 출근자 리스트
+	@RequestMapping(value = "/inEmp_list")
+	public void In_empList(Model model, PageVO pageVO, HttpServletRequest request) {
+		logger.debug("In_empList() 호출![]~(￣▽￣)~*");
+		
+		//================================페이징 처리를 위한 값 받아오기 동작========================================
+		// 준비물 : Inject > PageVO , 파라미터값 PageVO pageVO, HttpServletRequest request
+		//   		리스트를 반환하는 DAO - Service 메서드에 PageVO 추가, 쿼리에 LIMIT #{startRow}, #{pageSize} 추가.
+		// 페이징 처리
+		// 한 화면에 보여줄 글 개수 설정
+		int pageSize = 5; // sql문에 들어가는 항목
+		
+		// 현페이지 번호 가져오기
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum==null) {
+			pageNum="1";
+		}
+		// 페이지번호를 정수형으로 변경
+		int currentPage=Integer.parseInt(pageNum);
+		pageVO.setPageSize(pageSize);
+		pageVO.setPageNum(pageNum);
+		pageVO.setCurrentPage(currentPage);
+		int startRow=(pageVO.getCurrentPage()-1)*pageVO.getPageSize()+1; // sql문에 들어가는 항목
+		int endRow = startRow+pageVO.getPageSize()-1;
+		
+		pageVO.setStartRow(startRow-1); // limit startRow (0이 1열이기 때문 1을 뺌)
+		pageVO.setEndRow(endRow);
+		
+		// 게시글 개수 가져오기
+		int count = pService.countInEmp(); // 요 동작만 각자 페이지에 맞게 수정하면 됨!!
+
+		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
+		int startPage=(currentPage-1)/pageBlock*pageBlock+1;
+		int endPage=startPage+pageBlock-1;
+		int pageCount=count/pageSize+(count%pageSize==0?0:1);
+		if(endPage > pageCount){
+		 	endPage = pageCount;
+		 }
+		pageVO.setCount(count);
+		pageVO.setPageBlock(pageBlock);
+		pageVO.setStartPage(startPage);
+		pageVO.setEndPage(endPage);
+		pageVO.setPageCount(pageCount);
+		
+		model.addAttribute("pageVO", pageVO);
+		//================================페이징 처리를 위한 값 받아오기 동작========================================
+		
+		List<EmployeeCheckVO> inList = eService.getInEmp(pageVO);
+		model.addAttribute("inList", inList);
+	}// In_empList() method end
+	// 퇴근자 리스트
+	@RequestMapping(value = "/outEmp_list")
+	public void OutEmp_list(Model model, PageVO pageVO, HttpServletRequest request) {
+		logger.debug("OutEmp_list() 호출![]~(￣▽￣)~*");
+		
+		//================================페이징 처리를 위한 값 받아오기 동작========================================
+		// 준비물 : Inject > PageVO , 파라미터값 PageVO pageVO, HttpServletRequest request
+		//   		리스트를 반환하는 DAO - Service 메서드에 PageVO 추가, 쿼리에 LIMIT #{startRow}, #{pageSize} 추가.
+		// 페이징 처리
+		// 한 화면에 보여줄 글 개수 설정
+		int pageSize = 5; // sql문에 들어가는 항목
+		
+		// 현페이지 번호 가져오기
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum==null) {
+			pageNum="1";
+		}
+		// 페이지번호를 정수형으로 변경
+		int currentPage=Integer.parseInt(pageNum);
+		pageVO.setPageSize(pageSize);
+		pageVO.setPageNum(pageNum);
+		pageVO.setCurrentPage(currentPage);
+		int startRow=(pageVO.getCurrentPage()-1)*pageVO.getPageSize()+1; // sql문에 들어가는 항목
+		int endRow = startRow+pageVO.getPageSize()-1;
+		
+		pageVO.setStartRow(startRow-1); // limit startRow (0이 1열이기 때문 1을 뺌)
+		pageVO.setEndRow(endRow);
+		
+		// 게시글 개수 가져오기
+		int count = pService.countOutEmp(); // 요 동작만 각자 페이지에 맞게 수정하면 됨!!
+
+		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
+		int startPage=(currentPage-1)/pageBlock*pageBlock+1;
+		int endPage=startPage+pageBlock-1;
+		int pageCount=count/pageSize+(count%pageSize==0?0:1);
+		if(endPage > pageCount){
+		 	endPage = pageCount;
+		 }
+		pageVO.setCount(count);
+		pageVO.setPageBlock(pageBlock);
+		pageVO.setStartPage(startPage);
+		pageVO.setEndPage(endPage);
+		pageVO.setPageCount(pageCount);
+		
+		model.addAttribute("pageVO", pageVO);
+		//================================페이징 처리를 위한 값 받아오기 동작========================================
+		
+		List<EmployeeCheckVO> outList = eService.getOutEmp(pageVO);
+		model.addAttribute("outList", outList);
+	}// Out_empList() method end
+	
+	
 ////////////////////////////////////////////////////사원 관리//////////////////////////////////////////////////////////////////////////////
 	
 ////////////////////////////////////////////////////급여 관리//////////////////////////////////////////////////////////////////////////////
@@ -538,37 +641,8 @@ public class MemberController {
 			return "redirect:/emp/vacationmodify?vacation_id="+vvo.getVacation_id();
 		}
 		    // 수정하기 - /emp/modify (POST)
-		
-		
-		
-		
-	
+
 /////////////////////////////////////////////////////휴가 관리/////////////////////////////////////////////////////////////////////////////	
-	
-//	// 로그인 > 정보입력 (GET)
-//	@RequestMapping(value="/login", method=RequestMethod.GET)
-//	public void loginGET() {
-//		logger.debug("loginGET() 호출![]~(￣▽￣)~*"); 
-//		logger.debug("연결된 뷰페이지로 이동! (/member/login.jsp)"); 
-//	}// loginGET() method end
-//	
-//	// 로그인 > 정보처리(POST)
-//	@RequestMapping(value="/login", method=RequestMethod.POST)
-//	public String loginPOST(MemberVO vo) { //@ModelAttribute ,,, vo로 대체 가능
-//		logger.debug("loginPOST() 호출![]~(￣▽￣)~*");
-//		// 전달정보(id,pw 저장)
-//		logger.debug(vo+""); // 프레임워크에서 대신해주는 일이 많다보니 데이터 놓치는 경우 많음.
-//							 // 항상 데이터가 잘 넘어오는지 확인하는 과정이 중요함!
-//		// DB에서 정보 체크(Service에서 실행)
-//		MemberVO resultVO = mService.memberLogin(vo);
-//		// 로그인 여부에 따라서 페이지 이동
-//		logger.debug(resultVO+"");
-//		
-//		// 로그인 성공 > 메인(redirect) + session에 id저장
-//		// 로그인 실패 > 뒤로가기
-//		
-//		return "";
-//	}// loginPOST() method end
 	
 	
 
