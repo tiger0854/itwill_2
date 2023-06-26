@@ -102,6 +102,7 @@
 				<th>#</th>
 				<th>자재코드</th>
 				<th>자재명</th>
+				<th>자재유형</th>
 			</tr>
 			<c:forEach var="vo" items="${resultList }" varStatus="status">
 				<tr>
