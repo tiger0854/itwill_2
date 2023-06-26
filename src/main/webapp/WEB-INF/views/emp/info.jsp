@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 <meta charset="UTF-8">
@@ -135,22 +136,33 @@ $(document).ready(function(){
 	    </form>
 
 	 </div>
-	    
-	 <div>
-		<table class="table table-striped" style="margin-top: 10px;" >
+
+	<div>
+		<input type="date" name="checkDate">
+		<table class="table table-striped" style="margin-top: 10px;">
 			<tr>
 				<td>일자</td>
-				<td>출근일시</td>
-				<td>퇴근일시</td>
+				<td>사유</td>
+				<td>시간</td>
 			</tr>
-			<tr>
-				<td>1</td>
-				<td>2</td>
-			</tr>
+			<c:forEach var="chkvo" items="${chkVO }">
+				<tr>
+					<c:set var="dateDATA" value="${chkvo.date_time }"/>
+						<td>${fn:substring(dateDATA,0,11) }</td>
+					<c:if test="${empty chkvo.emp_out }">
+						<td>${chkvo.emp_in }</td>
+					</c:if>
+					<c:if test="${empty chkvo.emp_in }">
+						<td>${chkvo.emp_out }</td>
+					</c:if>					
+					<td>${fn:substring(dateDATA,11,16) }</td>
+					
+				</tr>
+			</c:forEach>
 		</table>
-	 </div>
+	</div>
 
-    
+
 </body>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>

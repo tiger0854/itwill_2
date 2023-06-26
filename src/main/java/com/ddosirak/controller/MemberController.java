@@ -32,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ddosirak.domain.EmployeeCheckVO;
 import com.ddosirak.domain.EmployeeListVO;
 import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.EmployeevacationVO;
@@ -40,6 +41,7 @@ import com.ddosirak.domain.PageVO;
 
 
 import com.ddosirak.domain.SalaryVO;
+import com.ddosirak.service.BoardService;
 import com.ddosirak.service.EmployeeService;
 import com.ddosirak.service.PageService;
 
@@ -64,7 +66,9 @@ public class MemberController {
 	private EmployeeService eService;
 	@Inject
 	private PageService pService;
-	
+	@Inject
+	private BoardService bService;
+ 	
 	// 동작 구현 > 메서드 설계
 	
 	
@@ -104,8 +108,10 @@ public class MemberController {
 		}// if end
 		// ====================사원 IDPW 부여 동작=============================
 		
+		// ====================사원 사진 동작=============================
 		eService.setEmployee_photo(vo.getEmployee_id(), file, request);
-				
+		// ====================사원 사진 동작=============================
+		
 		logger.debug(">> vo: "+vo);
 		// 페이지 이동	
 		return "redirect:/emp/list"; // 주소를 변경하면서 페이지 이동
@@ -151,10 +157,13 @@ public class MemberController {
 
 	
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
-	public void employeeInfoGET(int employee_id, Model model) {
+	public void employeeInfoGET(int employee_id, Model model) throws Exception{
 		logger.debug("employeeInfoGET() 호출![]~(￣▽￣)~*");
 		// 0609, 페이지 이동간에 정보전달 방법 찾아본 후 마저 코드 짜기. // 해결
 		EmployeeVO evo = eService.getEmployee(employee_id);
+		List<EmployeeCheckVO> chkVO = bService.getInOutList(employee_id);
+		
+		model.addAttribute("chkVO",chkVO);
 		model.addAttribute("evo",evo);
 	}//employeeInfoGET() method end
 	
