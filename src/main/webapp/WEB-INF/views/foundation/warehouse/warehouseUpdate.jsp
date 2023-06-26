@@ -71,16 +71,16 @@
 					<tr>
 						<td>재고/자재</td>
 						<td><select name="retail_code">
-								<option value="재고">재고 창고</option>
-								<option value="자재">자재 창고</option>
+								<option value="재고" ${resultvo.retail_code == '재고' ? 'selected' : ''}>재고 창고</option>
+								<option value="자재" ${resultvo.retail_code == '자재' ? 'selected' : ''}>자재 창고</option>
 						</select></td>
 					</tr>
 					<tr>
 						<td>냉장/냉동/상온</td>
 						<td><select name="wh_type">
-								<option value="냉장">냉장</option>
-								<option value="냉동">냉동</option>
-								<option value="상온">상온</option>
+								<option value="냉장" ${resultvo.wh_type == '냉장' ? 'selected' : ''}>냉장</option>
+								<option value="냉동" ${resultvo.wh_type == '냉동' ? 'selected' : ''}>냉동</option>
+								<option value="상온" ${resultvo.wh_type == '상온' ? 'selected' : ''}>상온</option>
 						</select></td>
 					</tr>
 				</tbody>

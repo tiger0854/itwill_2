@@ -6,11 +6,14 @@ import java.util.Map;
 import org.springframework.ui.Model;
 
 import com.ddosirak.domain.FactoryVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.WarehouseVO;
 
 public interface WarehouseService {
 	// 창고 목록 출력
-	public List<WarehouseVO> warehouseList();
+	public List<WarehouseVO> warehouseList(PageVO pagevo);
+	// 창고 검색 목록 출력
+	public List<WarehouseVO> warehouseList(PageVO pagevo, Map<String, Object> instrSearch, Model model);
 
 	// 창고 등록
 	public Integer insertwh(WarehouseVO vo);
@@ -24,5 +27,9 @@ public interface WarehouseService {
 	public void deletewh(String wh_code);
 
 	// 상품목록 검색
+	public List<WarehouseVO> warehouseItemList();
 	public List<WarehouseVO> warehouseItemList(Map<String, Object> instrSearch, Model model);
+	
+	// 창고 검색 갯수
+	public Integer warehouseCount(Map<String, Object> instrSearch);
 }

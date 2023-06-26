@@ -7,7 +7,12 @@
 	<!-- 창고 조회 -->
 	<select id="WarehouseList"
 		resultType="com.ddosirak.domain.WarehouseVO">
-		select * from warehouse
+		select * from warehouse LIMIT #{startRow}, #{pageSize}
+	</select>
+	<select id="WarehouseListSearch"
+		resultType="com.ddosirak.domain.WarehouseVO">
+		select * from warehouse where wh_code LIKE concat('%',
+		#{wh_code}, '%') LIMIT #{startRow}, #{pageSize}
 	</select>
 	<!-- 창고 조회 -->
 	<!-- 창고 등록 -->
@@ -25,7 +30,8 @@
 	<!-- 창고 수정 -->
 	<update id="updateWarehouse">
 		UPDATE warehouse
-		SET wh_name = #{wh_name}, retail_code = #{retail_code}, wh_type =
+		SET wh_name = #{wh_name}, retail_code
+		= #{retail_code}, wh_type =
 		#{wh_type}
 		WHERE wh_code = #{wh_code}
 	</update>
@@ -37,6 +43,10 @@
 	<!-- 창고 삭제 -->
 
 	<!-- 상품 검색 (팝업창) -->
+	<select id="warehouseItemList"
+		resultType="com.ddosirak.domain.WarehouseVO">
+		SELECT * FROM warehouse
+	</select>
 	<select id="warehouseItemSearch"
 		resultType="com.ddosirak.domain.WarehouseVO">
 		SELECT * FROM warehouse
@@ -54,5 +64,15 @@
 		warehouse
 	</select>
 	<!-- max(코드) -->
+
+	<!-- 창고 검색 갯수 -->
+	<select id="wareCount" resultType="java.lang.Integer">
+		select count(*) from
+		warehouse
+		where wh_code LIKE concat('%', #{wh_code}, '%')
+		and wh_name LIKE
+		concat('%', #{wh_name}, '%')
+	</select>
+	<!-- 창고 검색 갯수 -->
 
 </mapper>

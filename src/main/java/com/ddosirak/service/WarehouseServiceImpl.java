@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.WarehouseVO;
 import com.ddosirak.persistance.WarehouseDAO;
 
@@ -22,9 +23,18 @@ public class WarehouseServiceImpl implements WarehouseService {
 	
 	//창고 목록
 	@Override
-	public List<WarehouseVO> warehouseList() {
+	public List<WarehouseVO> warehouseList(PageVO pageVO) {
 		logger.debug("dao : warehouselist 호출");
-		List<WarehouseVO> voList=dao.whList();
+		List<WarehouseVO> voList=dao.whList(pageVO);
+		logger.debug("voList의 개수 : "+voList.size());
+		return voList;
+	}
+	
+	//창고 검색 목록
+	@Override
+	public List<WarehouseVO> warehouseList(PageVO pageVO, Map<String, Object> instrSearch, Model model) {
+		logger.debug("dao : warehouselist 검색 호출");
+		List<WarehouseVO> voList=dao.whList(pageVO, instrSearch, model);
 		logger.debug("voList의 개수 : "+voList.size());
 		return voList;
 	}
@@ -72,10 +82,24 @@ public class WarehouseServiceImpl implements WarehouseService {
 	}
 
 	@Override
+	public List<WarehouseVO> warehouseItemList() {
+		logger.debug("service : 창고 검색 전체");
+		return dao.warehouseItemList();
+	}
+
+	@Override
 	public List<WarehouseVO> warehouseItemList(Map<String, Object> instrSearch, Model model) {
 		logger.debug("service : 창고 검색");
 		return dao.warehouseItemList(instrSearch, model);
 	}
+
+	@Override
+	public Integer warehouseCount(Map<String, Object> instrSearch) {
+		logger.debug("service : 창고 검색  갯수");
+		return dao.warehouseCount(instrSearch);
+	}
+	
+	
 	
 	
 
