@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.ddosirak.domain.PageVO;
+
 @Repository
 public class PageDAOImpl implements PageDAO {
 	private static final Logger logger = LoggerFactory.getLogger(PageDAOImpl.class);
@@ -32,6 +34,12 @@ public class PageDAOImpl implements PageDAO {
 		logger.debug("countEmpList() 메서드 호출");
 		return sqlSession.selectOne(NAMESPACE+".customerList");
 
+	}
+
+	@Override
+	public Integer serchCusname(PageVO vo) {
+		logger.debug("serchCusname() 메서드 호출");
+		return sqlSession.selectOne(NAMESPACE+".serchCusname",vo);
 	}
 	
 	

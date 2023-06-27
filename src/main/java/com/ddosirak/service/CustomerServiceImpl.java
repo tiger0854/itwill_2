@@ -46,4 +46,16 @@ public class CustomerServiceImpl implements CustomerService {
 		return cdao.customerDetail(cus_id);
 	}
 
+	@Override
+	public Integer selectCusNumber(String cus_number) {
+		
+		return cdao.selectCusNumber(cus_number);
+	}
+
+	@Override
+	public List<CustomerVO> serchCusname(PageVO vo) {
+		// TODO Auto-generated method stub
+		return cdao.serchCusname(vo);
+	}
+
 }

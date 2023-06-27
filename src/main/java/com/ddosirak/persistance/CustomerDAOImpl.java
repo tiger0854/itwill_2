@@ -1,6 +1,8 @@
 package com.ddosirak.persistance;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -49,6 +51,19 @@ public class CustomerDAOImpl implements CustomerDAO {
 	public CustomerVO customerDetail(String cus_id) {
 		
 		return sqlSession.selectOne(NAMESPACE+".selectCustomerDetail",cus_id);
+	}
+
+	@Override
+	public Integer selectCusNumber(String cus_number) {
+		
+		return sqlSession.selectOne(NAMESPACE+".selectCusNumber",cus_number);
+	}
+
+	@Override
+	public List<CustomerVO> serchCusname(PageVO vo) {
+
+		
+		return sqlSession.selectList(NAMESPACE+".serchCusname",vo);
 	}
 	
 }

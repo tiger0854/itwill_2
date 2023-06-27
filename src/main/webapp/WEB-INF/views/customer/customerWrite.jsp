@@ -41,10 +41,44 @@
 	            opener.location.reload();
 	            window.close();
 	          });
-		}
+		}//거래처 등록 완료시 alert띄우고 창닫기
 	
+		
+		$('#cus_number').keyup(function(){
+			  var cus_number =  $('#cus_number').val();
+			  $.ajax({
+				  type : "POST",
+				  url : "/customer/NumberCheck",
+				  data: {cus_number: cus_number},
+				  success:function(data){
+					  
+					  if(data == 1 && cus_number != ''){
+					  
+					  $('#checkmsg').css('color','red');
+					  $('#checkmsg').text("이미 존재하는 사업자번호 입니다.");  
+					  $('#submit').attr('disabled','disabled');
+				      return;
+						  
+					  }else if (data != 1 && cus_number != ''){
+							
+					  $('#checkmsg').css('color','green');
+					  $('#checkmsg').text("사용가능한 사업자번호 입니다.");
+					  $('#submit').removeAttr('disabled');
+					  return;
+					  }
+				  }//success 
+			  });// ajax
+			  if($('#cus_number').val() == ""){
+				  $('#checkmsg').css('color','red');
+				  $('#checkmsg').text("사업자번호를 입력해주세요.");  
+				  $('#submit').attr('disabled','disabled'); 
+				  return;
+			  }
+		  }); // 아이디중복확인 
+		
+		
 	
-	}); //거래처 등록 완료시 alert띄우고 창닫기
+	}); 
 
 </script>
 
@@ -76,7 +110,7 @@
   </tr>
   <tr>
     <th>사업자번호</th>
-    <td><input type="text" name="cus_number" class="form-control"></td>
+    <td><input type="text" name="cus_number" class="form-control" id="cus_number"> <span id="checkmsg"></span></td>
   </tr>
   <tr>
     <th>대표자</th>

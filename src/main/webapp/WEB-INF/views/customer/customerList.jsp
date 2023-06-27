@@ -16,6 +16,7 @@
 
 
 
+
 <!-- 판매목록 drop 기능 -->
 <style type="text/css">
 .detail-Link{
@@ -25,9 +26,20 @@
  text-decoration: underline;
 } 
 td{
-height: 50px; vertical-align: middle;
+height: 30px; vertical-align: middle; text-align: center;
 }
-  
+th{
+height: 50px; vertical-align: middle; text-align: center;
+}
+    table td:first-child,
+    table th:first-child {
+        border-left: none;
+    }
+
+    table td:last-child,
+    table th:last-child {
+        border-right: none;
+    }  
 </style>
 
 </head>
@@ -39,12 +51,12 @@ height: 50px; vertical-align: middle;
    
 
 	
-	
+	${serch }
     
 <!-- Nav tabs -->
 
-<div class="container" style="margin-top: 100px;">
-  <button type="button" class="btn btn-primary"style="margin-bottom: 50px;margin-right:50px; float: right;" onclick="openChildWindow(this);">거래처등록</button>
+<div class="container" style="margin-top: 100px;max-width: 100% !important;">
+
 <h3 style="font-style: italic;">거래처LIST</h3>
 
 <!-- Tab panes -->
@@ -52,16 +64,22 @@ height: 50px; vertical-align: middle;
 
 <!-- 전체 -->
   <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
-   <div class="input-group mb-3"style="width: 500px;justify-content: flex-start;">
-   	  <select class="form-select" aria-label="Default select example" style="max-width: 120px;">
-  <option value="1">거래처명</option>
-  <option value="2">종목</option>
+   <button type="button" class="btn btn-primary"style="float: right;margin-top: 20px;margin-right: 30px;" onclick="openChildWindow(this);">거래처등록</button>
+  <div style="background-color: #E9E9E9;height: 80px;padding: 20px;border-radius:10px;margin-bottom: 30px;margin-top: 60px;">
+  <form action="/customer/searchList"method="get">
+   <div class="input-group mb-3"style="width: 500px;justify-content: flex-start;align-items: center; justify-content: space-between;">
+   	  <select class="form-select" aria-label="Default select example" style="max-width: 120px;" name="kind" id="kind">
+  <option value="name">거래처명</option>
+  <option value="code">거래처코드</option>
 	</select>
-	<input type="text" class="form-control" placeholder="검색어를 입력하세요">
-	 <button type="button" class="btn btn-primary" onclick="openChild();">검색</button>
+	<input type="text" class="form-control" placeholder="검색어를 입력하세요" name="search" value="${pageVO.search }">
+	 <button type="submit" class="btn btn-primary">검색</button>
 	</div>
- <table class="table table-striped" style="width: 1250px;">
-    <thead style="border-bottom: 2px solid">
+   </form>
+
+   </div>
+ <table class="table table-bordered" style="width: 100%;">
+    <thead style="border-top:3px solid #E9E9E9; background-color: #F9F9F9;text-align: center;">
       <tr>
    		<th><input type="checkbox"  class="form-check-input" name='allCheck'value='selectall' onclick="selectAll(this);"></th>
    		<th>번호</th>
@@ -79,7 +97,7 @@ height: 50px; vertical-align: middle;
       
     </thead>
     
-</tbody>
+<tbody style="border-bottom:3px solid #E9E9E9; ">
       <c:forEach var="vo" items="${customerList}">
       <tr>
         <td><input type="checkbox"  class="form-check-input" name='rowCheck' value="${vo.cus_id}"></td>
@@ -125,8 +143,15 @@ height: 50px; vertical-align: middle;
 			</c:choose>
 			
 			<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
-			
-				<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/customer/customerList?pageNum=${i}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
+				<c:choose>
+					<c:when test="${pageVO.kind != null }">
+					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/customer/searchList?pageNum=${i}&kind=${pageVO.kind}&search=${pageVO.search}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
+					</c:when>
+					<c:otherwise>
+					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/customer/customerList?pageNum=${i}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
+					</c:otherwise>
+				</c:choose>
+				
 			</c:forEach>
 			
 			<c:choose>
@@ -155,8 +180,8 @@ height: 50px; vertical-align: middle;
  }// 거래처등록 팝업 
  
  function openChildWindow2(cus_id) {
-		var popupWidth = 600;
-		var popupHeight = 500;
+		var popupWidth = 800;
+		var popupHeight = 600;
 	   
 	    var childWindow = window.open("/customer/customerDetail?cus_id="+cus_id, "customerDetail", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
 	   
@@ -170,7 +195,7 @@ height: 50px; vertical-align: middle;
 	  checkboxes.forEach((checkbox) => {
 	    checkbox.checked = selectAll.checked;
 	  })
-	}
+	}//체크박스 전체선택
 
  function deleteInbound() {
 	 

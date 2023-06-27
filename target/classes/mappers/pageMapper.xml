@@ -16,10 +16,23 @@
 	</select>
 	<!-- 사원목록 페이징 처리를 위한 쿼리 -->
 	
-	<!-- 사원목록 페이징 처리를 위한 쿼리 -->
+	<!-- 거래처목록 페이징 처리를 위한 쿼리 -->
 	<select id="customerList" resultType="Integer">
 		SELECT COUNT(*) FROM ret_customer
 	</select>
-	<!-- 사원목록 페이징 처리를 위한 쿼리 -->
+	<!-- 거래처목록 페이징 처리를 위한 쿼리 -->
+	
+	<!-- 거래처목록 페이징 처리를 위한 쿼리 -->
+	<select id="serchCusname"  parameterType="com.ddosirak.domain.PageVO" resultType="Integer">
+		SELECT COUNT(*) FROM ret_customer
+		WHERE 
+			<choose>
+  				<when test="kind == 'name'">cus_name</when>
+  				<when test="kind == 'code'">cus_code</when>
+  			</choose> 
+		LIKE CONCAT('%', #{search}, '%')
+	</select>
+	<!-- 거래처목록 페이징 처리를 위한 쿼리 -->
+	
   
   </mapper>

@@ -43,7 +43,7 @@ tr{border-bottom: 1px solid;}
 
 
 </head>
-<body>
+<body style="margin: 0; padding-left: 0; margin-top: 20px;">
 	
 	<h2 style="text-align: center;">거래처 상세</h2>
 	
@@ -105,7 +105,7 @@ tr{border-bottom: 1px solid;}
 		
 		<!-- 버튼 -->
 		<div style="margin-top: 10px;float: right;">
-		<input type="submit" value="수정" class="btn btn-primary">
+		<input type="button" value="수정" class="btn btn-primary" onclick="location.href='/customer/customerModify?cus_id=${cus.cus_id}'">
 		<input type="button" value="닫기" onclick="window.close();"class="btn btn-danger">
 		</div>
 		<!-- 버튼 -->

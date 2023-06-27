@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.persistance.PageDAO;
 
 @Service
@@ -33,6 +34,11 @@ public class PageServiceImpl implements PageService {
 	public Integer customerList() {
 		logger.debug("service: customerList()");
 		return pdao.customerList();
+	}
+	@Override
+	public Integer serchCusname(PageVO vo) {
+		// TODO Auto-generated method stub
+		return pdao.serchCusname(vo);
 	}
 	
 	
