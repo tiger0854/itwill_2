@@ -23,7 +23,7 @@ function vacationdelete(vacation_id) {
 </head>
 <body id="body-pd" style="font-family: 'TheJamsil5';">
 <jsp:include page="../common/header.jsp"/>
-	<h1>휴가관리리스트페이지</h1>
+	<h1>휴가관리리스트페이지(관리자)</h1>
 <%-- 	${vacationList } --%>
 <%-- ${vc.employee_id} --%>
 
@@ -44,7 +44,7 @@ function vacationdelete(vacation_id) {
 			<td>수정</td>
 			<td>삭제</td>
 		</tr>
-		<c:forEach var="vc" items="${vacationList }">
+		<c:forEach var="vc" items="${vacationList}">
 			<tr>
 				<td>${vc.employee_id }</td>
 				<td>${vc.employee_name }</td>

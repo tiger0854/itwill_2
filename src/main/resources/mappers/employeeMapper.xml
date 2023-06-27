@@ -77,8 +77,8 @@
 
   	<!-- 사원 휴가 신청  -->
   	<insert id="insertVacation">
-	insert into emp_vacation (employee_id, position, department_name, phone_num, vacation_management, vacation_start,vacation_finish)
-	values(#{employee_id},#{position},#{department_name},#{phone_num},#{vacation_management},#{vacation_start},#{vacation_finish})
+	insert into emp_vacation (employee_id, position, department_name, phone_num, vacation_management, vacation_start,vacation_finish,vacation_reason,approve,approve_emp,subsitute,employee_name,vacation_date,approve_date,prop_date)
+	values(#{employee_id},#{position},#{department_name},#{phone_num},#{vacation_management},#{vacation_start},#{vacation_finish},#{vacation_reason},#{approve},#{approve_emp},#{subsitute},#{employee_name},#{vacation_date},#{approve_date},#{prop_date})
   	</insert>
   	<!-- 사원 휴가 신청  -->
   	

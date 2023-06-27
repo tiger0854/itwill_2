@@ -46,27 +46,39 @@ $(document).ready(function() {
         <h2>휴가 수정</h2>
         <form method="post" action="" id="fr">
         	<input type="hidden" name=vacation_id value="${param.vacation_id }">
-            <label for="name">사원 아이디:</label>
+            <label for="id">사원 아이디:</label>
             <input type="text" name="employee_id" value="${vvo.employee_id}" required>
 
-            <label for="email">직위:</label>
+            <label for="position">직위:</label>
             <input type="text" name="position" value="${vvo.position}" required>
 
-            <label for="message">부서:</label>
+            <label for="depart">부서:</label>
             <input type="text" name="department_name" value="${vvo.department_name}" required></textarea>
             
-            <label for="name">휴대폰번호:</label>
+            <label for="phone">휴대폰번호:</label>
             <input type="text" name="phone_num" value="${vvo.phone_num}" required>
             
-            <label for="name">휴가관리:</label>
+            <label for="vacationm">휴가관리:</label>
             <input type="text" name="vacation_management" value="${vvo.vacation_management}" required>
             
-            <label for="name">휴가 시작일:</label>
+            <label for="vacations">휴가 시작일:</label>
             <input type="text" name="vacation_start" value="${vvo.vacation_start}" required>
             
-            <label for="name">휴가 종료일:</label>
+            <label for="vacatione">휴가 종료일:</label>
             <input type="text" name="vacation_finish" value="${vvo.vacation_finish}" required>
+            
+            <label for="vacationr">휴가 사유:</label>
+            <input type="text" name="vacation_reason" value="${vvo.vacation_reason}" required>
 
+            <label for="vacationap">휴가 승인여부:</label>
+            <input type="text" name="approve" value="${vvo.approve}" required>
+			
+            <label for="app_name">휴가 승인자:</label>
+            <input type="text" name="approve_emp" value="${vvo.approve_emp}" required>
+            
+            <label for="sub">대체인:</label>
+            <input type="text" name="subsitute" value="${vvo.subsitute}" required>
+            
             <button class="btn-add">수정하기</button>
         </form>
     </div>
