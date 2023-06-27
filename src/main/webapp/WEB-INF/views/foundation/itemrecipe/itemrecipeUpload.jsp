@@ -53,8 +53,9 @@
 		function materialSearch() {
 			var itemCode = $("#item_code").val();
 			if (itemCode !== null && itemCode !== "") {
-				window.open("/foundation/itemrecipe/materialSearch", "popup",
+				var popup = window.open("/foundation/itemrecipe/materialSearch", "popup",
 						"width=500, height=600,left=100, top=100");
+				popup.materialArray=materialArray;
 			} else {
 				alert("상품 코드 부터 검색해주세요");
 				return false;
@@ -74,16 +75,43 @@
 
 		//자재 배열만큼 .append 시키는 함수
 	
+// 		function appendParameter() {
+// 			var existingElements = $("#material").children().length; // 이미 .append된 요소의 개수
+
+// 			for (var i = existingElements; i < materialArray.length+ existingElements; i++) {
+
+// 				$("#material")
+// 						.append(
+// 								"<td><input type='text' name='itemRecipeUploadvo[" + i + "].material_code' value='" + materialArray[i - existingElements].material_code + "' readonly='readonly'></td>");
+// 				$("#materialCon")
+// 						.append(
+// 								"<td><input type='text' name='itemRecipeUploadvo[" + i + "].material_con' value='" + materialArray[i - existingElements].material_con + "' placeholder='" + materialArray[i - existingElements].material_code + "의 소모량' ></td>");
+// 			}
+// 		}
+	
+		var appendedMaterialCodes = []; // 이미 .append된 material_code 저장 배열
+
 		function appendParameter() {
 			var existingElements = $("#material").children().length; // 이미 .append된 요소의 개수
 
-			for (var i = existingElements; i < materialArray.length+ existingElements; i++) {
+			for (var i = existingElements; i < materialArray.length
+					+ existingElements; i++) {
+				var currentMaterial = materialArray[i - existingElements]; // 현재 처리 중인 자재
+
+				if (appendedMaterialCodes
+						.includes(currentMaterial.material_code)) {
+					continue; // 이미 .append된 material_code인 경우 건너뛰기
+				}
+
+				// 중복되지 않은 경우 HTML 요소 생성
 				$("#material")
 						.append(
-								"<td><input type='text' name='itemRecipeUploadvo[" + i + "].material_code' value='" + materialArray[i - existingElements].material_code + "' readonly='readonly'></td>");
+								"<td><input type='text' name='itemRecipeUploadvo[" + i + "].material_code' value='" + currentMaterial.material_code + "' readonly='readonly'></td>");
 				$("#materialCon")
 						.append(
-								"<td><input type='text' name='itemRecipeUploadvo[" + i + "].material_con' value='" + materialArray[i - existingElements].material_con + "'></td>");
+								"<td><input type='text' name='itemRecipeUploadvo[" + i + "].material_con' value='" + currentMaterial.material_con + "' placeholder='" + currentMaterial.material_code + "의 소모량'></td>");
+
+				appendedMaterialCodes.push(currentMaterial.material_code); // .append된 material_code 추가
 			}
 		}
 
@@ -120,7 +148,7 @@
 					<tr>
 						<td></td>
 						<td>
-							<input type="text" name="item_code" id="item_code" onclick="getRelatedMaterials();"> 
+							<input type="text" name="item_code" id="item_code" onclick="getRelatedMaterials();" readonly="readonly" placeholder="검색 후 클릭"> 
 						</td>
 					</tr>
 					<tr>

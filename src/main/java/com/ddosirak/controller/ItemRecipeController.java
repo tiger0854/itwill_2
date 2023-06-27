@@ -72,9 +72,23 @@ public class ItemRecipeController {
         ObjectMapper objectMapper = new ObjectMapper();
 
         // List를 JSON 문자열로 변환
-        String jsonString = objectMapper.writeValueAsString(itemList);
-	    
+        String jsonString = objectMapper.writeValueAsString(itemList);	    
 	    return jsonString;
+	}
+	
+	//레시피 개별 삭제
+	@RequestMapping(value="/deleteItemRecipeMaterial", method = RequestMethod.GET)
+	public String deleteItemRecipeMaterialGET(ItemRecipeVO vo) throws Exception{
+		logger.debug("deleteItemRecipeMaterialGET 실행");
+		service.deleteItemRecipeMaterial(vo);
+		return "redirect:/foundation/itemrecipe/itemrecipeList";
+	}
+	//레시피 삭제
+	@RequestMapping(value="/deleteItemRecipe", method = RequestMethod.GET)
+	public String deleteItemRecipeGET(String item_code) throws Exception{
+		logger.debug("deleteItemRecipeGET 실행");
+		service.deleteItemRecipe(item_code);
+		return "redirect:/foundation/itemrecipe/itemrecipeList";
 	}
 	
 }

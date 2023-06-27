@@ -83,4 +83,10 @@ public class ItemRecipeServiceImpl implements ItemRecipeService {
 		}
 	}
 
+	@Override
+	public void deleteItemRecipeMaterial(ItemRecipeVO vo) throws Exception {
+		logger.debug("service : 레시피 개별 삭제");
+		dao.deleteItemRecipeMaterial(vo);
+	}
+
 }

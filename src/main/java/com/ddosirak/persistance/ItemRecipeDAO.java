@@ -30,7 +30,8 @@ public interface ItemRecipeDAO {
 	
 	//레시피 삭제
 	public void deleteItemRecipe(String item_code) throws Exception;
-	
+	//레피시 개별 삭제
+	public void deleteItemRecipeMaterial(ItemRecipeVO vo) throws Exception;
 	// 상품목록 검색
 	public List<MaterialdetailVO> materialList() throws Exception;
 	public List<MaterialdetailVO> materialList(MaterialdetailVO vo) throws Exception;

@@ -21,6 +21,7 @@
 		on i.item_code= id.item_code
 		join material_detail md
 		on i.material_code = md.material_code
+		order by item_code
 	</select>
 	<!-- 레시피 목록 출력 -->
 	
@@ -46,6 +47,10 @@
 	<delete id="deleteItemRecipe">
 		delete from item_recipe 
 		where item_code=#{item_code}
+	</delete>
+	<delete id="deleteItemRecipeMaterial">
+		delete from item_recipe 
+		where item_code=#{item_code} and material_code=#{material_code}
 	</delete>
 	<!-- 레시피 삭제 -->
 	

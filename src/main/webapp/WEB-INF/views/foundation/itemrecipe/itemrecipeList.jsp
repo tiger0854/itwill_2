@@ -14,17 +14,15 @@ function itemrecipeUpload() {
   // 새 창 열기
   window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 }
-
-function itemUpdate() {
-	  // 새 창을 열기 위한 URL
-	  var popupUrl = 'itemUpdate.jsp';
-	  // 새 창 열기
-	  window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
-	}
 	
-function itemDelete(item_code, item_name) {
-	  if (confirm("품명 : " + item_name + "를/을 정말로 삭제하시겠습니까?")) {
-	    location.href = 'itemDelete?item_code=' + item_code;
+function recipeDelete(item_code, item_name) {
+	  if (confirm("품명 : " + item_name + " 레시피 전체를 정말로 삭제하시겠습니까?")) {
+	    location.href = 'deleteItemRecipe?item_code=' + item_code;
+	  }
+	}
+function recipeDeleteMaterial(item_code, item_name, material_code, material_name) {
+	  if (confirm("품명 : " + item_name + " 레시피 요소인 "+material_name+"를/을 삭제하시겠습니까?")) {
+	    location.href = 'deleteItemRecipeMaterial?item_code=' + item_code+"&material_code="+material_code;
 	  }
 	}
 </script>
@@ -48,7 +46,7 @@ function itemDelete(item_code, item_name) {
 <!-- 상품목록 검색, 등록버튼 -->
 <div class=btn-container>
 <button class=btn-search><i class='bx bx-search-alt-2'></i> 조회</button>
-<button class=btn-add onclick="itemrecipeUpload();"><i class='bx bx-plus-medical'></i> 추가</button>
+<button class=btn-add onclick="itemrecipeUpload();"><i class='bx bx-plus-medical'></i> 추가 및 수정</button>
 </div>
 
 <!-- 품목 검색박스 -->
@@ -82,8 +80,8 @@ function itemDelete(item_code, item_name) {
         <th>품번</th>
         <th>품명</th>
         <th>자재코드:자재명/소모량</th>
-        <th>수정</th>
-        <th>삭제</th>
+        <th>자재 개별 삭제</th>
+        <th>레시피 전체 삭제</th>
       </tr>
     </thead>
     <tbody>
@@ -92,8 +90,8 @@ function itemDelete(item_code, item_name) {
         <td>${vo.item_code}</td>
         <td>${vo.item_name}</td>
         <td>${vo.material_code}:${vo.material_name }/${vo.material_con }</td>
-        <td><button class=btn-edit onclick="location.href='itemdetailUpdate?item_code=${vo.item_code}';"><i class='bx bx-edit'></i></button></td>
-        <td><button class=btn-delete onclick="itemDelete('${vo.item_code}','${vo.item_name }');"><i class='bx bxs-trash'></i></button></td>
+        <td><button class=btn-delete onclick="recipeDeleteMaterial('${vo.item_code}','${vo.item_name }','${vo.material_code }','${vo.material_name }');"><i class='bx bxs-trash'></i></button></td>
+        <td><button class=btn-delete onclick="recipeDelete('${vo.item_code}','${vo.item_name }');"><i class='bx bxs-trash'></i></button></td>
       </tr>
      </c:forEach>
         

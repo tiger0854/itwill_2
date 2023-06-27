@@ -79,8 +79,14 @@ public class ItemRecipeDAOImpl implements ItemRecipeDAO {
 
 	@Override
 	public Integer insertOrUpdateItemRecipe(ItemRecipeVO vo) throws Exception {
-		// TODO Auto-generated method stub
+		logger.debug("DAO : 자재 등록 및 수정");
 		return sqlsession.insert(NAMESPACE+".insertOrUpdateItemRecipe",vo);
+	}
+
+	@Override
+	public void deleteItemRecipeMaterial(ItemRecipeVO vo) throws Exception {
+		logger.debug("DAO : 레시피 삭제 - 자재만 ");
+		sqlsession.delete(NAMESPACE+".deleteItemRecipeMaterial", vo);
 	}
 
 }
