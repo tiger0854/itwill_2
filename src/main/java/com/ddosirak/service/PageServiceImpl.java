@@ -29,6 +29,12 @@ public class PageServiceImpl implements PageService {
 		return pdao.countEmpList();
 	}// countEmpList() method end
 	
+	@Override
+	public Integer customerList() {
+		logger.debug("service: customerList()");
+		return pdao.customerList();
+	}
+	
 	
 	
 	

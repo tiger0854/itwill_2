@@ -9,6 +9,8 @@
    	<!-- 거래처목록  -->
   	<select id="selectCustomer" resultType="com.ddosirak.domain.CustomerVO">
   		SELECT * FROM ret_customer
+  		ORDER BY cus_id DESC
+		LIMIT #{startRow}, #{pageSize}
   	</select>	
    	<!-- 거래처목록  -->
    	

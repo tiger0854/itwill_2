@@ -3,10 +3,11 @@ package com.ddosirak.service;
 import java.util.List;
 
 import com.ddosirak.domain.CustomerVO;
+import com.ddosirak.domain.PageVO;
 
 public interface CustomerService {
 		
-	public List<CustomerVO> customerList(); //거래처목록
+	public List<CustomerVO> customerList(PageVO vo); //거래처목록
 	
 	public CustomerVO customerDetail(String cus_id); //거래처 상세목록
 	

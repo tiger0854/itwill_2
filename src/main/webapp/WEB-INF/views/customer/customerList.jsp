@@ -18,6 +18,12 @@
 
 <!-- 판매목록 drop 기능 -->
 <style type="text/css">
+.detail-Link{
+ cursor: pointer;color: #2A1BB5!important;text-decoration: none;
+ }
+.detail-Link:hover{
+ text-decoration: underline;
+} 
 td{
 height: 50px; vertical-align: middle;
 }
@@ -40,17 +46,7 @@ height: 50px; vertical-align: middle;
 <div class="container" style="margin-top: 100px;">
   <button type="button" class="btn btn-primary"style="margin-bottom: 50px;margin-right:50px; float: right;" onclick="openChildWindow(this);">거래처등록</button>
 <h3 style="font-style: italic;">거래처LIST</h3>
-<ul class="nav nav-tabs" id="myTab" role="tablist" style="flex-direction: row;justify-content: flex-start;">
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">전체</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="notend-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">납입처</button>
-  </li>
-   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="end-tab" data-bs-toggle="tab" data-bs-target="#end" type="button" role="tab" aria-controls="profile" aria-selected="false">납품처</button>
-  </li>
-</ul>
+
 <!-- Tab panes -->
 <div class="tab-content" style="margin-top: 30px; " >
 
@@ -64,17 +60,17 @@ height: 50px; vertical-align: middle;
 	<input type="text" class="form-control" placeholder="검색어를 입력하세요">
 	 <button type="button" class="btn btn-primary" onclick="openChild();">검색</button>
 	</div>
- <table class="table table-hover" style="width: 1250px; cursor: pointer;">
-    <thead style="border-bottom: 1px solid">
+ <table class="table table-striped" style="width: 1250px;">
+    <thead style="border-bottom: 2px solid">
       <tr>
    		<th><input type="checkbox"  class="form-check-input" name='allCheck'value='selectall' onclick="selectAll(this);"></th>
    		<th>번호</th>
         <th>거래처코드</th>
+        <th>거래처명</th>
         <th>거래처분류</th>
         <th>대표자명</th>
         <th>담당자명</th>
         <th>담당자연락처</th>        
-        <th>주소</th>
         <th>업태</th>
         <th>종목</th>
 
@@ -85,10 +81,11 @@ height: 50px; vertical-align: middle;
     
 </tbody>
       <c:forEach var="vo" items="${customerList}">
-      <tr onclick="openChildWindow2(${vo.cus_id});">
-        <td><input type="checkbox"  class="form-check-input" name='rowCheck' value="${vo.cus_id}" ></td>
+      <tr>
+        <td><input type="checkbox"  class="form-check-input" name='rowCheck' value="${vo.cus_id}"></td>
         <td>${vo.cus_id}</td>
-	    <td>${vo.cus_code}</td>
+	    <td onclick="openChildWindow2(${vo.cus_id});"class="detail-Link">${vo.cus_code}</td>
+	    <td>${vo.cus_name}</td>
 		<c:choose>
        		<c:when test="${vo.cus_stat == 1}">
        		  <td>납입처</td>
@@ -100,7 +97,6 @@ height: 50px; vertical-align: middle;
 	      <td>${vo.cus_rep}</td>
 	      <td>${vo.cus_resp}</td>
 	      <td>${vo.cus_phone}</td>
-	      <td>${vo.cus_address}</td>
 	      <td>${vo.cus_business}</td>
 	      <td>${vo.cus_event}</td>
 	   
@@ -113,108 +109,36 @@ height: 50px; vertical-align: middle;
 </div>
 <!-- 전체 -->
 
-<!-- 납입처 -->
-  <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab" style="max-width: 100%;">
-   <div class="input-group mb-3"style="width: 500px;justify-content: flex-start;">
-   	  <select class="form-select" aria-label="Default select example" style="max-width: 120px;">
-  <option value="1">거래처명</option>
-  <option value="2">종목</option>
-	</select>
-	<input type="text" class="form-control" placeholder="검색어를 입력하세요">
-	 <button type="button" class="btn btn-primary">검색</button>
-	</div>
- <table class="table table-striped" style="width: 1250px;">
-    <thead style="border-bottom: 1px solid">
-      <tr>
-   		<th><input type="checkbox"  class="form-check-input" ></th>
-        <th>거래처코드</th>
-        <th>거래처분류</th>
-        <th>대표자명</th>
-        <th>담당자명</th>
-        <th>담당자연락처</th>        
-        <th>주소</th>
-        <th>업태</th>
-        <th>종목</th>
-      </tr>
-      
-      
-    </thead>
-    	</tbody>
-      <c:forEach var="vo" items="${customerList}">
-      <tr>
-    
-	      <td><input type="checkbox"></td>
-	      <td>${vo.cus_code}</td>
-	      <td>${vo.cus_stat}</td>
-	      <td>${vo.cus_rep}</td>
-	      <td>${vo.cus_resp}</td>
-	      <td>${vo.cus_phone}</td>
-	      <td>${vo.cus_address}</td>
-	      <td>${vo.cus_business}</td>
-	      <td>${vo.cus_event}</td>
-	   
-      </tr>
-       </tbody>
-   	</c:forEach>
-   	
-  </table>
-  </div>
-  <!-- 납입처 -->
-  
-  <!-- 발주완료 -->
-    <div class="tab-pane" id="end" role="tabpanel" aria-labelledby="profile-tab" style="max-width: 100%;">
-     <div class="input-group mb-3"style="width: 500px;justify-content: flex-start;">
-   	  <select class="form-select" aria-label="Default select example" style="max-width: 120px;">
-    <option value="1">거래처명</option>
-  <option value="2">종목</option>
-	</select>
-	<input type="text" class="form-control" placeholder="검색어를 입력하세요">
-	 <button type="button" class="btn btn-primary">검색</button>
-	</div>
-	 <table class="table table-striped" style="width: 1250px;">
-    <thead style="border-bottom: 1px solid">
-      <tr>
-   		<th><input type="checkbox"  class="form-check-input" ></th>
-   		<th></th>
-        <th>거래처코드</th>
-        <th>거래처분류</th>
-        <th>대표자명</th>
-        <th>담당자명</th>
-        <th>담당자연락처</th>        
-        <th>주소</th>
-        <th>업태</th>
-        <th>종목</th>
-      </tr>
-      
-      
-    </thead>
-    
-	  <tbody>
-      <c:forEach var="vo" items="${customerList}">
-      <tr>
-        <td><input type="checkbox"  class="form-check-input" ></td>
-          <td>${vo.cus_id}</td>
-	      <td>${vo.cus_code}</td>
-	      <td>${vo.cus_stat}</td>
-	      <td>${vo.cus_rep}</td>
-	      <td>${vo.cus_resp}</td>
-	      <td>${vo.cus_phone}</td>
-	      <td>${vo.cus_address}</td>
-	      <td>${vo.cus_business}</td>
-	      <td>${vo.cus_event}</td>
-	   
-      </tr>
-   	</c:forEach>
- 	 </tbody>
-     
-     
-  </table>
-  
-</div>
-  <!-- 납품처 -->
-      <div style="color: red; margin-bottom: 10px;">*원하는 목록을 선택하면 상세보기 및 수정페이지가 열립니다.</div>
-  <button type="button" class="btn btn-danger"style="margin-bottom: 30px;" onclick="deleteInbound();">선택삭제</button>
+      <div style="color: red; margin-bottom: 10px;">*거래처 코드를 클릭하면 상세보기 및 수정페이지가 열립니다.</div>
+  <button type="button" class="btn btn-danger"style="margin-bottom: 10px;" onclick="deleteInbound();">선택삭제</button>
+
  </div>
+   <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
+	<div class="container">
+	 	<ul class="pagination"style="justify-content: center;">			
+			<c:choose>
+				<c:when test="${pageVO.startPage > pageVO.pageBlock}">
+					<li class="page-item"><a class="page-link" href="/customer/customerList?pageNum=${pageVO.startPage - pageVO.pageBlock}" style="margin: 0.5em;">◀</a></li>
+				</c:when>
+				<c:otherwise>
+				</c:otherwise>
+			</c:choose>
+			
+			<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
+			
+				<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/customer/customerList?pageNum=${i}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
+			</c:forEach>
+			
+			<c:choose>
+				<c:when test="${pageVO.endPage < pageVO.pageCount}">
+					<li class="page-item"><a class="page-link" href="/customer/customerList?pageNum=${pageVO.startPage + pageVO.pageBlock}" style="margin: 0.5em;">▶</a></li>
+				</c:when>
+				<c:otherwise>
+				</c:otherwise>
+			</c:choose>
+		</ul>
+		</div>
+<!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
  </div>
     
  
@@ -231,12 +155,12 @@ height: 50px; vertical-align: middle;
  }// 거래처등록 팝업 
  
  function openChildWindow2(cus_id) {
-		var popupWidth = 800;
+		var popupWidth = 600;
 		var popupHeight = 500;
 	   
 	    var childWindow = window.open("/customer/customerDetail?cus_id="+cus_id, "customerDetail", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
 	   
-	 }// 거래처등록 팝업
+	 }// 거래처상세보기 팝업
 
  	
  function selectAll(selectAll)  {

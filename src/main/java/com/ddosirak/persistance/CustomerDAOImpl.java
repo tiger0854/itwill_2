@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.ddosirak.domain.CustomerVO;
+import com.ddosirak.domain.PageVO;
 
 @Repository
 public class CustomerDAOImpl implements CustomerDAO {
@@ -22,9 +23,9 @@ public class CustomerDAOImpl implements CustomerDAO {
 	private static final Logger logger = LoggerFactory.getLogger(InboundDAOImpl.class);
 
 	@Override
-	public List<CustomerVO> customerList() {
+	public List<CustomerVO> customerList(PageVO vo) {
 		
-		return sqlSession.selectList(NAMESPACE+".selectCustomer");
+		return sqlSession.selectList(NAMESPACE+".selectCustomer",vo);
 	}
 
 	@Override

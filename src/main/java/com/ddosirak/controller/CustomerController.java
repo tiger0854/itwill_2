@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddosirak.domain.CustomerVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.service.CustomerService;
+import com.ddosirak.service.PageService;
 
 @Controller
 @RequestMapping(value="/customer/*")
@@ -26,11 +28,56 @@ public class CustomerController {
 	@Inject
 	private CustomerService cService;
 	
+	@Inject
+	private PageService pService;
+	
 //	http://localhost:8088/customer/customerList
 	@RequestMapping(value = "/customerList",method=RequestMethod.GET) 
-	public void customerGET(Model model)throws Exception {
+	public void customerGET(Model model,PageVO pageVO, HttpServletRequest request)throws Exception {
 		logger.debug("customerGET() 호출!");
-		model.addAttribute("customerList",cService.customerList());
+		
+		//================================페이징 처리를 위한 값 받아오기 동작========================================
+		// 준비물 : Inject > PageVO , 파라미터값 PageVO pageVO, HttpServletRequest request
+		//   		리스트를 반환하는 DAO - Service 메서드에 PageVO 추가, 쿼리에 LIMIT #{startRow}, #{pageSize} 추가.
+		// 페이징 처리
+		// 한 화면에 보여줄 글 개수 설정
+		int pageSize = 5; // sql문에 들어가는 항목
+		
+		// 현페이지 번호 가져오기
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum==null) {
+			pageNum="1";
+		}
+		// 페이지번호를 정수형으로 변경
+		int currentPage=Integer.parseInt(pageNum);
+		pageVO.setPageSize(pageSize);
+		pageVO.setPageNum(pageNum);
+		pageVO.setCurrentPage(currentPage);
+		int startRow=(pageVO.getCurrentPage()-1)*pageVO.getPageSize()+1; // sql문에 들어가는 항목
+		int endRow = startRow+pageVO.getPageSize()-1;
+		
+		pageVO.setStartRow(startRow-1); // limit startRow (0이 1열이기 때문 1을 뺌)
+		pageVO.setEndRow(endRow);
+		
+		// 게시글 개수 가져오기
+		int count = pService.customerList(); // 요 동작만 각자 페이지에 맞게 수정하면 됨!!
+
+		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
+		int startPage=(currentPage-1)/pageBlock*pageBlock+1;
+		int endPage=startPage+pageBlock-1;
+		int pageCount=count/pageSize+(count%pageSize==0?0:1);
+		if(endPage > pageCount){
+		 	endPage = pageCount;
+		 }
+		pageVO.setCount(count);
+		pageVO.setPageBlock(pageBlock);
+		pageVO.setStartPage(startPage);
+		pageVO.setEndPage(endPage);
+		pageVO.setPageCount(pageCount);
+		
+		model.addAttribute("pageVO", pageVO);
+		//================================페이징 처리를 위한 값 받아오기 동작========================================
+		model.addAttribute("customerList",cService.customerList(pageVO));
 	}//거래처 리스트로 이동
 	
 	@RequestMapping(value = "/customerDetail",method=RequestMethod.GET) 

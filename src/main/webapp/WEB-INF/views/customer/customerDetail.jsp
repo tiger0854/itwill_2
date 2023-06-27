@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,7 +36,10 @@
 
 </script>
 
-
+<style type="text/css">
+th{background-color: #E8E8E8 !important;}
+tr{border-bottom: 1px solid;}
+</style>
 
 
 </head>
@@ -48,7 +52,8 @@
 		<div class="container" >
 		
 		
-		<table>
+		<table class="table">
+		<tr></tr>
 		  <tr>
 		    <th>거래처코드</th>
 		    <td>${cus.cus_code}</td>
@@ -57,7 +62,15 @@
 		  </tr>
 		  <tr>
 		   <th>거래처분류</th>
-		    <td>${cus.cus_stat}</td>
+	
+			<c:choose>
+       		<c:when test="${cus.cus_stat == '1'}">
+       		  <td>납입처</td>
+       		</c:when>
+       		<c:otherwise>
+  			 <td>납품처</td>	
+    		 </c:otherwise>
+            </c:choose>
 		    <th>사업자번호</th>
 		    <td>${cus.cus_number}</td>
 		  </tr>
@@ -80,21 +93,23 @@
 		    <td>${cus.cus_address}</td>
 		  </tr>
 		  <tr>
-		    <th>행 6, 열 1</th>
+		    <th>업태</th>
 		   <td>${cus.cus_business}</td>
-		    <th>행 6, 열 3</th>
+		    <th>종목</th>
 		   <td>${cus.cus_event}</td>
 		  </tr>
 		</table>
+		적요
+		<textarea rows="" cols="" class="form-control" readonly="readonly">${cus.cus_memo }</textarea>
 		
 		
-		
-		
-		
-		
-		<input type="submit" value="등록" class="btn btn-primary">
+		<!-- 버튼 -->
+		<div style="margin-top: 10px;float: right;">
+		<input type="submit" value="수정" class="btn btn-primary">
 		<input type="button" value="닫기" onclick="window.close();"class="btn btn-danger">
-		<input type="reset" value="초기화" class="btn btn-secondary">
+		</div>
+		<!-- 버튼 -->
+		
 		</div>
 	</form>
 	
