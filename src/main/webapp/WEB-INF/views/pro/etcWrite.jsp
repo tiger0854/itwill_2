@@ -10,12 +10,9 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 <!-- <link rel="stylesheet" type="text/css" href="../css/css.css"> -->
-<link rel="stylesheet" type="text/css"
-	href="../../resources/css/product.css">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	function handlegobdchange() {
@@ -80,18 +77,15 @@
 				<tbody>
 					<tr>
 						<td>품번</td>
-						<td><input type="text" name="item_code"
-							value="${pvo.item_code }" readonly></td>
+						<td><input type="text" name="item_code" value="${pvo.item_code }" readonly></td>
 					</tr>
 					<tr>
 						<td>품명</td>
-						<td><input type="text" name="item_name"
-							value="${pvo.item_name }" readonly></td>
+						<td><input type="text" name="item_name" value="${pvo.item_name }" readonly></td>
 					</tr>
 					<tr>
 						<td>지시수량</td>
-						<td><input type="number" name="oQTY" value="${pvo.oQTY }"
-							readonly></td>
+						<td><input type="number" name="oQTY" value="${pvo.oQTY }" readonly></td>
 					</tr>
 					<tr>
 						<td>실적수량</td>

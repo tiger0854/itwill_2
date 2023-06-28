@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 
 import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.MaterialdetailVO;
-import com.ddosirak.domain.PageVO;
 
 @Repository
 public class ItemdetailDAOImpl implements ItemdetailDAO {
@@ -27,23 +26,20 @@ public class ItemdetailDAOImpl implements ItemdetailDAO {
 	
 	//상품 기초 목록
 	@Override
-	public List<ItemdetailVO> idList(PageVO pageVO) throws Exception {
+	public List<ItemdetailVO> idList() {
 		logger.debug("dao : 상품 기초 목록 실행");
-		return sqlsession.selectList(NAMESPACE+".itemlist", pageVO);
+		return sqlsession.selectList(NAMESPACE+".itemlist");
 	}
 	
 	@Override
-	public List<ItemdetailVO> idList(PageVO pageVO, Map<String, Object> instrSearch, Model model) throws Exception {
+	public List<ItemdetailVO> idList(Map<String, Object> instrSearch, Model model) {
 		logger.debug("dao : 상품 기초 목록 검색기능 실행");
-		instrSearch.put("startRow", pageVO.getStartRow());
-		instrSearch.put("pageSize", pageVO.getPageSize());
-		logger.debug("@@@@페이징 :" + instrSearch);
 		return sqlsession.selectList(NAMESPACE+".itemDetailSearch", instrSearch);
 	}
 
 	//상품 기초 등록
 	@Override
-	public Integer insertID(ItemdetailVO vo) throws Exception {
+	public Integer insertID(ItemdetailVO vo) {
 		logger.debug("dao : 자재 기초 등록 실행");
 		logger.debug(vo+"");
 		return sqlsession.insert(NAMESPACE+".insertid",vo);
@@ -51,36 +47,30 @@ public class ItemdetailDAOImpl implements ItemdetailDAO {
 	
 	//상품 기초 수정
 	@Override
-	public Integer updateID(ItemdetailVO vo) throws Exception {
+	public Integer updateID(ItemdetailVO vo) {
 		logger.debug("dao : 상품 기초 수정 실행(update)");
 		return sqlsession.update(NAMESPACE+".updateid",vo);
 	}
 	@Override
-	public ItemdetailVO selectID(String item_code) throws Exception {
+	public ItemdetailVO selectID(String item_code) {
 		logger.debug("dao : 상품 기초 수정 실행(edit)");
 		return sqlsession.selectOne(NAMESPACE+".selectid", item_code);
 	}
 	
 	//자제 삭제
 	@Override
-	public void deleteI(String item_code) throws Exception {
+	public void deleteI(String item_code) {
 		logger.debug("dao : 자재 삭제 실행");
 		sqlsession.delete(NAMESPACE+".deleteid",item_code);
 
 	}
 	
+	
+
 	@Override
-	public String getMaxCode() throws Exception {
+	public String getMaxCode() {
 		logger.debug("dao : getMaxCode 호출");
 		return sqlsession.selectOne(NAMESPACE+".getMaxCode");
 	}
-
-	@Override
-	public Integer itemCount(Map<String, Object> instrSearch) {
-		logger.debug("dao : itemCount 호출");
-		return sqlsession.selectOne(NAMESPACE + ".itemCount", instrSearch);
-	}
-	
-	
 
 }
