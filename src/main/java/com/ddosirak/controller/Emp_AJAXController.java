@@ -2,7 +2,9 @@ package com.ddosirak.controller;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -164,21 +166,11 @@ public class Emp_AJAXController {
 		// --------------2. 리스트끼리 중복값 대조하고 중복값 삭제!!!!!!!!!!------------------
 		
 		// --------------3. 리스트 반환------------------
-//		logger.debug("filtetList_dupVal = " +filtetList_dupVal);
-		
-		filtetList_dupVal.size(); // 페이징 할때 카운트 !!!!!!
-		
+
 		return filtetList_dupVal;
 	}// filterAJAX() method end
 	
-	//필터링 페이징
-	@RequestMapping(value = "/pagination")
-	@ResponseBody
-	public int pagination_filterAJAX(PageVO pageVO, HttpServletRequest request, int pagedata) throws Exception{
-		logger.debug("pagination_filterAJAX() 호출! Σ(っ °Д °;)っ");
-		pageVO.setPageNum(Integer.toString(pagedata));
-		return pageVO.getPageCount();
-	}// pagination_filterAJAX method end
-	
+
+
 
 }// public class end

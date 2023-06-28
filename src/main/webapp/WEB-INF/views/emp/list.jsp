@@ -117,31 +117,33 @@
 			</tbody>
 		</table>
 		<!-- -------------------------------------------------------------------------------페이징 구현부------------------------------------------------------------------------ -->
-		<ul class="pagination" id="pagination">
-			<c:choose>
-				<c:when test="${pageVO.startPage > pageVO.pageBlock}">
-					<li class="page-item"><a href="/emp/list?pageNum=${pageVO.startPage - pageVO.pageBlock}"
-						class="page-link">이전</a></li>
-				</c:when>
-				<c:otherwise>
-				</c:otherwise>
-			</c:choose>
-
-			<c:forEach var="i" begin="${pageVO.startPage}"
-				end="${pageVO.endPage}" step="1">
-				<li class="page-item<c:if test="${pageVO.pageNum eq i}"> active</c:if>">
-				<a href="/emp/list?pageNum=${i}" class="page-link">${i}</a></li>
-			</c:forEach>
-
-			<c:choose>
-				<c:when test="${pageVO.endPage < pageVO.pageCount}">
-					<li class="page-item"><a href="/emp/list?pageNum=${pageVO.startPage + pageVO.pageBlock}"
-						class="page-link">다음</a></li>
-				</c:when>
-				<c:otherwise>
-				</c:otherwise>
-			</c:choose>
-		</ul>
+		<div id="pagingHere">
+			<ul class="pagination" id="pagination">
+				<c:choose>
+					<c:when test="${pageVO.startPage > pageVO.pageBlock}">
+						<li class="page-item"><a href="/emp/list?pageNum=${pageVO.startPage - pageVO.pageBlock}"
+							class="page-link">이전</a></li>
+					</c:when>
+					<c:otherwise>
+					</c:otherwise>
+				</c:choose>
+	
+				<c:forEach var="i" begin="${pageVO.startPage}"
+					end="${pageVO.endPage}" step="1">
+					<li class="page-item<c:if test="${pageVO.pageNum eq i}"> active</c:if>">
+					<a href="/emp/list?pageNum=${i}" class="page-link">${i}</a></li>
+				</c:forEach>
+	
+				<c:choose>
+					<c:when test="${pageVO.endPage < pageVO.pageCount}">
+						<li class="page-item"><a href="/emp/list?pageNum=${pageVO.startPage + pageVO.pageBlock}"
+							class="page-link">다음</a></li>
+					</c:when>
+					<c:otherwise>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+		</div>
 		<!-- -------------------------------------------------------------------------------페이징 구현부--------------------------------------------------------------------------- -->
 	</div>
 	<div></div>
@@ -175,6 +177,7 @@
 			}) // ajax end
 		}); // startInterval() method end
 
+		
 		$('#search_button').on('click',function(){
 			var department_name = $('#department_name_search').val();
 			var position = $('#position_search').val();
@@ -194,13 +197,12 @@
 				data: formdata,        // HTTP 요청과 함께 서버로 보낼 데이터
 				type: 'POST',          // HTTP 요청 방식(GET, POST)
 				success : function(filtetList_dupVal) {
-					console.log(filtetList_dupVal)
 					var table = '';
 					if(filtetList_dupVal.length !== 0){
 						for(var i=0;i<filtetList_dupVal.length;i++){
 							table += '<tr>';
 							table += '<td>'+filtetList_dupVal[i].employee_id+'</td>';
-							table += '<td>'+filtetList_dupVal[i].employee_name+'</td>';
+							table += '<td><a href="/emp/info?employee_id=' + filtetList_dupVal[i].employee_id + '">' + filtetList_dupVal[i].employee_name + '</a></td>'
 							table += '<td>'+filtetList_dupVal[i].department_name+'</td>';
 							table += '<td>'+filtetList_dupVal[i].position+'</td>';	
 							if(filtetList_dupVal[i].line_num == null){
@@ -222,27 +224,10 @@
 					$('#pagination').remove();
 					$('#empInfoBody').html(table);
 					
+					
 				}// success end
 			}); // ajax end
-			
-			// 필터링된 데이터의 페이징 처리를 위한 AJAX 동작
-			var pagedata = '${page_num}';
-			if(pagedata == ''){
-				pagedata = 1;
-			}// pagedata nullSet if end
-			$.ajax({
-				url: '/emp_ajax/pagination', 
-				data: pagedata,      
-				type: 'POST',          
-				success : function() {
-					console.log('hello, page:'+pagedata);
-				}// success end
-			}); // ajax end
-			
-			
-		});// button click end
-	
-		
+		}); // click end	
 	}); // jQ end
 	
 	

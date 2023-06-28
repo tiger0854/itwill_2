@@ -179,24 +179,28 @@
 																	table += '<td>'
 																			+ filtetList_dupVal[i].employee_id
 																			+ '</td>';
-																	table += '<td>'
+																	table += '<td><a href="/emp/salaryInfo?employee_id='
+																			+ filtetList_dupVal[i].employee_id
+																			+ '">'
 																			+ filtetList_dupVal[i].employee_name
-																			+ '</td>';
+																			+ '</a></td>';
 																	table += '<td>'
 																			+ filtetList_dupVal[i].department_name
 																			+ '</td>';
 																	table += '<td>'
 																			+ filtetList_dupVal[i].position
 																			+ '</td>';
-																			if(filtetList_dupVal[i].sal_account == null){
-																				table += '<td>미등록</td>';
-																			}else{
-																				table += '<td>'+filtetList_dupVal[i].sal_account+'</td>';
-																			}// i-e end
-																				}// for end
-																	table += '</tr>';
+																	if (filtetList_dupVal[i].sal_account == null) {
+																		table += '<td>미등록</td>';
+																	} else {
+																		table += '<td>'
+																				+ filtetList_dupVal[i].sal_account
+																				+ '</td>';
+																	}// i-e end
 																}// for end
-																else {
+																table += '</tr>';
+															}// for end
+															else {
 																table += '<tr>';
 																table += '<td colspan="5">';
 																table += '내용이 없습니다.';

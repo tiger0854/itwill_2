@@ -288,7 +288,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		logger.debug("getEmpList_employee_name()!!");
 		return sqlSession.selectList(NAMESPACE+".getEmpList_employee_name",employee_name);
 	}// getEmpList_employee_name() method end
-	// 필터링
 	
 
 /////////////////////////////////////////AJAX동작////////////////////////////////////////////////////
