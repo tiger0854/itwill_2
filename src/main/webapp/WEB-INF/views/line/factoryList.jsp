@@ -11,7 +11,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
-<!-- <link rel="stylesheet" type="text/css" href="../css/css.css"> -->
+<link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
@@ -20,36 +20,34 @@
 <script>
 
 </script>
-
-
 </head>
 <body>
-<div class="black-bar"> <h4 style="text-align: center; color: white; padding-top: 8px">  <i class='bx bx-edit'></i> 상품검색 </h4></div>
+<!-- <div class="black-bar"> <h4 style="text-align: center; color: white; padding-top: 8px">  <i class='bx bx-edit'></i> 상품검색 </h4></div> -->
 <!-- 작업지시등록 폼 -->
-		<div style="display: flex; justify-content: center; margin-bottom: 27px" >
-		  <img src="../../resources/css/logo.png">
-		</div>
+<!-- 		<div style="display: flex; justify-content: center; margin-bottom: 27px" > -->
+<!-- 		  <img src="../../resources/css/logo.png"> -->
+<!-- 		</div> -->
 <div class="container mt-3">
 <!--  		<hr width="100%" style="border: 2px solid black"> -->
        
 <!--         <hr width="100%" style="border: 2px solid black"> -->
+	<h3>공장검색</h3>
+	
 
-<table class="table" style="width: 100%">
     <form>
-        <tr>
-            <td>공장코드</td>
-            <td><input type="text" name="factory_code" style="width:70%;"></td>
-            <td>공장이름</td>
-            <td><input type="text" name="factroy_name" style="width:70%;"></td>
-            <td><button type="submit" class="btn-add">조회</button></td>
-        </tr>
+    <div class="input-group" style="margin-bottom: 10px; margin-top: 20px"> 
+    <table class="box">
+		<tr>
+	     <td>공장코드  <input type="text" name="factory_code" style="width:25%; margin-left: 5px"> 공장이름  <input type="text" name="factroy_name" style="width:25%; margin-left: 5px;margin-right: 2px"><button type="submit" class="btn btn-primary" style="width:15%">검색</button></td>
+	    </tr> 
+    </table>
     </form>
-</table>
+	 </div>
 <table class="table table-hover" style="text-align: center;">
     <%-- ${itemList } --%>
     <tr>
-        <th>품목코드</th>
         <th>공장코드</th>
+        <th>공장이름</th>
     </tr>
     <c:forEach var="vo" items="${itemList }">
         <tr onclick="selectItem('${vo.item_code}', '${vo.item_name}')">
