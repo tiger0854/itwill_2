@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ddosirak.domain.ItemRecipeListVO;
 import com.ddosirak.domain.ItemRecipeUploadVO;
 import com.ddosirak.domain.ItemRecipeVO;
 import com.ddosirak.domain.MaterialdetailVO;
@@ -66,7 +67,7 @@ public class ItemRecipeController {
 	@RequestMapping(value="/getMaterials", method = RequestMethod.GET)
 	@ResponseBody
 	public String getMaterialsGET(@RequestParam("item_code") String itemCode) throws Exception {
-	    List<ItemRecipeVO> itemList = service.selectItemRecipe(itemCode);
+	    List<ItemRecipeListVO> itemList = service.selectItemRecipe(itemCode);
 	    logger.debug(itemList.size()+"");
 	    // ObjectMapper 객체 생성
         ObjectMapper objectMapper = new ObjectMapper();

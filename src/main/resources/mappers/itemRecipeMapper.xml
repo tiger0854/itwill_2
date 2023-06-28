@@ -33,8 +33,10 @@
 	<!-- 레시피 등록 -->
 	
 	<!-- 레시피 수정 -->
-	<select id="selectItemRecipe" resultType="com.ddosirak.domain.ItemRecipeVO">
-		select material_code, material_con from item_recipe
+	<select id="selectItemRecipe" resultType="com.ddosirak.domain.ItemRecipeListVO">
+		select ir.material_code, ir.material_con, m.material_name 
+		from item_recipe ir join material_detail m
+		on ir.material_code = m.material_name
 		where item_code=#{item_code}
 	</select>
 	<update id="updateItemRecipe">

@@ -14,11 +14,11 @@ public interface ItemRecipeService {
 	//레시피 목록 출력
 	public List<ItemRecipeListVO> ItemRecipeList() throws Exception;
 	
-	//레시피 등록
+	//레시피 등록 및 수정
 	public void insertItemRecipe(ItemRecipeVO vo, ItemRecipeUploadVO uvo) throws Exception;
 	
 	//레시피 수정
-	public List<ItemRecipeVO> selectItemRecipe(String item_code) throws Exception;
+	public List<ItemRecipeListVO> selectItemRecipe(String item_code) throws Exception;
 	public Integer updateItemRecipe(ItemRecipeVO vo) throws Exception;
 	
 	//레시피 삭제

@@ -40,7 +40,7 @@ public class ItemRecipeDAOImpl implements ItemRecipeDAO {
 	
 	//레시피 수정
 	@Override
-	public List<ItemRecipeVO> selectItemRecipe(String item_code) throws Exception {
+	public List<ItemRecipeListVO> selectItemRecipe(String item_code) throws Exception {
 		logger.debug("DAO : 레시피 파라미터");
 		return sqlsession.selectList(NAMESPACE+".selectItemRecipe",item_code);
 	}

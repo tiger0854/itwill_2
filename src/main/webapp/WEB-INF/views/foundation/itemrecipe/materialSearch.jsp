@@ -18,8 +18,10 @@
 </head>
 <body>
 	<script>
-	var checkedValues = [];
-
+	var checkedValues = opener.materialArray;
+	console.log(checkedValues);
+	console.log(checkedValues.length);
+	
 	// 체크된 값들을 JSON 배열로 전달
 	function postParam() {
 	  // JSON 배열 생성
@@ -33,37 +35,90 @@
 	}
 
 	// 체크박스 온오프 시 배열에 담고 출력
-
 		$(function() {
-			$("input[type='checkbox']").change(
-					function() {
-						if ($(this).is(":checked")) {
-							var checkboxName = $(this).attr("name");
-							var checkboxValue = $(this).val();
-							checkedValues.push({
-								"material_code" : checkboxValue,
-								"material_con" : "" // material_con을 공백으로 설정
-							});
-
-							$("#checkParameter").append(
-									"<tr id='" + checkboxName + "'><td>"
-											+ checkboxName + "번 자재 </td><td>"
-											+ checkboxValue + "</td></tr>");
-						} else {
-							var checkboxName = $(this).attr("name");
-							var checkboxValue = $(this).val();
-							var removeIdx = checkedValues.findIndex(function(item) {
-								return item.name === checkboxName
-										&& item.value === checkboxValue;
-							});
-
-							if (removeIdx !== -1) {
-								checkedValues.splice(removeIdx, 1);
-							}
-								$("#" + checkboxName).remove();
-						}
+			 for (var i = 0; i < checkedValues.length; i++) {
+				    var materialCode = checkedValues[i].material_code;
+				    $("#" + materialCode).prop("checked", true);
+				  }
+			
+			$("input[type='checkbox']").change(function() {
+				if ($(this).is(":checked")) {
+					// 	var checkboxName = $(this).attr("name");
+					var checkboxValue = $(this).val();
+					 var checkboxName = $(this).siblings("input[type='hidden']").val();
+					
+					var isDuplicate = checkedValues.some(function(item) {
+						return item.material_code === checkboxValue;
 					});
+					if (isDuplicate != true) {
+						checkedValues.push({
+							"material_code" : checkboxValue,
+							"material_con" : "",// material_con을 공백으로 설정
+							"material_name" : checkboxName
+						});
+					} else {
+						alert("자재 번호 : "+checkboxValue+"은 이미 선택된 자재입니다.");
+						$(this).prop("checked", false);
+					}
+
+					// $("#checkParameter").append(
+					// 		"<tr id='" + checkboxValue + "'><td> 선택된 자재코드 : "
+					// 		+ checkboxValue + " </td></tr>");
+				} else {
+					// 	var checkboxName = $(this).attr("name");
+					var checkboxValue = $(this).val();
+					var removeIdx = checkedValues.findIndex(function(item) {
+						// 	return item.name === checkboxName &&
+						return item.material_code === checkboxValue;
+					});
+
+					if (removeIdx !== -1) {
+						checkedValues.splice(removeIdx, 1);
+					}
+					// 	$("#" + checkboxValue).remove();
+				}
+				updateTable();
+			});
+			updateTable();
 		});
+
+		// 체크된 값들을 테이블에 출력
+		function updateTable() {
+		  var table = $("#checkParameter");
+
+		  // 기존 내용 초기화
+		  table.empty();
+
+		  // 체크된 값들을 테이블에 추가
+		  for (var i = 0; i < checkedValues.length; i++) {
+
+		    var row = "<tr id='" + checkedValues[i].material_code + "'>" + "<td>자재 코드: "
+		              + checkedValues[i].material_code + " 자재 명 : "+checkedValues[i].material_name+"</td><td><input type='button' value='제거' onclick='deleteMaterial(\"" + checkedValues[i].material_code + "\", \"" + checkedValues[i].material_name + "\");'></td>" + "</tr>";
+
+		    table.append(row);
+		  }
+		}
+
+		// 자재 직접 삭제
+		
+
+		function deleteMaterial(material_code, material_name) {
+
+			if (confirm("자재 번호: " + material_code + ", 자재 명: " + material_name
+					+ "을(를) 레시피에서 제거하시겠습니까?")) {
+				var removeIdx = checkedValues.findIndex(function(item) {
+					return item.material_code === material_code;
+				});
+
+				if (removeIdx !== -1) {
+					checkedValues.splice(removeIdx, 1);
+				}//배열에서 제거
+				
+				$("#"+material_code).prop("checked", false); //체크박스 해제
+
+				updateTable();
+			}
+		}
 	</script>
 	<div class="black-bar">
 		<h4 style="text-align: center; color: white; padding-top: 8px">
@@ -101,27 +156,27 @@
 				</tr>
 			</table>
 		</form>
-		<form id="checkform">
 		<table class="table table-hover" style="text-align: center;">
 			<tr>
 				<th>#</th>
 				<th>자재코드</th>
 				<th>자재명</th>
 			</tr>
-			<c:forEach var="vo" items="${resultList }" varStatus="status">
+			<c:forEach var="vo" items="${resultList }">
 				<tr>
-					<td><input type="checkbox" name="${status.count }" value="${vo.material_code }"></td>
+					<td><input type="checkbox" id="${vo.material_code }" value="${vo.material_code }">
+						<input type="hidden" value="${vo.material_name }">
+					</td>
 					<td>${vo.material_code}</td>
 					<td>${vo.material_name}</td>
 					<td>${vo.material_type}</td>
 				</tr>
 			</c:forEach>
 		</table>
-		</form>
 		<br> <hr>
 		<form action="">
 		<table id="checkParameter">
-		
+			
 		</table>
 		<input type="button" value="등록" onclick="postParam();">
 		</form>

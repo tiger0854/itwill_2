@@ -25,7 +25,7 @@ public interface ItemRecipeDAO {
 	public Integer insertOrUpdateItemRecipe(ItemRecipeVO vo) throws Exception;
 	
 	//레시피 수정
-	public List<ItemRecipeVO> selectItemRecipe(String item_code) throws Exception;
+	public List<ItemRecipeListVO> selectItemRecipe(String item_code) throws Exception;
 	public Integer updateItemRecipe(ItemRecipeVO vo) throws Exception;
 	
 	//레시피 삭제
