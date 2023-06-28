@@ -139,7 +139,7 @@ function openItem() {
 			<c:forEach var="i" begin="${pageVO.startPage}"
 				end="${pageVO.endPage}" step="1">
 				<li class="page-item"><a class="page-link"
-					href="/foundation/warehouse/warehouseList?wh_code=&wh_name=&pageNum=${i}"><span>${i}</span></a></li>
+					href="/foundation/warehouse/warehouseList?wh_code=${Search.wh_code }&wh_name=${Search.wh_name }&pageNum=${i}"><span>${i}</span></a></li>
 			</c:forEach>
 			<c:if test="${pageVO.endPage < pageVO.pageCount}">
 				<li class="page-item"><a class="page-link"

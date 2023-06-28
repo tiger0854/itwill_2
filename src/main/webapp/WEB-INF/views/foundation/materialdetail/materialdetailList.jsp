@@ -136,7 +136,7 @@
 			<c:forEach var="i" begin="${pageVO.startPage}"
 				end="${pageVO.endPage}" step="1">
 				<li class="page-item"><a class="page-link"
-					href="/foundation/materialdetail/materialdetailList?material_code=&material_name=&pageNum=${i}"><span>${i}</span></a></li>
+					href="/foundation/materialdetail/materialdetailList?material_code=${Search.material_code }&material_name=${Search.material_name }&pageNum=${i}"><span>${i}</span></a></li>
 			</c:forEach>
 			<c:if test="${pageVO.endPage < pageVO.pageCount}">
 				<li class="page-item"><a class="page-link"

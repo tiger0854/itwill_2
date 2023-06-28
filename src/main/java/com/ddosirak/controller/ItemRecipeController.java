@@ -41,11 +41,14 @@ public class ItemRecipeController {
 		String item_name = request.getParameter("item_name");
 		String material_code = request.getParameter("material_code");
 		String material_name = request.getParameter("material_name");
+		String material_con = request.getParameter("material_con");
+
 		Map<String, Object> instrSearch = new HashMap<String, Object>();
 		instrSearch.put("item_code", item_code);
 		instrSearch.put("item_name", item_name);
 		instrSearch.put("material_code", material_code);
 		instrSearch.put("material_name", material_name);
+		instrSearch.put("material_con", material_con);
 
 		// ================================페이징 처리를 위한 값 받아오기
 		// 동작========================================
@@ -110,12 +113,12 @@ public class ItemRecipeController {
 	}
 
 	@RequestMapping(value = "/itemrecipeUpload", method = RequestMethod.POST)
-	public String itemrecipeUploadPOST(ItemRecipeVO vo, ItemRecipeUploadVO uvo) throws Exception {
+	public void itemrecipeUploadPOST(ItemRecipeVO vo, ItemRecipeUploadVO uvo) throws Exception {
 		logger.debug("itemrecipeUploadPOST 호출");
 		logger.debug(vo + "");
 		logger.debug(uvo + "");
 		service.insertItemRecipe(vo, uvo);
-		return "redirect:/foundation/itemrecipe/itemrecipeList";
+//		return "redirect:/foundation/itemrecipe/itemrecipeList";
 	}
 
 	// 자재 검색
@@ -150,7 +153,7 @@ public class ItemRecipeController {
 	public String deleteItemRecipeMaterialGET(ItemRecipeVO vo) throws Exception {
 		logger.debug("deleteItemRecipeMaterialGET 실행");
 		service.deleteItemRecipeMaterial(vo);
-		return "redirect:/foundation/itemrecipe/itemrecipeList";
+		return "redirect:/foundation/itemrecipe/itemrecipeList?item_name=&item_code=";
 	}
 
 	// 레시피 삭제
@@ -158,7 +161,35 @@ public class ItemRecipeController {
 	public String deleteItemRecipeGET(String item_code) throws Exception {
 		logger.debug("deleteItemRecipeGET 실행");
 		service.deleteItemRecipe(item_code);
-		return "redirect:/foundation/itemrecipe/itemrecipeList";
+		return "redirect:/foundation/itemrecipe/itemrecipeList?item_name=&item_code=";
 	}
+
+	// 상품목록(팝업)
+	@RequestMapping(value = "/itemrecipeItemList", method = RequestMethod.GET)
+	public void itemrecipeListGET(Model model, HttpServletRequest request) throws Exception {
+
+		String item_code = request.getParameter("item_code");
+		String item_name = request.getParameter("item_name");
+		Map<String, Object> instrSearch = new HashMap<String, Object>();
+		instrSearch.put("item_code", item_code);
+		instrSearch.put("item_name", item_name);
+		List<ItemRecipeListVO> itemrecipeList;
+		if (item_code == null && item_name == null) {
+			// 전체 조회
+			logger.debug("itemrecipeList.jsp 전체 호출 ![]~(￣▽￣)~*");
+			itemrecipeList = service.itemrecipeItemList();
+
+		} else {
+			// 검색 조회
+			logger.debug("itemrecipeList.jsp 검색 호출 ![]~(￣▽￣)~*");
+//					proOrderList = oService.proOrderList();
+			itemrecipeList = service.itemrecipeItemList(instrSearch, model);
+//					int instrSearchCount = instructService.instrCount(instrSearch);
+//					model.addAttribute("instrSearchCount", instrSearchCount);
+		}
+		logger.debug("itemrecipeList 실행");
+
+		model.addAttribute("itemrecipeList", itemrecipeList);
+	}// /itemListGET() method end
 
 }

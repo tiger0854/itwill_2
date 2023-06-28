@@ -102,8 +102,26 @@ public class ItemRecipeDAOImpl implements ItemRecipeDAO {
 	@Override
 	public Integer itemrecipeCount(Map<String, Object> instrSearch) {
 		logger.debug("DAO : 레시피 검색 갯수 ");
-		return sqlsession.selectOne(NAMESPACE + ".recipeCount", instrSearch);
+		int result = sqlsession.selectOne(NAMESPACE + ".recipeCount", instrSearch);
+		logger.debug("@@@@result" + result);
+		return result;
 	}
+
+	@Override
+	public List<ItemRecipeListVO> itemrecipeItemList() throws Exception {
+		logger.debug("DAO : 상품목록 검색 ");
+		return sqlsession.selectList(NAMESPACE + ".itemrecipeItemList");
+	}
+
+	@Override
+	public List<ItemRecipeListVO> itemrecipeItemList(Map<String, Object> instrSearch, Model model) throws Exception {
+		logger.debug("DAO : 상품목록 부분검색 ");
+		return sqlsession.selectList(NAMESPACE + ".itemrecipeItemSearchList", instrSearch);
+	}
+	
+	
+	
+	
 	
 	
 

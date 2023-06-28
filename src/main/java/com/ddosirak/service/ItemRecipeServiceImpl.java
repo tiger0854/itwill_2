@@ -101,6 +101,22 @@ public class ItemRecipeServiceImpl implements ItemRecipeService {
 		logger.debug("service : 레시피 검색 갯수");
 		return dao.itemrecipeCount(instrSearch);
 	}
+
+	@Override
+	public List<ItemRecipeListVO> itemrecipeItemList() throws Exception {
+		logger.debug("service : 상품 목록 검색");
+		return dao.itemrecipeItemList();
+	}
+
+	@Override
+	public List<ItemRecipeListVO> itemrecipeItemList(Map<String, Object> instrSearch, Model model) throws Exception {
+		logger.debug("service : 상품 목록 부분 검색");
+		return dao.itemrecipeItemList(instrSearch, model);
+	}
+	
+	
+	
+	
 	
 	
 

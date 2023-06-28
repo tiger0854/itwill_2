@@ -38,7 +38,7 @@
 
 	//레시피 검색 팝업창
 	function openItem() {
-		window.open("/foundation/itemrecipe/materialSearch", "popup",
+		window.open("/foundation/itemrecipe/itemrecipeItemList", "popup",
 				"width=500, height=600,left=100, top=100");
 	}
 </script>
@@ -82,13 +82,7 @@
 							<td>
 							<th>품번</th>
 							<td><input type="text" name="item_code" id="item_code"
-								placeholder="품번"></td>
-							<th>자재유형</th>
-							<td><select id="material_type" name="material_type" disabled>
-									<option value=""></option>
-									<option value="원자재">원자재</option>
-									<option value="부자재">부자재</option>
-							</select></td>
+								placeholder="품번" readonly></td>
 						</tr>
 					</table>
 				</div>
@@ -123,7 +117,7 @@
 							onclick="recipeDeleteMaterial('${vo.item_code}','${vo.item_name }','${vo.material_code }','${vo.material_name }');">
 							<i class='bx bxs-trash'></i>
 						</button></td>
-					<td><button class=btn-delete
+					<td><button class=btn-delete type="button"
 							onclick="recipeDelete('${vo.item_code}','${vo.item_name }');">
 							<i class='bx bxs-trash'></i>
 						</button></td>
@@ -148,7 +142,7 @@
 			<c:forEach var="i" begin="${pageVO.startPage}"
 				end="${pageVO.endPage}" step="1">
 				<li class="page-item"><a class="page-link"
-					href="/foundation/itemrecipe/itemrecipeList?item_code=&item_name=&pageNum=${i}"><span>${i}</span></a></li>
+					href="/foundation/itemrecipe/itemrecipeList?item_code=${Search.item_code }&item_name=${Search.item_name }&pageNum=${i}"><span>${i}</span></a></li>
 			</c:forEach>
 			<c:if test="${pageVO.endPage < pageVO.pageCount}">
 				<li class="page-item"><a class="page-link"
@@ -157,7 +151,7 @@
 			</c:if>
 		</ul>
 	</div>
- 
+
 
 
 	</div>

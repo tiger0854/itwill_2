@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.ui.Model;
 
+import com.ddosirak.domain.ItemRecipeListVO;
 import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.PageVO;
 
@@ -25,6 +26,8 @@ public interface ItemdetailService {
 
 	// 자재 삭제
 	public void deleteI(String item_code);
+	
+	
 
 	// 자재 검색 갯수
 	public Integer itemCount(Map<String, Object> instrSearch);

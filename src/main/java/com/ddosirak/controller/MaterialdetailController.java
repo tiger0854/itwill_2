@@ -37,7 +37,7 @@ public class MaterialdetailController {
 		String material_code = request.getParameter("material_code");
 		String material_name = request.getParameter("material_name");
 		String material_type = request.getParameter("material_type");
-
+		
 		Map<String, Object> instrSearch = new HashMap<String, Object>();
 		instrSearch.put("material_code", material_code);
 		instrSearch.put("material_name", material_name);

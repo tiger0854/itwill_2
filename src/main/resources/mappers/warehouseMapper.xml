@@ -69,9 +69,12 @@
 	<select id="wareCount" resultType="java.lang.Integer">
 		select count(*) from
 		warehouse
-		where wh_code LIKE concat('%', #{wh_code}, '%')
-		and wh_name LIKE
-		concat('%', #{wh_name}, '%')
+		<if test="wh_code != null and wh_name != null">
+			where wh_code LIKE concat('%', #{wh_code}, '%')
+			and wh_name
+			LIKE
+			concat('%', #{wh_name}, '%')
+		</if>
 	</select>
 	<!-- 창고 검색 갯수 -->
 

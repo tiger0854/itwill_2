@@ -31,7 +31,7 @@ public class WarehouseController {
 	// http://localhost:8088/foundation/warehouse/warehouseList
 	// 창고 목록
 	@RequestMapping(value = "/warehouseList", method = RequestMethod.GET)
-	public void warehouseListGET(Model model, HttpServletRequest request, PageVO pageVO) {
+	public void warehouseListGET(Model model, HttpServletRequest request, PageVO pageVO) throws Exception {
 		logger.debug("warehouseListGET호출");
 
 		String wh_code = request.getParameter("wh_code");
@@ -99,8 +99,8 @@ public class WarehouseController {
 			logger.debug(whList + "");
 		}
 		logger.debug("whlist 개수 : " + whList.size());
-		model.addAttribute("whList", whList);
 		model.addAttribute("Search", instrSearch);
+		model.addAttribute("whList", whList);
 	}
 
 	// 창고 등록

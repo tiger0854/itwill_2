@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.ddosirak.domain.ItemRecipeListVO;
 import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.persistance.ItemdetailDAO;
@@ -71,6 +72,8 @@ public class ItemdetailServiceImpl implements ItemdetailService {
 		logger.debug("service : itemCount 실행");
 		return dao.itemCount(instrSearch);
 	}
+	
+	
 	
 	
 

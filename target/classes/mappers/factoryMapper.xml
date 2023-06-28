@@ -81,10 +81,12 @@
 	<!-- 공장 검색 갯수 -->
 	<select id="facCount" resultType="java.lang.Integer">
 		select count(*) from factory
-		WHERE factory_code LIKE CONCAT('%',
-		#{factory_code}, '%')
-		AND
-		factory_name LIKE CONCAT('%', #{factory_name}, '%')
+		<if test="factory_code != null and factory_name != null">
+			WHERE factory_code LIKE CONCAT('%',
+			#{factory_code}, '%')
+			AND
+			factory_name LIKE CONCAT('%', #{factory_name}, '%')
+		</if>
 	</select>
 	<!-- 공장 검색 갯수 -->
 

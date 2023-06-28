@@ -154,7 +154,7 @@
 			<c:forEach var="i" begin="${pageVO.startPage}"
 				end="${pageVO.endPage}" step="1">
 				<li class="page-item"><a class="page-link"
-					href="/foundation/itemdetail/itemdetailList?item_code=&item_name=&pageNum=${i}"><span>${i}</span></a></li>
+					href="/foundation/itemdetail/itemdetailList?item_code=${Search.item_code}&item_name=${Search.item_name}&pageNum=${i}"><span>${i}</span></a></li>
 			</c:forEach>
 			<c:if test="${pageVO.endPage < pageVO.pageCount}">
 				<li class="page-item"><a class="page-link"
