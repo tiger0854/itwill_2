@@ -96,8 +96,9 @@ function ProOrderDelete(wo_code){
 <!-- 작업지시목록 리스트 -->
 <!-- 작업지시상태 시작/지시 :  작업지시 현황 리스트 -->
 <!-- 작업지시상태 마감 :  실적현황 -> 실적등록 -->
-<%-- ${oderList} --%>
- <h4 style="margin-top: 100px;"><i class='bx bx-list-ol icon'></i> 작업지시 목록</h4>     
+
+ <h4 style="margin-top: 100px;"><i class='bx bx-list-ol icon'></i> 작업지시 목록</h4>    
+ <span style="color: red; font-size: 13px">* 작업 지시 번호 클릭시 해당작업 실적등록 가능 / 상품번호 클릭시 해당 레시피 확인가능</span> 
   <table class="product-table"style="margin-top: 20px;width: 100%;">
     <thead>
       <tr>
@@ -107,7 +108,8 @@ function ProOrderDelete(wo_code){
         <th>지시상태</th>
         <th>납품예정일</th>
         <th>라인코드</th>
-        <th>품목코드</th>
+        <th>상품번호</th>
+        <th>상품이름</th>
         <th>지시수량</th>
         <th>생산수량</th>
 <!--         <th>수정</th> -->
@@ -138,6 +140,7 @@ function ProOrderDelete(wo_code){
         <td>${vo.delivery_date}</td>
         <td>${vo.line_code}</td>
         <td>${vo.item_code}</td>
+        <td>${vo.item_name}</td>
         <td>${vo.oQTY}</td>
         <td>${vo.pQTY}</td>
 		<c:choose>

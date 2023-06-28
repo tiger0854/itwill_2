@@ -7,16 +7,18 @@ import org.springframework.ui.Model;
 
 import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.LineVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.ProOrderVO;
 
 public interface LineDAO {
 
-	
 	//라인목록
 	public List<LineVO> LineList();
+	//라인목록
+	public List<LineVO> LineList(PageVO pageVO);
 	
 	//라인검색
-	public List<LineVO> LineList(Map<String, Object> instrSearch, Model model);
+	public List<LineVO> LineList(Map<String, Object> instrSearch, Model model,PageVO pageVO);
 	
 	//라인등록
 	public void addLine(LineVO vo); 
@@ -29,5 +31,7 @@ public interface LineDAO {
 	
 	//라인삭제
 	public void lineDelete(String line_code);
+
+	public Integer lineCount(Map<String, Object> instrSearch);
 	
 }

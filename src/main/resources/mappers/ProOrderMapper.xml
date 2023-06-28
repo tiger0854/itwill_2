@@ -113,6 +113,7 @@
   	<!-- 상품목록 -->
   	<select id="proitemList" resultType="com.ddosirak.domain.ItemdetailVO">
 		SELECT * FROM item_detail
+		LIMIT #{startRow}, #{pageSize}
   	</select>
   	
   	<!-- 상품검색 -->
@@ -131,6 +132,7 @@
 	<sql id="itemSearch">
 	  WHERE item_code LIKE CONCAT('%', #{item_code}, '%')
 	  AND item_name LIKE CONCAT('%', #{item_name}, '%')
+	  LIMIT #{startRow}, #{pageSize}
 	</sql>
   	
   	<!-- addQTY -->
@@ -171,6 +173,16 @@
 	  AND item_code LIKE CONCAT('%', #{item_code}, '%')
 	  </if>
 	</sql>
+  	
+  	<!-- 상품갯수 -->
+  	<select id="itemcount" resultType="java.lang.Integer">
+		SELECT count(*) FROM item_detail
+		<if test="item_name != null and item_code != null">
+		WHERE item_code LIKE CONCAT('%', #{item_code}, '%')
+		AND item_name LIKE CONCAT('%', #{item_name}, '%')
+		</if>
+  	</select>
+
   	
   	
   </mapper>

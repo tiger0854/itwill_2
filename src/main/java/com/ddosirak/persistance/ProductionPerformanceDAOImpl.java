@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.ProductionPerformanceVO;
 
 @Repository
@@ -36,11 +37,11 @@ public class ProductionPerformanceDAOImpl implements ProductionPerformanceDAO {
 	}
 	
 	// 실적 현황
-	public List<ProductionPerformanceVO> prodPerfList(String wo_code) {
-		// 1,2 DB 연결
-		// 3. SQL 작성 && pstmt
-		// 4. SQL 실행
-		List<ProductionPerformanceVO> prodPerfList = sqlSession.selectList(NAMESPACE + ".prodPerfList", wo_code);
+	public List<ProductionPerformanceVO> prodPerfList(Map<String, Object> instrSearch,String wo_code,PageVO pageVO) {
+		instrSearch.put("startRow", pageVO.getStartRow());
+		instrSearch.put("pageSize", pageVO.getPageSize());
+		instrSearch.put("wo_code",wo_code);
+		List<ProductionPerformanceVO> prodPerfList = sqlSession.selectList(NAMESPACE + ".prodPerfList", instrSearch);
 		logger.debug("@@@@@@@ prodPerfList : " + prodPerfList);
 		logger.debug("실적 조회 완료");
 		return prodPerfList;
@@ -118,6 +119,12 @@ public class ProductionPerformanceDAOImpl implements ProductionPerformanceDAO {
 	public void pfQTYDel(ProductionPerformanceVO pvo) {
 		sqlSession.update(NAMESPACE + ".pqtydel", pvo);
 		logger.debug("실적 생산량 삭제 완료");
+	}
+
+	@Override
+	public Integer orderStatuscount(String wo_code) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NAMESPACE+".etccount", wo_code);
 	}
 
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.ddosirak.domain.LineVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.ProOrderVO;
 import com.ddosirak.persistance.LineDAO;
 import com.ddosirak.persistance.ProOrderDAO;
@@ -19,16 +20,23 @@ public class LineServiceImpl implements LineService{
 	@Inject
 	private LineDAO ldao; // 의존성 주입
 	
-	//라인목록
 	@Override
 	public List<LineVO> LineList() {
+		// TODO Auto-generated method stub
 		return ldao.LineList();
+	}
+
+
+	//라인목록
+	@Override
+	public List<LineVO> LineList(PageVO pageVO) {
+		return ldao.LineList(pageVO);
 	}
 	
 	//라인검색
 	@Override
-	public List<LineVO> LineList(Map<String, Object> instrSearch, Model model) {
-		return ldao.LineList(instrSearch, model);
+	public List<LineVO> LineList(Map<String, Object> instrSearch, Model model,PageVO pageVO) {
+		return ldao.LineList(instrSearch, model,pageVO);
 	}
 
 	//라인등록
@@ -52,6 +60,13 @@ public class LineServiceImpl implements LineService{
 	public void deleteLine(String line_code) {
 		ldao.lineDelete(line_code);
 	}
+
+	@Override
+	public Integer getLinecount(Map<String, Object> instrSearch) {
+		// TODO Auto-generated method stub
+		return ldao.lineCount(instrSearch);
+	}
+
 
 
 

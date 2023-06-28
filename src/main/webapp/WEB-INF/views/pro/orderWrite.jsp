@@ -41,7 +41,6 @@
   function openItem(){
       window.open("/pro/itemList","popup", "width=500, height=600,left=100, top=100");
   }
-
   
 </script>
 
@@ -88,6 +87,7 @@
 		</select></td>
     </tr>
     <tr>
+    
     	<td>품목코드</td>
   		<td>
 		<input type="text" id="item_code" name="item_code" placeholder="품번검색" onclick="openItem()" width="50%" readonly> 
