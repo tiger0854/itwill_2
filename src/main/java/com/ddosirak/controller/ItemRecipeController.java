@@ -1,8 +1,11 @@
 package com.ddosirak.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -139,7 +142,7 @@ public class ItemRecipeController {
 	@RequestMapping(value = "/getMaterials", method = RequestMethod.GET)
 	@ResponseBody
 	public String getMaterialsGET(@RequestParam("item_code") String itemCode) throws Exception {
-		List<ItemRecipeVO> itemList = service.selectItemRecipe(itemCode);
+		List<ItemRecipeListVO> itemList = service.selectItemRecipe(itemCode);
 		logger.debug(itemList.size() + "");
 		// ObjectMapper 객체 생성
 		ObjectMapper objectMapper = new ObjectMapper();

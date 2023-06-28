@@ -60,7 +60,7 @@ public class ItemRecipeServiceImpl implements ItemRecipeService {
 	}
 
 	@Override
-	public List<ItemRecipeVO> selectItemRecipe(String item_code) throws Exception {
+	public List<ItemRecipeListVO> selectItemRecipe(String item_code) throws Exception {
 		logger.debug("service : 레시피 수정 파라미터");
 		return dao.selectItemRecipe(item_code);
 	}

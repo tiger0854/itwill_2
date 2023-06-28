@@ -28,5 +28,5 @@ public interface ItemdetailService {
 	
 
 	// 자재 검색 갯수
-	public Integer itemCount(Map<String, Object> instrSearch);
+	public Integer itemCount(Map<String, Object> instrSearch) throws Exception;
 }

@@ -111,7 +111,7 @@ public class WarehouseController {
 	}
 
 	@RequestMapping(value = "/warehouseUpload", method = RequestMethod.POST)
-	public String insertWhPOST(WarehouseVO vo) throws Exception {
+	public void insertWhPOST(WarehouseVO vo) throws Exception {
 		logger.debug("insertWhPOSt 호출");
 		service.insertwh(vo);
 
@@ -126,7 +126,7 @@ public class WarehouseController {
 	}
 
 	@RequestMapping(value = "/warehouseUpdate", method = RequestMethod.POST)
-	public String updateWhPOST(WarehouseVO vo) throws Exception {
+	public void updateWhPOST(WarehouseVO vo) throws Exception {
 		logger.debug("updateWhpost 호출");
 		service.updatewh(vo);
 

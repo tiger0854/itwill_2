@@ -54,7 +54,8 @@
 
 	<!-- 레시피 등록 -->
 	<insert id="insertItemRecipe">
-		insert into item_recipe (item_code, material_code, material_con)
+		insert into item_recipe (item_code, material_code,
+		material_con)
 		values(#{item_code}, #{material_code}, #{material_con})
 	</insert>
 	<!-- 레시피 등록 -->

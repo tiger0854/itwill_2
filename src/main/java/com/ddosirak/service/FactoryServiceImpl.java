@@ -33,7 +33,7 @@ public class FactoryServiceImpl implements FactoryService {
 	
 
 	@Override
-	public List<FactoryVO> facList(PageVO pageVO, Map<String, Object> instrSearch, Model model) {
+	public List<FactoryVO> facList(PageVO pageVO, Map<String, Object> instrSearch, Model model) throws Exception {
 		logger.debug("service : 창고 검색 목록 출력");
 		return dao.facList(pageVO, instrSearch, model);
 	}

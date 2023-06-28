@@ -19,7 +19,7 @@ public interface ItemdetailDAO {
 	// 자재 기초 등록
 	public Integer insertID(ItemdetailVO vo) throws Exception;
 
-	public String getMaxCode();
+	public String getMaxCode() throws Exception;
 
 	// 자재 기초 수정
 	public Integer updateID(ItemdetailVO vo) throws Exception;

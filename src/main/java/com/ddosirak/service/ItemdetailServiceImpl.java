@@ -29,15 +29,9 @@ public class ItemdetailServiceImpl implements ItemdetailService {
 	}
 	
 	@Override
-	public List<ItemdetailVO> idList(PageVO pageVO, Map<String, Object> instrSearch, Model model) {
+	public List<ItemdetailVO> idList(PageVO pageVO, Map<String, Object> instrSearch, Model model) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.idList(pageVO, instrSearch, model);
-	}
-	
-	@Override
-	public List<ItemdetailVO> idList(Map<String, Object> instrSearch, Model model) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.idList(instrSearch, model);
 	}
 
 	@Override
@@ -74,7 +68,7 @@ public class ItemdetailServiceImpl implements ItemdetailService {
 	}
 
 	@Override
-	public Integer itemCount(Map<String, Object> instrSearch) {
+	public Integer itemCount(Map<String, Object> instrSearch) throws Exception {
 		logger.debug("service : itemCount 실행");
 		return dao.itemCount(instrSearch);
 	}

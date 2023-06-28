@@ -32,7 +32,7 @@ public class FactoryController {
 	// http://localhost:8088/foundation/factory/factoryList
 	// 공장 목록 출력
 	@RequestMapping(value = "/factoryList", method = RequestMethod.GET)
-	public void factoryListGET(Model model, HttpServletRequest request, PageVO pageVO) {
+	public void factoryListGET(Model model, HttpServletRequest request, PageVO pageVO) throws Exception {
 
 		logger.debug("factoryListGET 호출");
 
@@ -134,7 +134,7 @@ public class FactoryController {
 	}
 
 	@RequestMapping(value = "/factoryUpload", method = RequestMethod.POST)
-	public void factoryUploadPOST(FactoryVO vo) {
+	public void factoryUploadPOST(FactoryVO vo) throws Exception {
 
 		logger.debug("factoryUploadPOST 호출");
 		service.insertFac(vo);
@@ -143,7 +143,7 @@ public class FactoryController {
 
 	// 창고 수정
 	@RequestMapping(value = "/factoryUpdate", method = RequestMethod.GET)
-	public void factoryUpdateGET(String factory_code, Model model) {
+	public void factoryUpdateGET(String factory_code, Model model) throws Exception {
 
 		logger.debug("factoryUpdateGET 호출");
 		FactoryVO resultvo = service.selectFac(factory_code);
@@ -152,7 +152,7 @@ public class FactoryController {
 	}
 
 	@RequestMapping(value="/factoryUpdate", method=RequestMethod.POST)
-	public String factoryUpdatePOST(FactoryVO vo) throws Exception {
+	public void factoryUpdatePOST(FactoryVO vo) throws Exception {
 		logger.debug("factoryUpdatePOST 호출");
 		service.updateFac(vo);
 
