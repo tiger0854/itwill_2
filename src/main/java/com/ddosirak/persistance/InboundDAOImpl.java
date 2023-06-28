@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ddosirak.domain.InboundVO;
 import com.ddosirak.domain.OrderVO;
+import com.ddosirak.domain.PageVO;
 
 @Repository
 public class InboundDAOImpl implements InboundDAO {
@@ -30,10 +31,10 @@ public class InboundDAOImpl implements InboundDAO {
 	}
 
 	@Override
-	public List<InboundVO> inboundAllList() {
+	public List<InboundVO> inboundAllList(PageVO vo) {
 
 		logger.debug("입고리스트 불러오기 완료!");		
-		return sqlSession.selectList(NAMESPACE+".inboundAllList");
+		return sqlSession.selectList(NAMESPACE+".inboundAllList",vo);
 	}
 
 	@Override

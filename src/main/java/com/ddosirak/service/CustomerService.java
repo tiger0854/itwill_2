@@ -9,8 +9,6 @@ public interface CustomerService {
 		
 	public List<CustomerVO> customerList(PageVO vo); //거래처목록
 	
-	public List<CustomerVO> serchCusname(PageVO vo); //거래처 이름검색 목록
-	
 	public CustomerVO customerDetail(String cus_id); //거래처 상세목록
 	
 	public void insertCustomer(CustomerVO vo); //거래처등록

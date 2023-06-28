@@ -27,7 +27,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 	@Override
 	public List<CustomerVO> customerList(PageVO vo) {
 		
-		return sqlSession.selectList(NAMESPACE+".selectCustomer",vo);
+		return sqlSession.selectList(NAMESPACE+".selectCus",vo);
 	}
 
 	@Override
@@ -59,11 +59,6 @@ public class CustomerDAOImpl implements CustomerDAO {
 		return sqlSession.selectOne(NAMESPACE+".selectCusNumber",cus_number);
 	}
 
-	@Override
-	public List<CustomerVO> serchCusname(PageVO vo) {
 
-		
-		return sqlSession.selectList(NAMESPACE+".serchCusname",vo);
-	}
 	
 }

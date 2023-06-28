@@ -9,10 +9,13 @@ public interface PageDAO {
 	public Integer countEmpList();
 	
 	///////////거래처 페이징////////////
-	//거래처 페이징처리
-	public Integer customerList();
+	public Integer countCustomerList(PageVO vo);
 	
-	public Integer serchCusname(PageVO vo);
-	///////////거래처 페이징////////////
+	///////////입고리스트 페이징////////////
+	public Integer countInList(PageVO vo);
+	
+	///////////발주리스트 페이징////////////
+	public Integer countRetOrdList(PageVO vo);
+
 	
 }// public interface end

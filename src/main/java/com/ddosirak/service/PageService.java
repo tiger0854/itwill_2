@@ -10,11 +10,15 @@ public interface PageService {
 	
 	
 	///////////거래처 페이징////////////
-	//거래처 페이징처리
-	public Integer customerList();
-	
-	public Integer serchCusname(PageVO vo);
-	
+	public Integer countCusList(PageVO vo);
 	///////////거래처 페이징////////////
+	
+	///////////입고리스트 페이징////////////
+	public Integer countInList(PageVO vo);
+	
+	
+	///////////발주리스트 페이징////////////
+	public Integer countRetOrdList(PageVO vo);
+
 	
 }// public interface end

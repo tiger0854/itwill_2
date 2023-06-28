@@ -24,6 +24,7 @@ public class PageServiceImpl implements PageService {
 		return pdao.countBoard();
 	}// countBoard() method end
 	// 사원목록 페이징 처리
+	
 	@Override
 	public Integer countEmpList() {
 		logger.debug("service: countEmpList()");
@@ -31,15 +32,25 @@ public class PageServiceImpl implements PageService {
 	}// countEmpList() method end
 	
 	@Override
-	public Integer customerList() {
-		logger.debug("service: customerList()");
-		return pdao.customerList();
-	}
+	public Integer countCusList(PageVO vo) {
+		logger.debug("service: countCusList(PageVO vo)");
+		return pdao.countCustomerList(vo);
+	}//거래처목록 페이징
+	
 	@Override
-	public Integer serchCusname(PageVO vo) {
-		// TODO Auto-generated method stub
-		return pdao.serchCusname(vo);
-	}
+	public Integer countInList(PageVO vo) {
+		logger.debug("service: countInList(PageVO vo)");
+		return pdao.countInList(vo);
+	}//입고리스트 페이징
+
+	@Override
+	public Integer countRetOrdList(PageVO vo) {
+		logger.debug("service: countRetOrdList(PageVO vo)");
+		return pdao.countRetOrdList(vo);
+	}//발주리스트 페이징
+
+	
+
 	
 	
 	

@@ -55,12 +55,24 @@ function orderDelete(button) {
 
 </script>
 
-<!-- 판매목록 drop 기능 -->
+
 <style type="text/css">
+
 td{
-height: 50px; vertical-align: middle;
+height: 30px; vertical-align: middle; text-align: center;
 }
-  
+th{
+height: 50px; vertical-align: middle; text-align: center;
+}
+    table td:first-child,
+    table th:first-child {
+        border-left: none;
+    }
+
+    table td:last-child,
+    table th:last-child {
+        border-right: none;
+    }    
 </style>
 
 </head>
@@ -76,35 +88,30 @@ height: 50px; vertical-align: middle;
     
 <!-- Nav tabs -->
 
-<div class="container" style="margin-top: 100px;">
+<div class="container" style="margin-top: 100px;max-width: 100% !important;">
 <h3 style="font-style: italic;">발주현황</h3>
-<ul class="nav nav-tabs" id="myTab" role="tablist" style="flex-direction: row;justify-content: flex-start;">
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">전체</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="notend-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">발주대기</button>
-  </li>
-   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="end-tab" data-bs-toggle="tab" data-bs-target="#end" type="button" role="tab" aria-controls="profile" aria-selected="false">발주완료</button>
-  </li>
-</ul>
+
 <!-- Tab panes -->
 <div class="tab-content" style="margin-top: 30px; " >
 
 <!-- 전체 -->
   <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
-   <div class="input-group mb-3"style="width: 500px;justify-content: flex-start;">
-   	  <select class="form-select" aria-label="Default select example" style="max-width: 120px;">
-  <option value="1">상품코드</option>
-  <option value="2">상품명</option>
-  <option value="3">발주번호</option>
+  <button type="button" class="btn btn-primary"style="float: right;margin-top: 20px;margin-right: 30px;" onclick="location.href='/inbound/orderWrite'">발주등록</button>
+  <div style="background-color: #E9E9E9;height: 80px;padding: 20px;border-radius:10px;margin-bottom: 30px;margin-top: 60px;">
+  <form action=""method="get">
+   <div class="input-group mb-3"style="width: 500px;justify-content: flex-start;align-items: center; justify-content: space-between;">
+   	  <select class="form-select" aria-label="Default select example" style="max-width: 150px;" name="kind" id="kind">
+  <option value="number">발주번호</option>
+  <option value="code">상품코드</option>
+  <option value="name">상품명</option>
 	</select>
-	<input type="text" class="form-control" placeholder="검색어를 입력하세요">
-	 <button type="button" class="btn btn-primary">검색</button>
+	<input type="text" class="form-control" placeholder="검색어를 입력하세요" name="search" value="${pageVO.search }">
+	 <button type="submit" class="btn btn-primary">검색</button>
 	</div>
- <table class="table table-striped" style="width: 1200px;">
-    <thead style="border-bottom: 1px solid">
+   </form>
+   </div>
+  <table class="table table-bordered" style="width: 100%;">
+    <thead style="border-top:3px solid #E9E9E9; background-color: #F9F9F9;text-align: center;">
       <tr>
         <th>발주번호</th>
         <th>상품코드</th>
@@ -120,6 +127,7 @@ height: 50px; vertical-align: middle;
         <th>관리</th>
       </tr>
     </thead>
+     <tbody style="border-bottom:3px solid #E9E9E9; ">
     <c:forEach var="vo" items="${orderList}">
     
       <tr>
@@ -157,126 +165,47 @@ height: 50px; vertical-align: middle;
       </tr>
   
       </c:forEach>
-     
+     </tbody>
   </table>
 </div>
 <!-- 전체 -->
 
-<!-- 발주대기 -->
-  <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab" style="max-width: 100%;">
-   <div class="input-group mb-3"style="width: 500px;justify-content: flex-start;">
-   	  <select class="form-select" aria-label="Default select example" style="max-width: 120px;">
-  <option value="1">상품코드</option>
-  <option value="2">상품명</option>
-  <option value="3">발주번호</option>
-	</select>
-	<input type="text" class="form-control" placeholder="검색어를 입력하세요">
-	 <button type="button" class="btn btn-primary">검색</button>
-	</div>
-  <table class="table table-striped" style="width: 1200px;">
-    <thead >
-      <tr>
-        <th>발주번호</th>
-        <th>상품코드</th>
-        <th>상품명</th>
-        <th>발주수량</th>
-        <th>발주일자</th>
-        <th>납기일자</th>
-        <th>물품단가</th>
-        <th>총액</th>
-        <th>담당자</th>
-        <th>거래처</th>
-        <th>진행상황</th>
-        <th>관리</th>
-      </tr>
-    </thead>
-    <tbody>
-    <c:forEach var="vo" items="${orderList}">
-    <c:if test="${vo.order_state == 0 }">
-      <tr >
- 		<td>${vo.order_number }</td>
-        <td>${vo.material_code }</td>
-        <td>${vo.material_name }</td>
-        <td>${vo.order_piece }</td>
-        <td>${vo.order_date }</td>
-        <td>${vo.pay_date }</td>
-        <td><fmt:formatNumber>${vo.material_price }</fmt:formatNumber>원</td>
-        <td><fmt:formatNumber>${vo.material_price*vo.order_piece }</fmt:formatNumber>원</td>
-        <td>${vo.order_resp }</td>
-        <td>${vo.order_trade }</td> 
-        <td style="color: red;">발주대기</td>
-        <td>    
-       	 <button type="button" class="btn btn-primary btn-sm" onclick="openChildWindow(this);">수정</button>
-       	 <button type="button" class="btn btn-secondary btn-sm">취소</button>
-        </td>
-      </tr>
-	  </c:if>
-      </c:forEach>
-
-    </tbody>
-  </table>
-  </div>
-  <!-- 발주대기 -->
-  
-  <!-- 발주완료 -->
-    <div class="tab-pane" id="end" role="tabpanel" aria-labelledby="profile-tab" style="max-width: 100%;">
-     <div class="input-group mb-3"style="width: 500px;justify-content: flex-start;">
-   	  <select class="form-select" aria-label="Default select example" style="max-width: 120px;">
-  <option value="1">상품코드</option>
-  <option value="2">상품명</option>
-  <option value="3">발주번호</option>
-	</select>
-	<input type="text" class="form-control" placeholder="검색어를 입력하세요">
-	 <button type="button" class="btn btn-primary">검색</button>
-	</div>
-	 <table class="table table-striped" style="width: 1200px;">
-    <thead >
-      <tr>
-        <th>발주번호</th>
-        <th>상품코드</th>
-        <th>상품명</th>
-        <th>발주수량</th>
-        <th>발주일자</th>
-        <th>납기일자</th>
-        <th>물품단가</th>
-        <th>총액</th>
-        <th>담당자</th>
-        <th>거래처</th>
-        <th>진행상황</th>
-        <th>관리</th>
-      </tr>
-    </thead>
-    <tbody>
-      <c:forEach var="vo" items="${orderList}">
-    <c:if test="${vo.order_state == 1 }">
-      <tr >
- 		<td>${vo.order_number }</td>
-        <td>${vo.material_code }</td>
-        <td>${vo.material_name }</td>
-        <td>${vo.order_piece }</td>
-        <td>${vo.order_date }</td>
-        <td>${vo.pay_date }</td>
-        <td><fmt:formatNumber>${vo.material_price }</fmt:formatNumber>원</td>
-        <td><fmt:formatNumber>${vo.material_price*vo.order_piece }</fmt:formatNumber>원</td>
-        <td>${vo.order_resp }</td>
-        <td>${vo.order_trade }</td> 
-        <td style="color: blue;">발주완료</td>
-        <td>     	
-        <button type="button" class="btn btn-primary btn-sm" disabled="disabled">수정</button>
-        <button type="button" class="btn btn-secondary btn-sm" disabled="disabled">취소</button>
-        </td>
-      </tr>
-	  </c:if>
-      </c:forEach>
-
-    </tbody>
-  </table>
-</div>
-  <!-- 발주완료 -->
     </div>
      <div style="color: red;">*발주완료된 건은 수정/취소가 불가합니다.</div>
-  <button type="button" class="btn btn-outline-primary"style="margin-bottom: 30px;margin-right:50px; float: right;" onclick="location.href='/inbound/orderWrite'">발주등록</button>
- 
+  
+    <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
+	<div class="container">
+	 	<ul class="pagination"style="justify-content: center;">			
+			<c:choose>
+				<c:when test="${pageVO.startPage > pageVO.pageBlock}">
+					<li class="page-item"><a class="page-link" href="/inbound/orderList?pageNum=${pageVO.startPage - pageVO.pageBlock}" style="margin: 0.5em;">◀</a></li>
+				</c:when>
+				<c:otherwise>
+				</c:otherwise>
+			</c:choose>
+			
+			<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
+				<c:choose>
+					<c:when test="${pageVO.kind != null }">
+					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/inbound/orderList?pageNum=${i}&kind=${pageVO.kind}&search=${pageVO.search}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
+					</c:when>
+					<c:otherwise>
+					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/inbound/orderList?pageNum=${i}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
+					</c:otherwise>
+				</c:choose>
+				
+			</c:forEach>
+			
+			<c:choose>
+				<c:when test="${pageVO.endPage < pageVO.pageCount}">
+					<li class="page-item"><a class="page-link" href="/inbound/orderList?pageNum=${pageVO.startPage + pageVO.pageBlock}" style="margin: 0.5em;">▶</a></li>
+				</c:when>
+				<c:otherwise>
+				</c:otherwise>
+			</c:choose>
+		</ul>
+		</div>
+<!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
     </div>
  
  <script type="text/javascript">

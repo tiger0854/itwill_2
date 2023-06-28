@@ -17,22 +17,46 @@
 	<!-- 사원목록 페이징 처리를 위한 쿼리 -->
 	
 	<!-- 거래처목록 페이징 처리를 위한 쿼리 -->
-	<select id="customerList" resultType="Integer">
-		SELECT COUNT(*) FROM ret_customer
+	<select id="countCusList"  parameterType="com.ddosirak.domain.PageVO" resultType="Integer">
+		SELECT COUNT(*) FROM ret_customer	 
+		<choose>
+  				<when test="kind == 'name'">WHERE cus_name</when>
+  				<when test="kind == 'code'">WHERE cus_code</when>
+  		</choose> 
+  		<if test="search != ''">	
+		LIKE CONCAT('%', #{search}, '%')
+		</if>
 	</select>
 	<!-- 거래처목록 페이징 처리를 위한 쿼리 -->
 	
-	<!-- 거래처목록 페이징 처리를 위한 쿼리 -->
-	<select id="serchCusname"  parameterType="com.ddosirak.domain.PageVO" resultType="Integer">
-		SELECT COUNT(*) FROM ret_customer
-		WHERE 
-			<choose>
-  				<when test="kind == 'name'">cus_name</when>
-  				<when test="kind == 'code'">cus_code</when>
-  			</choose> 
+	<!-- 입고리스트 페이징 처리를 위한 쿼리 -->
+	<select id="countInbountList"  parameterType="com.ddosirak.domain.PageVO" resultType="Integer">
+		SELECT COUNT(*) FROM ret_in	 
+		<choose>
+  				<when test="kind == 'code'">WHERE wh_code</when>
+  				<when test="kind == 'number'">WHERE in_number</when>
+  		</choose> 
+  		<if test="search != ''">	
 		LIKE CONCAT('%', #{search}, '%')
+		</if>
 	</select>
 	<!-- 거래처목록 페이징 처리를 위한 쿼리 -->
+	
+	<!-- 발주리스트 페이징 처리를 위한 쿼리 -->
+	<select id="countOrdList"  parameterType="com.ddosirak.domain.PageVO" resultType="Integer">
+		SELECT COUNT(*) FROM ret_order
+		<choose>
+  				<when test="kind == 'number'">WHERE order_number</when>
+  				<when test="kind == 'code'">WHERE material_code</when>
+  				<when test="kind == 'name'">WHERE material_name</when>
+  		</choose> 
+  		<if test="search != ''">	
+		LIKE CONCAT('%', #{search}, '%')
+		</if>
+	</select>
+	<!-- 거래처목록 페이징 처리를 위한 쿼리 -->
+	
+
 	
   
   </mapper>

@@ -30,18 +30,23 @@ public class PageDAOImpl implements PageDAO {
 	}//countEmpList() method end
 
 	@Override
-	public Integer customerList() {
-		logger.debug("countEmpList() 메서드 호출");
-		return sqlSession.selectOne(NAMESPACE+".customerList");
-
-	}
+	public Integer countCustomerList(PageVO vo) {
+		return sqlSession.selectOne(NAMESPACE+".countCusList",vo);
+	}//거래처리스트
 
 	@Override
-	public Integer serchCusname(PageVO vo) {
-		logger.debug("serchCusname() 메서드 호출");
-		return sqlSession.selectOne(NAMESPACE+".serchCusname",vo);
+	public Integer countInList(PageVO vo) {
+		return sqlSession.selectOne(NAMESPACE+".countInbountList",vo);
+	}//입고리스트
+
+	@Override
+	public Integer countRetOrdList(PageVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NAMESPACE+".countOrdList",vo);
 	}
-	
+
+
+
 	
 
 }// public class end

@@ -52,10 +52,5 @@ public class CustomerServiceImpl implements CustomerService {
 		return cdao.selectCusNumber(cus_number);
 	}
 
-	@Override
-	public List<CustomerVO> serchCusname(PageVO vo) {
-		// TODO Auto-generated method stub
-		return cdao.serchCusname(vo);
-	}
 
 }
