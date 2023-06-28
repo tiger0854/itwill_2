@@ -14,9 +14,19 @@
 	<!-- 공장 목록 조회 -->
 	<select id="factoryList"
 		resultType="com.ddosirak.domain.FactoryVO">
-		SELECT * FROM factory
+		SELECT * FROM factory LIMIT #{startRow}, #{pageSize}
 	</select>
 	<!-- 공장 목록 조회 -->
+
+	<!-- 공장 목록 검색 -->
+	<select id="factoryListSearch"
+		resultType="com.ddosirak.domain.FactoryVO">
+		SELECT * FROM factory
+		WHERE factory_code LIKE CONCAT('%',
+		#{factory_code}, '%')
+		LIMIT #{startRow}, #{pageSize}
+	</select>
+	<!-- 공장 목록 검색 -->
 
 	<!-- 특정 공장 조회 -->
 	<select id="selectFactory"
@@ -37,15 +47,47 @@
 	<!-- 공장 삭제 -->
 	<delete id="deleteFactory">
 		DELETE FROM factory
-		WHERE factory_code = #{factory_code}
+		WHERE factory_code =
+		#{factory_code}
 	</delete>
 	<!-- 공장 삭제 -->
-	
+
+
+
+	<!-- 상품 검색 (팝업창) -->
+	<select id="factoryItemList"
+		resultType="com.ddosirak.domain.FactoryVO">
+		select * from factory
+	</select>
+
+	<select id="factoryItemSearch"
+		resultType="com.ddosirak.domain.FactoryVO">
+		SELECT * FROM factory
+		WHERE factory_code LIKE CONCAT('%',
+		#{factory_code}, '%')
+		AND factory_name LIKE CONCAT('%',
+		#{factory_name}, '%')
+	</select>
+	<!-- 상품 검색 (팝업창) -->
+
 	<!-- max(코드) -->
 	<select id="getMaxCode" resultType="String">
-		select max(factory_code) 
-		from factory	
+		select max(factory_code)
+		from
+		factory
 	</select>
 	<!-- max(코드) -->
+
+	<!-- 공장 검색 갯수 -->
+	<select id="facCount" resultType="java.lang.Integer">
+		select count(*) from factory
+		<if test="factory_code != null and factory_name != null">
+			WHERE factory_code LIKE CONCAT('%',
+			#{factory_code}, '%')
+			AND
+			factory_name LIKE CONCAT('%', #{factory_name}, '%')
+		</if>
+	</select>
+	<!-- 공장 검색 갯수 -->
 
 </mapper>
