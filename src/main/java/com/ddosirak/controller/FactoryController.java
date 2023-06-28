@@ -73,4 +73,12 @@ public class FactoryController {
 		return "redirect:/foundation/factory/factoryList";
 	}
 	
+	//창고 삭제
+	@RequestMapping(value="/factoryDelete", method=RequestMethod.GET)
+	public String 충돌String factory_code) {
+		logger.debug("factoryDeleteGET 호출");
+		service.deleteF(factory_code);
+		return "redirect:/foundation/factory/factoryList";
+	}
+	
 }
