@@ -15,32 +15,18 @@ function orderwrite() {
   // 새 창을 열기 위한 URL
   var popupUrl = '/pro/orderWrite';
   // 새 창 열기
-  window.open(popupUrl, '_blank', 'width=500,height=600,left=100, top=100');
+  window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 }
 
 function orderedit(wo_code) {
 	  var popupUrl = '/pro/orderEdit?wo_code='+ wo_code;
-	  window.open(popupUrl, '_blank', 'width=500,height=600,left=100, top=100');
-	}
-
-
-//품명 검색 팝업창
-function openItem(){
-    window.open("/pro/itemList","popup", "width=500, height=600,left=100, top=100");
-}
-
-
-function ProOrderDelete(wo_code){
-		if(confirm("정말로 삭제하시겠습니까?")){
-			location.href='/pro/proOrderDelete?wo_code='+wo_code;
-			alert("삭제완료!");
-		}
+	  window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 	}
 
 </script>
 
 </head>
-<body id="body-pd" style="font-family: 'TheJamsil5';">
+<body>
 
 
 <div class="height-100">
@@ -49,17 +35,23 @@ function ProOrderDelete(wo_code){
 <h4 style="margin-top: 150px;"><i class="bx bx-book"></i> 작업지시</h4>
 <div style="margin-top: 10px;">
 <hr width="100%" style="border: 2px solid black">
+<<<<<<<< HEAD:src/main/webapp/WEB-INF/views/pro/orderList.jsp
 
 
 <!-- 작업지시목록 검색박스 -->
 
 <form id="instr">
+========
+>>>>>>>> origin/0622kbs:src/main/webapp/WEB-INF/views/pro/oderList.jsp
 <!-- 작업지시목록 검색, 등록버튼 -->
 <div class=btn-container>
-<button type="submit" class=btn-search><i class='bx bx-search-alt-2'></i> 조회</button>
+<button class=btn-search><i class='bx bx-search-alt-2'></i> 조회</button>
 <button class=btn-add onclick="orderwrite()"><i class='bx bx-plus-medical'></i> 추가</button>
 </div>
+
+<!-- 작업지시목록 검색박스 -->
 <table class="product-box"style="margin-top: 20px; width: 100%; " border="1">
+<<<<<<<< HEAD:src/main/webapp/WEB-INF/views/pro/orderList.jsp
 			<tr>
 				<td>라인</td>
 				<td><select name="line_code" class="line_code">
@@ -90,9 +82,40 @@ function ProOrderDelete(wo_code){
 				</select>
 				</td>
 			</tr>
+========
+ 	
+     <tr>
+        <th>라인</th>
+        <td>
+        <select>
+        <option>전체</option>
+        <option>A</option>
+        <option>B</option>
+        </select>
+        <td>
+        <th>품번</th>
+        <td>
+        <input type="text" value="" placeholder="품번 검색하기"><input type="text" value="" placeholder="품명">
+        </td>
+      </tr>
+
+      <tr>
+        <th>지시일자</th>
+        <td><input type="date" value=""><td>
+        <th>지시상태</th>
+        <td>
+        <select>
+        <option>전체</option>
+        <option>지시</option>
+        <option>시작</option>
+        <option>마감</option>
+        </select>
+		</td>
+      </tr>
+>>>>>>>> origin/0622kbs:src/main/webapp/WEB-INF/views/pro/oderList.jsp
   </table>
 </div>
-</form>
+
 <!-- 작업지시목록 리스트 -->
 <!-- 작업지시상태 시작/지시 :  작업지시 현황 리스트 -->
 <!-- 작업지시상태 마감 :  실적현황 -> 실적등록 -->
@@ -117,10 +140,19 @@ function ProOrderDelete(wo_code){
       </tr>
     </thead>
     <tbody>
-    
     <c:forEach var="vo" items="${oderList }">
       <tr>
-		<td><a href="/pro/etcstatusList?wo_code=${vo.wo_code}">${vo.wo_code}</a></td>
+		<c:choose>
+		  <c:when test="${vo.wo_status eq '지시' or vo.wo_status eq '시작'}">
+		    <td><a href="/pro/orderstatusList?wo_code=${vo.wo_code}">${vo.wo_code}</a></td>
+		  </c:when>
+		  <c:when test="${vo.wo_status eq '마감'}">
+		    <td><a href="/pro/closedOrders?wo_code=${vo.wo_code}">${vo.wo_code}</a></td>
+		  </c:when>
+		  <c:otherwise>
+		    <td>${vo.wo_code}</td>
+		  </c:otherwise>
+		</c:choose>
         <td>${vo.so_code}</td>
         <td>${vo.employee_id}</td>
         <c:choose>
@@ -145,8 +177,13 @@ function ProOrderDelete(wo_code){
         <td>${vo.pQTY}</td>
 		<c:choose>
 		  <c:when test="${vo.wo_status eq '지시'}">
+<<<<<<<< HEAD:src/main/webapp/WEB-INF/views/pro/orderList.jsp
 <%-- 		    <td><button class="btn-edit" onclick="orderedit('${vo.wo_code}')"><i class="bx bx-edit"></i></button></td> --%>
 		    <td><button class="btn-delete" onclick="ProOrderDelete('${vo.wo_code}')"><i class="bx bxs-trash"></i></button></td>
+========
+		    <td><button class="btn-edit" onclick="orderedit('${vo.wo_code}')"><i class="bx bx-edit"></i></button></td>
+		    <td><button class="btn-delete"><i class="bx bxs-trash"></i></button></td>
+>>>>>>>> origin/0622kbs:src/main/webapp/WEB-INF/views/pro/oderList.jsp
 		  </c:when>
 		  <c:otherwise>
 		    <td></td>
@@ -157,7 +194,7 @@ function ProOrderDelete(wo_code){
       </c:forEach>
     </tbody>
   </table>
-
+  
   
   <!-- 페이징처리 -->
 <%--   		${Search} --%>

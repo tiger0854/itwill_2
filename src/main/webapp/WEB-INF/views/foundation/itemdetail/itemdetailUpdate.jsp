@@ -32,7 +32,8 @@
 		var frObj = $("#fr");
 		var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
 		$.ajax({
-			url : "/foundation/itemdetail/itemdetailUpdate?item_code="+item_code, // 요청을 보낼 서버의 URL
+			url : "/foundation/itemdetail/itemdetailUpdate?item_code="
+					+ item_code, // 요청을 보낼 서버의 URL
 			type : "POST", // HTTP 요청 방식 (POST)
 			data : formData, // 전송할 데이터 (직렬화된 폼 데이터)
 			success : function(response) {
@@ -92,7 +93,8 @@
 
 			<!-- 작업지시등록, 취소 버튼 -->
 			<div style="text-align: center; margin-top: 50px">
-				<button type="button" class=btn-add onclick="onUpdate('${vo.item_code }');">
+				<button type="button" class=btn-add
+					onclick="onUpdate('${vo.item_code }');">
 					<i class='bx bx-edit'></i> 등록
 				</button>
 				<button class=btn-search onclick="window.close()">X 취소</button>

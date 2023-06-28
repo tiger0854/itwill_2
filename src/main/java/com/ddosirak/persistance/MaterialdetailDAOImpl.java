@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 
 import com.ddosirak.domain.MaterialdetailVO;
+import com.ddosirak.domain.PageVO;
 
 @Repository
 public class MaterialdetailDAOImpl implements MaterialdetailDAO {
@@ -24,9 +25,18 @@ public class MaterialdetailDAOImpl implements MaterialdetailDAO {
 
 	// 자재 기초 목록
 	@Override
-	public List<MaterialdetailVO> mdList() {
+	public List<MaterialdetailVO> mdList(PageVO pageVO) {
 		logger.debug("dao : 자재 기초 목록 실행");
-		return sqlsession.selectList(NAMESPACE + ".MaterialDetailList");
+		return sqlsession.selectList(NAMESPACE + ".MaterialDetailList", pageVO);
+	}
+
+	@Override
+	public List<MaterialdetailVO> mdList(PageVO pageVO, Map<String, Object> instrSearch, Model model) {
+		logger.debug("dao : 자재 기초 검색 목록 실행");
+		instrSearch.put("startRow", pageVO.getStartRow());
+		instrSearch.put("pageSize", pageVO.getPageSize());
+		logger.debug("@@@@페이징 :" + instrSearch);
+		return sqlsession.selectList(NAMESPACE + ".MaterialDetailListSearch", instrSearch);
 	}
 
 	// 자재 기초 등록
@@ -76,6 +86,12 @@ public class MaterialdetailDAOImpl implements MaterialdetailDAO {
 		logger.debug("dao : materialItemList 부분호출");
 		List<MaterialdetailVO> materialItemList = sqlsession.selectList(NAMESPACE + ".materialItemSearch", instrSearch);
 		return materialItemList;
+	}
+
+	@Override
+	public Integer materialCount(Map<String, Object> instrSearch) {
+		logger.debug("dao : materialCount 검색갯수 호출");
+		return sqlsession.selectOne(NAMESPACE + ".matCount", instrSearch);
 	}
 
 }

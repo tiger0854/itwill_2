@@ -31,20 +31,22 @@
 	function onUpdate(material_code) {
 		var frObj = $("#fr");
 		var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
-		$.ajax({
-			url : "/foundation/materialdetail/materialdetailUpdate?material_code="
-					+ material_code, // 요청을 보낼 서버의 URL
-			type : "POST", // HTTP 요청 방식 (POST)
-			data : formData, // 전송할 데이터 (직렬화된 폼 데이터)
-			success : function(response) {
-				alert("작성 성공!");
-				opener.location.reload();
-				window.close(); // 윈도우 창을 닫습니다.
-			},
-			error : function(xhr, status, error) {
-				console.error("에러 발생:", error);
-			}
-		});
+		$
+				.ajax({
+					url : "/foundation/materialdetail/materialdetailUpdate?material_code="
+							+ material_code, // 요청을 보낼 서버의 URL
+					type : "POST", // HTTP 요청 방식 (POST)
+					data : formData, // 전송할 데이터 (직렬화된 폼 데이터)
+					success : function(response) {
+						alert("작성 성공!");
+						opener.location.reload();
+						window.close(); // 윈도우 창을 닫습니다.
+					},
+					error : function(xhr, status, error) {
+						console.error("에러 발생:", error);
+					}
+				});
+
 	}
 </script>
 <body>
@@ -75,15 +77,18 @@
 						<td><input type="text" name="material_name"
 							value="${resultvo.material_name }" required="required"></td>
 					</tr>
-					<tr>
-						<td>관리자명</td>
-						<td><input type="text"></td>
-					</tr>
+					<!-- 					<tr> -->
+					<!-- 						<td>관리자명</td> -->
+					<!-- 						<td><input type="text"></td> -->
+					<!-- 					</tr> -->
 					<tr>
 						<td>자재구분</td>
 						<td><select name="material_type">
-								<option value="원자재">원자재</option>
-								<option value="부자재">부자재</option>
+								<option value="원자재"
+									${resultvo.material_type == '원자재' ? 'selected' : ''}>원자재</option>
+								<option value="부자재"
+									${resultvo.material_type == '부자재' ? 'selected' : ''}>부자재</option>
+
 						</select></td>
 					</tr>
 				</tbody>
@@ -93,7 +98,8 @@
 
 			<!-- 창고등록, 취소 버튼 -->
 			<div style="text-align: center; margin-top: 50px">
-				<button type="button" class=btn-add onclick="onUpdate('${resultvo.material_code}');">
+				<button type="button" class=btn-add
+					onclick="onUpdate('${resultvo.material_code}');">
 					<i class='bx bx-edit'></i> 등록
 				</button>
 				<button class=btn-search onclick="window.close()">X 취소</button>
