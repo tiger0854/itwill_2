@@ -7,7 +7,7 @@
 	<!-- 상품 기초 목록 -->
 	<select id="itemlist"
 		resultType="com.ddosirak.domain.ItemdetailVO">
-		SELECT * FROM item_detail LIMIT #{startRow}, #{pageSize}
+		SELECT * FROM item_detail
 	</select>
 	<!-- 상품 기초 목록 -->
 
@@ -15,10 +15,11 @@
 	<select id="itemDetailSearch"
 		resultType="com.ddosirak.domain.ItemdetailVO">
 		select * from item_detail
-		WHERE item_code LIKE CONCAT('%',
-		#{item_code}, '%')
-		LIMIT #{startRow}, #{pageSize}
+		WHERE item_code LIKE CONCAT('%', #{item_code}, '%')
+		AND item_name LIKE CONCAT('%', #{item_name}, '%')
 	</select>
+
+		
 	<!-- 상품 기초 목록 검색 -->
 
 
@@ -59,16 +60,4 @@
 		item_detail
 	</select>
 	<!-- max(코드) -->
-
-	<!-- 공장 검색 갯수 -->
-	<select id="itemCount" resultType="java.lang.Integer">
-		select count(*) from item_detail
-		<if test="item_code != null and item_name != null">
-			WHERE item_code LIKE CONCAT('%',
-			#{item_code}, '%')
-			AND
-			item_name LIKE CONCAT('%', #{item_name}, '%')
-		</if>
-	</select>
-	<!-- 공장 검색 갯수 -->
 </mapper>

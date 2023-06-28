@@ -15,6 +15,7 @@
 		window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 	}
 
+
 	function itemUpdate(item_code) {
 		// 새 창을 열기 위한 URL
 		var popupUrl = '/foundation/itemdetail/itemdetailUpdate?item_code='
@@ -25,8 +26,7 @@
 
 	function itemDelete(item_code, item_name) {
 		if (confirm("품명 : " + item_name + "를/을 정말로 삭제하시겠습니까?")) {
-			location.href = '/foundation/itemdetail/itemdetailDelete?item_code='
-					+ item_code;
+			location.href = '/foundation/itemdetail/itemdetailDelete?item_code=' + item_code;
 			alert("삭제완료");
 		}
 
@@ -104,13 +104,13 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="vo" items="${itemList}">
+			<c:forEach var="vo" items="${resultlist}">
 				<tr>
 					<td>${vo.item_code}</td>
 					<td>${vo.item_name}</td>
 					<td>${vo.unit }</td>
 					<td>${vo.item_price }</td>
-					<td><button type="button" class=btn-edit
+					<td><button class=btn-edit
 							onclick="itemUpdate('${vo.item_code}');">
 							<i class='bx bx-edit'></i>
 						</button></td>
@@ -124,6 +124,7 @@
 
 		</tbody>
 	</table>
+	</form>
 	<!-- 페이징처리 -->
 
 	<!--   		  	<div class="container" style="margin-top: 30px; margin-bottom: 30px"> -->
@@ -141,28 +142,21 @@
 	<!--   		</div> -->
 
 
-	<!-- 페이징처리 -->
-	<%--   		${Search} --%>
-	<div class="container" style="margin-top: 30px; margin-bottom: 30px">
+	<!-- 임시 페이징처리 출력용 -->
+	<div class="container" style="margin-top: 40px; margin-bottom: 30px">
 		<ul class="pagination justify-content-center" id="pagination"
 			style="margin-top: 20px;">
-			<c:if test="${pageVO.startPage > pageVO.pageBlock}">
-				<li class="page-item"><a class="page-link"
-					href="/foundation/itemdetail/itemdetailList?item_code=${Search.item_code}&item_name=${Search.item_name}&pageNum=${pageVO.startPage - pageVO.pageBlock}"><sapn>
-						< </sapn></a></li>
-			</c:if>
-			<c:forEach var="i" begin="${pageVO.startPage}"
-				end="${pageVO.endPage}" step="1">
-				<li class="page-item"><a class="page-link"
-					href="/foundation/itemdetail/itemdetailList?item_code=${Search.item_code}&item_name=${Search.item_name}&pageNum=${i}"><span>${i}</span></a></li>
+			<li class="page-item"><a class="page-link" href="#"><sapn>
+					< </sapn></a></li>
+			<c:forEach var="i" begin="1" end="5" step="1">
+				<li class="page-item"><a class="page-link" href="#"><span>${i }</span></a></li>
 			</c:forEach>
-			<c:if test="${pageVO.endPage < pageVO.pageCount}">
-				<li class="page-item"><a class="page-link"
-					href="/foundation/itemdetail/itemdetailList?item_code=${Search.item_code}&item_name=${Search.item_name}&pageNum=${pageVO.startPage + pageVO.pageBlock}"><span>
-							> </span></a></li>
-			</c:if>
+			<li class="page-item"><a class="page-link" href="#"><span>
+						> </span></a></li>
 		</ul>
 	</div>
+
+	<br>
 	</div>
 	</div>
 </body>

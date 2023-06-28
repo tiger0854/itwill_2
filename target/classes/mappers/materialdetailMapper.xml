@@ -7,15 +7,7 @@
 	<!-- 물품 조회 -->
 	<select id="MaterialDetailList"
 		resultType="com.ddosirak.domain.MaterialdetailVO">
-		select * from material_detail LIMIT #{startRow},
-		#{pageSize}
-	</select>
-	<select id="MaterialDetailListSearch"
-		resultType="com.ddosirak.domain.MaterialdetailVO">
-		select * from material_detail WHERE material_code LIKE
-		CONCAT('%',
-		#{material_code}, '%')
-		LIMIT #{startRow}, #{pageSize}
+		select * from material_detail
 	</select>
 	<!-- 물품 조회 -->
 	<!-- 물품 기초 등록 -->
@@ -29,8 +21,7 @@
 	<!-- 특정 물품 기초 조회 -->
 	<select id="selectMaterialDetail"
 		resultType="com.ddosirak.domain.MaterialdetailVO">
-		select material_code, material_name, material_type from
-		material_detail
+		select material_code, material_name from material_detail
 		where material_code = #{material_code}
 	</select>
 	<!-- 특정 물품 기초 조회 -->
@@ -53,8 +44,7 @@
 
 	<!-- 상품 검색 (팝업창) -->
 	<!-- 전체 -->
-	<select id="materialItemList"
-		resultType="com.ddosirak.domain.MaterialdetailVO">
+	<select id="materialItemList" resultType="com.ddosirak.domain.MaterialdetailVO">
 		select * from material_detail
 	</select>
 
@@ -62,11 +52,9 @@
 	<select id="materialItemSearch"
 		resultType="com.ddosirak.domain.MaterialdetailVO">
 		SELECT * FROM material_detail
-		WHERE material_code LIKE
-		CONCAT('%',
+		WHERE material_code LIKE CONCAT('%',
 		#{material_code}, '%')
-		AND material_name LIKE CONCAT('%',
-		#{material_name}, '%')
+		AND material_name LIKE CONCAT('%', #{material_name}, '%')
 	</select>
 	<!-- 상품 검색 (팝업창) -->
 
@@ -76,18 +64,4 @@
 		from material_detail
 	</select>
 	<!-- max(코드) -->
-
-	<!-- 자재 검색 갯수 -->
-	<select id="matCount" resultType="java.lang.Integer">
-		select count(*) from
-		material_detail
-		<if test="material_code != null and material_name != null">
-			WHERE material_code LIKE CONCAT('%',
-			#{material_code},
-			'%')
-			AND
-			material_name LIKE CONCAT('%', #{material_name}, '%')
-		</if>
-	</select>
-	<!-- 자재 검색 갯수 -->
 </mapper>

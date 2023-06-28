@@ -59,8 +59,8 @@
 							<i class='bx bx-search-alt-2'></i> 조회
 						</button>
 						<!-- <button class=btn-add onclick="orderwrite()"><i class='bx bx-plus-medical'></i> 추가</button> -->
-						<button class=btn-add onclick="materialUpload();">
-
+						<button class=btn-add
+							onclick="materialUpload();">
 							<i class='bx bx-plus-medical'></i> 추가
 						</button>
 					</div>
@@ -78,8 +78,7 @@
 							<td><input type="text" id="material_code"
 								name="material_code" placeholder="자재코드" readonly></td>
 							<th>자재속성</th>
-							<td><select id="material_type" name="material_type" disabled>
-
+							<td><select id="material_type" name="material_type">
 									<option value=""></option>
 									<option value="원자재">원자재</option>
 									<option value="부자재">부자재</option>
@@ -110,8 +109,7 @@
 					<td>${vo.material_code }</td>
 					<td>${vo.material_name }</td>
 					<td>${vo.material_type }</td>
-					<td><button class=btn-edit type="button"
-
+					<td><button class=btn-edit
 							onclick="materialUpdate('${vo.material_code}');">
 							<i class='bx bx-edit'></i>
 						</button></td>
@@ -127,29 +125,37 @@
 
 
 	<!-- 페이징처리 -->
-	<%--   		${Search} --%>
-	<div class="container" style="margin-top: 30px; margin-bottom: 30px">
+
+	<!--   		  	<div class="container" style="margin-top: 30px; margin-bottom: 30px"> -->
+	<!-- 			  <ul class="pagination justify-content-center" id="pagination" style="margin-top: 20px;"> -->
+	<%-- 		  <c:if test="${startPage > pageBlock }">  --%>
+	<%-- 			<li class="page-item"><a class="page-link" href="./AdminQNAList.qn?pageNum=${startPage-pageBlock} "><sapn> < </sapn></a></li> --%>
+	<%-- 			</c:if> --%>
+	<%-- 		    <c:forEach var="i" begin="1" end="5" step="1"> --%>
+	<%-- 			<li class="page-item"><a class="page-link" href="./AdminQNAList.qn?pageNum=${i }"><span>${i }</span></a></li> --%>
+	<%-- 			</c:forEach> --%>
+	<%-- 		    <c:if test="${endPage<pageCount }"> --%>
+	<%-- 			<li class="page-item"><a class="page-link" href="./AdminQNAList.qn?pageNum=${startPage+pageBlock} "><span> > </span></a></li> --%>
+	<%-- 			</c:if> --%>
+	<!-- 		  </ul> -->
+	<!--   		</div> -->
+
+
+	<!-- 임시 페이징처리 출력용 -->
+	<div class="container" style="margin-top: 40px; margin-bottom: 30px">
 		<ul class="pagination justify-content-center" id="pagination"
 			style="margin-top: 20px;">
-			<c:if test="${pageVO.startPage > pageVO.pageBlock}">
-				<li class="page-item"><a class="page-link"
-					href="/foundation/materialdetail/materialdetailList?material_code=${Search.material_code }&material_name=${Search.material_name }&pageNum=${pageVO.startPage - pageVO.pageBlock}"><sapn>
-						< </sapn></a></li>
-			</c:if>
-			<c:forEach var="i" begin="${pageVO.startPage}"
-				end="${pageVO.endPage}" step="1">
-				<li class="page-item"><a class="page-link"
-					href="/foundation/materialdetail/materialdetailList?material_code=${Search.material_code }&material_name=${Search.material_name }&pageNum=${i}"><span>${i}</span></a></li>
+			<li class="page-item"><a class="page-link" href="#"><sapn>
+					< </sapn></a></li>
+			<c:forEach var="i" begin="1" end="5" step="1">
+				<li class="page-item"><a class="page-link" href="#"><span>${i }</span></a></li>
 			</c:forEach>
-			<c:if test="${pageVO.endPage < pageVO.pageCount}">
-				<li class="page-item"><a class="page-link"
-					href="/foundation/materialdetail/materialdetailList?material_code=${Search.material_code }&material_name=${Search.material_name }&pageNum=${pageVO.startPage + pageVO.pageBlock}"><span>
-							> </span></a></li>
-			</c:if>
+			<li class="page-item"><a class="page-link" href="#"><span>
+						> </span></a></li>
 		</ul>
 	</div>
 
-
+	<br>
 	</div>
 	</div>
 
