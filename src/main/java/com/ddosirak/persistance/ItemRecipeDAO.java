@@ -9,26 +9,43 @@ import com.ddosirak.domain.ItemRecipeListVO;
 import com.ddosirak.domain.ItemRecipeVO;
 import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.MaterialdetailVO;
+import com.ddosirak.domain.PageVO;
 
 public interface ItemRecipeDAO {
-	
-	//아이템 코드 출력
-	public List<ItemdetailVO> ItemdetailList();
-	
-	//레시피 목록 출력
-	public List<ItemRecipeListVO> ItemRecipeList();
-	
-	//레시피 등록
-	public Integer insertItemRecipe(ItemRecipeVO vo);
-	
-	//레시피 수정
-	public ItemRecipeVO selectItemRecipe(String item_code);
-	public Integer updateItemRecipe(ItemRecipeVO vo);
-	
-	//레시피 삭제
-	public void deleteItemRecipe(String item_code);
-	
+
+	// 아이템 코드 출력
+	public List<ItemdetailVO> ItemdetailList() throws Exception;
+
+	// 레시피 목록 출력
+	public List<ItemRecipeListVO> ItemRecipeList(PageVO pageVO) throws Exception;
+	public List<ItemRecipeListVO> ItemRecipeList(PageVO pageVO, Map<String, Object> instrSearch, Model model) throws Exception;
+
+	// 레시피 등록
+	public Integer insertItemRecipe(ItemRecipeVO vo) throws Exception;
+
+	// 등록 및 수정
+	public Integer insertOrUpdateItemRecipe(ItemRecipeVO vo) throws Exception;
+
+	// 레시피 수정
+	public List<ItemRecipeListVO> selectItemRecipe(String item_code) throws Exception;
+
+	public Integer updateItemRecipe(ItemRecipeVO vo) throws Exception;
+
+	// 레시피 삭제
+	public void deleteItemRecipe(String item_code) throws Exception;
+
+	// 레피시 개별 삭제
+	public void deleteItemRecipeMaterial(ItemRecipeVO vo) throws Exception;
+
 	// 상품목록 검색
-	public List<MaterialdetailVO> materialList();
-	public List<MaterialdetailVO> materialList(MaterialdetailVO vo);
+	public List<MaterialdetailVO> materialList() throws Exception;
+
+	public List<MaterialdetailVO> materialList(MaterialdetailVO vo) throws Exception;
+	
+	
+	public List<ItemRecipeListVO> itemrecipeItemList() throws Exception; 
+	public List<ItemRecipeListVO> itemrecipeItemList(Map<String, Object> instrSearch, Model model) throws Exception; 
+
+	// 레시피 검색 갯수
+	public Integer itemrecipeCount(Map<String, Object> instrSearch);
 }
