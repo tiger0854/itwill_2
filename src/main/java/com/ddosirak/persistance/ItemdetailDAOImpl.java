@@ -27,13 +27,13 @@ public class ItemdetailDAOImpl implements ItemdetailDAO {
 	
 	//상품 기초 목록
 	@Override
-	public List<ItemdetailVO> idList(PageVO pageVO) {
+	public List<ItemdetailVO> idList(PageVO pageVO) throws Exception {
 		logger.debug("dao : 상품 기초 목록 실행");
 		return sqlsession.selectList(NAMESPACE+".itemlist", pageVO);
 	}
 	
 	@Override
-	public List<ItemdetailVO> idList(PageVO pageVO, Map<String, Object> instrSearch, Model model) {
+	public List<ItemdetailVO> idList(PageVO pageVO, Map<String, Object> instrSearch, Model model) throws Exception {
 		logger.debug("dao : 상품 기초 목록 검색기능 실행");
 		instrSearch.put("startRow", pageVO.getStartRow());
 		instrSearch.put("pageSize", pageVO.getPageSize());
@@ -43,7 +43,7 @@ public class ItemdetailDAOImpl implements ItemdetailDAO {
 
 	//상품 기초 등록
 	@Override
-	public Integer insertID(ItemdetailVO vo) {
+	public Integer insertID(ItemdetailVO vo) throws Exception {
 		logger.debug("dao : 자재 기초 등록 실행");
 		logger.debug(vo+"");
 		return sqlsession.insert(NAMESPACE+".insertid",vo);
@@ -51,26 +51,26 @@ public class ItemdetailDAOImpl implements ItemdetailDAO {
 	
 	//상품 기초 수정
 	@Override
-	public Integer updateID(ItemdetailVO vo) {
+	public Integer updateID(ItemdetailVO vo) throws Exception {
 		logger.debug("dao : 상품 기초 수정 실행(update)");
 		return sqlsession.update(NAMESPACE+".updateid",vo);
 	}
 	@Override
-	public ItemdetailVO selectID(String item_code) {
+	public ItemdetailVO selectID(String item_code) throws Exception {
 		logger.debug("dao : 상품 기초 수정 실행(edit)");
 		return sqlsession.selectOne(NAMESPACE+".selectid", item_code);
 	}
 	
 	//자제 삭제
 	@Override
-	public void deleteI(String item_code) {
+	public void deleteI(String item_code) throws Exception {
 		logger.debug("dao : 자재 삭제 실행");
 		sqlsession.delete(NAMESPACE+".deleteid",item_code);
 
 	}
 	
 	@Override
-	public String getMaxCode() {
+	public String getMaxCode() throws Exception {
 		logger.debug("dao : getMaxCode 호출");
 		return sqlsession.selectOne(NAMESPACE+".getMaxCode");
 	}

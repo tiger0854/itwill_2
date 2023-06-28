@@ -15,13 +15,6 @@
 		window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 	}
 
-	function itemUpdate() {
-		// 새 창을 열기 위한 URL
-		var popupUrl = 'itemUpdate.jsp';
-		// 새 창 열기
-		window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
-	}
-
 	function recipeDelete(item_code, item_name) {
 		if (confirm("품명 : " + item_name + " 레시피 전체를 정말로 삭제하시겠습니까?")) {
 			location.href = 'deleteItemRecipe?item_code=' + item_code;
@@ -48,9 +41,6 @@
 </head>
 
 <body>
-
-
-
 
 	<form id="instr">
 		<div class="height-100">

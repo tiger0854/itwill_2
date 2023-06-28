@@ -2,6 +2,8 @@ package com.ddosirak.persistance;
 
 import java.util.List;
 
+
+import com.ddosirak.domain.OrderVO;
 import com.ddosirak.domain.OutboundVO;
 
 public interface OutboundDAO {

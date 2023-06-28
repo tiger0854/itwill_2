@@ -41,6 +41,5 @@ public interface ItemRecipeService {
 	public List<ItemRecipeListVO> itemrecipeItemList(Map<String, Object> instrSearch, Model model) throws Exception;
 
 	// 레시피 검색 갯수
-	public Integer itemrecipeCount(Map<String, Object> instrSearch);
-
+	public Integer itemrecipeCount(Map<String, Object> instrSearch) throws Exception;
 }

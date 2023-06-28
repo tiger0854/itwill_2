@@ -60,6 +60,7 @@
 						</button>
 						<!-- <button class=btn-add onclick="orderwrite()"><i class='bx bx-plus-medical'></i> 추가</button> -->
 						<button class=btn-add onclick="materialUpload();">
+
 							<i class='bx bx-plus-medical'></i> 추가
 						</button>
 					</div>
@@ -78,6 +79,7 @@
 								name="material_code" placeholder="자재코드" readonly></td>
 							<th>자재속성</th>
 							<td><select id="material_type" name="material_type" disabled>
+
 									<option value=""></option>
 									<option value="원자재">원자재</option>
 									<option value="부자재">부자재</option>
@@ -109,6 +111,7 @@
 					<td>${vo.material_name }</td>
 					<td>${vo.material_type }</td>
 					<td><button class=btn-edit type="button"
+
 							onclick="materialUpdate('${vo.material_code}');">
 							<i class='bx bx-edit'></i>
 						</button></td>
@@ -145,7 +148,6 @@
 			</c:if>
 		</ul>
 	</div>
-
 
 
 	</div>

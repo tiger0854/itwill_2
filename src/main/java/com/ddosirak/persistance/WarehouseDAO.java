@@ -17,10 +17,8 @@ public interface WarehouseDAO {
 
 	// 창고 등록
 	public Integer insertWh(WarehouseVO vo);
-
-	public String getMaxCode();
-
-	// 창고 수정
+	public String getMaxCode(WarehouseVO vo);
+	//창고 수정
 	public Integer updateWh(WarehouseVO vo);
 
 	public WarehouseVO selectwh(String wh_code);

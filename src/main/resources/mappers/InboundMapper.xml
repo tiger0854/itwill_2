@@ -9,7 +9,7 @@
   	<!-- 입고서 등록 -->
   	<insert id="insertInbound">
   	INSERT INTO ret_in (in_number, order_number, in_piece, in_date, in_resp, wh_code, in_expir)
-	SELECT CONCAT('IN', REPLACE(#{in_date}, '-', ''), MAX(in_id) + 1), #{order_number},#{in_piece},#{in_date},#{in_resp},#{wh_code},#{in_expir}
+	SELECT CONCAT('IN', REPLACE(#{in_date}, '-', ''),IFNULL(max(in_id)+1,1)), #{order_number},#{in_piece},#{in_date},#{in_resp},#{wh_code},#{in_expir}
   	FROM ret_in
   	</insert>
   	<!-- 입고서 등록 -->
@@ -73,10 +73,19 @@
   	
   	<!-- 입고취소시 발주상태 변경 -->
   	<update id="updateOrderStateToDefault">
-  	UPDATE ret_order set order_state = 0
+  	UPDATE ret_order SET order_state = 0
   	WHERE order_number = #{order_number}
   	</update>
   	<!-- 입고취소시 발주상태 변경 -->
+  	
+  	<!-- 입고서 수정 -->
+  	<update id="updateInbound">
+  	UPDATE ret_in SET in_expir = #{in_expir}, in_date = #{in_date} ,wh_code = #{wh_code}
+	WHERE in_number = #{in_number}
+  	</update>
+  	<!-- 입고서 수정 -->
+  	
+
   	
   	
   

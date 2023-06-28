@@ -48,7 +48,40 @@
 	<div class="container mt-3">
 		<!--  		<hr width="100%" style="border: 2px solid black"> -->
 
-		<!--         <hr width="100%" style="border: 2px solid black"> -->
+<table class="table" style="width: 100%">
+    <form>
+        <tr>
+            <td>품목코드</td>
+            <td><input type="text" name="item_code" style="width:70%;"></td>
+            <td>품명</td>
+            <td><input type="text" name="item_name" style="width:70%;"></td>
+            <td><button type="submit" class="btn-add">조회</button></td>
+        </tr>
+    </form>
+</table>
+<table class="table table-hover" style="text-align: center;">
+    <%-- ${itemList } --%>
+    <tr>
+        <th>품목코드</th>
+        <th>품명</th>
+    </tr>
+    <c:forEach var="vo" items="${itemList }">
+        <tr onclick="selectItem('${vo.item_code}', '${vo.item_name}')">
+            <td id="con">${vo.item_code}</td>
+            <td id="con">${vo.item_name}</td>
+        </tr>
+    <script>
+	    function selectItem(a, b) {
+	        // 부모 창으로 값 전달하기
+	        opener.document.getElementById("item_code").value = a;
+	        opener.document.getElementById("item_name").value = b;
+	        window.close();
+	    }
+	</script>   
+        
+    </c:forEach>
+</table>
+<br>
 
 		<table class="table" style="width: 100%">
 			<form>

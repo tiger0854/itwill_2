@@ -1,11 +1,8 @@
 package com.ddosirak.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +21,7 @@ import com.ddosirak.domain.PageVO;
 import com.ddosirak.service.ItemRecipeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+
 @Controller
 @RequestMapping(value = "/foundation/itemrecipe/*")
 public class ItemRecipeController {
@@ -35,6 +33,7 @@ public class ItemRecipeController {
 	// http://localhost:8088/foundation/itemrecipe/itemrecipeList
 	@RequestMapping(value = "/itemrecipeList", method = RequestMethod.GET)
 	public void ItemRecipeListGET(Model model, HttpServletRequest request, PageVO pageVO) throws Exception {
+
 		logger.debug("ItemRecipeListGET 호출");
 
 		String item_code = request.getParameter("item_code");
@@ -124,7 +123,9 @@ public class ItemRecipeController {
 	// 자재 검색
 	// http://localhost:8088/foundation/itemrecipe/materialSerch
 	@RequestMapping(value = "/materialSearch", method = RequestMethod.GET)
+
 	public void materialSerchGET(Model model, MaterialdetailVO vo) throws Exception {
+
 
 		logger.debug("idlistGET 실행");
 

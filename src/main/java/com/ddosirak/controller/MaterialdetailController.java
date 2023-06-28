@@ -31,7 +31,7 @@ public class MaterialdetailController {
 	// 자재 기초 목록
 	// http://localhost:8088/foundation/materialdetail/materialdetailList
 	@RequestMapping(value = "/materialdetailList", method = RequestMethod.GET)
-	public void materialdetailListGET(Model model, HttpServletRequest request, PageVO pageVO) {
+	public void materialdetailListGET(Model model, HttpServletRequest request) throws Exception {
 		logger.debug("materialdetailListGET호출");
 
 		String material_code = request.getParameter("material_code");
@@ -101,12 +101,14 @@ public class MaterialdetailController {
 
 	// 자재 기초 등록
 	@RequestMapping(value = "/materialdetailUpload", method = RequestMethod.GET)
-	public void materialdetailUploadGET() {
+	public void materialdetailUploadGET() throws Exception {
 		logger.debug("materialdetailUploadGET호출");
 	}
 
 	@RequestMapping(value = "/materialdetailUpload", method = RequestMethod.POST)
-	public void materialdetailUploadPOST(MaterialdetailVO vo) {
+
+	public void materialdetailUploadPOST(MaterialdetailVO vo) throws Exception {
+
 		logger.debug("materialdetailUploadPOST호출");
 		logger.debug(vo + "");
 		service.insertMD(vo);
@@ -114,34 +116,38 @@ public class MaterialdetailController {
 	}
 
 	@RequestMapping(value = "/materialdetailUpdate", method = RequestMethod.GET)
-	public void materialdetailupdateGET(String material_code, Model model) {
+
+	public void materialdetailupdateGET(String material_code, Model model) throws Exception {
 		logger.debug("materialdetailupdateGET 호출");
 		MaterialdetailVO resultvo = service.selectMD(material_code);
-		logger.debug("@@@@@@resultvo" + resultvo);
+
 		logger.debug(resultvo + "");
 		model.addAttribute("resultvo", resultvo);
 
 	}
 
 	@RequestMapping(value = "/materialdetailUpdate", method = RequestMethod.POST)
-	public void materialdetailupdatePOST(MaterialdetailVO vo) {
+
+	public void materialdetailupdatePOST(MaterialdetailVO vo) throws Exception {
 		logger.debug("materialdetailupdatePOST 호출");
 		service.updateMD(vo);
 
 	}
 
 	@RequestMapping(value = "/materialdetailDelete", method = RequestMethod.GET)
-	public String materialdetaildeleteGET(String material_code) {
+	public String materialdetaildeleteGET(String material_code) throws Exception {
 		logger.debug("materialdetaildeleteGET 호출");
 		logger.debug("material_code : " + material_code);
 		service.deleteM(material_code);
 
 		return "redirect:/foundation/materialdetail/materialdetailList?material_name=&material_code=";
+
 	}
 
 	// 상품목록(팝업)
 	@RequestMapping(value = "/materialItemList", method = RequestMethod.GET)
-	public void materialListGET(Model model, HttpServletRequest request) {
+
+	public void materialListGET(Model model, HttpServletRequest request) throws Exception {
 
 		String material_code = request.getParameter("material_code");
 		String material_name = request.getParameter("material_name");
@@ -150,12 +156,12 @@ public class MaterialdetailController {
 		instrSearch.put("material_name", material_name);
 		List<MaterialdetailVO> materialList;
 		if (material_code == null && material_name == null) {
-			// 전체 조회
+
 			logger.debug("materialdetailList.jsp 전체 호출 ![]~(￣▽￣)~*");
 			materialList = service.materialItemList();
 
 		} else {
-			// 검색 조회
+
 			logger.debug("materialdetailList.jsp 검색 호출 ![]~(￣▽￣)~*");
 //				proOrderList = oService.proOrderList();
 			materialList = service.materialItemList(instrSearch, model);

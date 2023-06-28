@@ -33,6 +33,7 @@ public class FactoryController {
 	// 공장 목록 출력
 	@RequestMapping(value = "/factoryList", method = RequestMethod.GET)
 	public void factoryListGET(Model model, HttpServletRequest request, PageVO pageVO) {
+
 		logger.debug("factoryListGET 호출");
 
 		
@@ -125,6 +126,7 @@ public class FactoryController {
 
 	}
 
+
 	// 공장 등록
 	@RequestMapping(value = "/factoryUpload", method = RequestMethod.GET)
 	public void factoryUploadGET() {
@@ -133,6 +135,7 @@ public class FactoryController {
 
 	@RequestMapping(value = "/factoryUpload", method = RequestMethod.POST)
 	public void factoryUploadPOST(FactoryVO vo) {
+
 		logger.debug("factoryUploadPOST 호출");
 		service.insertFac(vo);
 
@@ -141,22 +144,24 @@ public class FactoryController {
 	// 창고 수정
 	@RequestMapping(value = "/factoryUpdate", method = RequestMethod.GET)
 	public void factoryUpdateGET(String factory_code, Model model) {
+
 		logger.debug("factoryUpdateGET 호출");
 		FactoryVO resultvo = service.selectFac(factory_code);
 		logger.debug(resultvo + "");
 		model.addAttribute("vo", resultvo);
 	}
 
-	@RequestMapping(value = "/factoryUpdate", method = RequestMethod.POST)
-	public void factoryUpdatePOST(FactoryVO vo) {
+	@RequestMapping(value="/factoryUpdate", method=RequestMethod.POST)
+	public String factoryUpdatePOST(FactoryVO vo) throws Exception {
 		logger.debug("factoryUpdatePOST 호출");
 		service.updateFac(vo);
 
 	}
 
-	// 창고 삭제
-	@RequestMapping(value = "/factoryDelete", method = RequestMethod.GET)
-	public String factoryDeleteGET(String factory_code) {
+	
+	//창고 삭제
+	@RequestMapping(value="/factoryDelete", method=RequestMethod.GET)
+	public String factoryDeleteGET(String factory_code) throws Exception {
 		logger.debug("factoryDeleteGET 호출");
 		service.deleteF(factory_code);
 		return "redirect:/foundation/factory/factoryList?factory_name=&factory_code=";

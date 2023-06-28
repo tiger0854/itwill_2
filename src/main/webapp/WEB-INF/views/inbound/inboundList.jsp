@@ -17,9 +17,8 @@
 
 <!-- 판매목록 drop 기능 -->
 <style type="text/css">
-td{
-height: 50px; vertical-align: middle;
-}
+
+td{height: 50px; vertical-align: middle; text-align: center;}
   
 </style>
 
@@ -65,9 +64,9 @@ height: 50px; vertical-align: middle;
 	 <button type="button" class="btn btn-primary" onclick="openChild();">검색</button>
 	</div>
  <table class="table table-striped" style="width: 1250px;">
-    <thead style="border-bottom: 1px solid">
+    <thead style="border-bottom: 1px solid;text-align: center;">
       <tr>
-   		<th><input type="checkbox" disabled="disabled"  class="form-check-input" ></th>
+   		<th><input type="checkbox"  class="form-check-input" name='allCheck'value='selectall' onclick="selectAll(this);"></th>
         <th>입고예정번호</th>
         <th>품목명</th>
         <th>발주수량</th>
@@ -99,16 +98,16 @@ height: 50px; vertical-align: middle;
       
         <td>${vo.in_number }</td>
         <td>${vo.orderVO.material_name }</td>
-        <td>${vo.orderVO.order_piece }개</td>
-        <td>${vo.in_piece }개</td>
+        <td  style="text-align: right;" >${vo.orderVO.order_piece }</td>
+        <td style="text-align: right;">${vo.in_piece }</td>
         <c:choose>
        		<c:when test="${vo.in_state == 0 }">
-       		  <td>-</td>
-       		  <td>-</td>
+       		  <td style="text-align: right;">-</td>
+       		  <td style="text-align: right;">-</td>
        		</c:when>
        		<c:otherwise>
-  			   <td>${vo.in_piece - vo.in_Epiece }개</td>     
-  			   <td>${vo.in_Epiece }개</td>  		
+  			   <td style="text-align: right;">${vo.in_piece - vo.in_Epiece }</td>     
+  			   <td style="text-align: right;">${vo.in_Epiece }</td>  		
     		 </c:otherwise>
         </c:choose>
    
@@ -127,9 +126,11 @@ height: 50px; vertical-align: middle;
          <td>
          <c:choose>
          <c:when test="${vo.in_state == 0 }">
+      <button type="button" class="btn btn-primary btn-sm" onclick="openChildWindow2(this);" >수정</button>
       <button type="button" class="btn btn-primary btn-sm" onclick="openChildWindow(this);">입고처리</button>
         </c:when>
         <c:otherwise>
+          <button type="button" class="btn btn-primary btn-sm" disabled="disabled" >수정</button>
           <button type="button" class="btn btn-primary btn-sm" disabled="disabled">입고처리</button>
         </c:otherwise>
         </c:choose>
@@ -285,6 +286,39 @@ height: 50px; vertical-align: middle;
    });
  }//입고처리 팝업 
  
+ function openChildWindow2(button) {
+	   var row = button.parentNode.parentNode;
+	   var cells = row.getElementsByTagName("td");
+	   var rowData = [];
+	   
+	   for (var i = 0; i < cells.length - 1; i++) {
+	     rowData.push(cells[i].innerText);
+	   }
+	   
+		var popupWidth = 600;
+		var popupHeight = 400;
+
+		var popupX = Math.ceil(( window.screen.width - popupWidth )/2);
+		var popupY = Math.ceil(( window.screen.height - popupHeight )/2); 
+	    var childWindow = window.open("/inbound/inbountModify", "inbountModify", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
+	   
+	   // 자식 창이 로드된 후에 데이터를 전송합니다.
+	   childWindow.addEventListener("load", function() {
+	     childWindow.postMessage(rowData, "*");
+	   
+	   });
+	 }//수정 팝업 
+ 
+ function selectAll(selectAll)  {
+	  const checkboxes 
+	       = document.getElementsByName('rowCheck');
+	  
+	  checkboxes.forEach((checkbox) => {
+	    checkbox.checked = selectAll.checked;
+	  })
+	}
+ 
+ 
  function deleteInbound() {
 	var valArr = new Array();
 	var list = $("input[name='rowCheck']");
@@ -343,7 +377,7 @@ height: 50px; vertical-align: middle;
 	}
 }// 입고취소
 
-</script><  
+</script>
   
     
     

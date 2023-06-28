@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.ui.Model;
 
+import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.MaterialdetailVO;
 import com.ddosirak.domain.PageVO;
 
@@ -24,7 +25,7 @@ public interface MaterialdetailService {
 
 	// 자재 삭제
 	public void deleteM(String material_code);
-
+	
 	// 상품목록
 	public List<MaterialdetailVO> materialItemList();
 

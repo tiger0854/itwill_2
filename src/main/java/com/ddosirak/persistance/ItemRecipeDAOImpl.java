@@ -50,7 +50,7 @@ public class ItemRecipeDAOImpl implements ItemRecipeDAO {
 	
 	//레시피 수정
 	@Override
-	public List<ItemRecipeVO> selectItemRecipe(String item_code) throws Exception {
+	public List<ItemRecipeListVO> selectItemRecipe(String item_code) throws Exception {
 		logger.debug("DAO : 레시피 파라미터");
 		return sqlsession.selectList(NAMESPACE+".selectItemRecipe",item_code);
 	}
@@ -98,7 +98,7 @@ public class ItemRecipeDAOImpl implements ItemRecipeDAO {
 		logger.debug("DAO : 레시피 삭제 - 자재만 ");
 		sqlsession.delete(NAMESPACE+".deleteItemRecipeMaterial", vo);
 	}
-
+	
 	@Override
 	public Integer itemrecipeCount(Map<String, Object> instrSearch) {
 		logger.debug("DAO : 레시피 검색 갯수 ");
@@ -124,5 +124,4 @@ public class ItemRecipeDAOImpl implements ItemRecipeDAO {
 	
 	
 	
-
 }

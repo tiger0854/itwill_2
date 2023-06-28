@@ -32,6 +32,7 @@ public class WarehouseController {
 	// 창고 목록
 	@RequestMapping(value = "/warehouseList", method = RequestMethod.GET)
 	public void warehouseListGET(Model model, HttpServletRequest request, PageVO pageVO) throws Exception {
+
 		logger.debug("warehouseListGET호출");
 
 		String wh_code = request.getParameter("wh_code");
@@ -105,12 +106,12 @@ public class WarehouseController {
 
 	// 창고 등록
 	@RequestMapping(value = "/warehouseUpload", method = RequestMethod.GET)
-	public void insertWhGET() {
+	public void insertWhGET() throws Exception {
 		logger.debug("insertWhGET 호출");
 	}
 
 	@RequestMapping(value = "/warehouseUpload", method = RequestMethod.POST)
-	public void insertWhPOST(WarehouseVO vo) {
+	public String insertWhPOST(WarehouseVO vo) throws Exception {
 		logger.debug("insertWhPOSt 호출");
 		service.insertwh(vo);
 
@@ -118,14 +119,14 @@ public class WarehouseController {
 
 	// 창고 수정
 	@RequestMapping(value = "/warehouseUpdate", method = RequestMethod.GET)
-	public void updateWhGET(String wh_code, Model model) {
+	public void updateWhGET(String wh_code, Model model) throws Exception {
 		logger.debug("updateWhget 호출");
 		WarehouseVO resultvo = service.selectwh(wh_code);
 		model.addAttribute("resultvo", resultvo);
 	}
 
 	@RequestMapping(value = "/warehouseUpdate", method = RequestMethod.POST)
-	public void updateWhPOST(WarehouseVO vo) {
+	public String updateWhPOST(WarehouseVO vo) throws Exception {
 		logger.debug("updateWhpost 호출");
 		service.updatewh(vo);
 
@@ -133,7 +134,7 @@ public class WarehouseController {
 
 	// 창고 삭제
 	@RequestMapping(value = "/warehouseDelete", method = RequestMethod.GET)
-	public String deleteWhGET(String wh_code) {
+	public String deleteWhGET(String wh_code) throws Exception {
 		logger.debug("deleteWhGET 호출");
 		service.deletewh(wh_code);
 		return "redirect:/foundation/warehouse/warehouseList?wh_name=&wh_code=";

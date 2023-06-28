@@ -46,6 +46,7 @@
 						console.error("에러 발생:", error);
 					}
 				});
+
 	}
 </script>
 <body>
@@ -87,6 +88,7 @@
 									${resultvo.material_type == '원자재' ? 'selected' : ''}>원자재</option>
 								<option value="부자재"
 									${resultvo.material_type == '부자재' ? 'selected' : ''}>부자재</option>
+
 						</select></td>
 					</tr>
 				</tbody>

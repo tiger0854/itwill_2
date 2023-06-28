@@ -43,14 +43,48 @@ public class WarehouseServiceImpl implements WarehouseService {
 	@Override
 	public Integer insertwh(WarehouseVO vo) {
 		logger.debug("service : 창고 등록 호출");
-		if(dao.getMaxCode()!=null && dao.getMaxCode().contains("WARE")) {
-			int codeNum=Integer.parseInt(dao.getMaxCode().substring(4));
+		String codeFinder=dao.getMaxCode(vo);
+		logger.debug("codefinder : "+codeFinder);
+		if(codeFinder!=null) {
+			int codeNum=Integer.parseInt(codeFinder.substring(2));
 			StringBuilder sb = new StringBuilder();
-			sb.append("WARE");
-			sb.append(String.format("%02d", ++codeNum));
-			vo.setWh_code(sb.toString());
+				switch(codeFinder.charAt(0)) {
+					case 'A' :  sb.append("A");
+								break;
+					case 'B' :	sb.append("B");
+								break;
+					case 'C' :  sb.append("C");
+				}
+				switch(codeFinder.charAt(1)) {
+					case 'I' :  sb.append("I");
+					sb.append(String.format("%02d", ++codeNum));
+					break;
+					case 'M' :	sb.append("M");
+					sb.append(String.format("%02d", ++codeNum));
+					break;
+				}
+				logger.debug("codenum :"+codeNum);
+				logger.debug(sb.toString());
+				vo.setWh_code(sb.toString());
+				
 			}else {
-				vo.setWh_code("WARE01");
+			StringBuilder sb = new StringBuilder();
+				switch(vo.getWh_type()) {
+					case "냉동" :  sb.append("A");
+								break;
+					case "냉장" :	sb.append("B");
+								break;
+					case "상온" :  sb.append("C");
+				}
+				switch(vo.getRetail_code()) {
+					case "자재" :  sb.append("I");
+					sb.append(String.format("%02d", 1));
+					break;
+					case "재고" :	sb.append("M");
+					sb.append(String.format("%02d", 1));
+					break;
+				}
+				vo.setWh_code(sb.toString());
 			}
 		int result=dao.insertWh(vo);
 		logger.debug("sevice : 창고 등록 완료");

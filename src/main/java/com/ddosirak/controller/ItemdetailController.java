@@ -31,7 +31,8 @@ public class ItemdetailController {
 	// http://localhost:8088/foundation/itemdetail/itemdetailList
 	//상품 기초 목록 
 	@RequestMapping(value="/itemdetailList", method=RequestMethod.GET)
-	public void idlistGET(Model model, HttpServletRequest request, PageVO pageVO) {
+	public void idlistGET(Model model, HttpServletRequest request, PageVO pageVO) throws Exception {
+
 		logger.debug("idlistGET 실행");
 		
 		String item_code = request.getParameter("item_code");
@@ -106,12 +107,12 @@ public class ItemdetailController {
 	
 	//상품 기초 등록
 	@RequestMapping(value = "/itemdetailUpload", method=RequestMethod.GET)
-	public void iduploadGET() {
+	public void iduploadGET() throws Exception {
 		logger.debug("idUploadGET 실행");
 	}
 	
 	@RequestMapping(value = "/itemdetailUpload", method=RequestMethod.POST)
-	public void idUploadPOST(ItemdetailVO vo) {
+	public void idUploadPOST(ItemdetailVO vo) throws Exception {
 		logger.debug("idUploadPOST 실행");
 		service.insertID(vo);
 //		int result=service.insertID(vo);
@@ -124,13 +125,17 @@ public class ItemdetailController {
 	
 	//상품 기초 수정
 	@RequestMapping(value = "/itemdetailUpdate", method=RequestMethod.GET)
-	public void idUpdateGET(String item_code, Model model) {
+	public void idUpdateGET(String item_code, Model model) throws Exception {
+
+
 		logger.debug("idUpdateGET 실행");
 		ItemdetailVO vo =service.selectID(item_code);
 		model.addAttribute("vo", vo);
 	}
 	@RequestMapping(value = "/itemdetailUpdate", method=RequestMethod.POST)
-	public void idUpdatePOST(ItemdetailVO vo) {
+
+	public void idUpdatePOST(ItemdetailVO vo) throws Exception {
+
 		logger.debug("idUpdatePOST 실행");
 		service.updateID(vo);
 		logger.debug("@@@@@@@vo : " + vo);
@@ -144,7 +149,8 @@ public class ItemdetailController {
 	
 	//상품 기초 삭제
 	@RequestMapping(value="/itemdetailDelete", method=RequestMethod.GET)
-	public String idDeleteGET(String item_code) {
+	public String idDeleteGET(String item_code) throws Exception {
+
 		logger.debug("idDeleteGET 호출");
 		service.deleteI(item_code);
 		return "redirect:/foundation/itemdetail/itemdetailList?item_name=&item_code=";
