@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ddosirak.domain.EmployeeCheckVO;
 import com.ddosirak.domain.EmployeeVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.service.EmployeeService;
 
 @Controller
@@ -123,7 +125,8 @@ public class Emp_AJAXController {
 		}// 재직현황 i-e end
 		
 		// 이름 체크
-		if(employee_name != null) {
+		employee_name = employee_name.trim();
+		if(employee_name != "") {
 			List<EmployeeVO> filterList_employee_name = eService.getEmpList_employee_name(employee_name);
 //			logger.debug("이름 > "+filterList_employee_name);
 			
@@ -162,8 +165,20 @@ public class Emp_AJAXController {
 		
 		// --------------3. 리스트 반환------------------
 //		logger.debug("filtetList_dupVal = " +filtetList_dupVal);
+		
+		filtetList_dupVal.size(); // 페이징 할때 카운트 !!!!!!
+		
 		return filtetList_dupVal;
 	}// filterAJAX() method end
+	
+	//필터링 페이징
+	@RequestMapping(value = "/pagination")
+	@ResponseBody
+	public int pagination_filterAJAX(PageVO pageVO, HttpServletRequest request, int pagedata) throws Exception{
+		logger.debug("pagination_filterAJAX() 호출! Σ(っ °Д °;)っ");
+		pageVO.setPageNum(Integer.toString(pagedata));
+		return pageVO.getPageCount();
+	}// pagination_filterAJAX method end
 	
 
 }// public class end

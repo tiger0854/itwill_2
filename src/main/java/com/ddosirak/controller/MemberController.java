@@ -1,58 +1,31 @@
 package com.ddosirak.controller;
 
 
-import java.io.File;
-
-
 import java.util.List;
-import java.util.UUID;
 
 import javax.inject.Inject;
-
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ClassPathResource;
-
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
-
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddosirak.domain.EmployeeCheckVO;
 import com.ddosirak.domain.EmployeeListVO;
 import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.EmployeevacationVO;
-
 import com.ddosirak.domain.PageVO;
-
-
 import com.ddosirak.domain.SalaryVO;
 import com.ddosirak.service.BoardService;
 import com.ddosirak.service.EmployeeService;
 import com.ddosirak.service.PageService;
-
-// 컨트롤러 구현 전 정하면 좋은 것들.
-// - 컨트롤러별 공통 주소 (URI) 설계
-// - 각 기능별 주소(URI) 설계
-// - 각 URI별 호출방식 설정(GET/POST) 
-//		> 사용자의 정보입력,조회(GET)
-//		> 데이터 처리, Db접근(POST)  >> 해당 분류가 일반적인 방식.
-// - 결과처리, 페이지 이동 설계
-// - 예외처리
 
 
 @Controller
@@ -153,13 +126,11 @@ public class MemberController {
 		
 		return "redirect:/emp/list"; // 주소를 변경하면서 페이지 이동
 	}// alInsertPOST() method end
-	// >> GET / POST 의 전달방식을 사용하여 하나의 메서드로 두가지 동작을 수행할 수 있다.
 
 	
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
 	public void employeeInfoGET(int employee_id, Model model) throws Exception{
 		logger.debug("employeeInfoGET() 호출![]~(￣▽￣)~*");
-		// 0609, 페이지 이동간에 정보전달 방법 찾아본 후 마저 코드 짜기. // 해결
 		EmployeeVO evo = eService.getEmployee(employee_id);
 		List<EmployeeCheckVO> chkVO = bService.getInOutList(employee_id);
 		
@@ -167,7 +138,7 @@ public class MemberController {
 		model.addAttribute("evo",evo);
 	}//employeeInfoGET() method end
 	
-	@RequestMapping(value = "/info", method = RequestMethod.POST) // 0609, 모르겠음. 일단 GET > POST로 시도 // 해결
+	@RequestMapping(value = "/info", method = RequestMethod.POST)
 	public String employeeUpdate(EmployeeVO vo) { // (listPOST)
 		logger.debug("employeeUpdate() 호출![]~(￣▽￣)~*");
 		logger.debug("vo > "+vo);

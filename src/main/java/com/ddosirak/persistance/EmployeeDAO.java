@@ -9,10 +9,9 @@ import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.EmployeevacationVO;
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.SalaryVO;
-// persistance 영속성 > DB관련 처리
+
 
 public interface EmployeeDAO {
-	// 필요한 동작들을 추상메서드를 사용하여 정의! (만들어두기만 한다.)
 /////////////////////////////////////////사원동작////////////////////////////////////////////////////
 	// C - 사원정보 등록
 	public void insertEmployee(EmployeeVO vo); 

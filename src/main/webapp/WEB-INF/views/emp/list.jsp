@@ -15,7 +15,7 @@
 		<br>
 		<h1>사원 리스트</h1>
 		<h2>대시보드</h2>
-		<table class="table table-striped" style="margin-top: 10px;">
+		<table class="table table-bordered" style="margin-top: 10px;">
 			<tr>
 				<td>임직원 수</td>
 				<td>${empCount}명</td>
@@ -41,6 +41,7 @@
 		<input type="button" value="사원 정보등록"
 			onclick="location.href='/emp/insert'"> <input type="button"
 			value="일용직 일괄등록" onclick="location.href='/emp/insert_al'">
+		<!-- ---------------------필터링------------------- -->
 		<table class="table table-striped" style="margin-top: 10px;">
 			<tr>
 				<td><select name="department_name" id="department_name_search">
@@ -79,8 +80,9 @@
 				<input type="button" value="검색" id="search_button"></td>
 			</tr>
 		</table>
-
-		<table class="table table-striped" style="margin-top: 10px;">
+		<!-- ---------------------필터링------------------- -->
+		
+		<table class="table table-bordered" style="margin-top: 10px;">
 			<thead>
 			<tr>
 				<td>사원번호</td>
@@ -98,7 +100,14 @@
 					<td><a href="/emp/info?employee_id=${vo.employee_id}">${vo.employee_name }</a></td>
 					<td>${vo.department_name }</td>
 					<td>${vo.position }</td>
-					<td>${vo.line_num }</td>
+					<td>
+					<c:if test="${empty vo.line_num }">
+						미등록
+					</c:if>
+					<c:if test="${!empty vo.line_num }">
+						${vo.line_num }
+					</c:if>
+					</td>
 					<td>${vo.employee_status }</td>
 				</tr>
 				<c:if test="${empty empList }">
@@ -107,12 +116,12 @@
 			</c:forEach>
 			</tbody>
 		</table>
-		<!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
-		<div class="pagination" id="pagination">
+		<!-- -------------------------------------------------------------------------------페이징 구현부------------------------------------------------------------------------ -->
+		<ul class="pagination" id="pagination">
 			<c:choose>
 				<c:when test="${pageVO.startPage > pageVO.pageBlock}">
-					<a href="/emp/list?pageNum=${pageVO.startPage - pageVO.pageBlock}"
-						style="margin: 0.5em;">◀</a>
+					<li class="page-item"><a href="/emp/list?pageNum=${pageVO.startPage - pageVO.pageBlock}"
+						class="page-link">이전</a></li>
 				</c:when>
 				<c:otherwise>
 				</c:otherwise>
@@ -120,21 +129,20 @@
 
 			<c:forEach var="i" begin="${pageVO.startPage}"
 				end="${pageVO.endPage}" step="1">
-				<a href="/emp/list?pageNum=${i}"
-					<c:if test="${pageVO.pageNum eq i}">class="active"</c:if>
-					style="margin: 0.5em;">${i}</a>
+				<li class="page-item<c:if test="${pageVO.pageNum eq i}"> active</c:if>">
+				<a href="/emp/list?pageNum=${i}" class="page-link">${i}</a></li>
 			</c:forEach>
 
 			<c:choose>
 				<c:when test="${pageVO.endPage < pageVO.pageCount}">
-					<a href="/emp/list?pageNum=${pageVO.startPage + pageVO.pageBlock}"
-						style="margin: 0.5em;">▶</a>
+					<li class="page-item"><a href="/emp/list?pageNum=${pageVO.startPage + pageVO.pageBlock}"
+						class="page-link">다음</a></li>
 				</c:when>
 				<c:otherwise>
 				</c:otherwise>
 			</c:choose>
-		</div>
-		<!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
+		</ul>
+		<!-- -------------------------------------------------------------------------------페이징 구현부--------------------------------------------------------------------------- -->
 	</div>
 	<div></div>
 </body>
@@ -194,8 +202,12 @@
 							table += '<td>'+filtetList_dupVal[i].employee_id+'</td>';
 							table += '<td>'+filtetList_dupVal[i].employee_name+'</td>';
 							table += '<td>'+filtetList_dupVal[i].department_name+'</td>';
-							table += '<td>'+filtetList_dupVal[i].position+'</td>';
-							table += '<td>'+filtetList_dupVal[i].line_num+'</td>';
+							table += '<td>'+filtetList_dupVal[i].position+'</td>';	
+							if(filtetList_dupVal[i].line_num == null){
+								table += '<td>미등록</td>';
+							}else{
+								table += '<td>'+filtetList_dupVal[i].line_num+'</td>';
+							} // i-e end
 							table += '<td>'+filtetList_dupVal[i].employee_status+'</td>';
 							table += '</tr>';
 						}// for end
@@ -210,6 +222,20 @@
 					$('#pagination').remove();
 					$('#empInfoBody').html(table);
 					
+				}// success end
+			}); // ajax end
+			
+			// 필터링된 데이터의 페이징 처리를 위한 AJAX 동작
+			var pagedata = '${page_num}';
+			if(pagedata == ''){
+				pagedata = 1;
+			}// pagedata nullSet if end
+			$.ajax({
+				url: '/emp_ajax/pagination', 
+				data: pagedata,      
+				type: 'POST',          
+				success : function() {
+					console.log('hello, page:'+pagedata);
 				}// success end
 			}); // ajax end
 			

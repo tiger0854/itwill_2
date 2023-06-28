@@ -214,12 +214,12 @@
    		WHERE employee_status = #{employee_status}
    	</select>
    <!-- 재직현황 -->
-   <!-- 재직현황 -->
+   <!-- 이름 -->
    	<select id="getEmpList_employee_name" resultType="com.ddosirak.domain.EmployeeVO">
    		SELECT * FROM emp_main
-   		WHERE employee_name = #{employee_name}
+   		WHERE employee_name LIKE CONCAT('%',#{employee_name},'%');
    	</select>
-   <!-- 재직현황 -->
+   <!-- 이름 -->
    
   <!-- 필터링 --> 
   </mapper>
