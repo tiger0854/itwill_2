@@ -41,7 +41,59 @@ function etcEdit() {
 
 <!-- 실적 리스트 -->
  <h4 style="margin-top: 100px;"><i class='bx bx-list-ol icon'></i> 작업지시 현황</h4>  
-
+	 <table class="product-table"style="margin-top: 20px;width: 100%;">
+    <thead>
+      <tr>
+        <th>작업지시번호</th>
+        <th>수주번호</th>
+        <th>작업지시자</th>
+        <th>지시상태</th>
+        <th>납품예정일</th>
+        <th>라인코드</th>
+        <th>품목코드</th>
+        <th>지시수량</th>
+        <th>생산수량</th>
+<!--         <th>수정</th> -->
+        <th>삭제</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+		<td><a href="/pro/etcstatusList?wo_code=${vo.wo_code}">${vo.wo_code}</a></td>
+        <td>${vo.so_code}</td>
+        <td>${vo.employee_id}</td>
+        <c:choose>
+	  <c:when test="${vo.wo_status eq '지시'}">
+	    <td style="color: blue;">${vo.wo_status}</td>
+	  </c:when>
+	  <c:when test="${vo.wo_status eq '마감'}">
+	    <td style="color: red;">${vo.wo_status}</td>
+	  </c:when>
+	  <c:when test="${vo.wo_status eq '시작'}">
+	    <td style="color: green;">${vo.wo_status}</td>
+	  </c:when>
+	  <c:otherwise>
+	    <td>${vo.wo_status}</td>
+	  </c:otherwise>
+	</c:choose>
+        <td>${vo.delivery_date}</td>
+        <td>${vo.line_code}</td>
+        <td>${vo.item_code}</td>
+        <td>${vo.oQTY}</td>
+        <td>${vo.pQTY}</td>
+		<c:choose>
+		  <c:when test="${vo.wo_status eq '지시'}">
+<%-- 		    <td><button class="btn-edit" onclick="orderedit('${vo.wo_code}')"><i class="bx bx-edit"></i></button></td> --%>
+		    <td><button class="btn-delete" onclick="ProOrderDelete('${vo.wo_code}')"><i class="bx bxs-trash"></i></button></td>
+		  </c:when>
+		  <c:otherwise>
+		    <td></td>
+		    <td></td>
+		  </c:otherwise>
+		</c:choose>
+      </tr>
+    </tbody>
+  </table>
 
   <table class="product-table"style="margin-top: 20px;width: 100%;">
    작업지시번호 : <span style="color: blue"><b>${param.wo_code}</b></span>

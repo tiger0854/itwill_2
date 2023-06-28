@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.ProductionPerformanceVO;
 import com.ddosirak.persistance.ProductionPerformanceDAO;
 
@@ -25,24 +26,32 @@ public class ProductionPerformanceServiceImpl implements ProductionPerformanceSe
 	// 실적 등록
 	@Override
 	public void insertProdPerf(ProductionPerformanceVO ivo) {
-		
+
 		ppdao.insertProdPerf(ivo);
+		
+		logger.debug("@@@@@@@@@@@@ getWo_code() : "+ivo.getWo_code());
+		
+		String wo_status = ppdao.getWoMap(ivo.getWo_code());
+		logger.debug("@@@@@@@@@@@@ wo_status : "+wo_status);
+		
+		if(wo_status != null && !wo_status.isEmpty()) {
+			if(wo_status.equals("지시")) { // 지시 상태면 
+				ppdao.updateStart(ivo.getWo_code()); // 시작으로 변경
+			}
+		}
+		
 		
 		if(ppdao.checkY(ivo.getWo_code())) { // 양품이 지시수량보다 같거나 많으면
 			ppdao.updateClose(ivo.getWo_code()); // 마감으로 지시 상태 변경
 		}
-		String wo_status = ppdao.getWoMap(ivo.getWo_code());
-		logger.debug("@@@@@@@@@@@@ wo_status : "+wo_status);
-		if(wo_status.equals("지시")) { // 지시 상태면 
-			ppdao.updateStart(ivo.getWo_code()); // 시작으로 변경
-		}
+
 
 	}
 
 	// 실적 현황
 	@Override
-	public List<ProductionPerformanceVO> prodPerfList(String wo_code) {
-		return ppdao.prodPerfList(wo_code);
+	public List<ProductionPerformanceVO> prodPerfList(Map<String, Object> instrSearch,String wo_code,PageVO pageVO) {
+		return ppdao.prodPerfList(instrSearch,wo_code, pageVO);
 		
 	}
 
@@ -91,10 +100,16 @@ public class ProductionPerformanceServiceImpl implements ProductionPerformanceSe
 		ppdao.updateClose(wo_code);
 	}
 
-	
-	
-	
-	
+	@Override
+	public Integer orderStatuscount(String wo_code) {
+		return ppdao.orderStatuscount(wo_code);
+	}
+
+	@Override
+	public String getWoMap(String wo_code) {
+		return ppdao.getWoMap(wo_code);
+	}
+
 	
 	
 	

@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 
 import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.LineVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.ProOrderVO;
 
 @Repository
@@ -23,20 +24,27 @@ public class LineDAOImpl implements LineDAO{
 	
 	@Inject
 	private SqlSession sqlSession;
-
+	
 	@Override
 	public List<LineVO> LineList() {
 		logger.debug("proitemList()");
-		List<LineVO> lineList = sqlSession.selectList(NAMESPACE+".LineList");
+		List<LineVO> lineList = sqlSession.selectList(NAMESPACE+".LineListAll");
 		return lineList;
 	}
 	
 	@Override
-	public List<LineVO> LineList(Map<String, Object> instrSearch, Model model) {
+	public List<LineVO> LineList(PageVO pageVO) {
+		logger.debug("proitemList()");
+		List<LineVO> lineList = sqlSession.selectList(NAMESPACE+".LineList",pageVO);
+		return lineList;
+	}
+	
+	@Override
+	public List<LineVO> LineList(Map<String, Object> instrSearch, Model model,PageVO pageVO) {
 		// 작업지시 조회 목록
 		logger.debug("proOrderList()!");
-//		instrSearch.put("startRow", pageDTO.getStartRow());
-//		instrSearch.put("pageSize", pageDTO.getPageSize());
+		instrSearch.put("startRow", pageVO.getStartRow());
+		instrSearch.put("pageSize", pageVO.getPageSize());
 //		System.out.println("작업지시 페이징 : " + instrSearch);
 		List<LineVO> lineList = sqlSession.selectList(NAMESPACE+".lineSearch",instrSearch);
 		return lineList;
@@ -70,6 +78,12 @@ public class LineDAOImpl implements LineDAO{
 		logger.debug("dao: 라인지시 삭제 호출");
 		sqlSession.delete(NAMESPACE+".deleteLine",line_code);
 		
+	}
+
+	@Override
+	public Integer lineCount(Map<String, Object> instrSearch) {
+		logger.debug("lineCount");
+		return sqlSession.selectOne(NAMESPACE+".linecount",instrSearch);
 	}
 
 

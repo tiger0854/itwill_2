@@ -81,7 +81,6 @@ function factoryDelete(factory_code, factory_name) {
         <td><button class=btn-delete onclick="factoryDelete('${vo.factory_code}', '${vo.factory_name}')" ><i class='bx bxs-trash'></i></button></td>
       </tr>
       </c:forEach>
-      
     </tbody>
   </table>
   

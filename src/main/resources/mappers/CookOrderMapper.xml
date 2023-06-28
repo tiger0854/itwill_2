@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  
+  <mapper namespace="com.ddosirak.mapper.CookOrderMapper">
+  	
+  	<!-- 조리지시 등록 -->
+	<insert id="cookOrder">
+	  <selectKey keyProperty="co_code" resultType="String" order="BEFORE">
+	    SELECT CONCAT('CO', DATE_FORMAT(NOW(), '%Y%m%d'),
+	      (SELECT count(co_code) + 1 FROM cook)) AS wo_code
+	  </selectKey>
+		  INSERT INTO cook
+		  (co_code, employee_id, line_code, item_code, co_date,
+		  coQTY, cpQTY,item_name,material_code,material_name,line_name)
+		  VALUES (
+		  #{co_code}, #{employee_id}, #{line_code}, #{item_code},
+		  CURDATE(), #{coQTY}, #{cpQTY},#{item_name},
+		  #{material_code},#{material_name},#{line_name}
+		  )
+	</insert>
+
+  	
+  	<!-- 조리지시 목록 출력-->
+  	<select id="cookOrderList" resultType="com.ddosirak.domain.CookVO">
+		SELECT * FROM cook LIMIT #{startRow}, #{pageSize}
+  	</select>
+  	
+	<!-- cookSearchList 조리지시 검색목록 -->
+  	<select id="cookSearchList" resultType="com.ddosirak.domain.CookVO">
+	SELECT * FROM cook
+	  WHERE line_code LIKE CONCAT('%', #{line_code}, '%')
+	  <if test="co_date != null and co_date != ''">
+	    AND co_date = #{co_date}
+	  </if>
+	  <choose>
+	    <when test="co_status == null or co_status == ''"></when>
+	    <otherwise>
+	      AND co_status = #{co_status}
+	    </otherwise>
+	  </choose>
+	  AND material_code LIKE CONCAT('%', #{material_code}, '%')
+	  LIMIT #{startRow}, #{pageSize}
+  	</select>
+
+
+  	<!-- .cookcount 조리지시 갯수 -->
+    <select id="cookcount" resultType="java.lang.Integer">
+		SELECT count(*) FROM cook
+		<if test="co_date != null and co_status != null and
+		 line_code != null and material_code != null">
+		WHERE line_code LIKE CONCAT('%', #{line_code}, '%')
+	  <if test="wo_date != null and wo_date != ''">
+	    AND co_date = #{co_date}
+	  </if>
+	  <choose>
+	    <when test="wo_status == null or wo_status == ''"></when>
+	    <otherwise>
+	      AND co_status = #{co_status}
+	    </otherwise>
+	  </choose>
+	  AND material_code LIKE CONCAT('%', #{material_code}, '%')
+	  </if>	
+  	</select>
+  	
+<!-- 	.getcookOrder 조리지시 조회 -->
+  	<!-- 작업지시 정보 -->
+  	<select id="getcookOrder" resultType="com.ddosirak.domain.CookVO">
+		SELECT * FROM cook WHERE co_code=#{co_code}
+  	</select>
+
+<!-- co_code, employee_id, line_code, item_code, co_date, co_time,  -->
+<!-- 		  coQTY, cpQTY,item_name,material_code,material_name,line_name -->
+  	<!-- editcookOrder 조리지시  수정 -->
+	<update id="editcookOrder">
+	  UPDATE cook
+	  SET employee_id=#{employee_id},
+	      line_code=#{line_code},
+	      line_name=#{line_name},
+	      item_code=#{item_code},
+	      item_name=#{item_name},
+	      material_code=#{material_code},
+	      material_name=#{material_name},
+	      coQTY=#{coQTY},
+	      cpQTY=#{cpQTY},
+	      co_status=#{co_status}
+	  WHERE co_code=#{co_code}
+	</update>
+  	<!-- 작업지시  수정 -->
+  	
+  	<!-- 조리지시 삭제 -->
+  	<delete id="deletecookOrder">
+  		delete from cook where co_code=#{co_code}
+  	</delete>
+  	
+  	
+  	
+<!--   	.insertcookPerf 조리지시 실적등록 -->
+  	<insert id="insertcookPerf">
+  		insert into cook_add
+  		(item_code, item_name, cerf_gobd, err_reason,
+  		cfQTY, co_code, cerf_date, unit,material_code,material_name,co_time )
+  		values
+  		(#{item_code}, #{item_name}, #{cerf_gobd}, #{err_reason},
+  		#{cfQTY}, #{co_code}, #{cerf_date}, #{unit},
+  		#{material_code},#{material_name},#{co_time})
+  	</insert>
+  	
+<!--   	cooketccount -->
+	<select id="cooketccount" resultType="java.lang.Integer">
+		SELECT count(*) FROM cook_add
+		where co_code=#{co_code}
+	</select>
+	
+<!-- 	cooketcList -->
+	<select id="cooketcList" resultType="com.ddosirak.domain.CookAddVO">
+		SELECT * FROM cook_add
+		where co_code=#{co_code}
+		LIMIT #{startRow}, #{pageSize}
+  	</select>
+  	
+<!--   	cooketcDel -->
+  	<delete id="cooketcDel">
+  		delete from cook_add where cook_id=#{cook_id}
+  	</delete>
+<!-- .addcpQTY -->
+<!-- addcpQTY -->
+  	<update id="addcpQTY">
+	  UPDATE cook
+	  SET cpQTY = cpQTY + #{cfQTY}
+	  WHERE co_code = #{co_code}
+	  AND #{cerf_gobd} = 'n'
+  	</update>
+	
+<!-- 	cookstatus -->
+	<select id="cookstatus" resultType="String">
+	 SELECT co_status
+	 FROM cook
+     WHERE co_code = #{co_code}
+	</select>
+
+	<!-- .cookturnstart -->
+	<update id="cookturnstart"> <!-- 지시상태 시작으로 변경 -->
+	update cook
+	set co_status = '시작'
+	where co_code = #{co_code}
+	</update>
+	
+	<!-- cookturnend -->	
+	<update id="cookturnend"> <!-- 지시상태 마감으로 변경 -->
+	update cook
+	set co_status = '마감'
+	where co_code = #{co_code}
+	</update>
+	<!--   	cookturninstr -->
+	<update id="cookturninstr"> <!-- 지시상태 지시로 변경 -->
+	update cook
+	set co_status = '지시'
+	where co_code = #{co_code}
+	</update>
+	
+<!-- 	checkY 양품체크 -->
+	<select id="checkY"  resultType="boolean">
+	    select
+		count(*)
+		from
+		(select
+		it.coQTY,
+	    sum(if(p.cerf_gobd='n',p.cfQTY,0)) as "n"
+		from cook_add p join cook it
+		on it.co_code = p.co_code
+	    where it.co_code = #{co_code}
+	    group by it.co_code
+		having it.coQTY &lt;= sum(if(p.cerf_gobd='n',p.cfQTY,0))) as table1
+	</select>  
+	
+  	<!-- addQTY -->
+  	<update id="addQTY">
+	  UPDATE prod
+	  SET pQTY = pQTY + #{pfQTY}
+	  WHERE wo_code = #{wo_code}
+	  AND #{perf_gobd} = 'n'
+  	</update>
+  		
+	<!-- 	getcooketc -->
+	<select id="getcooketc" resultType="com.ddosirak.domain.CookAddVO">
+		 SELECT * FROM cook_add
+	     WHERE cook_id = #{cook_id}
+	</select>
+	
+	<!-- cpqtydel -->
+  	<update id="cpqtydel">
+	  UPDATE cook
+	  SET cpQTY = cpQTY - #{cfQTY}
+	  WHERE co_code = #{co_code}
+  	</update>
+
+	<!-- 	getCrefcount -->
+  	<select id="getCrefcount" resultType="Integer">
+	  	select count(cook_id)
+	  	from cook_add
+	  	where co_code=#{co_code}
+  	</select> 
+  	
+
+  	
+  	
+  	
+  </mapper>

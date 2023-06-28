@@ -1,7 +1,9 @@
 package com.ddosirak.service;
 
 import java.util.List;
+import java.util.Map;
 
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.ProductionPerformanceVO;
 
 public interface ProductionPerformanceService {
@@ -10,7 +12,7 @@ public interface ProductionPerformanceService {
 	public void insertProdPerf(ProductionPerformanceVO ivo);
 	
 	// 실적현황
-	public List<ProductionPerformanceVO> prodPerfList(String wo_code);
+	public List<ProductionPerformanceVO> prodPerfList(Map<String, Object> instrSearch, String wo_code, PageVO pageVO);
 	
 	// 실적수정 조회
 	public ProductionPerformanceVO perfUpdateList(int perf_id);
@@ -22,4 +24,9 @@ public interface ProductionPerformanceService {
 	public void perfDeleteBoard(int perf_id);
 
 	public void wostatusEnd(String wo_code);
+
+	public Integer orderStatuscount(String wo_code);
+	
+	public String getWoMap(String wo_code);
+
 }

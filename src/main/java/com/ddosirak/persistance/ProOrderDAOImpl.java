@@ -105,15 +105,18 @@ public class ProOrderDAOImpl implements ProOrderDAO {
 //	
 	// 상품목록
 	@Override
-	public List<ItemdetailVO> proitemList() {
+	public List<ItemdetailVO> proitemList(PageVO pageVO) {
 		logger.debug("proitemList()");
-		List<ItemdetailVO> proitemList = sqlSession.selectList(NAMESPACE+".proitemList");
+		List<ItemdetailVO> proitemList = sqlSession.selectList(NAMESPACE+".proitemList",pageVO);
 		return proitemList;
 	}
 
 	@Override
-	public List<ItemdetailVO> proitemList(Map<String, Object> instrSearch, Model model) {
-		logger.debug("proitemList()");
+	public List<ItemdetailVO> proitemList(PageVO pageVO,Map<String, Object> instrSearch, Model model) {
+		logger.debug("proOrderList()!");
+		instrSearch.put("startRow", pageVO.getStartRow());
+		instrSearch.put("pageSize", pageVO.getPageSize());
+		System.out.println(" 페이징 : " + instrSearch);
 		List<ItemdetailVO> proitemList = sqlSession.selectList(NAMESPACE+".proitemSearch",instrSearch);
 		return proitemList;
 	}
@@ -128,6 +131,13 @@ public class ProOrderDAOImpl implements ProOrderDAO {
 	public Integer ProOdercount(Map<String, Object> instrSearch) {
 		logger.debug("procount");
 		return sqlSession.selectOne(NAMESPACE+".procount",instrSearch);
+	}
+
+	//상품 갯수
+	@Override
+	public Integer itemCount(Map<String, Object> instrSearch) {
+		logger.debug("itemCount");
+		return sqlSession.selectOne(NAMESPACE+".itemcount",instrSearch);
 	}
 
 
