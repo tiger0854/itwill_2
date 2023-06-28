@@ -15,12 +15,12 @@
 	window.addEventListener("message", function(event) {
 	      var rowData = event.data;
 	      
-	      document.getElementById("in_number").value = rowData[0];
-	      document.getElementById("in_date").value = rowData[6];
-	      document.getElementById("wh_code").value = rowData[8];
-	      document.getElementById("in_expir").value = rowData[9];
-	      document.getElementById("order_piece").value = rowData[2];
-	      document.getElementById("order_piece").value = rowData[2];
+	      document.getElementById("in_number").value = rowData[1];
+	      document.getElementById("in_date").value = rowData[7];
+	      document.getElementById("wh_code").value = rowData[9];
+	      document.getElementById("in_expir").value = rowData[10];
+	
+
 	      
 	    });
 		
@@ -31,21 +31,36 @@
 	
 </head>
 <body>
+		<h4 style="text-align: center;">입고 수정</h4>
+	<hr style="border-width: 1.3px;border-style: solid;">
 	<form id="fr" role="form">
-	
-		입고예정번호 <input type="text" id="in_number"  name="in_number" readonly="readonly"><br>
-		입고일자 <input type="date" id="in_date" name="in_date"><br>
-		유통기한 <input type="date" id="in_expir" name="in_expir"><br>
-		<div class="input-group">
-		입고창고
-    <input type="text"placeholder="창고 검색하기" class="form-control" name="wh_code" id="wh_code" readonly="readonly" >
-    <button class="btn btn-primary" type="button" onclick="openChildWindow();">검색</button>
-    </div>
-
-    
-	<button type="button" class="btn btn-primary" id="modify">수정완료</button>
-	<input type="button" value="닫기" class="btn btn-secondary" onclick="window.close();">
-	
+		<table class="table">
+		  <tr>
+	  		<th>입고예정번호</th>
+	   		<td><input type="text" id="in_number" name="in_number" readonly="readonly" class="form-control" ></td>
+	 	  </tr>
+		  <tr>	
+		    <th>입고일자</th>
+		    <td><input type="date" id="in_date" name="in_date" class="form-control" ></td>
+		  </tr>
+		  <tr>
+		    <th>유통기한</th>
+		    <td><input type="date" id="in_expir" name="in_expir" class="form-control" ></td>
+		  </tr>
+		  <tr>
+		  <th>입고창고</th>
+		  <td>
+			  <div class="input-group">
+	  		 	 <input type="text"placeholder="창고 검색하기" class="form-control" name="wh_code" id="wh_code" readonly="readonly" >
+	    	 	 <button class="btn btn-primary" type="button" onclick="openChildWindow();">검색</button>
+	   		  </div>
+	   	  </td>	  
+		  </tr>
+		</table> 
+    	<div style="margin-top: 10px;float: right;">
+			<button type="button" class="btn btn-primary" id="modify">수정완료</button>
+			<input type="button" value="닫기" class="btn btn-secondary" onclick="window.close();">
+		</div>
 	</form>
 	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

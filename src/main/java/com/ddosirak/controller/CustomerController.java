@@ -32,9 +32,9 @@ public class CustomerController {
 	@Inject
 	private PageService pService;
 	
-//	http://localhost:8088/customer/customerList
+//	http://localhost:8088/customer/customerList?pop=no
 	@RequestMapping(value = "/customerList",method=RequestMethod.GET) 
-	public void customerGET(Model model,PageVO pageVO, HttpServletRequest request)throws Exception {
+	public String customerGET(Model model,PageVO pageVO, HttpServletRequest request,@RequestParam(value ="pop",required = false) String pop)throws Exception {
 		
 		logger.debug("customerGET() 호출!");
 		
@@ -44,7 +44,7 @@ public class CustomerController {
 		//   		리스트를 반환하는 DAO - Service 메서드에 PageVO 추가, 쿼리에 LIMIT #{startRow}, #{pageSize} 추가.
 		// 페이징 처리
 		// 한 화면에 보여줄 글 개수 설정
-		int pageSize = 2; // sql문에 들어가는 항목
+		int pageSize = 8; // sql문에 들어가는 항목
 		
 		// 현페이지 번호 가져오기
 		String pageNum = request.getParameter("pageNum");
@@ -81,6 +81,12 @@ public class CustomerController {
 		model.addAttribute("pageVO", pageVO);
 		//================================페이징 처리를 위한 값 받아오기 동작========================================
 		model.addAttribute("customerList",cService.customerList(pageVO));
+		
+		if(pop != null && pop.equals("ok")) {
+			return "/inbound/tradeList";
+		}
+			return "/customer/customerList";
+		
 	}//거래처 리스트로 이동
 
 	

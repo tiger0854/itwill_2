@@ -220,7 +220,7 @@ height: 50px; vertical-align: middle; text-align: center;
    }
    
 	var popupWidth = 600;
-	var popupHeight = 500;
+	var popupHeight = 600;
 
 	var popupX = Math.ceil(( window.screen.width - popupWidth )/2);
 	var popupY = Math.ceil(( window.screen.height - popupHeight )/2); 
