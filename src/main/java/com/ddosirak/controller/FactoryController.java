@@ -18,7 +18,7 @@ import com.ddosirak.service.FactoryService;
 @Controller
 public class FactoryController {
 	public static final Logger logger = LoggerFactory.getLogger(FactoryController.class);
-	  
+	    
 	@Inject
 	FactoryService service;
 	// http://localhost:8088/foundation/factory/factoryList
