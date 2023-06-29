@@ -21,6 +21,7 @@
 		FROM prod_perf_add a
 		LEFT OUTER JOIN prod p ON a.wo_code = p.wo_code
 		WHERE a.wo_code = #{wo_code}
+		LIMIT #{startRow}, #{pageSize}
   	</select>
   	<!-- 실적 현황 -->
   	
@@ -85,6 +86,14 @@
 	  SET pQTY = pQTY - #{pfQTY}
 	  WHERE wo_code = #{wo_code}
   	</update>
+  	 
+  	<!-- etccount -->
+  	<select id="etccount" resultType="java.lang.Integer">
+	SELECT COUNT(*)
+	FROM prod_perf_add a
+	LEFT OUTER JOIN prod p ON a.wo_code = p.wo_code
+	WHERE a.wo_code = #{wo_code}
+  	</select> 
   	 
   	 
   	<update id="turnclose"> <!-- 지시상태 마감으로 변경 -->

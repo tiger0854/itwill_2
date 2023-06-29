@@ -1,5 +1,6 @@
 package com.ddosirak.service;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import com.ddosirak.domain.ItemRecipeUploadVO;
 import com.ddosirak.domain.ItemRecipeVO;
 import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.MaterialdetailVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.persistance.ItemRecipeDAO;
 
 
@@ -28,43 +30,55 @@ public class ItemRecipeServiceImpl implements ItemRecipeService {
 	
 	//레시피 목록 호출
 	@Override
-	public List<ItemRecipeListVO> ItemRecipeList() {
+	public List<ItemRecipeListVO> ItemRecipeList(PageVO pageVO) throws Exception {
 		logger.debug("service : 레시피 목록 호출");
-		return dao.ItemRecipeList();
+		return dao.ItemRecipeList(pageVO);
+	}
+
+	@Override
+	public List<ItemRecipeListVO> ItemRecipeList(PageVO pageVO, Map<String, Object> instrSearch, Model model) throws Exception {
+		logger.debug("service : 레시피 목록 호출");
+		return dao.ItemRecipeList(pageVO, instrSearch, model);
 	}
 
 	//레시피 등록
 	@Override
-	public void insertItemRecipe(ItemRecipeVO vo, ItemRecipeUploadVO uvo) {
+	public void insertItemRecipe(ItemRecipeVO vo, ItemRecipeUploadVO uvo) throws Exception {
 		logger.debug("service : 레시피 등록");
-		for(int i=0;i<uvo.getItemRecipeUploadvo().size();i++) {
-			ItemRecipeVO item = uvo.getItemRecipeUploadvo().get(i);  // i번째 요소 가져오기
-		    item.setItem_code(vo.getItem_code());  // 값을 설정
-		    uvo.getItemRecipeUploadvo().set(i, item);  // 변경된 값을 다시 설정
-		    dao.insertItemRecipe(vo);
-		}
+		 List<ItemRecipeVO> itemRecipeUploadvo = uvo.getItemRecipeUploadvo(); // ItemRecipeUploadVO 객체에서 리스트를 가져옴
+		 Iterator<ItemRecipeVO> iterator = itemRecipeUploadvo.iterator(); // Iterator 객체 생성
+
+		    while (iterator.hasNext()) {
+		        ItemRecipeVO item = iterator.next();
+		        item.setItem_code(vo.getItem_code()); // 값을 설정
+		        if (item.getMaterial_code() == null) {
+		            iterator.remove(); // material_code가 null인 아이템 제거
+		        } else {
+		            dao.insertOrUpdateItemRecipe(item); // 변경된 ItemRecipeVO 객체를 사용하여 레시피 등록
+		        }
+		    }
 	}
 
 	@Override
-	public ItemRecipeVO selectItemRecipe(String item_code) {
+	public List<ItemRecipeListVO> selectItemRecipe(String item_code) throws Exception {
 		logger.debug("service : 레시피 수정 파라미터");
 		return dao.selectItemRecipe(item_code);
 	}
 
 	@Override
-	public Integer updateItemRecipe(ItemRecipeVO vo) {
+	public Integer updateItemRecipe(ItemRecipeVO vo) throws Exception {
 		logger.debug("service : 레시피 수정");
 		return dao.updateItemRecipe(vo);
 	}
 
 	@Override
-	public void deleteItemRecipe(String item_code) {
+	public void deleteItemRecipe(String item_code) throws Exception {
 		logger.debug("service: 레시피 삭제");
 		dao.deleteItemRecipe(item_code);
 	}
 
 	@Override
-	public List<MaterialdetailVO> materialList(MaterialdetailVO vo) {
+	public List<MaterialdetailVO> materialList(MaterialdetailVO vo) throws Exception {
 		logger.debug("service : 자재 목록 조회");
 		logger.debug("자재 목록 : 검색");
 		if (vo.getMaterial_code()==null&&vo.getMaterial_name()==null&&vo.getMaterial_type()==null) {
@@ -76,4 +90,28 @@ public class ItemRecipeServiceImpl implements ItemRecipeService {
 		}
 	}
 
+	@Override
+	public void deleteItemRecipeMaterial(ItemRecipeVO vo) throws Exception {
+		logger.debug("service : 레시피 개별 삭제");
+		dao.deleteItemRecipeMaterial(vo);
+	}
+
+	@Override
+	public Integer itemrecipeCount(Map<String, Object> instrSearch) {
+		logger.debug("service : 레시피 검색 갯수");
+		return dao.itemrecipeCount(instrSearch);
+	}
+
+	@Override
+	public List<ItemRecipeListVO> itemrecipeItemList() throws Exception {
+		logger.debug("service : 상품 목록 검색");
+		return dao.itemrecipeItemList();
+	}
+
+	@Override
+	public List<ItemRecipeListVO> itemrecipeItemList(Map<String, Object> instrSearch, Model model) throws Exception {
+		logger.debug("service : 상품 목록 부분 검색");
+		return dao.itemrecipeItemList(instrSearch, model);
+	}
+	
 }

@@ -75,15 +75,15 @@ public class ProOrderServiceImpl implements ProOrderService {
 //	}
 
 	@Override
-	public List<ItemdetailVO> proitemList() {
+	public List<ItemdetailVO> proitemList(PageVO pageVO) {
 		// TODO Auto-generated method stub
-		return odao.proitemList();
+		return odao.proitemList(pageVO);
 	}
 
 	@Override
-	public List<ItemdetailVO> proitemList(Map<String, Object> instrSearch, Model model) {
+	public List<ItemdetailVO> proitemList(PageVO pageVO,Map<String, Object> instrSearch, Model model) {
 		// TODO Auto-generated method stub
-		return odao.proitemList(instrSearch,model);
+		return odao.proitemList(pageVO,instrSearch,model);
 	}
 
 	@Override
@@ -95,6 +95,12 @@ public class ProOrderServiceImpl implements ProOrderService {
 	@Override
 	public Integer ProOrdercount(Map<String, Object> instrSearch) {
 		return odao.ProOdercount(instrSearch);
+	}
+
+	@Override
+	public Integer itemcount(Map<String, Object> instrSearch) {
+		// TODO Auto-generated method stub
+		return odao.itemCount(instrSearch);
 	}
 
 	

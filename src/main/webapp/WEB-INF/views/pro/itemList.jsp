@@ -68,8 +68,21 @@
     </c:forEach>
 </table>
 <br>
-
-
+<%-- ${Search } --%>
+<!-- model.addAttribute("Search", instrSearch); -->
+	<div class="container" style="margin-top: 30px; margin-bottom: 30px">
+	  <ul class="pagination justify-content-center" id="pagination" style="margin-top: 20px;">
+	    <c:if test="${pageVO.startPage > pageVO.pageBlock}"> 
+	      <li class="page-item"><a class="page-link" href="/pro/itemList?item_code=${Search.item_code }&item_name=${Search.item_name }&pageNum=${pageVO.startPage - pageVO.pageBlock}"><sapn> < </sapn></a></li>
+	    </c:if>
+	    <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
+	      <li class="page-item"><a class="page-link" href="/pro/itemList?item_code=${Search.item_code }&item_name=${Search.item_name }&pageNum=${i}"><span>${i}</span></a></li>
+	    </c:forEach>
+	    <c:if test="${pageVO.endPage < pageVO.pageCount}">
+	      <li class="page-item"><a class="page-link" href="/pro/itemList?item_code=${Search.item_code }&item_name=${Search.item_name }&pageNum=${pageVO.startPage + pageVO.pageBlock}"><span> > </span></a></li>
+	    </c:if>
+	  </ul>
+	</div>
 
 
 

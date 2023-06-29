@@ -34,7 +34,9 @@ public class MaterialsController {
 	// 자재 입고 목록
 	// http://localhost:8088/materials/materialsReceivingList
 	@RequestMapping(value = "/materialsReceivingList", method = RequestMethod.GET)
-	public void materialsReceivingListGET(Model model) {
+
+	public void materialsReceivingListGET(Model model) throws Exception {
+
 		logger.debug("mtReceivingListGET() 호출");
 		logger.debug("materials/materialsReceivingList.jsp 뷰페이지로 연결");
 
@@ -46,14 +48,15 @@ public class MaterialsController {
 	// 자재 입고 등록
 	// http://localhost:8088/materials/materialsReceivingWrite
 	@RequestMapping(value = "/materialsReceivingWrite", method = RequestMethod.GET)
-	public void materialsWriteGET() {
+	public void materialsWriteGET() throws Exception {
+
 		logger.debug("materialsWriteGET() 호출!");
 		logger.debug("materials/materialsReceivingWrite.jsp 뷰페이지로 연결");
 
 	}
 
 	@RequestMapping(value = "/materialsReceivingWrite", method = RequestMethod.POST)
-	public void materialsWritePOST(MaterialsVO ivo) {
+	public void materialsWritePOST(MaterialsVO ivo) throws Exception {
 		logger.debug("materialsWritePOST() 호출!");
 
 		service.matInputInsert(ivo);
@@ -62,7 +65,7 @@ public class MaterialsController {
 
 	// 자재 입고 특정 게시물 조회
 	@RequestMapping(value = "/materialsReceivingEdit", method = RequestMethod.GET)
-	public void materialsEditGET(@RequestParam("material_code") String material_code, Model model) {
+	public void materialsEditGET(@RequestParam("material_code") String material_code, Model model) throws Exception {
 		logger.debug("materialsEditGET() 호출!");
 		logger.debug("materials/materialsReceivingEdit.jsp 뷰페이지로 연결");
 
@@ -76,7 +79,7 @@ public class MaterialsController {
 
 	// 자재 입고 특정 게시물 수정
 	@RequestMapping(value = "/materialsReceivingEdit", method = RequestMethod.POST)
-	public void materialsEditPOST(MaterialsVO uvo) {
+	public void materialsEditPOST(MaterialsVO uvo) throws Exception {
 		logger.debug("materialsEditPOST() 호출!");
 
 		logger.debug("@@@@@@@@ uvo : " + uvo);
@@ -87,7 +90,7 @@ public class MaterialsController {
 
 	// 자재입고 특정 게시물 삭제
 	@RequestMapping(value = "/materialsReceivingRemove", method = RequestMethod.GET)
-	public String materialsRemoveGET(@RequestParam("material_code") String material_code) {
+	public String materialsRemoveGET(@RequestParam("material_code") String material_code) throws Exception {
 		logger.debug("materialsRemoveGET() 호출");
 		service.RemoveMatInput(material_code);
 		return "redirect:/materials/materialsReceivingList";
@@ -96,7 +99,7 @@ public class MaterialsController {
 	// 자재관리 - 상품목록(팝업)
 	// http://localhost:8088/pro/itemList
 	@RequestMapping(value = "/matItelList", method = RequestMethod.GET)
-	public void matItelListGET(Model model, HttpServletRequest request) {
+	public void matItelListGET(Model model, HttpServletRequest request) throws Exception {
 		logger.debug("matItelListGET() 호출");
 //		String item_code = request.getParameter("item_code");
 //		String item_name = request.getParameter("item_name");

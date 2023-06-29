@@ -19,19 +19,24 @@
 		</insert>
 
   	<!-- 작업지시 등록 -->
-  	
+<!--   	.LineListAll -->
+	<select id="LineListAll" resultType="com.ddosirak.domain.LineVO">
+		SELECT * FROM pro_line 
+  	</select>
+
   	<!-- 작업지시 목록 출력-->
   	<select id="LineList" resultType="com.ddosirak.domain.LineVO">
-		SELECT * FROM pro_line
+		SELECT * FROM pro_line LIMIT #{startRow}, #{pageSize}
   	</select>
-  	
+  
   	<!-- 작업지시 검색목록 -->
   	<select id="lineSearch" resultType="com.ddosirak.domain.LineVO">
 		SELECT * FROM pro_line
 		WHERE line_code LIKE CONCAT('%', #{line_code}, '%')
 		AND line_name LIKE CONCAT('%', #{line_name}, '%')
+		LIMIT #{startRow}, #{pageSize}
   	</select>
-
+<!-- LIMIT #{startRow}, #{pageSize} -->
 
   	<!-- 라인 정보 -->
   	<select id="getLine" resultType="com.ddosirak.domain.LineVO">
@@ -52,6 +57,16 @@
   		delete from pro_line WHERE line_code=#{line_code}
   	</delete>
   	<!-- 라인 삭제 -->
+  	
+  	
+<!--   	linecount -->
+  <select id="linecount" resultType="java.lang.Integer">
+		SELECT count(*) FROM pro_line
+		<if test="line_code != null and line_name != null">
+		WHERE line_code LIKE CONCAT('%', #{line_code}, '%')
+		AND line_name LIKE CONCAT('%', #{line_name}, '%')
+		</if>
+  	</select>
   	
   	
   	<!-- 작업지시 상태변경 -->

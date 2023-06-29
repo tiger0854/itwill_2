@@ -3,12 +3,13 @@ package com.ddosirak.persistance;
 import java.util.List;
 import java.util.Map;
 
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.ProductionPerformanceVO;
 
 public interface ProductionPerformanceDAO {
 	public void insertProdPerf(ProductionPerformanceVO ivo);
 	
-	public List<ProductionPerformanceVO> prodPerfList(String wo_code);
+	public List<ProductionPerformanceVO> prodPerfList(Map<String, Object> instrSearch,String wo_code,PageVO pageVO);
 	
 	public ProductionPerformanceVO perfUpdateList(int perf_id);
 	
@@ -36,6 +37,8 @@ public interface ProductionPerformanceDAO {
 	
 	//생산량 갯수 삭제
 	public void pfQTYDel(ProductionPerformanceVO pvo);
+
+	public Integer orderStatuscount(String wo_code);
 
 	
 
