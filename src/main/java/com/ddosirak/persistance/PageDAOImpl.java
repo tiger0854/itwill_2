@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.ddosirak.domain.PageVO;
+
 @Repository
 public class PageDAOImpl implements PageDAO {
 	private static final Logger logger = LoggerFactory.getLogger(PageDAOImpl.class);
@@ -42,7 +44,37 @@ public class PageDAOImpl implements PageDAO {
 	
 	
 	
+	@Override
+	public Integer countCustomerList(PageVO vo) {
+		return sqlSession.selectOne(NAMESPACE+".countCusList",vo);
+	}//거래처리스트
+
+	@Override
+	public Integer countInList(PageVO vo) {
+		return sqlSession.selectOne(NAMESPACE+".countInbountList",vo);
+	}//입고리스트
+
+	@Override
+	public Integer countRetOrdList(PageVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NAMESPACE+".countOrdList",vo);
+	}
+
+
+
+	// 수주목록 페이징
+	@Override
+	public Integer countReceiveList() {
+		logger.debug("countReceiveList() 메서드 호출");
+		return sqlSession.selectOne(NAMESPACE + ".countReceiveList");
+	}
 	
+	// 출고목록 페이징
+	@Override
+	public Integer countOutList() {
+		logger.debug("countOutList() 메서드 호출");
+		return sqlSession.selectOne(NAMESPACE + ".countOutList");
+	}
 	
 
 }// public class end

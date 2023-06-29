@@ -51,9 +51,12 @@
 			});
 		});
 	});
+
+	
 </script>
 </head>
 <body>
+
 	<!-- 생산실적등록 폼 -->
 	<div class="black-bar">
 		<h4 style="text-align: center; color: white; padding-top: 8px">
@@ -69,11 +72,9 @@
 
 		<!--         <hr width="100%" style="border: 2px solid black"> -->
 		<!-- 품번, 품명, 실적일, 실적수량, 불량여부, 불량사유 , 비고 -->
-		<form id="fr" role="form" method="post">
+		<form id="fr" role="form" method="post" action="">
 			<table class="box" style="margin-top: 30px; width: 100%">
 				<tbody>
-					<input type="hidden" value=${param.wo_code }
-						name="${param.wo_code }">
 					<tr>
 						<td>품번</td>
 						<td><input type="text" name="item_code" value="${pvo.item_code }" readonly></td>
@@ -122,9 +123,7 @@
 				</button>
 				<button class=btn-search onclick="window.close()">X 취소</button>
 			</div>
-
 		</form>
-
 		<br>
 	</div>
 

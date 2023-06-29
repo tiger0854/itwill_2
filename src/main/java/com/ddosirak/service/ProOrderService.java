@@ -21,7 +21,6 @@ public interface ProOrderService {
 	// 작업지시 검색
 	public List<ProOrderVO> proOrderList(Map<String, Object> instrSearch, Model model, PageVO pageVO);
 
-	
 	// 작업지시 조회
 	public ProOrderVO getProOder(String wo_code);
 	
@@ -35,15 +34,18 @@ public interface ProOrderService {
 //	public Integer statusProOrder(ProductionPerformanceVO ivo);
 	
 	// 상품목록
-	public List<ItemdetailVO> proitemList();
+	public List<ItemdetailVO> proitemList(PageVO pageVO);
 	
 	// 상품목록 검색
-	public List<ItemdetailVO> proitemList(Map<String, Object> instrSearch, Model model);
+	public List<ItemdetailVO> proitemList(PageVO pageVO,Map<String, Object> instrSearch, Model model);
 
 	public void addpQTY(ProductionPerformanceVO ivo);
 	
 	// 작업지시 검색 갯수
 	public Integer ProOrdercount(Map<String, Object> instrSearch);
+	
+	// 상품 검색 갯수
+	public Integer itemcount(Map<String, Object> instrSearch);
 	
 	
 } // interface end

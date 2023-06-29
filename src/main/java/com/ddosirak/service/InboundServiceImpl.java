@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ddosirak.domain.InboundVO;
 import com.ddosirak.domain.OrderVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.persistance.InboundDAO;
 
 @Service
@@ -23,8 +24,8 @@ public class InboundServiceImpl implements InboundService {
 	}//입고예정서 등록
 
 	@Override
-	public List<InboundVO> inboundAllList() {
-		List<InboundVO> inboundList = idao.inboundAllList();
+	public List<InboundVO> inboundAllList(PageVO vo) {
+		List<InboundVO> inboundList = idao.inboundAllList(vo);
 		return inboundList;
 	}//입고리스트
 

@@ -16,8 +16,18 @@
   	<!-- 발주서 등록 -->
   	
   	<!-- 발주현황 리스트 -->
-  	<select id="orderAllList" resultType="com.ddosirak.domain.OrderVO">
+  	<select id="orderAllList" parameterType="com.ddosirak.domain.PageVO"  resultType="com.ddosirak.domain.OrderVO">
   		SELECT * FROM ret_order 
+	  		<choose>
+  				<when test="kind == 'number'">WHERE order_number</when>
+  				<when test="kind == 'code'">WHERE material_code</when>
+  				<when test="kind == 'name'">WHERE material_name</when>
+	   		</choose> 
+	   		<if test="search != ''">
+	   		LIKE CONCAT('%', #{search}, '%')
+	   		</if>
+  		ORDER BY order_date DESC
+		LIMIT #{startRow}, #{pageSize} 
   	</select>
   	<!-- 발주현황 리스트 -->
   	

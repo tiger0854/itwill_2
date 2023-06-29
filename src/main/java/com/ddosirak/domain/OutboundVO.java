@@ -1,6 +1,7 @@
 package com.ddosirak.domain;
 
 import java.sql.Date;
+import java.util.List;
 
 public class OutboundVO {
 
@@ -17,7 +18,7 @@ public class OutboundVO {
 	private String stock_code; // 재고코드
 	private String factory_code; // 공장코드
 	private int out_state; // 출고상태 default 1 (진행중)
-	private Date due_date; // 납기일자
+	private String due_date; // 납기일자
 	private Date out_date; // 출고일자
 	private Date create_date; // 작성일자
 	private int outNumCount; // outNum 카운트
@@ -103,10 +104,10 @@ public class OutboundVO {
 	public void setOut_state(int out_state) {
 		this.out_state = out_state;
 	}
-	public Date getDue_date() {
+	public String getDue_date() {
 		return due_date;
 	}
-	public void setDue_date(Date due_date) {
+	public void setDue_date(String due_date) {
 		this.due_date = due_date;
 	}
 	public Date getOut_date() {
@@ -123,15 +124,15 @@ public class OutboundVO {
 	}
 	
 	
-	// out_num 카운트
+	// out_num 카운트 get/set
 	public int getOutNumCount() {
 		return outNumCount;
 	}
-	public void setOutNumCount(int count) {
-		 this.outNumCount = count;		
+	public void setOutNumCount(int oCount) {
+		 this.outNumCount = oCount;		
 	}
 	
-	
+	 
 	
 	@Override
 	public String toString() {
@@ -141,7 +142,6 @@ public class OutboundVO {
 				+ ", stock_code=" + stock_code + ", factory_code=" + factory_code + ", out_state=" + out_state
 				+ ", due_date=" + due_date + ", out_date=" + out_date + ", create_date=" + create_date +  "]";
 	}
-	
 	
 	
 	

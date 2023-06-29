@@ -39,10 +39,13 @@ public interface ProOrderDAO {
 //	public Integer statusProOrder(ProductionPerformanceVO vo);
 	
 	// 상품목록
-	public List<ItemdetailVO> proitemList();
+	public List<ItemdetailVO> proitemList(PageVO pageVO);
 	
 	// 상품목록 검색
-	public List<ItemdetailVO> proitemList(Map<String, Object> instrSearch, Model model);
+	public List<ItemdetailVO> proitemList(PageVO pageVO,Map<String, Object> instrSearch, Model model);
+	
+	//상품 검색 갯수
+	public Integer itemCount(Map<String, Object> instrSearch);
 	
 	public void addpQTY(ProductionPerformanceVO ivo);
 	

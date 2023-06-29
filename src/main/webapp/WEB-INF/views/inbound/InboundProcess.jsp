@@ -13,8 +13,8 @@
 		window.addEventListener("message", function(event) {
 		    var rowData = event.data;
 		    
-		    document.getElementById("in_number").value = rowData[0];
-		    document.getElementById("in_piece").value = rowData[3];
+		    document.getElementById("in_number").value = rowData[1];
+		    document.getElementById("in_piece").value = rowData[4];
 		
 		  });
 		
@@ -42,14 +42,14 @@
 		<input type="hidden" id="in_piece">
 	<form id="fr" role="form">
 		입고번호<input type="text" id="in_number"  name="in_number" class="form-control" readonly="readonly"> <br>
-		입고 완료 수량<input type="number" id="in_Epiece"  name="in_Epiece" class="form-control"><span id="ipmsg"></span> <br>
+		입고 완료 수량<input type="number" id="in_Epiece"  name="in_Epiece" class="form-control" min="0"><span id="ipmsg"></span> <br>
 		
 		입고 완료일 <input type="date" id="in_Edate" name="in_Edate" class="form-control"><br>
 
-    
-	<button type="button" class="btn btn-primary" id="confirm">입고처리완료</button>
+    <div style="margin-top: 10px;float: right;">
+	<input type="button" class="btn btn-primary" id="confirm" value="입고처리하기">
 	<input type="button" value="닫기" class="btn btn-secondary" onclick="window.close();">
-	
+	</div>
 	</form>
 	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

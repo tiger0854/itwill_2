@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.ddosirak.domain.CustomerVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.persistance.CustomerDAO;
 
 @Service
@@ -16,9 +17,9 @@ public class CustomerServiceImpl implements CustomerService {
 	CustomerDAO cdao;
 	
 	@Override
-	public List<CustomerVO> customerList() {
+	public List<CustomerVO> customerList(PageVO vo) {
 	
-		return cdao.customerList();
+		return cdao.customerList(vo);
 	}
 
 	@Override
@@ -44,5 +45,12 @@ public class CustomerServiceImpl implements CustomerService {
 		// TODO Auto-generated method stub
 		return cdao.customerDetail(cus_id);
 	}
+
+	@Override
+	public Integer selectCusNumber(String cus_number) {
+		
+		return cdao.selectCusNumber(cus_number);
+	}
+
 
 }
