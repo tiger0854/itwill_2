@@ -31,14 +31,13 @@
   <th>상품명</th>
   <th>수주업체</th>
   <th>수주일자</th>
-  <th>납품예정일</th>
   <th>담당자</th>
   <th>수주수량</th>
   </tr>
   
   <c:forEach var="vo" items="${receiveList }">
   <tr>
-  <td>${vo.re_code }</td> <!-- join 하면 concat item_code 되는지 확인 -->
+  <td><a href="/receive/receiveDetail?re_code=${vo.re_code}">${vo.re_code }</td> <!-- join 하면 concat item_code 되는지 확인 -->
   <td>${vo.item_code }</td> <!-- join 해서 이름으로 가져오기  -->
   <td>${vo.customer_code }</td> <!-- join 해서 이름으로 가져오기  -->
   <td>${vo.re_date }</td>
@@ -48,7 +47,39 @@
   </c:forEach>
   </table>
   
-  <button onclick="receive/receiveInsert">등록</button>
+  <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
+	 		<ul class="pagination" id="pagination">
+		<c:choose>
+			<c:when test="${pageVO.startPage > pageVO.pageBlock}">
+				<li class="page-item"><a
+					href="/receive/receiveList?pageNum=${pageVO.startPage - pageVO.pageBlock}"
+					class="page-link">이전</a></li>
+			</c:when>
+			<c:otherwise>
+			</c:otherwise>
+		</c:choose>
+
+		<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}"
+			step="1">
+			<li
+				class="page-item<c:if test="${pageVO.pageNum eq i}"> active</c:if>">
+				<a href="/receive/receiveList?pageNum=${i}" class="page-link">${i}</a>
+			</li>
+		</c:forEach>
+
+		<c:choose>
+			<c:when test="${pageVO.endPage < pageVO.pageCount}">
+				<li class="page-item"><a
+					href="/receive/receiveList?pageNum=${pageVO.startPage + pageVO.pageBlock}"
+					class="page-link">다음</a></li>
+			</c:when>
+			<c:otherwise>
+			</c:otherwise>
+		</c:choose>
+	</ul>
+<!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
+  
+  <button onclick="location.href='./receiveInsert';">등록</button>
 
 </body>
 </html>

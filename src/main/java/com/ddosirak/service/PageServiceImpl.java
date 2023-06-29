@@ -51,6 +51,20 @@ public class PageServiceImpl implements PageService {
 
 	
 
+	// 수주 목록 페이징
+	@Override
+	public Integer countReceiveList() {
+		logger.debug("service: countReceiveList()");
+		return pdao.countReceiveList();
+	}
+	
+	// 출고목록 페이징
+	@Override
+	public Integer countOutList() {
+		logger.debug("service: countOutList()");
+		return pdao.countOutList();
+	}
+	
 	
 	
 	

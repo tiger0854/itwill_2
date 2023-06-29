@@ -16,6 +16,11 @@ public interface PageDAO {
 	
 	///////////발주리스트 페이징////////////
 	public Integer countRetOrdList(PageVO vo);
+	// 수주목록 페이징처리
+	public Integer countReceiveList();
+	
+	// 출고목록 페이징처리
+	public Integer countOutList();
 
 	
 }// public interface end

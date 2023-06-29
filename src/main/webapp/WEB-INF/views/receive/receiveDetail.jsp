@@ -13,6 +13,30 @@
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.all.min.js"></script>
 <script type="text/javascript">
 
+	$(document).ready(function(){
+		var frObj = $("form[role='form']");
+		
+		// 목록으로
+		$(".btn-list").click(function(){
+			location.href='/receive/receiveList';
+		});
+		
+		// 수정
+		$(".btn-update").click(function(){
+			frObj.attr("action","/receive/receiveUpdate"); 
+			frObj.submit();
+		});	
+		
+		// 삭제
+		$(".btn-del").click(function(){
+			frObj.attr("action","/receive/receiveRemove");
+			frObj.attr("method", "post");
+			frObj.submit();
+		});
+
+	});
+
+
 
 </script>
 </head>
@@ -22,32 +46,42 @@
 <h1>receiveDetail.jsp</h1>
   <h1>수주상세</h1>
   
+  <!-- 수정(get-post)/삭제(post)시 정보 전달용 form -->
+	<form role="form" id="fr"> 
+		<input type="hidden" name="re_code" value="${vo.re_code }">
+	</form>
+  
   <table border="1" class="table table-bordered">
   <tr>
   <th>수주번호</th>
-  <th>거래처명(수주업체명)</th>
+  <th>수주업체코드</th>
+  <th>수주업체명</th>
+  <th>상품코드</th>
   <th>상품명</th>
   <th>수주일자</th>
-  <th>납품예정일</th>
-  <th>담당자</th>
+  <th>담당자코드</th>
+  <th>담당자명</th>
   <th>수주수량</th>
   </tr>
-  
-  <tr>
-  <td>I001-20230505</td>
-  <td>마켓퀄리</td>
-  <td>참치마요 도시락</td>
-  <td>2023-04-28</td>
-  <td>2023-05-09</td>
-  <td>챠효진</td>
-  <td>33</td>
-  </tr>
+
+	   <tr>
+	    <td>${vo.re_code }</td>
+	    <td>${vo.customer_code }</td>
+	    <td>거래처명</td>
+	    <td>${vo.item_code }</td>
+	    <td>상품명</td>
+	    <td>${vo.re_date }</td>
+	    <td>${vo.employee_id }</td>
+	    <td>담당자명</td>
+	    <td>${vo.re_qty }</td>
+	  </tr>
+
   
   </table>
   
-  <button>수정</button>
-  <button>삭제</button>
-  <button>목록</button>
+	  <button class="btn-update">수정</button>
+	  <button class="btn-del">삭제</button>
+	  <button class="btn-list">목록</button>
 
 
 </body>

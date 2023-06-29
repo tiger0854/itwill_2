@@ -58,5 +58,17 @@
 	
 
 	
+	<!-- 수주목록 페이징 처리를 위한 쿼리 -->
+	<select id="countReceiveList" resultType="Integer">
+		SELECT COUNT(*) FROM receive
+	</select>
+	<!-- 수주목록 페이징 처리를 위한 쿼리 -->
+	
+	<!-- 출고목록 페이징 -->
+	<select id="countOutList" resultType="Integer">
+		SELECT COUNT(*) FROM outbound
+	</select>
+	<!-- 출고목록 페이징 -->
+
   
   </mapper>
