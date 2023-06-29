@@ -30,20 +30,6 @@ public class PageDAOImpl implements PageDAO {
 		return sqlSession.selectOne(NAMESPACE+".countEmpList");
 	}//countEmpList() method end
 
-	// 출근자 목록 페이징 처리
-	@Override
-	public Integer countInEmp() {
-		return sqlSession.selectOne(NAMESPACE+".countInEmp");
-	}// countInEmp() method end
-	// 퇴근자 목록 페이징 처리
-	@Override
-	public Integer countOutEmp() {
-		return sqlSession.selectOne(NAMESPACE+".countOutEmp");
-	}// countOutEmp() method end
-	
-	
-	
-	
 	@Override
 	public Integer countCustomerList(PageVO vo) {
 		return sqlSession.selectOne(NAMESPACE+".countCusList",vo);
@@ -68,6 +54,20 @@ public class PageDAOImpl implements PageDAO {
 		logger.debug("countReceiveList() 메서드 호출");
 		return sqlSession.selectOne(NAMESPACE + ".countReceiveList");
 	}
+	// 출근자 목록 페이징 처리
+	@Override
+	public Integer countInEmp() {
+		return sqlSession.selectOne(NAMESPACE+".countInEmp");
+	}// countInEmp() method end
+	// 퇴근자 목록 페이징 처리
+	@Override
+	public Integer countOutEmp() {
+		return sqlSession.selectOne(NAMESPACE+".countOutEmp");
+	}// countOutEmp() method end
+	
+	
+	
+	
 	
 	// 출고목록 페이징
 	@Override

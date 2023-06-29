@@ -197,9 +197,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}// getEmpSalaryInfo() method end
 /////////////////////////////////////////급여동작////////////////////////////////////////////////////	
 	
-	
-/////////////////////////////////////////사원휴가////////////////////////////////////////////////////
-	
+/////////////////////////////////////////휴가동작////////////////////////////////////////////////////	
 	// 나의 휴가 리스트 출력
 	@Override
 	public List<EmployeevacationVO> myvacationList(int employee_id) {
@@ -222,7 +220,77 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		logger.debug("vacationim()!");
 		EmployeevacationVO resultEVO = sqlSession.selectOne((NAMESPACE)+".vacationim", vacation_id);
 		return resultEVO;
-	}// vacationim() method end
+	}
+/////////////////////////////////////////휴가동작////////////////////////////////////////////////////	
+
+	
+/////////////////////////////////////////AJAX동작////////////////////////////////////////////////////
+	
+	// 일자별 사원 출근 현황 출력
+	@Override
+	public List<EmployeeCheckVO> getCheckList(Timestamp date_time, int employee_id) {
+		logger.debug("getCheckList()!!");
+		EmployeeCheckVO vo = new EmployeeCheckVO();
+		vo.setDate_time(date_time);
+		vo.setEmployee_id(employee_id);
+		return sqlSession.selectList(NAMESPACE+".getCheckList", vo);
+	}// getCheckList() method end
+
+	// 출근인원 조회
+	@Override
+	public List<EmployeeCheckVO> getInEmp() {
+		logger.debug("getInEmp()!!");
+		return sqlSession.selectList(NAMESPACE+".getInEmp");
+	}// getInEmp() method end
+	// 퇴근인원 조회
+	@Override
+	public List<EmployeeCheckVO> getOutEmp() {
+		logger.debug("getOutEmp()!!");
+		return sqlSession.selectList(NAMESPACE+".getOutEmp");
+	}// getOutEmp() method end
+	
+	// 출근인원 조회 페이징
+	@Override
+	public List<EmployeeCheckVO> getInEmp(PageVO vo) {
+		logger.debug("getInEmp()!!");
+		return sqlSession.selectList(NAMESPACE+".getInEmpPage",vo);
+	}// getInEmp() method end
+	// 퇴근인원 조회 페이징
+	@Override
+	public List<EmployeeCheckVO> getOutEmp(PageVO vo) {
+		logger.debug("getOutEmp()!!");
+		return sqlSession.selectList(NAMESPACE+".getOutEmpPage",vo);
+	}// getOutEmp() method end
+
+	
+	// 필터링
+	// 부서
+	@Override
+	public List<EmployeeVO> getEmpList_department_name(String department_name) {
+		logger.debug("getEmpList_department_name()!!");
+		return sqlSession.selectList(NAMESPACE+".getEmpList_department_name",department_name);
+	}// getEmpList_department_name() method end
+	// 직위
+	@Override
+	public List<EmployeeVO> getEmpList_position(String position) {
+		logger.debug("getEmpList_position()!!");
+		return sqlSession.selectList(NAMESPACE+".getEmpList_position",position);
+	}// getEmpList_position() method end
+	// 재직현황
+	@Override
+	public List<EmployeeVO> getEmpList_employee_status(String employee_status) {
+		logger.debug("getEmpList_employee_status()!!");
+		return sqlSession.selectList(NAMESPACE+".getEmpList_employee_status",employee_status);
+	}// getEmpList_employee_status() method end
+	// 이름
+	@Override
+	public List<EmployeeVO> getEmpList_employee_name(String employee_name) {
+		logger.debug("getEmpList_employee_name()!!");
+		return sqlSession.selectList(NAMESPACE+".getEmpList_employee_name",employee_name);
+	}// getEmpList_employee_name() method end
+	
+
+/////////////////////////////////////////AJAX동작////////////////////////////////////////////////////
 
 
 
