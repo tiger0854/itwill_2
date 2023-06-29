@@ -135,8 +135,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	// 나의 휴가 리스트 출력
 	@Override
-	public List<EmployeevacationVO> myvacationList() {	
-		return edao.myvacationList();
+	public List<EmployeevacationVO> myvacationList(int employee_id) {	
+		System.out.println("service.employee_id"+employee_id);
+		return edao.myvacationList(employee_id);
 	}// myvacationList() method end
 
 	

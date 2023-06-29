@@ -133,6 +133,14 @@ public class MemberController {
 		// 0609, 페이지 이동간에 정보전달 방법 찾아본 후 마저 코드 짜기. // 해결
 		EmployeeVO evo = eService.getEmployee(employee_id);
 		model.addAttribute("evo",evo);
+		employee_id = evo.getEmployee_id();
+		
+		// 서비스 - DB에 저장된 글 정보를 가져오기
+		List<EmployeevacationVO> myvacationList = eService.myvacationList(employee_id);
+		logger.debug("myvacationList", myvacationList);
+		// 연결된 뷰페이지로 전달(뷰-출력)
+		model.addAttribute("myvacationList", myvacationList);
+		
 	}//employeeInfoGET() method end
 	
 	@RequestMapping(value = "/info", method = RequestMethod.POST) // 0609, 모르겠음. 일단 GET > POST로 시도 // 해결
@@ -141,6 +149,7 @@ public class MemberController {
 		logger.debug("vo > "+vo);
 		
 		 eService.updateEmployee(vo);
+		 
 		return "redirect:/emp/info?employee_id="+vo.getEmployee_id();
 	}// employeeUpdate() method end
 	
@@ -316,12 +325,12 @@ public class MemberController {
 			logger.debug("myvacation() 호출!");
 			logger.debug("result :"+result);
 			
-			// 서비스 - DB에 저장된 글 정보를 가져오기
-			List<EmployeevacationVO> myvacationList = eService.myvacationList();
-			logger.debug("myvacationList", myvacationList);
-			// 연결된 뷰페이지로 전달(뷰-출력)
-			model.addAttribute("myvacationList", myvacationList);
-			return "/emp/myvacationList";
+//			 서비스 - DB에 저장된 글 정보를 가져오기
+//			List<EmployeevacationVO> myvacationList = eService.myvacationList();
+//			logger.debug("myvacationList", myvacationList);
+//			// 연결된 뷰페이지로 전달(뷰-출력)
+//			model.addAttribute("myvacationList", myvacationList);
+		return "/emp/myvacationList";
 		}
 		
 		
@@ -332,9 +341,15 @@ public class MemberController {
 		// 휴가 신청 페이지	
 		// 글쓰기 - /emp/regist (GET)
 		@RequestMapping(value = "/vacationregist", method = RequestMethod.GET)
-		public void vacationregist(Model model) throws Exception{
+		public String vacationregist(Model model,EmployeevacationVO vvo) throws Exception{
 			logger.debug("vacationregist() 호출!");
 			logger.debug("/emp/vacationregist.jsp페이지 이동");
+			logger.debug("@@@@@@@@@@@@@@@@@@@" + vvo);
+			model.addAttribute("vvo", vvo);
+			model.addAttribute("employee_id", vvo.getEmployee_id());
+			
+			return "/emp/vacationregist";
+			
 		}
 	
 		// 글쓰기 - /emp/regist (POST)
@@ -399,7 +414,7 @@ public class MemberController {
 			logger.debug("/emp/vacationdelete.jsp페이지 이동");
 			// 서비스 - 휴가 삭제 동작 호출
 			eService.vacationdelete(vacation_id);
-			return "redirect:/emp/vacationlist?vacation_id="+vacation_id;
+			return "redirect:/emp/info?vacation_id="+vacation_id;
 		}
 		
 		

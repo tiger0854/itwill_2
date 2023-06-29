@@ -21,6 +21,14 @@
           <th>휴가관리</th>
           <th>휴가시작일</th>
           <th>휴가종료일</th>
+          <th>휴가 사유</th>
+          <th>휴가 승인여부</th>
+          <th>휴가 승인자</th>
+          <th>휴가 대체인</th>
+          <th>사원명</th>
+          <th>휴가 승인일자</th>
+          <th>휴가 신청일자</th>
+          <th>연차 일 수</th>
         </tr>
       </thead>
       <c:forEach var="mvc" items="${myvacationList }">
@@ -33,6 +41,14 @@
 	          <td>${mvc.vacation_management }</td>
 	          <td>${mvc.vacation_start }</td>
 	          <td>${mvc.vacation_finish}</td>
+	          <td>${mvc.vacation_reason}</td>
+	          <td>${mvc.approve}</td>
+	          <td>${mvc.approve_emp}</td>
+	          <td>${mvc.subsitute}</td>
+	          <td>${mvc.employee_name}</td>
+	          <td>${mvc.approve_date}</td>
+	          <td>${mvc.prop_date}</td>
+	          <td>${mvc.vacation_date}</td>
 	        </tr>
 	        <!-- 다른 휴가 내역을 여기에 추가 -->
 	      </tbody>

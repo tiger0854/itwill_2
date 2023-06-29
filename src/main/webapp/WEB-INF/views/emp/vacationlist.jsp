@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>휴가관리리스트</title>
+<title>사원 휴가관리</title>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <script>
 function vacationmodify(vacation_id) {
@@ -23,7 +23,7 @@ function vacationdelete(vacation_id) {
 </head>
 <body id="body-pd" style="font-family: 'TheJamsil5';">
 <jsp:include page="../common/header.jsp"/>
-	<h1>휴가관리리스트페이지(관리자)</h1>
+	<h1>사원 휴가관리</h1>
 <%-- 	${vacationList } --%>
 <%-- ${vc.employee_id} --%>
 
@@ -46,7 +46,7 @@ function vacationdelete(vacation_id) {
 		</tr>
 		<c:forEach var="vc" items="${vacationList}">
 			<tr>
-				<td>${vc.employee_id }</td>
+				<td><a href="/emp/info?employee_id=${vc.employee_id}">${vc.employee_id }</td>
 				<td>${vc.employee_name }</td>
 				<td>${vc.approve_date }</td>
 				<td>${vc.prop_date }</td>

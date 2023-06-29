@@ -10,7 +10,22 @@
 
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+function vacationmodify(vacation_id) {
+	  var popupUrl = '/emp/vacationmodify?vacation_id='+vacation_id;
+	  window.open(popupUrl, '_blank', 'width=500,height=600,left=100, top=100');
+	}
+</script>
+<script>
+function vacationdelete(vacation_id) {
+	if(confirm("정말로 삭제하시겠습니까?")){
+		location.href='/emp/vacationdelete?vacation_id='+vacation_id;
+	}
+
+}
+</script>
 <script type="text/javascript">
+
 $(document).ready(function(){
 	$('#update').on('click',function(){
 		alert('수정 진행');
@@ -44,8 +59,28 @@ $(document).ready(function(){
 	$("#department_name").val("${evo.department_name}").prop("selected", true); 
 	$("#employee_status").val("${evo.employee_status}").prop("selected", true); 
 	
+
+	$('#btn').on('click', function(){
+	  var employee_id = '${evo.employee_id}';
+	  var position = '${evo.position}';
+	  var department_name = '${evo.department_name}';
+	  var phone_num = '${evo.phone_num}';
+	  var employee_name = '${evo.employee_name}';
+		    
+	  var url = '/emp/vacationregist?employee_id=' + employee_id +
+		        '&position=' + position +
+		        '&department_name=' + department_name +
+		        '&phone_num=' + phone_num + '&employee_name=' + employee_name;  
+	    window.open(
+	    		
+	    url,'_blank', 'width=600,height=500');
+	  });
+
+	   
 	});// jQ end
 
+	
+	
 </script>
 </head>
 <body id="body-pd" style="font-family: 'TheJamsil5';">
@@ -53,6 +88,13 @@ $(document).ready(function(){
 	<div>
 	<br>
 	    <h1>사원 정보</h1>
+	    
+<%-- 	    ${evo.employee_id} --%>
+<%-- 	    ${evo.position} --%>
+<%-- 	    ${evo.department_name} --%>
+<%-- 	    ${evo.phone_num} --%>
+	     
+	    
 <%-- 	    	    ${evo } --%>
 	    <form action="" method="post">
 	    <input type="hidden" name="employee_id" value="${evo.employee_id }">
@@ -152,7 +194,47 @@ $(document).ready(function(){
 		</table>
 	 </div>
 
-    
+    <div class="table table-striped">
+    <h1>나의휴가 내역</h1>
+    <table class="table table-striped" style="margin-top: 10px;">
+      <thead>
+        <tr>
+          <th>사원아이디</th>
+          <th>직위</th>
+          <th>부서</th>
+          <th>휴대폰번호</th>
+          <th>휴가관리</th>
+          <th>휴가시작일</th>
+          <th>휴가종료일</th>
+          <td>수정</td>
+		  <td>삭제</td>
+        </tr>
+      </thead>
+      <c:forEach var="mvc" items="${myvacationList }">
+	      <tbody>
+	        <tr>
+	          <td><a href="/emp/info?employee_id=${mvc.employee_id}">${mvc.employee_id }</td>
+	          <td>${mvc.position }</td>
+	          <td>${mvc.department_name }</td>
+	          <td>${mvc.phone_num }</td>
+	          <td>${mvc.vacation_management }</td>
+	          <td>${mvc.vacation_start }</td>
+	          <td>${mvc.vacation_finish}</td>
+	          <td><button onclick="vacationmodify('${mvc.vacation_id}')">수정하기</button></td>
+			  <td><button onclick="vacationdelete('${mvc.vacation_id}')">삭제하기</button></td>
+	        </tr>
+	        <!-- 다른 휴가 내역을 여기에 추가 -->
+	      </tbody>
+      </c:forEach>
+    </table>
+  </div>
+  
+
+  <input type="button" value="휴가신청하기" id="btn">
+  
+  
+
+ 
 </body>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>

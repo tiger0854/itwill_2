@@ -55,7 +55,7 @@ public interface EmployeeService {
 	public void insertVacation(EmployeevacationVO vvo);
 	
 	// 나의 휴가 리스트 출력
-	public List<EmployeevacationVO> myvacationList();
+	public List<EmployeevacationVO> myvacationList(int employee_id);
 	
 	// 휴가 수정
 	public Integer vacationmodify(EmployeevacationVO vvo);

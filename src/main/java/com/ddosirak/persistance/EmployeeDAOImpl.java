@@ -178,9 +178,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	
 	// 나의 휴가 리스트 출력
 	@Override
-	public List<EmployeevacationVO> myvacationList() {
-		logger.debug("myvacationList()!");
-		List<EmployeevacationVO> myvacationList = sqlSession.selectList(NAMESPACE+".vacationList");
+	public List<EmployeevacationVO> myvacationList(int employee_id) {
+		logger.debug("@@@@@implmyvacationList(int employee_id)!"+employee_id);
+		List<EmployeevacationVO> myvacationList = sqlSession.selectList(NAMESPACE+".myvacationList",employee_id);
 		return myvacationList;
 	}// myvacationList() method end
 

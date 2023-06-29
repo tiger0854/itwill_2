@@ -84,8 +84,8 @@
   	
   	<!-- 나의 휴가 목록 출력 -->
   	<select id="myvacationList" resultType="com.ddosirak.domain.EmployeevacationVO">
-  		SELECT * FROM emp_vacation 
-  	</select>
+  		SELECT * FROM emp_vacation WHERE employee_id=#{employee_id}
+  	</select>	
   	<!-- 나의 휴가 목록 출력 -->
   	
   	<!-- 휴가 수정 -->
