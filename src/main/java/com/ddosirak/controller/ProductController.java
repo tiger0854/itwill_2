@@ -17,14 +17,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddosirak.domain.CookAddVO;
 import com.ddosirak.domain.CookVO;
+import com.ddosirak.domain.IntegrationCodeVO;
 import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.LineVO;
+import com.ddosirak.domain.MaterialdetailVO;
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.ProOrderVO;
 import com.ddosirak.domain.ProductionPerformanceVO;
@@ -32,6 +35,8 @@ import com.ddosirak.persistance.ProductionPerformanceDAO;
 import com.ddosirak.service.CookOrderService;
 import com.ddosirak.service.ItemdetailService;
 import com.ddosirak.service.LineService;
+import com.ddosirak.service.MaterialdetailService;
+import com.ddosirak.service.MaterialsService;
 import com.ddosirak.service.ProOrderService;
 import com.ddosirak.service.ProductionPerformanceService;
 
@@ -62,6 +67,8 @@ public class ProductController {
 	private LineService lService;
 	@Inject
 	private CookOrderService cService;
+	@Inject
+	private MaterialdetailService mservice;
 	// 동작 구현 > 메서드 설계
 
 ///////////////////////////////////////////////////생산관리//////////////////////////////////////////////////////////////////////////////
@@ -650,6 +657,91 @@ public class ProductController {
 		logger.debug("productEtcRemoveGET() 호출![]~(￣▽￣)~*");
 		cService.cooketcDelete(cook_id);
 		return "redirect:/pro/cooketcstatusList?co_code="+co_code;
+	}// productEtcWriteGET() method end
+		// 생산관리 - 실적 삭제
+	
+	
+	// http://localhost:8088/pro/costatusEnd
+	@RequestMapping(value = "/costatusEnd", method = RequestMethod.GET)
+	public String costatusEndGET(HttpServletRequest request) {
+		logger.debug("productEtcRemoveGET() 호출![]~(￣▽￣)~*");
+		String co_code = request.getParameter("co_code");
+		cService.costatusEnd(co_code);
+		return "redirect:/pro/cooketcstatusList?co_code="+co_code;
+	}// productEtcWriteGET() method end
+	
+	
+	
+	
+	// ------------------------ materialList(자재목록) -------------------------------
+	
+	// 	// http://localhost:8088/pro/materialList
+	@RequestMapping(value = "/materialList", method = RequestMethod.GET)
+	public void materialList(HttpServletRequest request, Model model,PageVO pageVO) {
+
+		String material_code = request.getParameter("material_code");
+		String material_name = request.getParameter("material_name");
+		String material_type = request.getParameter("material_type");
+		
+		Map<String, Object> instrSearch = new HashMap<String, Object>();
+		instrSearch.put("material_code", material_code);
+		instrSearch.put("material_name", material_name);
+		instrSearch.put("material_type", material_type);
+
+		// ================================페이징 처리를 위한 값 받아오기
+		// 동작========================================
+		// 준비물 : Inject > PageVO , 파라미터값 PageVO pageVO, HttpServletRequest request
+		// 리스트를 반환하는 DAO - Service 메서드에 PageVO 추가, 쿼리에 LIMIT #{startRow}, #{pageSize}
+		// 추가.
+		// 페이징 처리
+		// 한 화면에 보여줄 글 개수 설정
+		int pageSize = 5; // sql문에 들어가는 항목
+		// 현페이지 번호 가져오기
+		String pageNum = request.getParameter("pageNum");
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		// 페이지번호를 정수형으로 변경
+		int currentPage = Integer.parseInt(pageNum);
+		pageVO.setPageSize(pageSize);
+		pageVO.setPageNum(pageNum);
+		pageVO.setCurrentPage(currentPage);
+		int startRow = (pageVO.getCurrentPage() - 1) * pageVO.getPageSize() + 1; // sql문에 들어가는 항목
+		int endRow = startRow + pageVO.getPageSize() - 1;
+
+		pageVO.setStartRow(startRow - 1); // limit startRow (0이 1열이기 때문 1을 뺌)
+		pageVO.setEndRow(endRow);
+		int count = mservice.materialCount(instrSearch);
+		logger.debug("글갯수 @@@@@@@@@@2" + count);
+		// 게시글 개수 가져오기
+		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
+		int startPage = (currentPage - 1) / pageBlock * pageBlock + 1;
+		int endPage = startPage + pageBlock - 1;
+		int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
+		if (endPage > pageCount) {
+			endPage = pageCount;
+		}
+		pageVO.setCount(count);
+		pageVO.setPageBlock(pageBlock);
+		pageVO.setStartPage(startPage);
+		pageVO.setEndPage(endPage);
+		pageVO.setPageCount(pageCount);
+
+		model.addAttribute("pageVO", pageVO);
+		logger.debug("startRow @@@@@@@@@@2" + startRow);
+		logger.debug("pageSize @@@@@@@@@@2" + pageSize);
+
+		List<MaterialdetailVO> materialList = null;
+		if (material_code == null) {
+			logger.debug("전체 조회");
+			materialList = mservice.mdList(pageVO);
+		} else {
+			logger.debug("검색 조회");
+			materialList = mservice.mdList(pageVO, instrSearch, model);
+		}
+		logger.debug("resultlist 개수 : " + materialList.size());
+		model.addAttribute("Search", instrSearch);
+		model.addAttribute("materialList", materialList);
 	}// productEtcWriteGET() method end
 		// 생산관리 - 실적 삭제
 	

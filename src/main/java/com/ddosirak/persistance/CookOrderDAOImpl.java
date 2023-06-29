@@ -188,6 +188,13 @@ public class CookOrderDAOImpl implements CookOrderDAO {
 	public Integer getCrefCount(String co_code) {
 		return sqlSession.selectOne(NAMESPACE+".getCrefcount", co_code);
 	}
+	
+	// 조리실적 수동마감
+	@Override
+	public void codatatusEnd(String co_code) {
+		// TODO Auto-generated method stub
+		sqlSession.selectOne(NAMESPACE+".cookturnend", co_code);
+	}
 
 
 

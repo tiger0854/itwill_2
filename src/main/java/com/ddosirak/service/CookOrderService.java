@@ -53,6 +53,9 @@ public interface CookOrderService {
 	
 	//조리지시 실적등록 - 생산수량 증가
 	public void addcpQTY(CookAddVO cavo);
+	
+	// 실적 수동마감
+	public void costatusEnd(String co_code);
 
 	
 

@@ -82,6 +82,9 @@ public interface CookOrderDAO {
 	
 	// 조리실적 갯수
 	public Integer getCrefCount(String co_code);
+	
+	// 조리실적 수동마감
+	public void codatatusEnd(String co_code);
 
 	
 

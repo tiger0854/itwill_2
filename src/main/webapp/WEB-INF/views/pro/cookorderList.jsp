@@ -25,8 +25,8 @@ function orderedit(co_code) {
 
 
 //품명 검색 팝업창
-function openItem(){
-    window.open("/pro/itemList","popup", "width=500, height=600,left=100, top=100");
+function openmaterial(){
+    window.open("/pro/materialList","popup", "width=500, height=600,left=100, top=100");
 }
 
 
@@ -76,9 +76,9 @@ function cookOrderDelete(co_code){
 				<td>자재코드</td>
 				<td>
 				<label>
-				  <input type="text" id="item_code" name="material_code" placeholder="자재코드" onclick="openItem()" width="100%" readonly>
+				  <input type="text" id="material_code" name="material_code" placeholder="자재코드" onclick="openmaterial()" width="100%" readonly>
 				  <i class='bx bx-search-alt-2'></i>  
-				  <input type="text" id="item_name" placeholder="자재이름" style="border:1px solid" readonly>
+				  <input type="text" id="material_name" placeholder="자재이름" style="border:1px solid" readonly>
 				</label></td>
 				<td>지시상태</td>
 				<td colspan="8">

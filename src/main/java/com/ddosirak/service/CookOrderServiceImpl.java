@@ -150,6 +150,12 @@ public class CookOrderServiceImpl implements CookOrderService {
 		cdao.addcpQTY(cavo);
 	}
 
+	// 조리실적 수동마감
+	@Override
+	public void costatusEnd(String co_code) {
+		cdao.codatatusEnd(co_code);
+	}
+
 
 
 

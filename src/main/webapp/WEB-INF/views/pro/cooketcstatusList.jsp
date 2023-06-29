@@ -11,9 +11,9 @@
 <script>
 	function etcwrite(co_code) {
 		
-		var wo_status = "${pvo.wo_status}";
+		var co_status = "${cvo.co_status}";
 		
-		if(wo_status === "마감") {
+		if(co_status === "마감") {
 			alert("마감된 지시입니다!");
 		}else{
 		
@@ -41,9 +41,9 @@
 	}
 	
 // 	wostatus
-	function wostatus(wo_code) {
+	function costatus(co_code) {
 		if(confirm("수동 마감하 시겠습니까?")){
-			location.href = '/pro/wostatusEnd?wo_code='+wo_code;
+			location.href = '/pro/costatusEnd?co_code='+co_code;
 			alert("수동마감 완료!");
 		}
 	}
@@ -104,7 +104,7 @@
   </table>
 				<!-- 작업지시목록 검색, 등록버튼 -->
 				<div class=btn-container>
-					<button class=btn-search onclick="wostatus('${param.co_code }')">수동마감</button>
+					<button class=btn-search onclick="costatus('${param.co_code }')">수동마감</button>
 					<button class=btn-add onclick="etcwrite('${param.co_code }')">
 						<i class='bx bx-plus-medical'></i> 실적등록
 					</button>
