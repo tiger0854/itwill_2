@@ -70,5 +70,19 @@
 	</select>
 	<!-- 출고목록 페이징 -->
 
+	<!-- 출근사원수 -->
+  	<select id="countInEmp" resultType="Integer">
+  		SELECT COUNT(*) FROM emp_check 
+  		WHERE DATE(date_time) = DATE(NOW()) AND emp_in IS NOT NULL 
+  		ORDER BY date_time DESC 
+  	</select>
+  	<!-- 출근사원수 -->
+  	<!-- 퇴근사원수 -->
+  	<select id="countOutEmp" resultType="Integer">
+  		SELECT COUNT(*) FROM emp_check  
+  		WHERE DATE(date_time) = DATE(NOW()) AND emp_out IS NOT NULL 
+  		ORDER BY date_time DESC 
+  	</select>
+  	<!-- 퇴근사원수 -->
   
   </mapper>

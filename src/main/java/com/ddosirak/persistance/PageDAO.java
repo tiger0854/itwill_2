@@ -21,6 +21,10 @@ public interface PageDAO {
 	
 	// 출고목록 페이징처리
 	public Integer countOutList();
+	// 출근자 페이징 처리
+	public Integer countInEmp();
+	// 퇴근자 페이징 처리
+	public Integer countOutEmp();
 
 	
 }// public interface end

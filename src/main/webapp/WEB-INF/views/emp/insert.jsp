@@ -9,38 +9,38 @@
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
-// function checkFile(el){ //파일 용량 & 확장자 체크
-// 	//파일 정보 얻기
-// 	var file = el.files;
-//     var fileSize = file[0].size;
-// 	var fileName = file[0].name;
-// 	var fileLen = fileName.length;
-// 	var fileCom = fileName.lastIndexOf('.');
-// 	var fileExt = fileName.substring(fileCom, fileLen).toLowerCase();
-// 	var arrayExt = new Array(".gif", ".jpg", ".png");
-// 	var result;
+function checkFile(el){ //파일 용량 & 확장자 체크
+	//파일 정보 얻기
+	var file = el.files;
+    var fileSize = file[0].size;
+	var fileName = file[0].name;
+	var fileLen = fileName.length;
+	var fileCom = fileName.lastIndexOf('.');
+	var fileExt = fileName.substring(fileCom, fileLen).toLowerCase();
+	var arrayExt = new Array(".gif", ".jpg", ".png");
+	var result;
 	
-// 	if(fileSize > 1024 * 1024 * 10 ){ //용량을 초과했을 때
-// 		alert('10MB 이하 파일만 등록할 수 있습니다.\n\n 현재파일 용량 : ' + (Math.round(file[0].size / 1024 / 1024 * 100) / 100) + 'MB');
-// 		el.outerHTML = el.outerHTML;
-// 		}else { //용량을 초과하지 않았지만 허용하는 확장자가 아닐 경우
-// 			for(var i = 0; i < arrayExt.length; i++){
-// 				if(Object.is(fileExt, arrayExt[i])){
-// 					console.log(fileExt, arrayExt[i], i);
-// 					break;
-// 				}else{
-// 					if(i == (arrayExt.length - 1 )){
-// 						alert('gif, jpg, png 파일만 올릴 수 있습니다 \n\n 현재파일 확장자 : ' + fileExt);
-// 						console.log(fileExt, arrayExt[i], i);
-// 						el.outerHTML = el.outerHTML;
-// 						return -1;
-// 					}// if end
-// 				}// else end
-// 			}// for end
+	if(fileSize > 1024 * 1024 * 10 ){ //용량을 초과했을 때
+		alert('10MB 이하 파일만 등록할 수 있습니다.\n\n 현재파일 용량 : ' + (Math.round(file[0].size / 1024 / 1024 * 100) / 100) + 'MB');
+		el.outerHTML = el.outerHTML;
+		}else { //용량을 초과하지 않았지만 허용하는 확장자가 아닐 경우
+			for(var i = 0; i < arrayExt.length; i++){
+				if(Object.is(fileExt, arrayExt[i])){
+					console.log(fileExt, arrayExt[i], i);
+					break;
+				}else{
+					if(i == (arrayExt.length - 1 )){
+						alert('gif, jpg, png 파일만 올릴 수 있습니다 \n\n 현재파일 확장자 : ' + fileExt);
+						console.log(fileExt, arrayExt[i], i);
+						el.outerHTML = el.outerHTML;
+						return -1;
+					}// if end
+				}// else end
+			}// for end
 
-// 		}// else end
+		}// else end
 	
-// 	}// if end
+	}// if end
 	
 	$(function(){
 		$("#file1").on("change", function(event) {
@@ -65,13 +65,13 @@
 <!-- 		<form action="/emp/insert" method="post"> -->
 	    <input type="submit" value="등록" >
 	    <input type="button" value="뒤로가기" onclick="location.href='/emp/list'">
-	    <input type="file" name="employee_photo_link" id= "file1">
+	    <input type="file" name="employee_photo_link" id= "file1" onchange="checkFile(this)">
         
 	    
 		    <table class="table table-striped" style="margin-top: 10px;" >
 		
 		        <tr>
-		            <td rowspan="4"><img src="../../resources/default_profile_photo.png" alt="default_image" width="150" height="150" id="preview1"></td>
+		            <td rowspan="4"><img src="../../resources/default_profile_photo.png" alt="default_image" width="150" height="150" id="preview1"  ></td>
 		            
 		            <td>성명</td>
 		            <td><input type="text" size="50" name="employee_name"></td>

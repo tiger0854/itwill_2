@@ -32,29 +32,33 @@
 		</c:forEach>
 	</tbody>
 </table>
-<!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
-	 	<div class="pagination">			
+		<!-- -------------------------------------------------------------------------------페이징 구현부------------------------------------------------------------------------ -->
+		<ul class="pagination" id="pagination">
 			<c:choose>
 				<c:when test="${pageVO.startPage > pageVO.pageBlock}">
-					<a href="/public/boardList?pageNum=${pageVO.startPage - pageVO.pageBlock}" style="margin: 0.5em;">◀</a>
+					<li class="page-item"><a href="/emp/list?pageNum=${pageVO.startPage - pageVO.pageBlock}"
+						class="page-link">이전</a></li>
 				</c:when>
 				<c:otherwise>
 				</c:otherwise>
 			</c:choose>
-			
-			<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
-				<a href="/public/boardList?pageNum=${i}" <c:if test="${pageVO.pageNum eq i}">class="active"</c:if> style="margin: 0.5em;">${i}</a>
+
+			<c:forEach var="i" begin="${pageVO.startPage}"
+				end="${pageVO.endPage}" step="1">
+				<li class="page-item<c:if test="${pageVO.pageNum eq i}"> active</c:if>">
+				<a href="/emp/list?pageNum=${i}" class="page-link">${i}</a></li>
 			</c:forEach>
-			
+
 			<c:choose>
 				<c:when test="${pageVO.endPage < pageVO.pageCount}">
-					<a href="/public/boardList?pageNum=${pageVO.startPage + pageVO.pageBlock}" style="margin: 0.5em;">▶</a>
+					<li class="page-item"><a href="/emp/list?pageNum=${pageVO.startPage + pageVO.pageBlock}"
+						class="page-link">다음</a></li>
 				</c:when>
 				<c:otherwise>
 				</c:otherwise>
 			</c:choose>
-		</div>
-<!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
+		</ul>
+		<!-- -------------------------------------------------------------------------------페이징 구현부--------------------------------------------------------------------------- -->
 
 
 </body>

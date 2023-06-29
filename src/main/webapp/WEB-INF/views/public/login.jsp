@@ -26,6 +26,18 @@ $(document).ready(function(){
 		alert('로그인 실패!');
 // 		hold()
 	}// if end
+	if(data == "OUTFAIL" ){
+		alert('퇴근확인 실패!');
+// 		hold()
+	}// if end
+	if(data == "EMPOUT" ){
+		alert('퇴근 확인!');
+// 		hold()
+	}// if end
+	if(data == "INSUCC" ){
+		alert('출근 확인!');
+// 		hold()
+	}// if end
 	
 });// jQ end
 
