@@ -158,18 +158,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	
 	
-/////////////////////////////////////////급여동작////////////////////////////////////////////////////
 	
-/////////////////////////////////////////휴가 동작////////////////////////////////////////////////////
 	
-	// 사원목록 출력
+/////////////////////////////////////////급여동작////////////////////////////////////////////////////	
+	
+/////////////////////////////////////////휴가동작////////////////////////////////////////////////////
 	
 	// 사원휴가 리스트 출력(관리자)
 	@Override
 	public List<EmployeevacationVO> vacationList() {
 		return edao.vacationList();
 	} // vacationList() method end
-
+	
 	// 사원휴가 신청
 	@Override
 	public void insertVacation(EmployeevacationVO vvo) {
@@ -179,8 +179,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	// 나의 휴가 리스트 출력
 	@Override
-	public List<EmployeevacationVO> myvacationList() {	
-		return edao.myvacationList();
+	public List<EmployeevacationVO> myvacationList(int employee_id) {	
+		System.out.println("service.employee_id"+employee_id);
+		return edao.myvacationList(employee_id);
 	}// myvacationList() method end
 
 	
@@ -259,7 +260,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 
 /////////////////////////////////////////AJAX동작////////////////////////////////////////////////////
-
+	// 휴가 삭제 // 나중에 올리기
+	@Override
+	public void vacationdelete(Integer vacation_id) {
+		edao.vacationdelete(vacation_id);
+	}
 	
+	
+	
+	
+	
+	
+	
+/////////////////////////////////////////휴가동작////////////////////////////////////////////////////
 
 } // public class end

@@ -94,15 +94,15 @@
 
   	<!-- 사원 휴가 신청  -->
   	<insert id="insertVacation">
-	insert into emp_vacation (employee_id, position, department_name, phone_num, vacation_management, vacation_start,vacation_finish)
-	values(#{employee_id},#{position},#{department_name},#{phone_num},#{vacation_management},#{vacation_start},#{vacation_finish})
+	insert into emp_vacation (employee_id, position, department_name, phone_num, vacation_management, vacation_start,vacation_finish,vacation_reason,approve,approve_emp,subsitute,employee_name,vacation_date,approve_date,prop_date)
+	values(#{employee_id},#{position},#{department_name},#{phone_num},#{vacation_management},#{vacation_start},#{vacation_finish},#{vacation_reason},#{approve},#{approve_emp},#{subsitute},#{employee_name},#{vacation_date},#{approve_date},#{prop_date})
   	</insert>
   	<!-- 사원 휴가 신청  -->
   	
   	<!-- 나의 휴가 목록 출력 -->
   	<select id="myvacationList" resultType="com.ddosirak.domain.EmployeevacationVO">
-  		SELECT * FROM emp_vacation 
-  	</select>
+  		SELECT * FROM emp_vacation WHERE employee_id=#{employee_id}
+  	</select>	
   	<!-- 나의 휴가 목록 출력 -->
   	
   	<!-- 휴가 수정 -->
@@ -119,6 +119,13 @@
 		SELECT * FROM emp_vacation WHERE vacation_id=#{vacation_id}
   	</select>
   	<!-- 휴가 수정 정보 조회 -->
+  	
+  	<!-- 휴가 삭제 -->
+  	<delete id="vacationdelete" parameterType="Integer">
+  		DELETE FROM emp_vacation WHERE vacation_id=#{vacation_id}
+  	</delete>
+  	<!-- 휴가 삭제 -->
+  	
   	<!-- 급여 정보 등록 -->
   	<update id="salaryInsert">
 		 UPDATE emp_main

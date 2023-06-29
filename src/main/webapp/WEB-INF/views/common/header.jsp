@@ -46,6 +46,7 @@ function foundDropdown() {
 	  collapseSale.classList.toggle('show');
 	}
 
+
 document.addEventListener("DOMContentLoaded", function(event) {
 
 	const showNavbar = (toggleId, navId, bodyId, headerId) =>{
@@ -54,6 +55,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	bodypd = document.getElementById(bodyId),
 	headerpd = document.getElementById(headerId)
 
+	const linkVacationHistory = document.getElementById('collapseSale');
+	
 	// Validate that all variables exist
 	if(toggle && nav && bodypd && headerpd){
 	toggle.addEventListener('click', ()=>{
@@ -75,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	const linkColor = document.querySelectorAll('.nav_link')
 
 	function colorLink(){
-	if(linkColor){
+	if(linkColor){	
 	linkColor.forEach(l=> l.classList.remove('active'))
 	this.classList.add('active')
 	}
