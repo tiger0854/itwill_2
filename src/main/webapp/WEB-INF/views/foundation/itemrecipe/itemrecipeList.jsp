@@ -29,9 +29,15 @@
 		}
 	}
 
-	//레시피 검색 팝업창
+	//레시피 검색 팝업창 ()
 	function openItem() {
-		window.open("/foundation/itemrecipe/itemrecipeItemList", "popup",
+		window.open("/pro/itemList", "popup",
+				"width=500, height=600,left=100, top=100");
+	}
+	
+	//레시피 검색 팝업창 (자재)
+	function openMaterialItem() {
+		window.open("/foundation/itemrecipe/materialItemList", "popup",
 				"width=500, height=600,left=100, top=100");
 	}
 </script>
@@ -66,13 +72,20 @@
 						border="1">
 						<!--  품번, 품명, 자재유형(완제품,부자재), 재고단위, 사용여부,단가 등록	 -->
 						<tr>
+							<th>품번</th>
+							<td><input type="text" name="item_code" id="item_code"
+								placeholder="품번" onclick="openItem();"></td>
 							<th>품명</th>
 							<td><input type="text" name="item_name" id="item_name"
 								placeholder="품명" onclick="openItem();">
 							<td>
-							<th>품번</th>
-							<td><input type="text" name="item_code" id="item_code"
-								placeholder="품번" readonly></td>
+							<th>자재코드</th>
+							<td><input type="text" name="material_code" id="material_code"
+								placeholder="자재번호" onclick="openMaterialItem();">
+							<td>
+							<th>자재명</th>
+							<td><input type="text" name="material_name" id="material_name"
+								placeholder="자재명" onclick="openMaterialItem();"></td>
 						</tr>
 					</table>
 				</div>
@@ -126,17 +139,17 @@
 			style="margin-top: 20px;">
 			<c:if test="${pageVO.startPage > pageVO.pageBlock}">
 				<li class="page-item"><a class="page-link"
-					href="/foundation/itemrecipe/itemrecipeList?item_code=${Search.item_code }&item_name=${Search.item_name }&pageNum=${pageVO.startPage - pageVO.pageBlock}"><sapn>
+					href="/foundation/itemrecipe/itemrecipeList?item_code=${Search.item_code }&item_name=${Search.item_name }&material_code=${Search.material_code }&material_name=${Search.material_name }&pageNum=${pageVO.startPage - pageVO.pageBlock}"><sapn>
 						< </sapn></a></li>
 			</c:if>
 			<c:forEach var="i" begin="${pageVO.startPage}"
 				end="${pageVO.endPage}" step="1">
 				<li class="page-item"><a class="page-link"
-					href="/foundation/itemrecipe/itemrecipeList?item_code=${Search.item_code }&item_name=${Search.item_name }&pageNum=${i}"><span>${i}</span></a></li>
+					href="/foundation/itemrecipe/itemrecipeList?item_code=${Search.item_code }&item_name=${Search.item_name }&&material_code=${Search.material_code }&material_name=${Search.material_name }&pageNum=${i}"><span>${i}</span></a></li>
 			</c:forEach>
 			<c:if test="${pageVO.endPage < pageVO.pageCount}">
 				<li class="page-item"><a class="page-link"
-					href="/foundation/itemrecipe/itemrecipeList?item_code=${Search.item_code }&item_name=${Search.item_name }&pageNum=${pageVO.startPage + pageVO.pageBlock}"><span>
+					href="/foundation/itemrecipe/itemrecipeList?item_code=${Search.item_code }&item_name=${Search.item_name }&&material_code=${Search.material_code }&material_name=${Search.material_name }&pageNum=${pageVO.startPage + pageVO.pageBlock}"><span>
 							> </span></a></li>
 			</c:if>
 		</ul>

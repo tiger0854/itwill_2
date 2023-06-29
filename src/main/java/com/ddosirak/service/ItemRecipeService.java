@@ -36,9 +36,9 @@ public interface ItemRecipeService {
 	// 상품목록 검색
 	public List<MaterialdetailVO> materialList(MaterialdetailVO vo) throws Exception;
 
-	// 상품목록 검색
-	public List<ItemRecipeListVO> itemrecipeItemList() throws Exception;
-	public List<ItemRecipeListVO> itemrecipeItemList(Map<String, Object> instrSearch, Model model) throws Exception;
+	// 자재 상품목록 검색
+	public List<MaterialdetailVO> itemrecipeItemList(PageVO pageVO) throws Exception;
+	public List<MaterialdetailVO> itemrecipeItemList(PageVO pageVO, Map<String, Object> instrSearch, Model model) throws Exception;
 
 	// 레시피 검색 갯수
 	public Integer itemrecipeCount(Map<String, Object> instrSearch) throws Exception;

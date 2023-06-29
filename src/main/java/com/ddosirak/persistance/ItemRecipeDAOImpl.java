@@ -108,14 +108,16 @@ public class ItemRecipeDAOImpl implements ItemRecipeDAO {
 	}
 
 	@Override
-	public List<ItemRecipeListVO> itemrecipeItemList() throws Exception {
+	public List<MaterialdetailVO> itemrecipeItemList(PageVO pageVO) throws Exception {
 		logger.debug("DAO : 상품목록 검색 ");
-		return sqlsession.selectList(NAMESPACE + ".itemrecipeItemList");
+		return sqlsession.selectList(NAMESPACE + ".itemrecipeItemList", pageVO);
 	}
 
 	@Override
-	public List<ItemRecipeListVO> itemrecipeItemList(Map<String, Object> instrSearch, Model model) throws Exception {
+	public List<MaterialdetailVO> itemrecipeItemList(PageVO pageVO, Map<String, Object> instrSearch, Model model) throws Exception {
 		logger.debug("DAO : 상품목록 부분검색 ");
+		instrSearch.put("startRow", pageVO.getStartRow());
+		instrSearch.put("pageSize", pageVO.getPageSize());
 		return sqlsession.selectList(NAMESPACE + ".itemrecipeItemSearchList", instrSearch);
 	}
 	
