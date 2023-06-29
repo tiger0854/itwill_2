@@ -11,7 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.ddosirak.domain.OutboundListVO;
 import com.ddosirak.domain.OutboundVO;
+import com.ddosirak.domain.PageVO;
 
 @Repository
 public class OutboundDAOImpl implements OutboundDAO {
@@ -23,61 +25,64 @@ public class OutboundDAOImpl implements OutboundDAO {
 	
 	private static final Logger logger = LoggerFactory.getLogger(OutboundDAOImpl.class);
 
-
+	// 출고등록
 	@Override
 	public void outInsert(OutboundVO vo) {
+		logger.debug("outInsert DAOImpl 시랳ㅇ~~~~~");
 		sqlSession.insert(NAMESPACE + ".outInsert", vo);
+		logger.debug("등록완료~");
 	}
 
-
+	
+	// 출고 전체 리스트
 	@Override
-	public List<OutboundVO> getOutList() {		
-		return sqlSession.selectList(NAMESPACE + ".outList");
+	public List<OutboundVO> getOutList(PageVO pageVO) {		
+		return sqlSession.selectList(NAMESPACE + ".outList",pageVO);
 	}
 	
 	
-
+	// 출고 진행중 리스트
 	@Override
-	public List<OutboundVO> getOngoingOutList() {
-		return sqlSession.selectList(NAMESPACE + ".getOngoingOutList");
+	public List<OutboundVO> getOngoingOutList(PageVO pageVO) {
+		return sqlSession.selectList(NAMESPACE + ".getOngoingOutList",pageVO);
 	}
 
-
+	// 출고 완료 리스트
 	@Override
-	public List<OutboundVO> getCompletedOutList() {
-		return sqlSession.selectList(NAMESPACE + ".getCompletedOutList");
+	public List<OutboundVO> getCompletedOutList(PageVO pageVO) {
+		return sqlSession.selectList(NAMESPACE + ".getCompletedOutList",pageVO);
 	}
 	
-
+	// 출고 상태 수정
 	@Override
-	public void updateOutState(String outNum, int newState) {
+	public void updateOutState(String out_num, int out_state) {
 		  Map<String, Object> paramMap = new HashMap<>();
-	        paramMap.put("outNum", outNum);
-	        paramMap.put("newState", newState);
+	        paramMap.put("out_num", out_num);
+	        paramMap.put("out_state", out_state);
 	        sqlSession.update(NAMESPACE + ".updateOutState", paramMap);	
 	}
 
 	
-	// 출고 번호에 따른 출고 상품 리스트
+	// 출고 번호에 따른 출고 상품  리스트
 	@Override
-	public List<OutboundVO> getOutProductList(String outNum) {
-		return sqlSession.selectList(NAMESPACE + ".outProductList", outNum);
+	public List<OutboundVO> getOutProductList(String out_num) {
+		return sqlSession.selectList(NAMESPACE + ".outProductList", out_num);
 	}
 	// 출고 번호에 따른 출고 상품 리스트
 	
 	// 상품이름 외 n 건 
 	  @Override
-	    public int getOutNumCount(String outNum) {
-	        return sqlSession.selectOne(NAMESPACE + ".getOutNumCount", outNum);
+	    public int getOutNumCount(String out_num) {
+	        return sqlSession.selectOne(NAMESPACE + ".getOutNumCount", out_num);
 	    }
 
-	  
+	  // 출고 수정
 	  @Override
 	  public Integer outboundUpdate(OutboundVO vo) {
 		  return sqlSession.update(NAMESPACE + ".outboundUpdate", vo);
 	  }
 
-
+	  // 출고 삭제
 	  @Override
 	  public Integer outboundDelete(String out_num) {
 		  return sqlSession.delete(NAMESPACE + ".outboundDelete", out_num);
@@ -85,17 +90,6 @@ public class OutboundDAOImpl implements OutboundDAO {
 	
 	
 	
-//	@Override
-//	public List<OutboundVO> getCustomerList() {		
-//		return sqlSession.selectList(NAMESPACE + ".customerList");
-//	}
-
-	// 페이징 목록 총 갯수
-	@Override
-	public int count() throws Exception {
-		return sqlSession.selectOne(NAMESPACE + ".count");
-	}
-
 
 
 

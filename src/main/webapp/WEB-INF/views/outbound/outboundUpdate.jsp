@@ -10,62 +10,52 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
 
+	//정보 전달
+	$(document).ready(function(){
+		var formObj = $("#fr");
+		
+		$(".btn-update").click(function(){
+			formObj.attr("method", "post");
+			formObj.submit();
+		});
+		
+	});
 
 	      
-	  </script>
-	  </head>
-	  <body id="body-pd" style="font-family: 'TheJamsil5';">
-	  <jsp:include page="../common/header.jsp"/>
+ </script>
+ </head>
+ <body id="body-pd" style="font-family: 'TheJamsil5';">
+ <jsp:include page="../common/header.jsp"/>
 
    
 
 
-  <h1>outboundUpdate.jsp</h1>
+  <h1>출고 수정</h1>
  
+  <form role="form" id="fr">
+  <input type="text" name="out_num" value="${vo.out_num }" readonly>
   <hr>
-  <table border="1" >
+  <table border="1" class="table table-bordered" >
    <tbody>
     <tr>
 	  <td>품목코드</td>
 	  <td>품목명</td>
-	  <td>규격</td>
+	  <td>담당자</td>
 	  <td>수량</td>
-	  <td>단가</td>
 	  <td>납기일자</td>  
  	  <td>적요</td>
     </tr>
-
-   <tr name="trProduct">
-	  <td><input type="text" name="code" placeholder="품목코드" 
-	  		onclick="location.href='productSearch.jsp'" readonly ></td>
-	  <td><input type="text" name="name" placeholder="품목명" 
-	  		onclick="location.href='productSearch.jsp'" readonly> </td>
-	  <td><input type="text" name="standard" placeholder="규격"> </td>
-	  <td><input type="text" name="count" placeholder="수량"></td>
-	  <td><input type="text" name="price" placeholder="단가"></td>
-	  <td><input type="text" name="date" placeholder="년-월-일"></td>
-	  <td><input type="text" name="notes" placeholder="적요"></td>
-	  <td colspan="8"><input type="button" value="del" id="delProduct"></td>   	
-    </tr>
-   </tbody>
-   
     <tr>
-	  <td></td>
-	  <td></td>
-	  <td></td>
-	  <td><input type="text" name="sumCount" placeholder="총수량"></td>
-	  <td><input type="text" name="sumPrice" placeholder="합계"></td>
-	  <td></td>
+	  <td><input type="text" name="item_code" value="${vo.item_code }" readonly></td>
+	  <td><input type="text" name="item_name" value="품목명" readonly></td>
+	  <td><input type="text" name="employee_name" value="담당자" readonly></td>
+	  <td><input type="text" name="out_qty" value="${vo.out_qty }"></td>
+	  <td><input type="date" name="due_date" value="${vo.due_date }"></td>
+	  <td><input type="text" name="out_notes" value="${vo.out_notes }"></td>
     </tr>
-   
   </table>
-	    <input type="button" value="add" name="addProduct">
-<!-- 		<input type="button" value="del" id="delProduct">  -->
-	
-	  
   <hr>
-
-  	<input type="submit" value="출고예정수정">
+  	<button type="submit" class="btn-update">수정</button>
   </form>
 </body>
 </html>

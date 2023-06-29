@@ -11,10 +11,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.min.css">
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.all.min.js"></script>
-<script type="text/javascript">
 
-
-</script>
 </head>
 <body id="body-pd" style="font-family: 'TheJamsil5';">
 <jsp:include page="../common/header.jsp"/>
@@ -35,20 +32,47 @@
   </tr>
   <tr>
     <td><input type="text" id="customer_code" name="customer_code" placeholder="업체코드" 
-	  		 ></td>
+	  		onclick="openChildWindow1();" ></td>
 	  <td><input type="text" id="customer_name" name="customer_name" placeholder="수주업체명" 
-	  		 > </td>
+	  		onclick="openChildWindow1();" > </td>
 	  <td><input type="text" id="item_code" name="item_code" placeholder="상품코드" 
-	  		 > </td>
+	  		onclick="openChildWindow3();" > </td>
 	  <td><input type="text" id="item_name" name="item_name" placeholder="품목명" 
-	  	> </td>
-	  <td><input type="date" name="rec_date" placeholder="년-월-일"></td>
-	  <td><input type="text" name="employee_id" placeholder="담당자"></td>
-	  <td><input type="text" name="rec_qty" placeholder="수주수량"></td>
+	   		onclick="openChildWindow3();"> </td>
+	  <td><input type="date" name="re_date" placeholder="년-월-일"></td>
+	  <td><input type="text" id="employee_id" name="employee_id" placeholder="담당자" 
+	  		onclick="openChildWindow2();"></td>
+	  <td><input type="text" name="re_qty" placeholder="수주수량"></td>
   </tr>
   </table>
     <button type="submit">수주등록</button>
   </form>
 
 </body>
+
+  <script type="text/javascript">
+
+	//팝업창 오픈
+	var popupWidth = 500;
+	var popupHeight = 400;
+	var popupX = Math.ceil(( window.screen.width - popupWidth )/2);
+	var popupY = Math.ceil(( window.screen.height - popupHeight )/2);
+		
+	function openChildWindow1() {	
+	var childWindow = window.open("/receive/customerList", "customerList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);	   
+	  }
+	
+	function openChildWindow2() {	
+	    var childWindow = window.open("/receive/empList", "empList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);		
+	  }
+	
+	function openChildWindow3() {		
+	    var childWindow = window.open("/receive/productList", "productList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
+	    childWindow.opener = window;
+	  }
+	// 팝업창 오픈
+
+
+  </script>
+
 </html>

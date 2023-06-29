@@ -26,7 +26,20 @@ public class PageDAOImpl implements PageDAO {
 		logger.debug("countEmpList() 메서드 호출");
 		return sqlSession.selectOne(NAMESPACE+".countEmpList");
 	}//countEmpList() method end
+
+	// 수주목록 페이징
+	@Override
+	public Integer countReceiveList() {
+		logger.debug("countReceiveList() 메서드 호출");
+		return sqlSession.selectOne(NAMESPACE + ".countReceiveList");
+	}
 	
+	// 출고목록 페이징
+	@Override
+	public Integer countOutList() {
+		logger.debug("countOutList() 메서드 호출");
+		return sqlSession.selectOne(NAMESPACE + ".countOutList");
+	}
 	
 
 }// public class end
