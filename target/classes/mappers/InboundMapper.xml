@@ -47,6 +47,11 @@
   	SELECT in_id,in_number,i.order_number, o.material_name,o.order_piece,in_piece,in_Epiece,in_date,in_resp,wh_code,in_state,in_expir,in_Edate
   	FROM ret_in as i JOIN ret_order as o
   	WHERE i.order_number = o.order_number 
+  		<choose>
+  				<when test="state == 'all'">AND in_state>= 0</when>
+  				<when test="state == 'ready'">AND in_state = 0</when>
+  				<when test="state == 'finish'">AND in_state = 1</when>
+  		</choose> 
  	   	<choose>
   		<when test="kind == 'number'">AND in_number</when>
   		<when test="kind == 'code'">AND wh_code</when>		

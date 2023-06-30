@@ -12,6 +12,7 @@ public class PageVO {
 	private int pageCount;
 	private int endRow;
 	private String kind;
+	private String state;
 	private String search;
 
 	// Getter / Setter
@@ -92,8 +93,12 @@ public class PageVO {
 		this.endRow = endRow;
 	}
 
-
-
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
 	// toString
 	@Override
 	public String toString() {

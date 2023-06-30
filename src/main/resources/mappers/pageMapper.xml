@@ -31,10 +31,17 @@
 	
 	<!-- 입고리스트 페이징 처리를 위한 쿼리 -->
 	<select id="countInbountList"  parameterType="com.ddosirak.domain.PageVO" resultType="Integer">
-		SELECT COUNT(*) FROM ret_in	 
+		SELECT COUNT(*) FROM ret_in	
+		
 		<choose>
-  				<when test="kind == 'code'">WHERE wh_code</when>
-  				<when test="kind == 'number'">WHERE in_number</when>
+  				<when test="state == 'all'">WHERE in_state>= 0</when>
+  				<when test="state == 'ready'">WHERE in_state = 0</when>
+  				<when test="state == 'finish'">WHERE in_state = 1</when>
+  		</choose> 
+		 
+		<choose>
+  				<when test="kind == 'code'">AND wh_code</when>
+  				<when test="kind == 'number'">AND in_number</when>
   		</choose> 
   		<if test="search != ''">	
 		LIKE CONCAT('%', #{search}, '%')
