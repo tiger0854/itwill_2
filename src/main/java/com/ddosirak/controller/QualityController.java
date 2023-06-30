@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.ddosirak.service.BoardService;
 
 @Controller
-@RequestMapping("/quality/*")
+@RequestMapping("/qc/*")
 public class QualityController {
 	// logger
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
@@ -21,10 +21,10 @@ public class QualityController {
 	private BoardService service;
 
 	///////////////////////////////// 게시판///////////////////////////////////
-	// http://localhost:8088/public/write
+	// http://localhost:8088/qc/orderList
 	// 게시판 업로드 페이지
-	@RequestMapping(value = "/qualitytest", method = RequestMethod.GET)
-	public void qualitytestListGET() {
-		logger.debug("qualitytestListGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
+	@RequestMapping(value = "/orderList", method = RequestMethod.GET)
+	public void qualityControlListGET() {
+		logger.debug("qualityControlListGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 	}
 }
