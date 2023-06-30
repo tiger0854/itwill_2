@@ -138,11 +138,12 @@ public class MemberController {
 		model.addAttribute("evo",evo);
 		employee_id = evo.getEmployee_id();
 		
+		// 주석처리
 		// 서비스 - DB에 저장된 글 정보를 가져오기
-		List<EmployeevacationVO> myvacationList = eService.myvacationList(employee_id);
-		logger.debug("myvacationList", myvacationList);
+//		List<EmployeevacationVO> myvacationList = eService.myvacationList(employee_id);
+//		logger.debug("myvacationList", myvacationList);
 		// 연결된 뷰페이지로 전달(뷰-출력)
-		model.addAttribute("myvacationList", myvacationList);
+//		model.addAttribute("myvacationList", myvacationList);
 		
 	}//employeeInfoGET() method end
 	

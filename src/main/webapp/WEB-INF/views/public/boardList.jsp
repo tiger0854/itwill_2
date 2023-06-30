@@ -36,7 +36,7 @@
 		<ul class="pagination" id="pagination">
 			<c:choose>
 				<c:when test="${pageVO.startPage > pageVO.pageBlock}">
-					<li class="page-item"><a href="/emp/list?pageNum=${pageVO.startPage - pageVO.pageBlock}"
+					<li class="page-item"><a href="/public/boardList?pageNum=${pageVO.startPage - pageVO.pageBlock}"
 						class="page-link">이전</a></li>
 				</c:when>
 				<c:otherwise>
@@ -46,12 +46,12 @@
 			<c:forEach var="i" begin="${pageVO.startPage}"
 				end="${pageVO.endPage}" step="1">
 				<li class="page-item<c:if test="${pageVO.pageNum eq i}"> active</c:if>">
-				<a href="/emp/list?pageNum=${i}" class="page-link">${i}</a></li>
+				<a href="/public/boardList?pageNum=${i}" class="page-link">${i}</a></li>
 			</c:forEach>
 
 			<c:choose>
 				<c:when test="${pageVO.endPage < pageVO.pageCount}">
-					<li class="page-item"><a href="/emp/list?pageNum=${pageVO.startPage + pageVO.pageBlock}"
+					<li class="page-item"><a href="/public/boardList?pageNum=${pageVO.startPage + pageVO.pageBlock}"
 						class="page-link">다음</a></li>
 				</c:when>
 				<c:otherwise>

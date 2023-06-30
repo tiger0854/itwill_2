@@ -169,7 +169,7 @@
 					<td rowspan="4"><img src="/img/${evo.employee_id}.png"
 						alt="profile_photo" width="150" height="150"></td>
 					<td>성명</td>
-					<td><input type="text" size="50" value="${evo.employee_name }"
+					<td><input type="text" size="40" value="${evo.employee_name }"
 						id="employee_name" name="employee_name" readonly></td>
 					<td>주민등록번호</td>
 					<td><input type="text" size="50" value="${evo.jumin}"
@@ -219,7 +219,7 @@
 				</tr>
 				<tr>
 					<td>휴대폰 번호</td>
-					<td><input type="text" size="50" value="${evo.phone_num }"
+					<td><input type="text" size="40" value="${evo.phone_num }"
 						id="phone_num" name="phone_num" readonly></td>
 					<td>내선번호</td>
 					<td><input type="text" size="50" value="${evo.line_num }"
@@ -232,7 +232,7 @@
 				</tr>
 				<tr>
 					<td>이메일</td>
-					<td><input type="text" size="50" value="${evo.email }"
+					<td><input type="text" size="40" value="${evo.email }"
 						id="email" name="email" readonly></td>
 					<td>주소</td>
 					<td><input type="text" size="30" placeholder="주소" id="address"

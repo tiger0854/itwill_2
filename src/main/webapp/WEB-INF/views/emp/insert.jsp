@@ -74,7 +74,7 @@ function checkFile(el){ //파일 용량 & 확장자 체크
 		            <td rowspan="4"><img src="../../resources/default_profile_photo.png" alt="default_image" width="150" height="150" id="preview1"  ></td>
 		            
 		            <td>성명</td>
-		            <td><input type="text" size="50" name="employee_name"></td>
+		            <td><input type="text" size="40" name="employee_name"></td>
 		            <td>주민등록번호</td>
 		            <td><input type="text" size="50" name="jumin"></td>
 		            <td>성별</td>
@@ -116,7 +116,7 @@ function checkFile(el){ //파일 용량 & 확장자 체크
 		        </tr>
 		        <tr>
 		            <td>휴대폰 번호</td>
-		            <td><input type="text" size="50" name="phone_num"></td>
+		            <td><input type="text" size="40" name="phone_num"></td>
 		            <td>내선번호</td>
 		            <td><input type="text" size="50" placeholder="내선" name="line_num"></td>
 		            <td>결혼여부</td>
@@ -128,7 +128,7 @@ function checkFile(el){ //파일 용량 & 확장자 체크
 		        </tr>
 		        <tr>
 		            <td>이메일</td>
-		            <td><input type="text" size="50" name="email"></td>
+		            <td><input type="text" size="40" name="email"></td>
 		            <td>주소</td>
 		            <td><input type="text" size="30" placeholder="주소" id="address" name="address" readonly="readonly">
 		            <input type="text" size="18" placeholder="상세주소" id="extraAddress" name="extraaddress"></td>
