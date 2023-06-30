@@ -23,6 +23,7 @@ import com.ddosirak.domain.ItemRecipeVO;
 import com.ddosirak.domain.MaterialdetailVO;
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.service.ItemRecipeService;
+import com.ddosirak.service.MaterialdetailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -33,6 +34,9 @@ public class ItemRecipeController {
 
 	@Inject
 	ItemRecipeService service;
+	
+	@Inject
+	MaterialdetailService mService;
 
 	// http://localhost:8088/foundation/itemrecipe/itemrecipeList
 	@RequestMapping(value = "/itemrecipeList", method = RequestMethod.GET)
@@ -128,14 +132,54 @@ public class ItemRecipeController {
 	// http://localhost:8088/foundation/itemrecipe/materialSerch
 	@RequestMapping(value = "/materialSearch", method = RequestMethod.GET)
 
-	public void materialSerchGET(Model model, MaterialdetailVO vo) throws Exception {
+	public void materialSerchGET(Model model, @RequestParam HashMap<String, Object> requestMap, PageVO pvo) throws Exception {
 
+		
+		logger.debug("materialSerchGET 실행");
+		
+		
+		//페이징 처리
+		int pageSize = 5; // sql문에 들어가는 항목
+		// 현페이지 번호 가져오기
+		String pageNum = (String) requestMap.get("pageNum");
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		// 페이지번호를 정수형으로 변경
+		int currentPage = Integer.parseInt(pageNum);
+		pvo.setPageSize(pageSize);
+		pvo.setPageNum(pageNum);
+		pvo.setCurrentPage(currentPage);
+		int startRow = (pvo.getCurrentPage() - 1) * pvo.getPageSize() + 1; // sql문에 들어가는 항목
+		int endRow = startRow + pvo.getPageSize() - 1;
 
-		logger.debug("idlistGET 실행");
+		pvo.setStartRow(startRow - 1); // limit startRow (0이 1열이기 때문 1을 뺌)
+		pvo.setEndRow(endRow);
+		int count = mService.materialCount(requestMap);
+		logger.debug("글갯수 @@@@@@@@@@2" + count);
+		// 게시글 개수 가져오기
+		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
+		int startPage = (currentPage - 1) / pageBlock * pageBlock + 1;
+		int endPage = startPage + pageBlock - 1;
+		int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
+		if (endPage > pageCount) {
+			endPage = pageCount;
+		}
+		requestMap.put("count", count);
+		requestMap.put("pageBlock", pageBlock);
+		requestMap.put("startPage", startPage);
+		requestMap.put("endPage", endPage);
+		requestMap.put("pageCount", pageCount);
+		requestMap.put("pageSize", pageSize);
+        requestMap.put("pageNum", pageNum);
+        requestMap.put("currentPage", currentPage);
+        requestMap.put("startRow", startRow - 1);
+        requestMap.put("endRow", endRow);
+		//페이징 처리
+		logger.debug(requestMap + "");
+		List<MaterialdetailVO> materialList = service.materialList(requestMap);
 
-		logger.debug(vo + "");
-		List<MaterialdetailVO> materialList = service.materialList(vo);
-
+		model.addAttribute("search",requestMap);
 		model.addAttribute("resultList", materialList);
 	}
 

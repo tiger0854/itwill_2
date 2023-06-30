@@ -38,9 +38,9 @@ public interface ItemRecipeDAO {
 	public void deleteItemRecipeMaterial(ItemRecipeVO vo) throws Exception;
 
 	// 상품목록 검색
-	public List<MaterialdetailVO> materialList() throws Exception;
+	public List<MaterialdetailVO> materialListAll(Map<String, Object> materialMap) throws Exception;
 
-	public List<MaterialdetailVO> materialList(MaterialdetailVO vo) throws Exception;
+	public List<MaterialdetailVO> materialListSearch(Map<String, Object> materialMap) throws Exception;
 	
 	
 	public List<ItemRecipeListVO> itemrecipeItemList() throws Exception; 

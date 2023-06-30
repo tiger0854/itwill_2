@@ -76,15 +76,15 @@ public class ItemRecipeDAOImpl implements ItemRecipeDAO {
 	}
 
 	@Override
-	public List<MaterialdetailVO> materialList(MaterialdetailVO vo) throws Exception {
+	public List<MaterialdetailVO> materialListSearch(Map<String, Object> materialMap) throws Exception {
 		logger.debug("DAO : 자재 목록 조회 : 검색");
-		return sqlsession.selectList(NAMESPACE+".materialSearch",vo);
+		return sqlsession.selectList(NAMESPACE+".materialSearch",materialMap);
 	}
 
 	@Override
-	public List<MaterialdetailVO> materialList() throws Exception {
+	public List<MaterialdetailVO> materialListAll(Map<String, Object> materialMap) throws Exception {
 		logger.debug("DAO : 자재 목록 조회 : 전체");
-		return sqlsession.selectList(NAMESPACE+".materialList");
+		return sqlsession.selectList(NAMESPACE+".materialList", materialMap);
 	}
 
 	@Override

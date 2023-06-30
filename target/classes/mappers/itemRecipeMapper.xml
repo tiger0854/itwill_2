@@ -64,7 +64,7 @@
 	<select id="selectItemRecipe" resultType="com.ddosirak.domain.ItemRecipeListVO">
 		select ir.material_code, ir.material_con, m.material_name 
 		from item_recipe ir join material_detail m
-		on ir.material_code = m.material_name
+		on ir.material_code = m.material_code
 		where item_code=#{item_code}
 	</select>
 	<update id="updateItemRecipe">
@@ -88,7 +88,8 @@
 	<!-- 자재 검색 -->
 	<select id="materialList"
 		resultType="com.ddosirak.domain.MaterialdetailVO">
-		SELECT * FROM material_detail
+		SELECT * FROM material_detail 
+		LIMIT #{startRow}, #{pageSize}
 	</select>
 
 	<select id="materialSearch"
@@ -100,6 +101,7 @@
 		#{material_name}, '%')
 		AND material_type LIKE CONCAT('%',
 		#{material_type}, '%')
+		LIMIT #{startRow}, #{pageSize}
 	</select>
 	<!-- 자재 검색 -->
 

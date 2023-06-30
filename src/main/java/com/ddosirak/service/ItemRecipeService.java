@@ -1,5 +1,6 @@
 package com.ddosirak.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +35,7 @@ public interface ItemRecipeService {
 	public void deleteItemRecipeMaterial(ItemRecipeVO vo) throws Exception;
 
 	// 상품목록 검색
-	public List<MaterialdetailVO> materialList(MaterialdetailVO vo) throws Exception;
+	public List<MaterialdetailVO> materialList(HashMap<String, Object> requestMap) throws Exception;
 
 	// 상품목록 검색
 	public List<ItemRecipeListVO> itemrecipeItemList() throws Exception;

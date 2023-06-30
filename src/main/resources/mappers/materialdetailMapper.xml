@@ -81,12 +81,13 @@
 	<select id="matCount" resultType="java.lang.Integer">
 		select count(*) from
 		material_detail
-		<if test="material_code != null and material_name != null">
-			WHERE material_code LIKE CONCAT('%',
-			#{material_code},
-			'%')
+		<if test="material_code != null and material_name != null and material_type != null">
+			WHERE material_code LIKE CONCAT
+			('%' ,#{material_code}, '%')
 			AND
 			material_name LIKE CONCAT('%', #{material_name}, '%')
+			AND
+			material_type LIKE CONCAT('%', #{material_type}, '%')	
 		</if>
 	</select>
 	<!-- 자재 검색 갯수 -->
