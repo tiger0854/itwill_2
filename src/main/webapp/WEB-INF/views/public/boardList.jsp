@@ -8,7 +8,7 @@
 <title>사내 게시판</title>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 </head>
-<body id="body-pd" style="font-family: 'TheJamsil5';">
+<body id="body-pd">
 <jsp:include page="../common/header.jsp"/>
 <h1>사내 게시판</h1>
 <button onclick="location.href='/public/write'">글쓰기</button>

@@ -34,6 +34,11 @@ public class BoardServiceImpl implements BoardService {
 	public void employeeOut(EmployeeCheckVO vo) throws Exception {
 		bdao.employeeOut(vo);
 	}// employeeIn() method end
+	// 퇴근시 일용직 퇴사처리
+	@Override
+	public Integer al_out(int employee_id) throws Exception {
+		return bdao.al_out(employee_id);
+	}//al_out() method end
 	// 출퇴근 리스트
 	@Override
 	public List<EmployeeCheckVO> getInOutList(int employee_id) throws Exception {
@@ -71,6 +76,7 @@ public class BoardServiceImpl implements BoardService {
 	public void deleteContent(int emp_bno) throws Exception{
 		bdao.deleteContent(emp_bno);
 	}// deleteContent() method end
+
 	
 
 

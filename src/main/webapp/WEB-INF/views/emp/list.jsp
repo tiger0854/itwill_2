@@ -45,7 +45,7 @@
 		<table class="table table-striped" style="margin-top: 10px;">
 			<tr>
 				<td><select name="department_name" id="department_name_search">
-							<option>선택없음</option>
+							<option value="선택없음">선택없음</option>
 						<optgroup label="생산">
 							<option value="생산과">생산과</option>
 							<option value="생산 1팀">생산 1팀</option>
@@ -61,7 +61,7 @@
 						</optgroup>
 				</select></td>
 				<td><select name="position" id="position_search">
-						<option>선택없음</option>
+						<option value="선택없음">선택없음</option>
 						<option value="이사">이사</option>
 						<option value="과장">과장</option>
 						<option value="팀장">팀장</option>
@@ -71,7 +71,7 @@
 						<option value="외주">외주</option>
 				</select></td>
 				<td><select name="employee_status" id="employee_status_search">
-						<option>선택없음</option>
+						<option value="선택없음">선택없음</option>
 						<option value="재직중">재직중</option>
 						<option value="퇴사">퇴사</option>
 						<option value="휴직중">휴직중</option>

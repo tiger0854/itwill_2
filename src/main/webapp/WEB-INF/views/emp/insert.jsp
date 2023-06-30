@@ -55,7 +55,7 @@ function checkFile(el){ //파일 용량 & 확장자 체크
 
 </script>
 </head>
-<body id="body-pd" style="font-family: 'TheJamsil5';">
+<body id="body-pd">
 <jsp:include page="../common/header.jsp"/>
 	<div>
 	<br>

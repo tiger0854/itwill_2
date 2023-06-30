@@ -199,9 +199,12 @@ public class PublicController {
 	public String inPOST(EmployeeCheckVO vo,RedirectAttributes rttr) throws Exception{
 		logger.debug("inPOST() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 		
-		bService.employeeIn(vo);
-		
-		rttr.addAttribute("result", "INSUCC");
+		if(eService.getEmployee(vo.getEmployee_id()) == null) {
+			rttr.addAttribute("result", "INFAIL");
+		}else {
+			bService.employeeIn(vo);
+			rttr.addAttribute("result", "INSUCC");
+		}// i-e end
 		
 		return "redirect:/public/login";
 	}//inPOST() method end
@@ -216,19 +219,46 @@ public class PublicController {
 	public String outPOST(EmployeeCheckVO vo,LoginVO lvo, RedirectAttributes rttr
 			,HttpSession session) throws Exception{
 		logger.debug("outPOST() 호출!(((o(*ﾟ▽ﾟ*)o)))");
-		
-		if(bService.checkIDPW(lvo) == null) {		
-			logger.debug("퇴근확인 실패!!!");
-			rttr.addFlashAttribute("result","OUTFAIL");
-			return "redirect:/public/login";
-		}// if end
+		// 일용직 퇴근
+		if(vo.getEmployee_id() > 10000) {
+			int result = bService.al_out(vo.getEmployee_id());
+			if(result == 1) {
+				// 퇴근성공
+				bService.employeeOut(vo);
+				session.invalidate();
+				rttr.addFlashAttribute("result", "EMPOUT");
+			}else {
+				// 퇴근 실패
+				rttr.addFlashAttribute("result","OUTFAIL");
+			}
+		}// if end (일용직 체크)
 		else {
-			bService.employeeOut(vo);
-			session.invalidate();
-			rttr.addFlashAttribute("result", "EMPOUT");
-		}// else end
+			// 일반직원 퇴근
+			if(bService.checkIDPW(lvo) == null) {		
+				logger.debug("퇴근확인 실패!!!");
+				rttr.addFlashAttribute("result","OUTFAIL");
+			}// if end
+			else {
+				bService.employeeOut(vo);
+				session.invalidate();
+				rttr.addFlashAttribute("result", "EMPOUT");
+			}// else end
+		} // else end(일반직원 퇴근 체크)
+		
 		return "redirect:/public/login";
 	}//outPOST() method end
 /////////////////////////////////로그인///////////////////////////////////
+	
+/////////////////////////////////대시보드///////////////////////////////////
+	// 대시보드 페이지
+	@RequestMapping(value = "/dashBoard", method = RequestMethod.GET)
+	public void dashBoardGET() throws Exception{
+		logger.debug("dashBoardGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
+	}//dashBoardGET() method end
+/////////////////////////////////대시보드///////////////////////////////////
+	
+/////////////////////////////////메신저///////////////////////////////////
+	
+/////////////////////////////////메신저///////////////////////////////////	
 	
 }// public class end

@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	<div class="l-navbar navbar-expand-sm bg-light navbar-light" id="nav-bar" style="color: black ;">
         <nav class="nav">
             <div> <a href="#" class="nav_logo"> <i class='bx bx-layer nav_logo-icon'></i> <span class="nav_logo-name" style="font-size: 25px;">또시락🍱</span></a>
-                <div class="nav_list"> <a href="#" class="nav_link active"> <i class='bx bx-grid-alt nav_icon'></i> <span class="nav_name">HOME</span> </a>
+                <div class="nav_list"> <a href="/public/dashBoard" class="nav_link active"> <i class='bx bx-grid-alt nav_icon'></i> <span class="nav_name">HOME</span> </a>
                   <div class="nav_list">
                    <a href="#" class="nav_link" onclick="toggleDropdown()"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">인사관리</span> </a> 
                 <div class="nav_link collapse" id="collapseSale">

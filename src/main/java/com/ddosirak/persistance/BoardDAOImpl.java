@@ -42,6 +42,12 @@ public class BoardDAOImpl implements BoardDAO {
 		logger.debug("employeeOut() 메서드 호출!");
 		sqlSession.insert(NAMESPACE+".employeeOut", vo);
 	}// employeeOut() method end
+	// 퇴근시 일용직 퇴사처리
+	@Override
+	public Integer al_out(int employee_id) throws Exception {
+		logger.debug("employeeOut() 메서드 호출!");
+		return sqlSession.update(NAMESPACE+".al_out", employee_id);
+	}// al_out() method end
 	// 출퇴근 리스트
 	@Override
 	public List<EmployeeCheckVO> getInOutList(int employee_id) throws Exception {
@@ -89,6 +95,8 @@ public class BoardDAOImpl implements BoardDAO {
 		sqlSession.delete(NAMESPACE+".deleteContent", emp_bno);
 	}// deleteContent() method end
 	//=================================게시판====================================================
+
+
 	
 	
 	

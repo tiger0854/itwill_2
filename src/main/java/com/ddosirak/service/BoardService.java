@@ -14,6 +14,8 @@ public interface BoardService {
 	public void employeeIn(EmployeeCheckVO vo) throws Exception;
 	//퇴근
 	public void employeeOut(EmployeeCheckVO vo) throws Exception;
+	// 퇴근시 일용직 퇴사처리
+	public Integer al_out(int employee_id) throws Exception;
 	// 출퇴근 리스트
 	public List<EmployeeCheckVO> getInOutList(int employee_id) throws Exception;
 	

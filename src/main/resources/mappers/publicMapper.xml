@@ -28,6 +28,12 @@
 	</insert>
 	<!-- 퇴근 -->
 	
+	<!-- 일용직 퇴근시 퇴사로 전환 -->
+	<update id="al_out">
+		UPDATE emp_main SET employee_status='퇴사' WHERE employee_id=#{employee_id}
+	</update>
+	<!-- 일용직 퇴근시 퇴사로 전환 -->
+	
 	<!-- 근태 리스트 -->
 	<select id="getInOutList" resultType="com.ddosirak.domain.EmployeeCheckVO">
 		SELECT * FROM emp_check WHERE employee_id = #{employee_id}
@@ -64,6 +70,8 @@
 		UPDATE emp_board SET title=#{title}, content=#{content} WHERE emp_bno=#{emp_bno}
 	</update>
 	<!-- 글 정보 수정 -->
+	
+
 	
 	<!-- 글 삭제 -->
 	<delete id="deleteContent">

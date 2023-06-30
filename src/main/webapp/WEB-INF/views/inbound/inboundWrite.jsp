@@ -43,7 +43,7 @@ window.onload = function() {
 td{height: 80px !important; vertical-align: middle;}
 </style>
 </head>
-<body  id="body-pd" style="font-family: 'TheJamsil5';">
+<body  id="body-pd">
 
 
 <div class="container" style=" width: 1000px; margin: auto; margin-top:100px; ">
