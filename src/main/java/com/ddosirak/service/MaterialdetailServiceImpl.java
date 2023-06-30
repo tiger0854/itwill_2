@@ -77,15 +77,15 @@ public class MaterialdetailServiceImpl implements MaterialdetailService {
 	}
 
 	@Override
-	public List<MaterialdetailVO> materialItemList() {
+	public List<MaterialdetailVO> materialItemList(PageVO pageVO) {
 		logger.debug("service : 자재 목록 전체 호출");
-		return dao.materialItemList();
+		return dao.materialItemList(pageVO);
 	}
 
 	@Override
-	public List<MaterialdetailVO> materialItemList(Map<String, Object> instrSearch, Model model) {
+	public List<MaterialdetailVO> materialItemList(PageVO pageVO, Map<String, Object> instrSearch, Model model) {
 		logger.debug("service : 자재 목록 검색 호출");
-		return dao.materialItemList(instrSearch, model);
+		return dao.materialItemList(pageVO, instrSearch, model);
 	}
 
 	@Override

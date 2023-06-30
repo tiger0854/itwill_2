@@ -22,9 +22,9 @@ public interface MaterialdetailDAO {
 		//자재 삭제
 		public void deleteM(String material_code);
 		//자재 검색(전체조회 검색)
-		public List<MaterialdetailVO> materialItemList();
+		public List<MaterialdetailVO> materialItemList(PageVO pageVO);
 		//자재 검색(부분 검색)
-		public List<MaterialdetailVO> materialItemList(Map<String, Object> instrSearch, Model model);
+		public List<MaterialdetailVO> materialItemList(PageVO pageVO, Map<String, Object> instrSearch, Model model);
 		// 자재 검색 갯수
 		public Integer materialCount(Map<String, Object> instrSearch);
 }

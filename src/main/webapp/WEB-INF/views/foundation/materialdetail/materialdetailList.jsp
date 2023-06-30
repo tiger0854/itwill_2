@@ -76,9 +76,9 @@
 								name="material_name" placeholder="자재명" onclick="openItem();"></td>
 							<th>자재코드</th>
 							<td><input type="text" id="material_code"
-								name="material_code" placeholder="자재코드" readonly></td>
+								name="material_code" placeholder="자재코드" onclick="openItem();"></td>
 							<th>자재속성</th>
-							<td><select id="material_type" name="material_type" disabled>
+							<td><select id="material_type" name="material_type">
 
 									<option value=""></option>
 									<option value="원자재">원자재</option>
@@ -133,17 +133,17 @@
 			style="margin-top: 20px;">
 			<c:if test="${pageVO.startPage > pageVO.pageBlock}">
 				<li class="page-item"><a class="page-link"
-					href="/foundation/materialdetail/materialdetailList?material_code=${Search.material_code }&material_name=${Search.material_name }&pageNum=${pageVO.startPage - pageVO.pageBlock}"><sapn>
+					href="/foundation/materialdetail/materialdetailList?material_code=${Search.material_code }&material_name=${Search.material_name }&material_type=${Search.material_type }&pageNum=${pageVO.startPage - pageVO.pageBlock}"><sapn>
 						< </sapn></a></li>
 			</c:if>
 			<c:forEach var="i" begin="${pageVO.startPage}"
 				end="${pageVO.endPage}" step="1">
 				<li class="page-item"><a class="page-link"
-					href="/foundation/materialdetail/materialdetailList?material_code=${Search.material_code }&material_name=${Search.material_name }&pageNum=${i}"><span>${i}</span></a></li>
+					href="/foundation/materialdetail/materialdetailList?material_code=${Search.material_code }&material_name=${Search.material_name }&material_type=${Search.material_type }&pageNum=${i}"><span>${i}</span></a></li>
 			</c:forEach>
 			<c:if test="${pageVO.endPage < pageVO.pageCount}">
 				<li class="page-item"><a class="page-link"
-					href="/foundation/materialdetail/materialdetailList?material_code=${Search.material_code }&material_name=${Search.material_name }&pageNum=${pageVO.startPage + pageVO.pageBlock}"><span>
+					href="/foundation/materialdetail/materialdetailList?material_code=${Search.material_code }&material_name=${Search.material_name }&material_type=${Search.material_type }&pageNum=${pageVO.startPage + pageVO.pageBlock}"><span>
 							> </span></a></li>
 			</c:if>
 		</ul>
