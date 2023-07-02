@@ -2,7 +2,6 @@ package com.ddosirak.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -11,12 +10,10 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.ddosirak.domain.ItemRecipeListVO;
 import com.ddosirak.domain.ItemRecipeUploadVO;
 import com.ddosirak.domain.ItemRecipeVO;
-import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.MaterialdetailVO;
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.persistance.ItemRecipeDAO;
@@ -38,9 +35,9 @@ public class ItemRecipeServiceImpl implements ItemRecipeService {
 	}
 
 	@Override
-	public List<ItemRecipeListVO> ItemRecipeList(PageVO pageVO, Map<String, Object> instrSearch, Model model) throws Exception {
+	public List<ItemRecipeListVO> ItemRecipeList(PageVO pageVO, Map<String, Object> instrSearch) throws Exception {
 		logger.debug("service : 레시피 목록 호출");
-		return dao.ItemRecipeList(pageVO, instrSearch, model);
+		return dao.ItemRecipeList(pageVO, instrSearch);
 	}
 
 	@Override
@@ -128,9 +125,9 @@ public class ItemRecipeServiceImpl implements ItemRecipeService {
 	}
 
 	@Override
-	public List<ItemRecipeListVO> itemrecipeItemList(Map<String, Object> instrSearch, Model model) throws Exception {
+	public List<ItemRecipeListVO> itemrecipeItemList(Map<String, Object> instrSearch) throws Exception {
 		logger.debug("service : 상품 목록 부분 검색");
-		return dao.itemrecipeItemList(instrSearch, model);
+		return dao.itemrecipeItemList(instrSearch);
 	}
 	
 }

@@ -107,7 +107,7 @@ public class ItemRecipeController {
 		} else {
 			// 공장 검색 조회
 			logger.debug("productList 검색 호출 ![]~(￣▽￣)~*");
-			resultlist = service.ItemRecipeList(pageVO, instrSearch, model);
+			resultlist = service.ItemRecipeList(pageVO, instrSearch);
 		}
 		model.addAttribute("Search", instrSearch);
 		model.addAttribute("resultlist", resultlist);
@@ -132,7 +132,7 @@ public class ItemRecipeController {
 	// http://localhost:8088/foundation/itemrecipe/materialSerch
 	@RequestMapping(value = "/materialSearch", method = RequestMethod.GET)
 
-	public void materialSerchGET(Model model, @RequestParam HashMap<String, Object> requestMap, PageVO pvo) throws Exception {
+	public void materialSerchGET(Model model, @RequestParam HashMap<String, Object> requestMap) throws Exception {
 
 		
 		logger.debug("materialSerchGET 실행");
@@ -147,16 +147,12 @@ public class ItemRecipeController {
 		}
 		// 페이지번호를 정수형으로 변경
 		int currentPage = Integer.parseInt(pageNum);
-		pvo.setPageSize(pageSize);
-		pvo.setPageNum(pageNum);
-		pvo.setCurrentPage(currentPage);
-		int startRow = (pvo.getCurrentPage() - 1) * pvo.getPageSize() + 1; // sql문에 들어가는 항목
-		int endRow = startRow + pvo.getPageSize() - 1;
+		int startRow = (currentPage - 1) * pageSize + 1; // sql문에 들어가는 항목
+		int endRow = startRow + pageSize - 1;
 
-		pvo.setStartRow(startRow - 1); // limit startRow (0이 1열이기 때문 1을 뺌)
-		pvo.setEndRow(endRow);
+//		startRow=startRow - 1; // limit startRow (0이 1열이기 때문 1을 뺌)
 		int count = mService.materialCount(requestMap);
-		logger.debug("글갯수 @@@@@@@@@@2" + count);
+		logger.debug("글 개수 :" + count);
 		// 게시글 개수 가져오기
 		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
 		int startPage = (currentPage - 1) / pageBlock * pageBlock + 1;
@@ -232,7 +228,7 @@ public class ItemRecipeController {
 			// 검색 조회
 			logger.debug("itemrecipeList.jsp 검색 호출 ![]~(￣▽￣)~*");
 //					proOrderList = oService.proOrderList();
-			itemrecipeList = service.itemrecipeItemList(instrSearch, model);
+			itemrecipeList = service.itemrecipeItemList(instrSearch);
 //					int instrSearchCount = instructService.instrCount(instrSearch);
 //					model.addAttribute("instrSearchCount", instrSearchCount);
 		}

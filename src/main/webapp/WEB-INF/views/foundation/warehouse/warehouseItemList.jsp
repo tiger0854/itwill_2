@@ -34,18 +34,18 @@
        
 <!--         <hr width="100%" style="border: 2px solid black"> -->
 
-<table class="table" style="width: 100%">
-    <form>
-        <tr>
-            <td>창고코드</td>
-            <td><input type="text" name="wh_code" style="width:70%;"></td>
-            <td>창고명</td>
-            <td><input type="text" name="wh_name" style="width:70%;"></td>
-            <td><button type="submit" class="btn-add">조회</button></td>
-        </tr>
-    </form>
-</table>
-<table class="table table-hover" style="text-align: center;">
+		<form>
+			<table class="table" style="width: 100%">
+				<tr>
+					<td>창고코드</td>
+					<td><input type="text" name="wh_code" style="width: 70%;"></td>
+					<td>창고명</td>
+					<td><input type="text" name="wh_name" style="width: 70%;"></td>
+					<td><button type="submit" class="btn-add">조회</button></td>
+				</tr>
+			</table>
+		</form>
+		<table class="table table-hover" style="text-align: center;">
     <%-- ${itemList } --%>
     <tr>
         <th>창고코드</th>

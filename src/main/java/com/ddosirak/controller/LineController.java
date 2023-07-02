@@ -227,7 +227,7 @@ public class LineController {
 				// 공장 검색 조회
 				logger.debug("productList 검색 호출 ![]~(￣▽￣)~*");
 //						proOrderList = oService.proOrderList();
-				factoryList = Fservice.facList(pageVO, instrSearch, model);
+				factoryList = Fservice.facList(pageVO, instrSearch);
 //						int instrSearchCount = instructService.instrCount(instrSearch);
 //						model.addAttribute("instrSearchCount", instrSearchCount);
 			}

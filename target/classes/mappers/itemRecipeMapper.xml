@@ -16,36 +16,24 @@
 	<!-- 레시피 목록 출력 -->
 	<select id="itemRecipeList"
 		resultType="com.ddosirak.domain.ItemRecipeListVO">
-		select i.item_code,
-		i.material_code, i.material_con,
-		id.item_name,
-		md.material_name
-		from
-		item_recipe i
+		select i.item_code, i.material_code, i.material_con, id.item_name, md.material_name
+		from item_recipe i
 		join item_detail id
-		on
-		i.item_code= id.item_code
-		join
-		material_detail md
-		on i.material_code =
-		md.material_code
-		order by
-		i.item_code
+		on i.item_code= id.item_code
+		join material_detail md
+		on i.material_code = md.material_code
+		order by i.item_code
 		limit #{startRow}, #{pageSize}
 	</select>
 
 	<select id="itemRecipeSearchList"
 		resultType="com.ddosirak.domain.ItemRecipeListVO">
-		select i.item_code, i.material_code, i.material_con,
-		id.item_name,
-		md.material_name
+		select i.item_code, i.material_code, i.material_con, id.item_name, md.material_name
 		from item_recipe i
 		join item_detail id
-		on
-		i.item_code= id.item_code
-		join material_detail md
-		on i.material_code =
-		md.material_code
+		on i.item_code = id.item_code
+		join material_detail md 
+		on i.material_code = md.material_code
 		where i.item_code like concat ('%', #{item_code}, '%')
 		order by i.item_code
 		limit #{startRow}, #{pageSize}
@@ -95,12 +83,9 @@
 	<select id="materialSearch"
 		resultType="com.ddosirak.domain.MaterialdetailVO">
 		select * from material_detail
-		WHERE material_code LIKE
-		CONCAT('%', #{material_code}, '%')
-		AND material_name LIKE CONCAT('%',
-		#{material_name}, '%')
-		AND material_type LIKE CONCAT('%',
-		#{material_type}, '%')
+		WHERE material_code LIKE CONCAT('%', #{material_code}, '%')
+		AND material_name LIKE CONCAT('%', #{material_name}, '%')
+		AND material_type LIKE CONCAT('%', #{material_type}, '%')
 		LIMIT #{startRow}, #{pageSize}
 	</select>
 	<!-- 자재 검색 -->
@@ -124,15 +109,13 @@
 		FROM item_recipe ir
 		LEFT OUTER JOIN item_detail id ON
 		ir.item_code = id.item_code
-		LEFT OUTER JOIN material_detail md ON
-		ir.material_code = md.material_code
+		LEFT OUTER JOIN material_detail md 
+		ON ir.material_code = md.material_code
 		<if test="item_code != null and item_name != null">
 			WHERE ir.item_code
-			LIKE CONCAT('%',
-			#{item_code}, '%')
+			LIKE CONCAT('%', #{item_code}, '%')
 			AND
-			id.item_name LIKE CONCAT('%',
-			#{item_name}, '%')
+			id.item_name LIKE CONCAT('%', #{item_name}, '%')
 		</if>
 	</select>
 	<!-- 레시피 검색 갯수 -->
@@ -141,35 +124,24 @@
 	<select id="itemrecipeItemList"
 		resultType="com.ddosirak.domain.ItemRecipeListVO">
 		select i.item_code,
-		i.material_code, i.material_con,
-		id.item_name,
-		md.material_name
-		from
-		item_recipe i
+		i.material_code, i.material_con, id.item_name, md.material_name
+		from item_recipe i
 		join item_detail id
-		on
-		i.item_code= id.item_code
-		join
-		material_detail md
-		on i.material_code =
-		md.material_code
+		on i.item_code= id.item_code
+		join material_detail md
+		on i.material_code = md.material_code
 	</select>
 
 	<select id="itemrecipeItemSearchList"
 		resultType="com.ddosirak.domain.ItemRecipeListVO">
-		select i.item_code,
-		i.material_code, i.material_con,
-		id.item_name,
-		md.material_name
-		from
-		item_recipe i
+		select i.item_code, i.material_code, i.material_con, id.item_name, md.material_name
+		from item_recipe i
 		join item_detail id
 		on
 		i.item_code= id.item_code
 		join
 		material_detail md
-		on i.material_code =
-		md.material_code
+		on i.material_code = md.material_code
 		where i.item_code like concat('%', #{item_code}, '%')
 		and id.item_name like concat('%', #{item_name}, '%')
 	</select>

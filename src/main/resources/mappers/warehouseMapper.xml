@@ -11,8 +11,10 @@
 	</select>
 	<select id="WarehouseListSearch"
 		resultType="com.ddosirak.domain.WarehouseVO">
-		select * from warehouse where wh_code LIKE concat('%',
-		#{wh_code}, '%') LIMIT #{startRow}, #{pageSize}
+		select * 
+		from warehouse 
+		where wh_code LIKE concat('%', #{wh_code}, '%') 
+		LIMIT #{startRow}, #{pageSize}
 	</select>
 	<!-- 창고 조회 -->
 	<!-- 창고 등록 -->
@@ -30,9 +32,7 @@
 	<!-- 창고 수정 -->
 	<update id="updateWarehouse">
 		UPDATE warehouse
-		SET wh_name = #{wh_name}, retail_code
-		= #{retail_code}, wh_type =
-		#{wh_type}
+		SET wh_name = #{wh_name}, retail_code = #{retail_code}, wh_type = #{wh_type}
 		WHERE wh_code = #{wh_code}
 	</update>
 	<!-- 창고 수정 -->
@@ -50,10 +50,8 @@
 	<select id="warehouseItemSearch"
 		resultType="com.ddosirak.domain.WarehouseVO">
 		SELECT * FROM warehouse
-		WHERE wh_code LIKE CONCAT('%',
-		#{wh_code}, '%')
-		AND wh_name LIKE CONCAT('%',
-		#{wh_name}, '%')
+		WHERE wh_code LIKE CONCAT('%', #{wh_code}, '%')
+		AND wh_name LIKE CONCAT('%', #{wh_name}, '%')
 	</select>
 	<!-- 상품 검색 (팝업창) -->
 
@@ -71,9 +69,8 @@
 		warehouse
 		<if test="wh_code != null and wh_name != null">
 			where wh_code LIKE concat('%', #{wh_code}, '%')
-			and wh_name
-			LIKE
-			concat('%', #{wh_name}, '%')
+			and 
+			wh_name LIKE concat('%', #{wh_name}, '%')
 		</if>
 	</select>
 	<!-- 창고 검색 갯수 -->

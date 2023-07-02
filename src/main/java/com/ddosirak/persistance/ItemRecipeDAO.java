@@ -3,8 +3,6 @@ package com.ddosirak.persistance;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.ui.Model;
-
 import com.ddosirak.domain.ItemRecipeListVO;
 import com.ddosirak.domain.ItemRecipeVO;
 import com.ddosirak.domain.ItemdetailVO;
@@ -18,7 +16,7 @@ public interface ItemRecipeDAO {
 
 	// 레시피 목록 출력
 	public List<ItemRecipeListVO> ItemRecipeList(PageVO pageVO) throws Exception;
-	public List<ItemRecipeListVO> ItemRecipeList(PageVO pageVO, Map<String, Object> instrSearch, Model model) throws Exception;
+	public List<ItemRecipeListVO> ItemRecipeList(PageVO pageVO, Map<String, Object> instrSearch) throws Exception;
 
 	// 레시피 등록
 	public Integer insertItemRecipe(ItemRecipeVO vo) throws Exception;
@@ -44,7 +42,7 @@ public interface ItemRecipeDAO {
 	
 	
 	public List<ItemRecipeListVO> itemrecipeItemList() throws Exception; 
-	public List<ItemRecipeListVO> itemrecipeItemList(Map<String, Object> instrSearch, Model model) throws Exception; 
+	public List<ItemRecipeListVO> itemrecipeItemList(Map<String, Object> instrSearch) throws Exception; 
 
 	// 레시피 검색 갯수
 	public Integer itemrecipeCount(Map<String, Object> instrSearch);

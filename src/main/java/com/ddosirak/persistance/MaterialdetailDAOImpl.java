@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
-import org.springframework.ui.Model;
 
 import com.ddosirak.domain.MaterialdetailVO;
 import com.ddosirak.domain.PageVO;
@@ -31,7 +30,7 @@ public class MaterialdetailDAOImpl implements MaterialdetailDAO {
 	}
 
 	@Override
-	public List<MaterialdetailVO> mdList(PageVO pageVO, Map<String, Object> instrSearch, Model model) {
+	public List<MaterialdetailVO> mdList(PageVO pageVO, Map<String, Object> instrSearch) {
 		logger.debug("dao : 자재 기초 검색 목록 실행");
 		instrSearch.put("startRow", pageVO.getStartRow());
 		instrSearch.put("pageSize", pageVO.getPageSize());
@@ -82,7 +81,7 @@ public class MaterialdetailDAOImpl implements MaterialdetailDAO {
 	}
 	
 	@Override
-	public List<MaterialdetailVO> materialItemList(Map<String, Object> instrSearch, Model model) {
+	public List<MaterialdetailVO> materialItemList(Map<String, Object> instrSearch) {
 		logger.debug("dao : materialItemList 부분호출");
 		List<MaterialdetailVO> materialItemList = sqlsession.selectList(NAMESPACE + ".materialItemSearch", instrSearch);
 		return materialItemList;

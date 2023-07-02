@@ -96,7 +96,7 @@ public class WarehouseController {
 			logger.debug(whList + "");
 		} else {
 			logger.debug("검색 조회");
-			whList = service.warehouseList(pageVO, instrSearch, model);
+			whList = service.warehouseList(pageVO, instrSearch);
 			logger.debug(whList + "");
 		}
 		logger.debug("whlist 개수 : " + whList.size());
@@ -159,7 +159,7 @@ public class WarehouseController {
 			// 작업지시 검색 조회
 			logger.debug("warehouseItemList.jsp 검색 호출 ![]~(￣▽￣)~*");
 //						proOrderList = oService.proOrderList();
-			warehouseList = service.warehouseItemList(instrSearch, model);
+			warehouseList = service.warehouseItemList(instrSearch);
 //						int instrSearchCount = instructService.instrCount(instrSearch);
 //						model.addAttribute("instrSearchCount", instrSearchCount);
 		}

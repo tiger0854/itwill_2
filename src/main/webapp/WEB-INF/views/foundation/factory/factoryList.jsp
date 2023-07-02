@@ -43,9 +43,9 @@ function openItem() {
 </head>
 
 <body>
-	<form id="instr">
 		<div class="height-100">
 			<div class="container mt-3">
+	<form id="instr">
 
 				<h4 style="margin-top: 150px;">
 					<i class="bx bx-book"></i> 공장관리
@@ -68,12 +68,12 @@ function openItem() {
 						border="1">
 
 						<tr>
-							<th>공장명</th>
-							<td><input type="text" id="factory_name" name="factory_name"
-								placeholder="공장명" onclick="openItem();"></td>
 							<th>공장 코드</th>
 							<td><input type="text" id="factory_code" name="factory_code"
 								placeholder="공장코드" readonly></td>
+							<th>공장명</th>
+							<td><input type="text" id="factory_name" name="factory_name"
+								placeholder="공장명" onclick="openItem();"></td>
 						</tr>
 					</table>
 				</div>
@@ -119,8 +119,8 @@ function openItem() {
 			style="margin-top: 20px;">
 			<c:if test="${pageVO.startPage > pageVO.pageBlock}">
 				<li class="page-item"><a class="page-link"
-					href="/foundation/factory/factoryList?factory_code=${Search.factory_code }&factory_name=${Search.factory_name }&pageNum=${pageVO.startPage - pageVO.pageBlock}"><sapn>
-						< </sapn></a></li>
+					href="/foundation/factory/factoryList?factory_code=${Search.factory_code }&factory_name=${Search.factory_name }&pageNum=${pageVO.startPage - pageVO.pageBlock}">
+						</a></li>
 			</c:if>
 			<c:forEach var="i" begin="${pageVO.startPage}"
 				end="${pageVO.endPage}" step="1">
@@ -129,8 +129,8 @@ function openItem() {
 			</c:forEach>
 			<c:if test="${pageVO.endPage < pageVO.pageCount}">	
 				<li class="page-item"><a class="page-link"
-					href="/foundation/factory/factoryList?factory_code=${Search.factory_code }&factory_name=${Search.factory_name }&pageNum=${pageVO.startPage + pageVO.pageBlock}"><span>
-							> </span></a></li>
+					href="/foundation/factory/factoryList?factory_code=${Search.factory_code }&factory_name=${Search.factory_name }&pageNum=${pageVO.startPage + pageVO.pageBlock}">
+							</a></li>
 			</c:if>
 		</ul>
 	</div>

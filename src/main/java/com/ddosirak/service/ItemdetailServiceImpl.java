@@ -8,9 +8,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
-import com.ddosirak.domain.ItemRecipeListVO;
 import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.persistance.ItemdetailDAO;
@@ -29,9 +27,9 @@ public class ItemdetailServiceImpl implements ItemdetailService {
 	}
 	
 	@Override
-	public List<ItemdetailVO> idList(PageVO pageVO, Map<String, Object> instrSearch, Model model) throws Exception {
+	public List<ItemdetailVO> idList(PageVO pageVO, Map<String, Object> instrSearch) throws Exception {
 		// TODO Auto-generated method stub
-		return dao.idList(pageVO, instrSearch, model);
+		return dao.idList(pageVO, instrSearch);
 	}
 
 	@Override

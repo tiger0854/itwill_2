@@ -44,9 +44,9 @@
 
 <body>
 
-	<form id="instr">
-		<div class="height-100">
-			<div class="container mt-3">
+	<div class="height-100">
+		<div class="container mt-3">
+			<form id="instr">
 
 				<h4 style="margin-top: 150px;">
 					<i class="bx bx-book"></i>자재 등록
@@ -71,12 +71,12 @@
 						border="1">
 
 						<tr>
-							<th>자재이름</th>
-							<td><input type="text" id="material_name"
-								name="material_name" placeholder="자재명" onclick="openItem();"></td>
 							<th>자재코드</th>
 							<td><input type="text" id="material_code"
 								name="material_code" placeholder="자재코드" readonly></td>
+							<th>자재이름</th>
+							<td><input type="text" id="material_name"
+								name="material_name" placeholder="자재명" onclick="openItem();"></td>
 							<th>자재속성</th>
 							<td><select id="material_type" name="material_type" disabled>
 
@@ -88,69 +88,68 @@
 						</tr>
 					</table>
 				</div>
-	</form>
-	<!-- 작업지시목록 리스트 -->
-	<!-- 품목코드 , 식자재이름, 수량, 창고코드(냉장,냉동,상온) (페이징처리,검색기능)  -->
-	<h4 style="margin-top: 100px;">
-		<i class='bx bx-list-ol icon'></i> 자재 목록
-	</h4>
-	<table class="product-table" style="margin-top: 20px; width: 100%;">
-		<thead>
-			<tr>
-				<th>자재코드</th>
-				<th>자재이름</th>
-				<th>자재속성</th>
-				<th>수정</th>
-				<th>삭제</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="vo" items="${resultlist }">
-				<tr>
-					<td>${vo.material_code }</td>
-					<td>${vo.material_name }</td>
-					<td>${vo.material_type }</td>
-					<td><button class=btn-edit type="button"
-
-							onclick="materialUpdate('${vo.material_code}');">
-							<i class='bx bx-edit'></i>
-						</button></td>
-					<!--         <td><button class=btn-edit onclick="orderedit()"><i class='bx bx-edit'></i></button></td> -->
-					<td><button class=btn-delete
-							onclick="materialDelete('${vo.material_code}','${vo.material_name }');">
-							<i class='bx bxs-trash'></i>
-						</button></td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-
-
-	<!-- 페이징처리 -->
-	<%--   		${Search} --%>
-	<div class="container" style="margin-top: 30px; margin-bottom: 30px">
-		<ul class="pagination justify-content-center" id="pagination"
-			style="margin-top: 20px;">
-			<c:if test="${pageVO.startPage > pageVO.pageBlock}">
-				<li class="page-item"><a class="page-link"
-					href="/foundation/materialdetail/materialdetailList?material_code=${Search.material_code }&material_name=${Search.material_name }&pageNum=${pageVO.startPage - pageVO.pageBlock}"><sapn>
-						< </sapn></a></li>
-			</c:if>
-			<c:forEach var="i" begin="${pageVO.startPage}"
-				end="${pageVO.endPage}" step="1">
-				<li class="page-item"><a class="page-link"
-					href="/foundation/materialdetail/materialdetailList?material_code=${Search.material_code }&material_name=${Search.material_name }&pageNum=${i}"><span>${i}</span></a></li>
-			</c:forEach>
-			<c:if test="${pageVO.endPage < pageVO.pageCount}">
-				<li class="page-item"><a class="page-link"
-					href="/foundation/materialdetail/materialdetailList?material_code=${Search.material_code }&material_name=${Search.material_name }&pageNum=${pageVO.startPage + pageVO.pageBlock}"><span>
-							> </span></a></li>
-			</c:if>
-		</ul>
-	</div>
+			</form>
+			<!-- 작업지시목록 리스트 -->
+			<!-- 품목코드 , 식자재이름, 수량, 창고코드(냉장,냉동,상온) (페이징처리,검색기능)  -->
+			<h4 style="margin-top: 100px;">
+				<i class='bx bx-list-ol icon'></i> 자재 목록
+			</h4>
+			<table class="product-table" style="margin-top: 20px; width: 100%;">
+				<thead>
+					<tr>
+						<th>자재코드</th>
+						<th>자재이름</th>
+						<th>자재속성</th>
+						<th>수정</th>
+						<th>삭제</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="vo" items="${resultlist }">
+						<tr>
+							<td>${vo.material_code }</td>
+							<td>${vo.material_name }</td>
+							<td>${vo.material_type }</td>
+							<td><button class=btn-edit type="button"
+									onclick="materialUpdate('${vo.material_code}');">
+									<i class='bx bx-edit'></i>
+								</button></td>
+							<!--         <td><button class=btn-edit onclick="orderedit()"><i class='bx bx-edit'></i></button></td> -->
+							<td><button class=btn-delete
+									onclick="materialDelete('${vo.material_code}','${vo.material_name }');">
+									<i class='bx bxs-trash'></i>
+								</button></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
 
 
-	</div>
+			<!-- 페이징처리 -->
+			<%--   		${Search} --%>
+			<div class="container" style="margin-top: 30px; margin-bottom: 30px">
+				<ul class="pagination justify-content-center" id="pagination"
+					style="margin-top: 20px;">
+					<c:if test="${pageVO.startPage > pageVO.pageBlock}">
+						<li class="page-item"><a class="page-link"
+							href="/foundation/materialdetail/materialdetailList?material_code=${Search.material_code }&material_name=${Search.material_name }&pageNum=${pageVO.startPage - pageVO.pageBlock}">
+								</a></li>
+					</c:if>
+					<c:forEach var="i" begin="${pageVO.startPage}"
+						end="${pageVO.endPage}" step="1">
+						<li class="page-item"><a class="page-link"
+							href="/foundation/materialdetail/materialdetailList?material_code=${Search.material_code }&material_name=${Search.material_name }&pageNum=${i}"><span>${i}</span></a></li>
+					</c:forEach>
+					<c:if test="${pageVO.endPage < pageVO.pageCount}">
+						<li class="page-item"><a class="page-link"
+							href="/foundation/materialdetail/materialdetailList?material_code=${Search.material_code }&material_name=${Search.material_name }&pageNum=${pageVO.startPage + pageVO.pageBlock}">
+									</a></li>
+					</c:if>
+				</ul>
+			</div>
+
+
+		</div>
 	</div>
 
 
