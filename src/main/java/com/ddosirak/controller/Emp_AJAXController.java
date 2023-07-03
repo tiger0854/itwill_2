@@ -1,5 +1,6 @@
 package com.ddosirak.controller;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ddosirak.domain.EmployeeCheckVO;
 import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.PageVO;
+import com.ddosirak.domain.SalaryVO;
 import com.ddosirak.service.EmployeeService;
 
 @Controller
@@ -195,6 +197,19 @@ public class Emp_AJAXController {
 		return filtetList_dupVal;
 	}// filterAJAX() method end
 	
+	// 월별 급여정보 
+	@RequestMapping(value = "/salaryInfoAJAX", method = RequestMethod.POST)
+	@ResponseBody
+	public List<SalaryVO> salaryInfoGET(@RequestParam("dateData")Date dateData, @RequestParam("employee_id")int employee_id) throws Exception{
+		logger.debug("salaryInfoGET() 호출! Σ(っ °Д °;)っ");
+		SalaryVO vo = new SalaryVO();
+		vo.setEmployee_id(employee_id);
+		vo.setSal_date(dateData);
+		
+		logger.debug("vo: "+vo);
+		
+		return eService.getSalaryInfo(vo);
+	}// salaryInfoGET() method end
 
 
 

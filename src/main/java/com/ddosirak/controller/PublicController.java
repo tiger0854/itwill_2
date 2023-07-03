@@ -2,6 +2,7 @@ package com.ddosirak.controller;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -258,7 +259,17 @@ public class PublicController {
 /////////////////////////////////대시보드///////////////////////////////////
 	
 /////////////////////////////////메신저///////////////////////////////////
+	// http://localhost:8088/public/chatList
+	@RequestMapping(value = "/chatList", method = RequestMethod.GET)
+	public void chatListGET () throws Exception{
+		logger.debug("chatList");
+	}// chatListGET() method end
 	
+	// http://localhost:8088/public/chat
+	@RequestMapping(value = "/chat", method = RequestMethod.GET)
+	public void chatGET () throws Exception{
+		logger.debug("chat");
+	}// chat() method end
 /////////////////////////////////메신저///////////////////////////////////	
 	
 }// public class end

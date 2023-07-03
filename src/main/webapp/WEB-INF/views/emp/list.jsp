@@ -177,7 +177,7 @@
 			}) // ajax end
 		}); // startInterval() method end
 
-		
+		// ----------------------- 필터링 ----------------------------------------
 		$('#search_button').on('click',function(){
 			var department_name = $('#department_name_search').val();
 			var position = $('#position_search').val();
@@ -193,14 +193,16 @@
 			var formdata = {'department_name': department_name, 'position': position, 
 					'employee_status':employee_status , 'employee_name':employee_name };
 			$.ajax({
-				url: '/emp_ajax/filter', // 클라이언트가 요청을 보낼 서버의 URL 주소
+				url: '/emp_ajax/filter', // 클라이언트가 요청을 보낼 서버의 URL 주소 
 				data: formdata,        // HTTP 요청과 함께 서버로 보낼 데이터
 				type: 'POST',          // HTTP 요청 방식(GET, POST)
 				success : function(filtetList_dupVal) {
 					var table = '';
 					if(filtetList_dupVal.length !== 0){
 						for(var i=0;i<filtetList_dupVal.length;i++){
+							$('thead').html('<tr><td width="50">순번</td><td>사원번호</td><td>성명</td><td>부서</td><td>직급</td><td>내선번호</td><td>재직현황</td></tr>');
 							table += '<tr>';
+							table += '<td id="pageIdx'+(i+1)+'">'+(i+1)+'</td>';
 							table += '<td>'+filtetList_dupVal[i].employee_id+'</td>';
 							table += '<td><a href="/emp/info?employee_id=' + filtetList_dupVal[i].employee_id + '">' + filtetList_dupVal[i].employee_name + '</a></td>'
 							table += '<td>'+filtetList_dupVal[i].department_name+'</td>';
@@ -212,6 +214,7 @@
 							} // i-e end
 							table += '<td>'+filtetList_dupVal[i].employee_status+'</td>';
 							table += '</tr>';
+
 						}// for end
 					}else{
 						table += '<tr>';
@@ -222,21 +225,25 @@
 					}// i-e end
 					
 					$('#pagination').remove();
+					$('#pagingHere').html('<b> 검색결과: '+filtetList_dupVal.length+'명</b>');
 					$('#empInfoBody').html(table);
 					
 					
 				}// success end
 			}); // ajax end
-		}); // click end	
+		}); // click end
+		// -------------------------필터링-----------------------------------------
+		
+		
 	}); // jQ end
-	
-	
-	// 출퇴근자 팝업 열기
-    function emp_inList(){
-    	  		window.open('/emp/inEmp_list','출근자 리스트','width=500,height=500,resizable=no');                 
-    	    };
-	function emp_outList(){
-				window.open('/emp/outEmp_list','퇴근자 리스트','width=500,height=500,resizable=no');                 
-	    	};
+
+	    	// 출퇴근자 팝업 열기
+	        function emp_inList(){
+	        	  		window.open('/emp/inEmp_list','출근자 리스트','width=500,height=500,resizable=no');                 
+	        	    };
+	    	function emp_outList(){
+	    				window.open('/emp/outEmp_list','퇴근자 리스트','width=500,height=500,resizable=no');                 
+	    	    	};	
+
 </script>
 </html>

@@ -1,6 +1,7 @@
 package com.ddosirak.controller;
 
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -99,11 +100,12 @@ public class MemberController {
 	}// alInsertGET() method end
 	// 일용직 일괄등록 > 동작
 	@RequestMapping(value="/insert_al",method=RequestMethod.POST)	
-	public String alInsertPOST(@ModelAttribute(value="EmployeeListVO") EmployeeListVO voList) {	 // List로 여러 내용을 받아오는 방법.
+	public String alInsertPOST(@ModelAttribute(value="EmployeeListVO") EmployeeListVO voList, Date emp_date) {	 // List로 여러 내용을 받아오는 방법.
 		logger.debug("alInsertPOST() 호출![]~(￣▽￣)~*");
 		// 사원번호 부여 동작
 		for(int i=0;i<voList.getEmployeelist().size();i++) {
 			EmployeeVO emp = voList.getEmployeelist().get(i);
+			emp.setEmp_date(emp_date);
 			logger.debug("!!!!"+emp.getPosition());
 			if(emp.getPosition().equals("일용")) {
 				emp.setEmployee_id(eService.getMaxId_al());// 일용직 사원의 직번

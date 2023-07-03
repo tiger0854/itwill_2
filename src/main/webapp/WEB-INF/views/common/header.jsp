@@ -14,6 +14,7 @@
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 <script type="text/javascript">
 function toggleDropdown() {
@@ -172,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                  <!-- 0622 -->
 				</div>
             </div> 
-            <a href="#" class="nav_link"> <i class='bx bx-message-dots nav_icon' ></i> <span class="nav_name">메신저</span> </a>
+            <a href="/public/chatList" class="nav_link"> <i class='bx bx-message-dots nav_icon' ></i> <span class="nav_name">메신저</span> </a>
         </nav>
     </div>
     

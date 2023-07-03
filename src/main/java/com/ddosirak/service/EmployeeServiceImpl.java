@@ -133,6 +133,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return edao.getSalaryInfo(employee_id);
 	}//getSalaryInfo() method end
 	
+	// 급여정보 조회_월별
+	@Override
+	public List<SalaryVO> getSalaryInfo(SalaryVO vo) {
+		return edao.getSalaryInfo(vo);
+	}//getSalaryInfo() method end
+	
+	
 	// 급여 등록
 	@Override
 	public void salaryInsert(EmployeeVO vo) {
@@ -264,6 +271,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void vacationdelete(Integer vacation_id) {
 		edao.vacationdelete(vacation_id);
 	}
+
 	
 	
 	
