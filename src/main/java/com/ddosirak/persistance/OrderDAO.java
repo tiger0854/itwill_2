@@ -2,6 +2,8 @@ package com.ddosirak.persistance;
 
 import java.util.List;
 
+import com.ddosirak.domain.ItemRecipeListVO;
+import com.ddosirak.domain.ItemRecipeVO;
 import com.ddosirak.domain.OrderVO;
 import com.ddosirak.domain.PageVO;
 
@@ -20,6 +22,7 @@ public interface OrderDAO {
 
 	public Integer deleteOrder(String order_number); //발주서 삭제
 	
+	public List<ItemRecipeVO> getRequestList(PageVO vo); //수주요청한 품목의 레시피 받아오기
 	
 	
 }

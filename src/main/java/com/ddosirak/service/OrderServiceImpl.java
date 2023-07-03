@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.ddosirak.domain.ItemRecipeVO;
 import com.ddosirak.domain.OrderVO;
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.persistance.EmployeeDAO;
@@ -36,7 +37,13 @@ public class OrderServiceImpl implements OrderService{
 
 	@Override
 	public Integer deleteOrder(String order_number) {
-		// TODO Auto-generated method stub
+
 		return odao.deleteOrder(order_number);
+	}
+
+	@Override
+	public List<ItemRecipeVO> getRequestList(PageVO vo) {
+
+		return odao.getRequestList(vo);
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.ddosirak.domain.ItemRecipeVO;
 import com.ddosirak.domain.OrderVO;
 import com.ddosirak.domain.PageVO;
 
@@ -20,4 +21,6 @@ public interface OrderService {
 	public Integer updateOrder(OrderVO vo); //발주서 수정
 	
 	public Integer deleteOrder(String order_number); //발주서 삭제
+	
+	public List<ItemRecipeVO> getRequestList(PageVO vo);  // 수주요청한 품목의 레시피를 가져옴
 }

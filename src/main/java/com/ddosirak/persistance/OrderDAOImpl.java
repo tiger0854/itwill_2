@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.ddosirak.domain.ItemRecipeVO;
 import com.ddosirak.domain.OrderVO;
 import com.ddosirak.domain.PageVO;
 
@@ -51,6 +52,12 @@ public class OrderDAOImpl implements OrderDAO{
 	public Integer deleteOrder(String order_number) {
 		logger.debug("발주서 삭제 완료!");	
 		return sqlSession.delete(NAMESPACE+".deleteOrder",order_number);
+	}
+
+	@Override
+	public List<ItemRecipeVO> getRequestList(PageVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(NAMESPACE+".selectRequset",vo);
 	}
 
 }

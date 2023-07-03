@@ -4,9 +4,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="script">
@@ -14,6 +11,9 @@
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
 <script type="text/javascript">
 function toggleDropdown() {
 	  const collapseSale = document.getElementById('collapseSale');
@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				</div>
 				<div>
 				 <!-- 0622 -->
-                 <a href=" /customer/customerList " class="nav_link"> <i class='bx bx-folder nav_icon'></i><span class="nav_name">거래처 추가</span></a> 
+                 <a href=" /customer/customerList " class="nav_link"> <i class='bx bx-folder nav_icon'></i><span class="nav_name">거래처 관리</span></a> 
                  <!-- 0622 -->
 				</div>
             </div> 

@@ -66,9 +66,9 @@ td{height: 80px !important; vertical-align: middle;}
   <tr>
     <td>자재코드</td>
     <td>
-    <div class="input-group">
-    <input type="text"placeholder="상품코드 검색하기" class="form-control" name="material_code" id="material_code" readonly="readonly">
-    <button type="button" class="btn btn-primary" onclick="openChildWindow();">검색</button>
+    <div class="input-group" style="display: flex; align-items: center;">
+    <button type="button" class="btn btn-primary" onclick="openChildWindow();" >요청리스트</button>
+    <input type="text"placeholder="상품코드 검색하기" class="form-control"  onclick="openChildWindow();" name="material_code" id="material_code" readonly="readonly" style="margin-left: 5px;">
 
     </div>
     </td>
@@ -76,11 +76,11 @@ td{height: 80px !important; vertical-align: middle;}
     <td><input type="text" placeholder="코드검색시 자동입력" class="form-control" name="material_name" id="material_name" readonly="readonly"></td>
   </tr>
   <tr>
-  <td>단가</td>
-     <td><input type="text" class="form-control" name="material_price" id="material_price" placeholder="코드검색시 자동입력" readonly="readonly"></td>
     <td>발주수량</td>
-     <td><input type="number" class="form-control" name="order_piece"></td>
-  </tr>
+     <td><input type="number" class="form-control" name="order_piece" id="order_piece" readonly="readonly" placeholder="코드검색시 자동입력"></td>
+ <td>가격</td>
+     <td><input type="text" class="form-control" name="material_price" id="material_price" ></td>
+ </tr>
   <tr>
   		
     	<td><label for="order_date">납기일자</label></td>
@@ -92,7 +92,7 @@ td{height: 80px !important; vertical-align: middle;}
     <td>담당자</td>
     <td>  
     <div class="input-group">
-    <input type="text"placeholder="담당자 검색하기" class="form-control" name="order_resp" readonly="readonly" id="order_resp">
+    <input type="text"placeholder="담당자 검색하기" class="form-control" name="order_resp" readonly="readonly" id="order_resp"  onclick="openChildWindow2();">
     <button type="button" class="btn btn-primary"  onclick="openChildWindow2();">검색</button>
     </div>
     </td>
@@ -100,7 +100,7 @@ td{height: 80px !important; vertical-align: middle;}
     <td>거래처</td>
     <td>
   <div class="input-group">
-    <input type="text"placeholder="거래처 검색하기" class="form-control" name="order_trade" readonly="readonly" id="order_trade">
+    <input type="text"placeholder="거래처 검색하기" class="form-control" name="order_trade" readonly="readonly" id="order_trade"   onclick="openChildWindow3();">
     <button type="button" class="btn btn-primary"  onclick="openChildWindow3();">검색</button>
     </div>
 	</td>
@@ -123,7 +123,7 @@ var popupY = Math.ceil(( window.screen.height - popupHeight )/2);
 
 function openChildWindow() {
 
-    var childWindow = window.open("/inbound/productList", "productList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
+    var childWindow = window.open("/inbound/requestList", "requestList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
 
   } //productList팝업
   

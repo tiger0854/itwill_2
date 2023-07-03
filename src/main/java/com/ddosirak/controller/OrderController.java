@@ -100,11 +100,53 @@ public class OrderController {
 	
 	
 	
-	// http://localhost:8088/inbound/productList
-	@RequestMapping(value="/productList",method=RequestMethod.GET)
-	public void productListGET() {
-		logger.debug("productListGET() 호출!");
-		logger.debug("inbound/productList.jsp 뷰페이지로 연결");
+	// http://localhost:8088/inbound/requestList
+	@RequestMapping(value="/requestList",method=RequestMethod.GET)
+	public void requestListGET(Model model,HttpServletRequest request, PageVO pageVO ) {
+		logger.debug("requestListGET() 호출!");
+		
+		// 페이징 처리
+				// 한 화면에 보여줄 글 개수 설정
+				int pageSize = 10; // sql문에 들어가는 항목
+				
+				// 현페이지 번호 가져오기
+				String pageNum = request.getParameter("pageNum");
+				if(pageNum==null) {
+					pageNum="1";
+				}
+				// 페이지번호를 정수형으로 변경
+				int currentPage=Integer.parseInt(pageNum);
+				pageVO.setPageSize(pageSize);
+				pageVO.setPageNum(pageNum);
+				pageVO.setCurrentPage(currentPage);
+				int startRow=(pageVO.getCurrentPage()-1)*pageVO.getPageSize()+1; // sql문에 들어가는 항목
+				int endRow = startRow+pageVO.getPageSize()-1;
+				
+				pageVO.setStartRow(startRow-1); // limit startRow (0이 1열이기 때문 1을 뺌)
+				pageVO.setEndRow(endRow);
+				
+				// 게시글 개수 가져오기
+				int count = pService.countRequestList(); // 요 동작만 각자 페이지에 맞게 수정하면 됨!!
+
+				int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
+				int startPage=(currentPage-1)/pageBlock*pageBlock+1;
+				int endPage=startPage+pageBlock-1;
+				int pageCount=count/pageSize+(count%pageSize==0?0:1);
+				if(endPage > pageCount){
+				 	endPage = pageCount;
+				 }
+				pageVO.setCount(count);
+				pageVO.setPageBlock(pageBlock);
+				pageVO.setStartPage(startPage);
+				pageVO.setEndPage(endPage);
+				pageVO.setPageCount(pageCount);
+				
+				model.addAttribute("pageVO", pageVO);
+				//================================페이징 처리를 위한 값 받아오기 동작========================================
+				model.addAttribute("requestList",oService.getRequestList(pageVO));
+				logger.debug("###########"+oService.getRequestList(pageVO).size());
+				
+		logger.debug("inbound/requestList.jsp 뷰페이지로 연결");
 		
 	}//productList팝업창
 	
