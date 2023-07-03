@@ -121,7 +121,7 @@
 		      
 		    function openChildWindow3() {
 
-		        var childWindow3 = window.open("/inbound/tradeList", "tradeList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
+		        var childWindow3 = window.open("/customer/customerList?pop=ok", "tradeList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
 		     
 		      } //tradeList팝업   
 	

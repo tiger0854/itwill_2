@@ -99,11 +99,17 @@ height: 50px; vertical-align: middle; text-align: center;
   <button type="button" class="btn btn-primary"style="float: right;margin-top: 20px;margin-right: 30px;" onclick="location.href='/inbound/orderWrite'">발주등록</button>
   <div style="background-color: #E9E9E9;height: 80px;padding: 20px;border-radius:10px;margin-bottom: 30px;margin-top: 60px;">
   <form action=""method="get">
-   <div class="input-group mb-3"style="width: 500px;justify-content: flex-start;align-items: center; justify-content: space-between;">
+   <div class="input-group mb-3"style="width: 600px;justify-content: flex-start;align-items: center; justify-content: space-between;">
+   	   <select class="form-select"style="max-width: 150px;margin-right: 5px;" name="state" id="state" >
+			  <option value="all">전체</option>
+			  <option value="ready">발주대기</option>
+			  <option value="finish">발주완료</option>
+		</select>
+   	 
    	  <select class="form-select" aria-label="Default select example" style="max-width: 150px;" name="kind" id="kind">
-  <option value="number">발주번호</option>
-  <option value="code">상품코드</option>
-  <option value="name">상품명</option>
+			  <option value="number">발주번호</option>
+			  <option value="code">상품코드</option>
+			  <option value="name">상품명</option>
 	</select>
 	<input type="text" class="form-control" placeholder="검색어를 입력하세요" name="search" value="${pageVO.search }">
 	 <button type="submit" class="btn btn-primary">검색</button>
@@ -187,7 +193,7 @@ height: 50px; vertical-align: middle; text-align: center;
 			<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
 				<c:choose>
 					<c:when test="${pageVO.kind != null }">
-					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/inbound/orderList?pageNum=${i}&kind=${pageVO.kind}&search=${pageVO.search}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
+					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/inbound/orderList?pageNum=${i}&kind=${pageVO.kind}&search=${pageVO.search}&state=${pageVO.state}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
 					</c:when>
 					<c:otherwise>
 					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/inbound/orderList?pageNum=${i}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>

@@ -17,6 +17,7 @@
 	<h3>거래처검색</h3>
 	
   <form action="">
+  <input type="hidden" name="state" value="input">
    <div class="input-group mb-3"style="width: 100%;justify-content: flex-start;align-items: center; justify-content: space-between;">
    	  <select class="form-select" aria-label="Default select example" style="max-width: 120px;" name="kind" id="kind">
   <option value="name">거래처명</option>

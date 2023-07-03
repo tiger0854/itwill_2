@@ -17,12 +17,18 @@
   	
   	<!-- 발주현황 리스트 -->
   	<select id="orderAllList" parameterType="com.ddosirak.domain.PageVO"  resultType="com.ddosirak.domain.OrderVO">
-  		SELECT * FROM ret_order 
+  		SELECT * FROM ret_order   		
 	  		<choose>
-  				<when test="kind == 'number'">WHERE order_number</when>
-  				<when test="kind == 'code'">WHERE material_code</when>
-  				<when test="kind == 'name'">WHERE material_name</when>
+  				<when test="state == 'all'">WHERE order_state>= 0</when>
+  				<when test="state == 'ready'">WHERE order_state = 0</when>
+  				<when test="state == 'finish'">WHERE order_state = 1</when>
+  			</choose>
+	  		<choose>
+  				<when test="kind == 'number'">AND order_number</when>
+  				<when test="kind == 'code'">AND material_code</when>
+  				<when test="kind == 'name'">AND material_name</when>
 	   		</choose> 
+	   		
 	   		<if test="search != ''">
 	   		LIKE CONCAT('%', #{search}, '%')
 	   		</if>

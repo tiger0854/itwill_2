@@ -18,6 +18,7 @@ window.onload = function() {
 	document.getElementById("Date1").setAttribute("min", today);
 	
 	 $('#in_piece').keyup(function() {
+
 	     var o_piece = parseInt($('#order_piece').val());
 	     var in_piece = parseInt($('#in_piece').val());
 
