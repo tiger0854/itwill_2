@@ -37,20 +37,16 @@ public class QualityController {
 	public void qualityControlListGET(Model model, HttpServletRequest request, PageVO pageVO) throws Exception {
 		logger.debug("qualityControlListGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 
-		String inspection_number = request.getParameter("inspection_number");
 		String wo_code = request.getParameter("wo_code");
 		String line_name = request.getParameter("line_name");
 		String item_name = request.getParameter("item_name");
 		String employee_id = request.getParameter("employee_id");
-		String inspection_date = request.getParameter("inspection_date");
 
 		Map<String, Object> instrSearch = new HashMap<String, Object>();
-		instrSearch.put("inspection_number", inspection_number);
 		instrSearch.put("wo_code", wo_code);
 		instrSearch.put("line_name", line_name);
 		instrSearch.put("item_name", item_name);
 		instrSearch.put("employee_id", employee_id);
-		instrSearch.put("inspection_date", inspection_date);
 
 		// ================================페이징 처리를 위한 값 받아오기
 		// 동작========================================
@@ -95,8 +91,8 @@ public class QualityController {
 		logger.debug("startRow @@@@@@@@@@2" + startRow);
 		logger.debug("pageSize @@@@@@@@@@2" + pageSize);
 		List<QualityControlVO> qualityList = null;
-		if (inspection_number == null && wo_code == null && line_name == null && item_name == null
-				&& employee_id == null && inspection_date == null) {
+		if (wo_code == null && line_name == null && item_name == null
+				&& employee_id == null) {
 			// 품질현황 전체 조회
 			logger.debug("qualityList 전체 호출 ![]~(￣▽￣)~*");
 			qualityList = service.qualityList(pageVO);
