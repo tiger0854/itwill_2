@@ -1,5 +1,7 @@
 package com.ddosirak.persistance;
 
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -71,9 +73,9 @@ public class PageDAOImpl implements PageDAO {
 	
 	// 출고목록 페이징
 	@Override
-	public Integer countOutList() {
+	public Integer countOutList(Map<String, Object> param) {
 		logger.debug("countOutList() 메서드 호출");
-		return sqlSession.selectOne(NAMESPACE + ".countOutList");
+		return sqlSession.selectOne(NAMESPACE + ".countOutList", param);
 	}
 	
 

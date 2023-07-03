@@ -1,13 +1,13 @@
 package com.ddosirak.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
 import com.ddosirak.domain.OutboundVO;
-import com.ddosirak.domain.PageVO;
 import com.ddosirak.persistance.OutboundDAO;
 
 @Service
@@ -22,22 +22,10 @@ public class OutboundServiceImpl implements OutboundService{
 		odao.outInsert(vo);
 	}
 	
-	// 전체 리스트
+	// 출고 리스트
 	@Override
-	public List<OutboundVO> getOutList(PageVO pageVO) {
-		return odao.getOutList(pageVO);
-	}
-	
-	// 진행중 출고 리스트
-	@Override
-	public List<OutboundVO> getOngoingOutList(PageVO pageVO) {
-		return odao.getOngoingOutList(pageVO); // out_state가 1인 진행중인 리스트 반환
-	}
-
-	// 완료된 출고 리스트
-	@Override
-	public List<OutboundVO> getCompletedOutList(PageVO pageVO) {
-		return odao.getCompletedOutList(pageVO); // out_state가 0인 완료된 리스트 반환
+	public List<OutboundVO> getOutList(Map<String, Object> param) {
+		return odao.getOutList(param);
 	}
 	
 	// 출고 상태 업데이트 (진행중, 출고 완료)
@@ -71,6 +59,14 @@ public class OutboundServiceImpl implements OutboundService{
 	public Integer outboundDelete(String out_num) {
 		return odao.outboundDelete(out_num);
 	}
+
+	// 출고 처리
+	@Override
+	public Integer outProcessModify(OutboundVO vo) {
+		return odao.outProcessModify(vo);
+	}
+
+	
 
 
 

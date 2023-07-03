@@ -10,52 +10,79 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
 
-	//정보 전달
-	$(document).ready(function(){
-		var formObj = $("#fr");
-		
-		$(".btn-update").click(function(){
-			formObj.attr("method", "post");
-			formObj.submit();
-		});
-		
-	});
-
-	      
+	window.addEventListener("message", function(event) {
+    var rowData = event.data;
+    
+    document.getElementById("out_num").value = rowData[1];
+    document.getElementById("item_name").value = rowData[3];
+    document.getElementById("employee_name").value = rowData[9];
+    document.getElementById("out_qty").value = rowData[4];
+    document.getElementById("due_date").value = rowData[6];
+    document.getElementById("out_notes").value;
+   });
+      
  </script>
  </head>
  <body id="body-pd" style="font-family: 'TheJamsil5';">
  <jsp:include page="../common/header.jsp"/>
 
-   
-
-
   <h1>출고 수정</h1>
  
   <form role="form" id="fr">
-  <input type="text" name="out_num" value="${vo.out_num }" readonly>
+  <input type="text" name="out_num" id="out_num"  readonly>
   <hr>
   <table border="1" class="table table-bordered" >
    <tbody>
     <tr>
-	  <td>품목코드</td>
-	  <td>품목명</td>
-	  <td>담당자</td>
-	  <td>수량</td>
-	  <td>납기일자</td>  
- 	  <td>적요</td>
+	  <th>품목명</th>
+	  <th>담당자</th>
+	  <th>수량</th>
+	  <th>납기일자</th>  
+ 	  <th>적요</th>
     </tr>
     <tr>
-	  <td><input type="text" name="item_code" value="${vo.item_code }" readonly></td>
-	  <td><input type="text" name="item_name" value="품목명" readonly></td>
-	  <td><input type="text" name="employee_name" value="담당자" readonly></td>
-	  <td><input type="text" name="out_qty" value="${vo.out_qty }"></td>
-	  <td><input type="date" name="due_date" value="${vo.due_date }"></td>
-	  <td><input type="text" name="out_notes" value="${vo.out_notes }"></td>
+	  <td><input type="text" name="item_name" id="item_name" readonly></td>
+	  <td><input type="text" name="employee_name" id="employee_name" readonly></td>
+	  <td><input type="text" name="out_qty" id="out_qty"></td>
+	  <td><input type="date" name="due_date" id="due_date"></td>
+	  <td><input type="text" name="out_notes" id="out_notes"></td>
     </tr>
   </table>
   <hr>
-  	<button type="submit" class="btn-update">수정</button>
+  	<button type="button" id="update" class="btn-update">수정</button>
   </form>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript">
+  $("#update").click(function() {
+	    var frObj = $("#fr");
+	    var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
+
+	    $.ajax({
+	      url: "/outbound/outboundUpdate", // 요청을 보낼 서버의 URL
+	      type: "POST", // HTTP 요청 방식 (POST)
+	      data: formData, // 전송할 데이터 (직렬화된 폼 데이터)
+	      success: function(response) {
+	      	Swal.fire({
+	              title: "수정 완료",
+	              text: "",
+	              icon: "success"
+	            }).then(function() {
+	              opener.location.reload();
+	              window.close();
+	            });
+	      },
+	      error: function(xhr, status, error) {
+	        console.error("에러 ", error);
+	      }
+	    });
+	 
+	  
+
+	});
+  
+  </script>
+  
+  
 </body>
 </html>

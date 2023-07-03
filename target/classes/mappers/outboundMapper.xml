@@ -16,60 +16,48 @@
   	
   	<!-- 출고 등록 -->
 	<insert id="outInsert">
-		insert into outbound (out_num,customer_code,employee_id,item_code,item_name,out_notes,standard,out_qty,price,stock_code,factory_code,due_date,create_date) 
-		SELECT CONCAT('OUT', REPLACE(current_date(), '-', ''), nullif(MAX(out_id)+1, 1)),#{customer_code},#{employee_id},#{item_code},#{item_name},#{out_notes},#{standard},#{out_qty},#{price},#{stock_code},#{factory_code},#{due_date},now()
+		insert into outbound (out_num,customer_code,employee_id,item_code,item_name,out_notes,out_qty,price,stock_code,factory_code,due_date,create_date) 
+		SELECT CONCAT('OUT', REPLACE(current_date(), '-', ''), nullif(MAX(out_id)+1, 1)),#{customer_code},#{employee_id},#{item_code},#{item_name},#{out_notes},#{out_qty},#{price},#{stock_code},#{factory_code},#{due_date},now()
 		from outbound
 	</insert>
   	<!-- 출고 등록 -->
 
 
   	<!-- 출고 리스트 -->
-  	<select id="outList" resultType="com.ddosirak.domain.OutboundVO">
-  		select out_num, customer_code, item_name, standard, out_qty, stock_code, due_date, out_state, out_date, employee_id
+  	<select id="outList" resultType="com.ddosirak.domain.OutboundVO" parameterType="map">
+  		select 
+  			*
 		from outbound
-		limit #{startRow}, #{pageSize}
+		where
+			1=1
+		<if test="state != null">
+			and out_state = #{state}
+		</if>
+		<if test="pageVO.search != null">
+			and item_name like CONCAT('%',#{pageVO.search},'%')
+		</if>
+		order by out_num desc
+		limit #{pageVO.startRow}, #{pageVO.pageSize}
   	</select>
   	<!-- 출고 리스트 -->
-  	
-  	
-  	<!-- 진행중인 출고 리스트 -->
-	<select id="getOngoingOutList" resultType="com.ddosirak.domain.OutboundVO">
-	    select out_num, customer_code, item_name, out_qty, stock_code, due_date, out_state, out_date, employee_id
-	    from outbound
-	    where out_state = 1
-	    limit #{startRow}, #{pageSize}
-	</select>
-  	<!-- 진행중인 출고 리스트 -->
-  	
+  
 
-	<!-- 완료된 출고 리스트 -->
-	<select id="getCompletedOutList" resultType="com.ddosirak.domain.OutboundVO">
-	    select out_num, customer_code, item_name, out_qty, stock_code, due_date, out_state, out_date, employee_id
-	    from outbound
-	    where out_state = 0
-	    limit #{startRow}, #{pageSize}
-	</select>
-	<!-- 완료된 출고 리스트 -->
-	
-	
-	 <!-- 출고 상태 업데이트 (진행중, 출고 완료) -->
-	 <update id="updateOutState" parameterType="map">
+	<!-- 출고 상태 업데이트 (진행중, 출고 완료) -->
+	<update id="updateOutState" parameterType="map">
         update outbound
         set out_state = #{out_state}
         where out_num = #{out_num}
     </update>
-	 <!-- 출고 상태 업데이트 (진행중, 출고 완료) -->
+	<!-- 출고 상태 업데이트 (진행중, 출고 완료) -->
 	 
  	
- 	
- 	
-  	<!-- 출고 번호에 따른 출고 상품 리스트 -->
+  	<!-- 출고번호에 따른 출고 상품 리스트 -->
   	<select id="outProductList" resultType="com.ddosirak.domain.OutboundVO">
-  		select item_code, item_name, standard, out_qty, due_date, out_notes
+  		select *
 		from outbound
 		where out_num=#{out_num}
   	</select>
-  	<!-- 출고 번호에 따른 출고 상품 리스트 -->
+  	<!-- 출고번호에 따른 출고 상품 리스트 -->
   	
   	<!-- 상품 이름 외 n건 -->
   	<select id="getOutNumCount" parameterType="string" resultType="int">
@@ -78,7 +66,7 @@
   	
   	<!-- 출고 수정 -->
   	<update id="outboundUpdate">	
-  		UPDATE outbound SET out_qty=#{out_qty}
+  		UPDATE outbound SET out_qty = #{out_qty}, due_date = #{due_date}, out_notes = #{out_notes}
   		WHERE out_num=#{out_num}
   	</update>
   	<!-- 출고 수정 -->
@@ -89,15 +77,15 @@
   	</delete>
   	<!-- 출고 삭제 -->
   	
+  	<!-- 출고 처리 -->
+  	<update id="outProcessModify">
+  	UPDATE outbound set out_Cqty = #{out_Cqty}, out_date = #{out_date} , out_state = 0
+  	WHERE out_num = #{out_num}
+  	<!-- 출고 처리 -->
+  	</update>
   	
   	
   	
-  	<!-- 페이징 목록 총 갯수 -->
-  	<select id="count" resultType="int">
-  		select count(bno) 
-  		from items
-  	</select>
-  					
   
   
   </mapper>

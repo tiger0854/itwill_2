@@ -11,9 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.ddosirak.domain.OutboundListVO;
 import com.ddosirak.domain.OutboundVO;
-import com.ddosirak.domain.PageVO;
 
 @Repository
 public class OutboundDAOImpl implements OutboundDAO {
@@ -34,24 +32,12 @@ public class OutboundDAOImpl implements OutboundDAO {
 	}
 
 	
-	// 출고 전체 리스트
+	// 출고 리스트
 	@Override
-	public List<OutboundVO> getOutList(PageVO pageVO) {		
-		return sqlSession.selectList(NAMESPACE + ".outList",pageVO);
+	public List<OutboundVO> getOutList(Map<String, Object> param) {
+		return sqlSession.selectList(NAMESPACE + ".outList", param);
 	}
 	
-	
-	// 출고 진행중 리스트
-	@Override
-	public List<OutboundVO> getOngoingOutList(PageVO pageVO) {
-		return sqlSession.selectList(NAMESPACE + ".getOngoingOutList",pageVO);
-	}
-
-	// 출고 완료 리스트
-	@Override
-	public List<OutboundVO> getCompletedOutList(PageVO pageVO) {
-		return sqlSession.selectList(NAMESPACE + ".getCompletedOutList",pageVO);
-	}
 	
 	// 출고 상태 수정
 	@Override
@@ -66,9 +52,9 @@ public class OutboundDAOImpl implements OutboundDAO {
 	// 출고 번호에 따른 출고 상품  리스트
 	@Override
 	public List<OutboundVO> getOutProductList(String out_num) {
-		return sqlSession.selectList(NAMESPACE + ".outProductList", out_num);
+	    return sqlSession.selectList(NAMESPACE + ".outProductList", out_num);	
 	}
-	// 출고 번호에 따른 출고 상품 리스트
+
 	
 	// 상품이름 외 n 건 
 	  @Override
@@ -87,6 +73,16 @@ public class OutboundDAOImpl implements OutboundDAO {
 	  public Integer outboundDelete(String out_num) {
 		  return sqlSession.delete(NAMESPACE + ".outboundDelete", out_num);
 	  }
+
+
+	  // 출고 처리
+	  @Override
+	  public Integer outProcessModify(OutboundVO vo) {
+		  return sqlSession.update(NAMESPACE + ".outProcessModify", vo);
+	  }
+
+
+	
 	
 	
 	

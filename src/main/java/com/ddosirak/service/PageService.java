@@ -1,5 +1,7 @@
 package com.ddosirak.service;
 
+import java.util.Map;
+
 import com.ddosirak.domain.PageVO;
 
 public interface PageService {
@@ -27,7 +29,12 @@ public interface PageService {
 	// 수주목록 페이징 처리
 	public Integer countReceiveList();
 	
+	// 수주 등록시 거래처 팝업 페이징
+	
+	
 	// 출고목록 페이징 처리
-	public Integer countOutList();
+	public Integer countOutList(Map<String, Object> param);
+	
+	
 	
 }// public interface end

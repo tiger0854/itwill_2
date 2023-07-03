@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class ReceiveVO {
 	
-	private int re_id; // 수주아이디(PK용)
+	private int rec_id; // 수주아이디(PK용)
 	private String re_code; // 수주 코드 
 	private String item_code; // 품목 코드
 	private String customer_code; // 거래처 코드
@@ -15,10 +15,10 @@ public class ReceiveVO {
 	
 	
 	public int getRe_id() {
-		return re_id;
+		return rec_id;
 	}
-	public void setRe_id(int re_id) {
-		this.re_id = re_id;
+	public void setRec_id(int rec_id) {
+		this.rec_id = rec_id;
 	}
 	public String getRe_code() {
 		return re_code;
@@ -60,7 +60,7 @@ public class ReceiveVO {
 	
 	@Override
 	public String toString() {
-		return "ReceiveVO [re_id=" + re_id + ", re_code=" + re_code + ", item_code=" + item_code + ", customer_code="
+		return "ReceiveVO [rec_id=" + rec_id + ", re_code=" + re_code + ", item_code=" + item_code + ", customer_code="
 				+ customer_code + ", re_date=" + re_date + ", employee_id=" + employee_id + ", re_qty=" + re_qty + "]";
 	}
 	

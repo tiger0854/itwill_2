@@ -1,8 +1,8 @@
 package com.ddosirak.controller;
 
-import java.sql.Date;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ddosirak.domain.EmployeeListVO;
-import com.ddosirak.domain.EmployeeVO;
+import com.ddosirak.domain.InboundVO;
 import com.ddosirak.domain.OutboundListVO;
 import com.ddosirak.domain.OutboundVO;
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.service.OutboundService;
 import com.ddosirak.service.PageService;
+
 
 @Controller
 @RequestMapping(value = "/outbound/*")
@@ -56,12 +56,6 @@ public class OutboundController {
 		
 		return "redirect:/outbound/outboundList";
 	}
-//	@RequestMapping(value = "/outboundInsert", method = RequestMethod.POST)
-//	public String outInsertPOST(OutboundVO vo) throws Exception {
-//		logger.debug("outInsertPOST() 호출");
-//		oService.outInsert(vo);
-//		return "redirect:/outbound/outboundList";
-//	}
 
 	
 	// 거래처 리스트(pop)
@@ -97,6 +91,7 @@ public class OutboundController {
 	public String outListGET(@RequestParam(name="state", required = false) String state,
 							 @RequestParam(name = "out_num", required = false) String out_num,
 							 @RequestParam(name = "out_state", required = false) Integer out_state,
+							 @RequestParam(name="search", required = false) String search,
 							 Model model, PageVO pageVO, HttpServletRequest request) {
 		logger.debug("outListGET() 호출");
 		logger.info("#################out_num" + out_num +"########out_state"+ out_state);
@@ -105,6 +100,7 @@ public class OutboundController {
 		// 페이징 처리
 		// 한 화면에 보여줄 글 개수 설정
 		int pageSize = 5; // sql문에 들어가는 항목
+		Map<String, Object> param = new HashMap<String, Object>(); // hyo
 		
 		// 현페이지 번호 가져오기
 		String pageNum = request.getParameter("pageNum");
@@ -121,10 +117,14 @@ public class OutboundController {
 		
 		pageVO.setStartRow(startRow-1); // limit startRow (0이 1열이기 때문 1을 뺌)
 		pageVO.setEndRow(endRow);
+		pageVO.setSearch(search); // hyo
+		
+		param.put("pageVO", pageVO); //hyo
+		param.put("state", state); //hyo
 		
 		// 게시글 개수 가져오기
-		int count = pService.countOutList(); // 요 동작만 각자 페이지에 맞게 수정하면 됨!!
-
+		int count = pService.countOutList(param); // 요 동작만 각자 페이지에 맞게 수정하면 됨!!
+		logger.debug("count : " + count);
 		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
 		int startPage=(currentPage-1)/pageBlock*pageBlock+1;
 		int endPage=startPage+pageBlock-1;
@@ -148,32 +148,14 @@ public class OutboundController {
 	        oService.updateOutState(out_num, out_state);
 	    }
 			
-		// 상태에 따라 필터링된 리스트 가져오기
+	    // 출고 리스트 가져오기
 	    List<OutboundVO> outList;
-	    if (state == null || state.isEmpty()) {
-	        outList = oService.getOutList(pageVO); // 전체 리스트 가져오기
-	    } else if (state.equals("ongoing")) {
-	        outList = oService.getOngoingOutList(pageVO); // 진행중인 리스트 가져오기
-	    } else if (state.equals("completed")) {
-	        outList = oService.getCompletedOutList(pageVO); // 완료된 리스트 가져오기
-	    } else {
-	        outList = oService.getOutList(pageVO); // 기본적으로 전체 리스트 가져오기
-	    }
+	    outList = oService.getOutList(param);
 
 		model.addAttribute("outList", outList);
-		
-		  // out_num 카운트하여 처리
-	    List<OutboundVO> processedOutList = new ArrayList<>();
-	    for (OutboundVO vo : outList) {
-	        int oCount = oService.getOutNumCount(vo.getOut_num());
-	        vo.setOutNumCount(oCount);
+		model.addAttribute("state", state);
+		model.addAttribute("search", search);
 
-	        if (oCount > 1) {
-	            vo.setItem_name(vo.getItem_name() + " 외 " + (oCount - 1) + " 건");
-	        }
-	        processedOutList.add(vo);
-	    }
-	    model.addAttribute("outList", processedOutList);
 		 
 		return "/outbound/outboundList";   
 
@@ -182,53 +164,78 @@ public class OutboundController {
 	
 	
 	// 출고번호 클릭시 해당 출고 리스트 출력
-	@RequestMapping(value = "/outProductList", method = RequestMethod.GET)
-	public String outProductListGET(@RequestParam(name = "out_num", required = false) String out_num, Model model) {
-		logger.debug("outProductListGET() 호출");
-		
-		logger.debug("out_num : " + out_num);
-		// DB에 저장된 글 정보를 가져오기
-		List<OutboundVO> outList = oService.getOutProductList(out_num);
-		logger.debug("outList : " + outList);
-		// 연겨로딘 뷰페이지를 전달(뷰-출력)
-		model.addAttribute("outList", outList);
-		return "/outbound/outProductList";
-	}
+		@RequestMapping(value = "/outProductList", method = RequestMethod.GET)
+		public String outProductListGET(@RequestParam(name = "out_num", required = false) String out_num, Model model) {
+			logger.debug("outProductListGET() 호출");
+			
+			logger.debug("out_num : " + out_num);
+
+			List<OutboundVO> outList = oService.getOutProductList(out_num);
+			logger.debug("outList : " + outList);
+
+			model.addAttribute("outList", outList);
+			return "/outbound/outProductList";
+		}
 	
 	
 	
 	// 출고 재고 
 	@RequestMapping(value = "/outboundStock", method = RequestMethod.GET)
-	public void outboundStockGET() {
+	public String outboundStockGET(@RequestParam(name = "out_num", required = false) String out_num, Model model) {
 		logger.debug("outboundStockGET() 호출");
-		logger.debug("/outbound/outboundStock.jsp 뷰 페이지 연결");		
+		List<OutboundVO> outList = oService.getOutProductList(out_num);
+		logger.debug("outList : " + outList);
+
+		model.addAttribute("outList", outList);
+		return "/outbound/outboundStock";	
+	}
+	
+	// 출고 처리
+	@RequestMapping(value = "/outProcess", method = RequestMethod.GET)
+	public void outProcessGET() {
+		logger.debug("outProcessGET() 호출");
+	}
+	
+	@RequestMapping(value="/outProcess",method=RequestMethod.POST)
+	public void outProcessPOST(OutboundVO vo) {
+		logger.debug("outProcessGET() 호출!");
+		int result = oService.outProcessModify(vo);
+		
+		if(result == 1) {
+			logger.info("출고완료");
+		}
 	}
 
 	
 	
 	//출고 수정
 	@RequestMapping(value = "/outboundUpdate",method=RequestMethod.GET )
-	public void outboundUpdateGET(Model model, @RequestParam("out_num") String out_num) throws Exception {
+	public void outboundUpdateGET() throws Exception {
 		logger.debug(" outboundUpdateGET() 호출!");
-		model.addAttribute("vo", oService.getOutProductList(out_num));	
 	}
 	
 	@RequestMapping(value = "/outboundUpdate",method=RequestMethod.POST )
-	public String outboundUpdatePOST(OutboundVO uvo) throws Exception {
+	public void outboundUpdatePOST(OutboundVO uvo) throws Exception {
 		logger.debug(" outboundUpdatePOST(vo) 호출!");
-		oService.outboundUpdate(uvo);
-		
-		return "redirect:/receive/receiveList";
-		
+		Integer result = oService.outboundUpdate(uvo);
 	}
 	
 	//출고 삭제
-	@RequestMapping(value = "/outboundDelete",method=RequestMethod.GET )
-	public String orderDeleteGET(String out_num) {
-		logger.debug(" outboundDeleteGET(String out_num) 호출!");
-		Integer result = oService.outboundDelete(out_num);
-		logger.info("result="+result);
+	@RequestMapping(value = "/outboundDelete",method=RequestMethod.POST )
+	public String outboundDeletePOST(String out_num, HttpServletRequest req) throws Exception {
+		logger.debug(" outboundDeletePOST(String out_num) 호출!");
+		String[] checkArr = req.getParameterValues("valArr");
+
+		int result = 0;
+		for(int i = 0 ; i < checkArr.length ; i++) {
+			result = oService.outboundDelete(checkArr[i]);
+			logger.debug("출고 취소 완료");
+		}
 		
 		return "redirect:/outbound/outboundList";	
 	}
+	
+	
+	
+	
 }

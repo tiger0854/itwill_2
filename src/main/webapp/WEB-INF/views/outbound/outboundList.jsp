@@ -11,62 +11,144 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.min.css">
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.all.min.js"></script>
+ <script type="text/javascript">
+
+ function outboundDelete() {
+		var valArr = new Array();
+		var list = $("input[name='rowCheck']");
+		for(var i=0; i<list.length;i++){
+			if(list[i].checked){
+			valArr.push(list[i].value);
+		  }	
+		}
+		if(valArr.length == 0){
+	    	Swal.fire("선택된 목록이 없습니다.")
+		}else{
+	      	Swal.fire({
+	            title: "출고를 취소하겠습니까?",
+	            text: "선택된 출고 목록 수 :"+valArr.length,
+				icon: "warning",
+	           	   showCancelButton: true, 
+	           	   confirmButtonColor: '#3085d6', 
+	           	   cancelButtonColor: '#d33',
+	           	   confirmButtonText: '예', 
+	           	   cancelButtonText: '아니오', 
+	            }).then(result => {
+	                if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
+	          		  $.ajax({
+	    				  url : "/outbound/outboundDelete",
+	    				  type : 'POST',
+	    				  traditional : true,
+	    				  data: {
+	    					  valArr : valArr
+	    				  },
+	    				  success:function(data){
+	    						 Swal.fire({
+	    				                title: "출고 취소가 완료되었습니다.",
+	    				                text: "",
+	    				                icon: "success"
+	    				              }).then(function() {
+	    				            	  location.reload()
+	    				              });
+	    				  }//success 
+	    			  });// ajax
+	                } else if (result.isDismissed) { // 만약 모달창에서 cancel 버튼을 눌렀다면
+	                	// ...실행
+	                }
+	            });
+			}
+		}
+	
+</script>
+
+
 </head>
 <body id="body-pd" style="font-family: 'TheJamsil5';">
 <jsp:include page="../common/header.jsp"/>
 
   <h3>outboundList.jsp</h3>
   <h1>출고 리스트</h1>
-  	<!-- 팝업창 정보 전달용(수정 삭제시 필요할 수도.) form 얘는 추후에 보고 뺄거 빼기 -->
-		<form role="form" id="fr"> 
-			<input type="hidden" name="out_num" value="'${vo.out_num }'">
-			<input type="hidden" name="out_id" value="'${vo.out_id }'">
-			<input type="hidden" name="customer_code" value="'${vo.customer_code }'">
-			<input type="hidden" name="create_date" value="'${vo.create_date }'">
-		</form>
   
-  <div >
-  출고번호 <input type="text" style="width:50px;">
-  출고일자 <input type="date" placeholder="날짜 선택"> ~ <input type="date" placeholder="날짜 선택">
-  담당자 <input type="text" onclick="location.href='user.jsp';"  style="width:50px;">
-  품목명 <input type="text" onclick="location.href='productSearch.jsp';"> 
-  <button>조회</button>
+  <div>
+  <form action="/outbound/outboundList" method="get" id="searchFrm">
+	  출고번호 <input type="text" style="width:50px;" >
+	  출고일자 <input type="date" placeholder="날짜 선택"> ~ <input type="date" placeholder="날짜 선택">
+	  담당자 <input type="text"  style="width:50px;">
+	  품목명 <input type="text" id="itemNm" name="search" value="${search}"> 
+	  <input type="hidden" name="state" value="${state}">
+  	<button type="submit">Search</button>
+  </form>
   </div>
   <hr>
   
-  <button id="allButton">전체</button>
-  <button id="ongoingButton">진행중</button>
-  <button id="completedButton">출고완료</button>
+  <button id="allButton" onclick="getOutBoundList(2);">전체</button>
+  <button id="ongoingButton" onclick="getOutBoundList(1);">진행중</button>
+  <button id="completedButton" onclick="getOutBoundList(0);">출고완료</button>
 
+  <hr>
   <table id="table" border="1" class="table table-bordered">
   <tr>
-  <td>출고번호</td>
-  <td>거래처명</td>
-  <td>품목명</td>
-  <td>재고</td>
-  <td>납기일자</td>
-  <td>진행상태</td>
-  <td>출고일자</td> 
-  <td>담당자</td>
-  <td>출고처리</td>  
-  <td>수정</td>  
+  <td></td>
+  <th>출고번호</th>
+  <th>거래처명</th>
+  <th>품목명</th>
+  <th>수량</th>
+  <th>재고</th>
+  <th>납기일자</th>
+  <th>진행상태</th>
+  <th>출고일자</th> 
+  <th>담당자</th>
+  <th>출고처리</th>  
+  <th>수정</th>  
   </tr>
-  <hr>
+  
   <c:forEach var="vo" items="${outList }">
   <tr>
-  <td onclick="location.href='/outbound/outProductList?=${vo.out_num}'">${vo.out_num }</td>
+  
+  <c:choose>
+  	<c:when test="${vo.out_state == 1 }">
+  		<td class="text_ct"><input type="checkbox" name="rowCheck" value="${vo.out_num }"/></td>
+ 	</c:when>
+ 	<c:otherwise>
+ 		<td class="text_ct"><input type="checkbox" name="rowCheck" disabled /></td>
+ 	</c:otherwise>
+  </c:choose>
+  
+  <td onclick="location.href='/outbound/outProductList?out_num=${vo.out_num}'">${vo.out_num }</td>
   <td>${vo.customer_code }</td>
+  
   <c:choose>
      <c:when test="${vo.outNumCount > 1}">
-        <td onclick="location.href='/outbound/outProductList?=${vo.customer_code}&=${vo.create_date }'"> ${vo.item_name} </td>
+        <td> ${vo.item_name} </td>
      </c:when>
      <c:otherwise>
        <td> ${vo.item_name} </td>
      </c:otherwise>
   </c:choose>
-<%--   <td>${vo.item_name }</td> --%>
-  <td onclick="location.href='/outbound/outboundStock';">출고불가능</td> <!-- 출고 총 수량이 재고 수량보다 많을 경우 불가능, 적을경우 가능 -->
+  
+<%-- <td>${vo.item_name }</td> --%>
+  <td>${vo.out_qty }</td>
+  
+  <c:choose>
+  	<c:when test="${vo.out_state == 1 }">
+  		<c:if test="${vo.out_qty > 50 }">
+  			<td onclick="location.href='/outbound/outboundStock?out_num=${vo.out_num}'">출고불가능</td>
+  		</c:if>
+  		<c:if test="${vo.out_qty < 50 }">
+  			<td onclick="location.href='/outbound/outboundStock?out_num=${vo.out_num}'"><font color="blue">출고가능</font></td>
+  		</c:if>
+  	</c:when>
+  	<c:when test="${vo.out_state == 0 }">
+  		<td></td>
+  	</c:when>
+  	<c:otherwise>
+  		<td></td>
+    </c:otherwise>
+  </c:choose>
+
+ 
   <td>${vo.due_date }</td> 
+  
  <c:choose>
     <c:when test="${vo.out_state==1 }">
    		<td>진행중</td>
@@ -75,12 +157,23 @@
 		 <td><font color="red">출고완료</font></td>
     </c:otherwise>
  </c:choose>
-  <td>${vo.out_date }</td>
+ 
+ <c:choose>
+ <c:when test="${vo.out_state==1 }">
+   		<td></td>
+    </c:when>
+    <c:otherwise>
+        <td><font color="red">${vo.out_date }</font></td>
+    </c:otherwise>
+ </c:choose>
+ 
   <td>${vo.employee_id }</td>
+  
  <c:choose>
     <c:when test="${vo.out_state==1 }">
-   		<td><button onclick="updateOutState('${vo.out_num}', 0)">출고</button></td> 
-   		<td><button type="button" class="btn-update" onclick="openChildWindow(this);">수정</button></td> 
+<%--    		<td><button type="button" onclick="updateOutState('${vo.out_num}', 0)">출고</button></td>  --%>
+   		<td><button type="button" onclick="openChildWindow2(this);">출고</button></td> 
+   		<td><button type="button" onclick="openChildWindow(this);" >수정</button></td>
     </c:when>
     <c:otherwise>
    		 <td></td>
@@ -93,12 +186,15 @@
   </c:forEach>
   </table>
   <hr>
+  
    <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
 	 		<ul class="pagination" id="pagination">
+	 		<c:set var="state" value="${state eq '0' ? '&state=0' : state eq '1' ? '&state=1' : ''}" />
+	 		<c:set var="search" value="${search ne '' ? '&search='+=search : ''}" />
 		<c:choose>
 			<c:when test="${pageVO.startPage > pageVO.pageBlock}">
 				<li class="page-item"><a
-					href="/outbound/outboundList?pageNum=${pageVO.startPage - pageVO.pageBlock}"
+					href="/outbound/outboundList?pageNum=${pageVO.startPage - pageVO.pageBlock}${state}${search}"
 					class="page-link">이전</a></li>
 			</c:when>
 			<c:otherwise>
@@ -108,15 +204,15 @@
 		<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}"
 			step="1">
 			<li
-				class="page-item<c:if test="${pageVO.pageNum eq i}"> active</c:if>">
-				<a href="/outbound/outboundList?pageNum=${i}" class="page-link">${i}</a>
-			</li>
-		</c:forEach>
+ 				class="page-item<c:if test="${pageVO.pageNum eq i}"> active</c:if>"> 
+				<a href="/outbound/outboundList?pageNum=${i}${state}${search}" class="page-link">${i}</a> 
+ 			</li>
+	    </c:forEach>
 
 		<c:choose>
 			<c:when test="${pageVO.endPage < pageVO.pageCount}">
 				<li class="page-item"><a
-					href="/outbound/outboundList?pageNum=${pageVO.startPage + pageVO.pageBlock}"
+					href="/outbound/outboundList?pageNum=${pageVO.startPage + pageVO.pageBlock}${state}${search}"
 					class="page-link">다음</a></li>
 			</c:when>
 			<c:otherwise>
@@ -125,14 +221,41 @@
 	</ul>
 <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
   
-  <button onclick="location.href='/outbound/outboundInsert';">등록</button>
+  <button type="button" class="btn btn-outline-info" onclick="outboundDelete(this);">출고 취소</button>
+  <button type="button" class="btn btn-outline-info" onclick="location.href='/outbound/outboundInsert';">출고 예정 등록</button>
   
   <!-- 진행상태 체크한것 일괄 변경 셀렉트버튼 추가 -->
   
-</body>
+  
+  </body>
 
 
-<script type="text/javascript">
+  <script type="text/javascript">
+  
+	// 출고 처리 popUp
+	 function openChildWindow2(button) {
+		   var row = button.parentNode.parentNode;
+		   var cells = row.getElementsByTagName("td");
+		   var rowData = [];
+		   
+		   for (var i = 0; i < cells.length - 1; i++) {
+		     rowData.push(cells[i].innerText);
+		   }
+		   
+			var popupWidth = 500;
+			var popupHeight = 400;
+
+			var popupX = Math.ceil(( window.screen.width - popupWidth )/2);
+			var popupY = Math.ceil(( window.screen.height - popupHeight )/2); 
+		    var childWindow = window.open("/outbound/outProcess", "outboundUpdate",'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
+		   
+		   // 자식 창이 로드된 후에 데이터를 전송합니다.
+		   childWindow.addEventListener("load", function() {
+		     childWindow.postMessage(rowData, "*");
+		   
+		   });
+		 } // 출고 처리 popUp end
+
 
 	// 출고 상태 변경
 	function updateOutState(out_num, out_state) {
@@ -165,41 +288,20 @@
 	      }
 	    });
 	  }
-
-
-
-	$(document).ready(function() {
-		  // 전체 목록 출력
-		  $("#allButton").click(function() {
-		    updateTable("all");
-		  });
-		  // 진행중 목록 출력
-		  $("#ongoingButton").click(function() {
-		    updateTable("ongoing");
-		  });
-		  // 완료 목록 출력
-		  $("#completedButton").click(function() {
-		    updateTable("completed");
-		  });
 	
-		  // 테이블 업데이트 함수
-		  function updateTable(state) {
-		    $.ajax({
-		      url: "/outbound/outboundList",
-		      method: "GET",
-		      data: { state: state },
-		      success: function(response) {
-		        $('body').html(response);
-		      },
-		      error: function() {
-		        alert("데이터 요청 실패");
-		      }
-		    });
-		  }
-		});
+
+	// 테이블 상태별 출력
+	function getOutBoundList(state) {
+		if(state != 2){
+			location.href = '/outbound/outboundList?state='+state;
+		}else{
+			location.href = '/outbound/outboundList';
+		}
+	}
 	
+
 	
-	// 수정 Popup
+	// 수정 popUp
 	 function openChildWindow(button) {
 		   var row = button.parentNode.parentNode;
 		   var cells = row.getElementsByTagName("td");
@@ -209,8 +311,8 @@
 		     rowData.push(cells[i].innerText);
 		   }
 		   
-			var popupWidth = 600;
-			var popupHeight = 500;
+			var popupWidth = 900;
+			var popupHeight = 400;
 
 			var popupX = Math.ceil(( window.screen.width - popupWidth )/2);
 			var popupY = Math.ceil(( window.screen.height - popupHeight )/2); 
@@ -221,8 +323,11 @@
 		     childWindow.postMessage(rowData, "*");
 		   
 		   });
-		 }
+		 } // 수정 popUp end
+		 
+		 
+	
 
-</script>
+  </script>
 
-</html>
+  </html>

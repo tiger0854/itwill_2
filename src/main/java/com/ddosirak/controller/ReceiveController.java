@@ -53,9 +53,17 @@ public class ReceiveController {
 	
 	
 	// 거래처 리스트(pop)
-		@RequestMapping(value = "/customerList", method = RequestMethod.GET)
-		public void customerListGET() {
-			logger.debug("customertListGET() 호출");
+	@RequestMapping(value = "/customerList", method = RequestMethod.GET)
+	public void customerListGET(PageVO pageVO, Model model, HttpServletRequest request) throws Exception {
+		logger.debug("customertListGET() 호출");
+		
+	
+		
+		
+		List<ReceiveVO> receiveList = rService.receiveList(pageVO);
+		logger.debug("receiveList : " + receiveList);
+		
+		model.addAttribute("receiveList", receiveList);
 	} 
 		
 		
@@ -160,11 +168,15 @@ public class ReceiveController {
 	
 	// 수주 삭제 - D
 	@RequestMapping(value = "/receiveRemove", method = RequestMethod.POST)
-	public String receiveRemovePOST(@RequestParam("re_code") String re_code) throws Exception {
+	public String receiveRemovePOST(String re_code, HttpServletRequest req) throws Exception {
 		logger.debug("receiveRemovePOST() 호출");
-		logger.debug("re_code : " + re_code);
-		rService.receiveRemove(re_code);
+		String[] checkArr = req.getParameterValues("valArr");
 		
+		int result = 0;
+		for(int i = 0 ; i < checkArr.length ; i++) {
+			result = rService.receiveRemove(checkArr[i]);
+			logger.debug("수주 삭제 완");
+		}	
 		return "redirect:/receive/receiveList";
 	}
 	

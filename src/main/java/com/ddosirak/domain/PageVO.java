@@ -99,7 +99,9 @@ public class PageVO {
 	public String toString() {
 		return "PageVO [pageSize=" + pageSize + ", pageNum=" + pageNum + ", currentPage=" + currentPage + ", startRow="
 				+ startRow + ", pageBlock=" + pageBlock + ", startPage=" + startPage + ", endPage=" + endPage
-				+ ", count=" + count + ", pageCount=" + pageCount + ", endRow=" + endRow + "]";
+				+ ", count=" + count + ", pageCount=" + pageCount + ", endRow=" + endRow + ", search=" + search + "]";
+		
+		
 	}
 
 }// public class end

@@ -22,25 +22,25 @@
   <h1>출고 재고 관리</h1>
   
   <table border="1" class="table table-bordered">
-  <tr>
-  <th>작업지시번호</th>
-  <td>I001-20230618</td>
-  <th>납기일</th>
-  <td>2023-06-18</td>
-  <th>작업지시일자</th>
-  <td>2023-06-18</td>
-  <th>작업지시 담당자</th>
-  <td>002</td>
-  </tr>
+   <c:forEach var="vo" items="${outList }">
   <tr>
   <th>출고진행현황</th>
+   <c:choose>
+     <c:when test="${vo.out_state==1}">
   <td>진행중</td>
-  <th>출고일자</th>
-  <td>2023-08-08</td>
+   </c:when>
+     <c:otherwise>
+         <td><font color="red">출고 완료</font></td>
+     </c:otherwise>
+  </c:choose>
+  <th>납기일</th>
+  <td>${vo.due_date }</td>
   <th>출고 담당자</th>
-  <td>003</td>
+  <td>${vo.employee_id }</td>
   </tr>
+  </c:forEach>
   </table>
+  
   
   <table border="1" class="table table-bordered">
   <tr>
@@ -51,23 +51,17 @@
   <th>필요수량</th>
   <th>창고재고</th>
   </tr>
+  <c:forEach var="vo" items="${outList }">
+  <tr>
+    <td>${vo.out_num }</td>
+    <td>${vo.item_name }</td>
+    <td>${vo.customer_code }</td>
+    <td>${vo.out_qty }</td>
+    <td>${vo.out_qty -10}</td>
+    <td>10</td>
+  </tr>
+   </c:forEach>
 
-  <tr>
-  <td>OUT2023060723</td>
-  <td>1234</td>
-  <td>스팸마요도시락[box]</td>
-  <td>20</td>
-  <td>10</td>
-  <td>0</td>
-  </tr>
-  <tr>
-  <td>OUT2023060723</td>
-  <td>1111</td>
-  <td>참치마요도시락[box]</td>
-  <td>50</td>
-  <td>0</td>
-  <td>10</td>  
-  </tr>
   </table>
 </body>
 </html>

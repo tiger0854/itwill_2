@@ -1,5 +1,7 @@
 package com.ddosirak.persistance;
 
+import java.util.Map;
+
 import com.ddosirak.domain.PageVO;
 
 public interface PageDAO {
@@ -20,7 +22,8 @@ public interface PageDAO {
 	public Integer countReceiveList();
 	
 	// 출고목록 페이징처리
-	public Integer countOutList();
+	public Integer countOutList(Map<String, Object> param);
+	
 	// 출근자 페이징 처리
 	public Integer countInEmp();
 	// 퇴근자 페이징 처리

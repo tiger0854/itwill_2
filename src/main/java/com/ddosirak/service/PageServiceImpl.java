@@ -1,5 +1,7 @@
 package com.ddosirak.service;
 
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -72,9 +74,9 @@ public class PageServiceImpl implements PageService {
 	
 	// 출고목록 페이징
 	@Override
-	public Integer countOutList() {
+	public Integer countOutList(Map<String, Object> param) {
 		logger.debug("service: countOutList()");
-		return pdao.countOutList();
+		return pdao.countOutList(param);
 	}
 	
 	

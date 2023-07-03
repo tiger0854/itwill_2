@@ -26,18 +26,18 @@
 	  <tr>
 	    <td>품목코드</td>
 	    <td>품목명</td>
-	    <td>규격</td>
 	    <td>수량</td>
 	    <td>납기일자</td>
+	    <td>출고예정 등록일자</td>
 	    <td>비고</td>
 	  </tr>
 	  <c:forEach var="vo" items="${outList }">
 	   <tr>
 	    <td>${vo.item_code }</td>
 	    <td>${vo.item_name }</td>
-	    <td>${vo.standard }</td>
 	    <td>${vo.out_qty }</td>
 	    <td>${vo.due_date }</td>
+	    <td>${vo.create_date }</td>
 	    <td>${vo.out_notes }</td>
 	  </tr>
 	  </c:forEach>
