@@ -67,23 +67,26 @@ function openItem() {
 						<tr>
 							<th>창고 코드</th>
 							<td><input type="text" id="wh_code" name="wh_code"
-								placeholder="창고코드" readonly></td>
+								placeholder="창고코드"></td>
 							<th>창고명</th>
 							<td><input type="text" id="wh_name" name="wh_name"
-								placeholder="창고명" onclick="openItem();"></td>
+								placeholder="창고명"></td>
+						</tr>
+						<tr>	
 							<th>재고/자재</th>
-							<td><select id="retail_code" name="retail_code" disabled>
-									<option value="전체">전체</option>
+							<td><select id="retail_code" name="retail_code">
+									<option></option>
 									<option value="자재">자재</option>
 									<option value="재고">재고</option>
 							</select></td>
 							<th>냉장/냉동/상온</th>
-							<td><select id="wh_type" name="wh_type" disabled>
-									<option value=""></option>
+							<td><select id="wh_type" name="wh_type">
+									<option></option>
 									<option value="냉장">냉장</option>
 									<option value="냉동">냉동</option>
 									<option value="상온">상온</option>
 							</select></td>
+							<td><input type="button" value="상세검색" onclick="openItem();"></td>
 						</tr>
 					</table>
 				</div>
@@ -133,17 +136,17 @@ function openItem() {
 					style="margin-top: 20px;">
 					<c:if test="${pageVO.startPage > pageVO.pageBlock}">
 						<li class="page-item"><a class="page-link"
-							href="/foundation/warehouse/warehouseList?wh_code=${Search.wh_code }&wh_name=${Search.wh_name }&pageNum=${pageVO.startPage - pageVO.pageBlock}">
+							href="/foundation/warehouse/warehouseList?wh_code=${Search.wh_code }&wh_name=${Search.wh_name }&wh_type=${Search.wh_type }&retail_code=${Search.retail_code }&pageNum=${pageVO.startPage - pageVO.pageBlock}">
 								</a></li>
 					</c:if>
 					<c:forEach var="i" begin="${pageVO.startPage}"
 						end="${pageVO.endPage}" step="1">
 						<li class="page-item"><a class="page-link"
-							href="/foundation/warehouse/warehouseList?wh_code=${Search.wh_code }&wh_name=${Search.wh_name }&pageNum=${i}"><span>${i}</span></a></li>
+							href="/foundation/warehouse/warehouseList?wh_code=${Search.wh_code }&wh_name=${Search.wh_name }&wh_type=${Search.wh_type }&retail_code=${Search.retail_code }&pageNum=${i}"><span>${i}</span></a></li>
 					</c:forEach>
 					<c:if test="${pageVO.endPage < pageVO.pageCount}">
 						<li class="page-item"><a class="page-link"
-							href="/foundation/warehouse/warehouseList?wh_code=${Search.wh_code }&wh_name=${Search.wh_name }&pageNum=${pageVO.startPage + pageVO.pageBlock}">
+							href="/foundation/warehouse/warehouseList?wh_code=${Search.wh_code }&wh_name=${Search.wh_name }&wh_type=${Search.wh_type }&retail_code=${Search.retail_code }&pageNum=${pageVO.startPage + pageVO.pageBlock}">
 								</a></li>
 					</c:if>
 				</ul>

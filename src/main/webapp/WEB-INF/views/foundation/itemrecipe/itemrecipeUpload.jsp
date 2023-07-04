@@ -47,11 +47,12 @@
 					window.close(); // 윈도우 창을 닫습니다.
 				},
 				error : function(xhr, status, error) {
-					console.error("에러 발생:", error);
+					alert("최소한 하나의 자재는 등록해야합니다");
 				}
 			});
 		}
-
+		
+		
 		// 상품 검색 후 자재 가져오기
 		function getRelatedMaterials() {
 			var itemCode = document.getElementById("item_code").value;
@@ -83,8 +84,9 @@
 
 		//상품 검색
 		function itemSearch() {
-			window.open("/pro/itemList", "popup",
+			var childWindow = window.open("/pro/itemList", "popup",
 					"width=500, height=600,left=100, top=100");
+			childWindow.onbeforeunload =getRelatedMaterials;
 		}
 
 		//자재 검색
@@ -203,7 +205,7 @@
 						<td></td>
 						<td>
 							<input type="hidden" name="item_code" id="item_code"> 
-							<input type="text" id="item_name" onclick="getRelatedMaterials();" required readonly="readonly" placeholder="검색 후 클릭"> 
+							<input type="text" id="item_name" required readonly="readonly" placeholder="검색 후 클릭"> 
 						</td>
 					</tr>
 					<tr>

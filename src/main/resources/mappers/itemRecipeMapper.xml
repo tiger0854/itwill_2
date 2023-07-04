@@ -35,7 +35,9 @@
 		join material_detail md 
 		on i.material_code = md.material_code
 		where i.item_code like concat ('%', #{item_code}, '%')
+		and id.item_name like concat ('%', #{item_name}, '%')
 		and i.material_code like concat ('%', #{material_code}, '%')
+		and md.material_name like concat ('%', #{material_name}, '%')
 		order by i.item_code
 		limit #{startRow}, #{pageSize}
 	</select>
@@ -111,11 +113,11 @@
 		ir.item_code = id.item_code
 		LEFT OUTER JOIN material_detail md 
 		ON ir.material_code = md.material_code
-		<if test="item_code != null and item_name != null">
-			WHERE ir.item_code
-			LIKE CONCAT('%', #{item_code}, '%')
-			AND
-			id.item_name LIKE CONCAT('%', #{item_name}, '%')
+		<if test="item_code != null and item_name != null and material_code != null and material_name != null">
+			WHERE ir.item_code LIKE CONCAT('%', #{item_code}, '%')
+			AND id.item_name LIKE CONCAT('%', #{item_name}, '%')
+			AND ir.material_code LIKE CONCAT('%', #{material_code}, '%')
+			AND md.material_name LIKE CONCAT('%', #{material_name}, '%')
 		</if>
 	</select>
 	<!-- 레시피 검색 갯수 -->

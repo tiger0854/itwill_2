@@ -14,6 +14,9 @@
 		select * 
 		from warehouse 
 		where wh_code LIKE concat('%', #{wh_code}, '%') 
+		and wh_name LIKE concat('%', #{wh_name}, '%') 
+		and wh_type LIKE concat('%', #{wh_type}, '%') 
+		and retail_code LIKE concat('%', #{retail_code}, '%') 
 		LIMIT #{startRow}, #{pageSize}
 	</select>
 	<!-- 창고 조회 -->
@@ -50,8 +53,10 @@
 	<select id="warehouseItemSearch"
 		resultType="com.ddosirak.domain.WarehouseVO">
 		SELECT * FROM warehouse
-		WHERE wh_code LIKE CONCAT('%', #{wh_code}, '%')
-		AND wh_name LIKE CONCAT('%', #{wh_name}, '%')
+		where wh_code LIKE concat('%', #{wh_code}, '%') 
+		and wh_name LIKE concat('%', #{wh_name}, '%') 
+		and wh_type LIKE concat('%', #{wh_type}, '%') 
+		and retail_code LIKE concat('%', #{retail_code}, '%') 
 	</select>
 	<!-- 상품 검색 (팝업창) -->
 

@@ -16,6 +16,8 @@
 
 		select * from material_detail 
 		WHERE material_code LIKE CONCAT('%', #{material_code}, '%')
+		and material_name LIKE CONCAT('%', #{material_name}, '%')
+		and material_type LIKE CONCAT('%', #{material_type}, '%')
 		order by material_code desc
 		LIMIT #{startRow}, #{pageSize}
 	</select>

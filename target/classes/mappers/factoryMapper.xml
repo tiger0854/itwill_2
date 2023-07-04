@@ -23,6 +23,7 @@
 		resultType="com.ddosirak.domain.FactoryVO">
 		SELECT * FROM factory
 		WHERE factory_code LIKE CONCAT('%', #{factory_code}, '%')
+		and factory_name LIKE CONCAT('%', #{factory_name}, '%')
 		LIMIT #{startRow}, #{pageSize}
 	</select>
 	<!-- 공장 목록 검색 -->

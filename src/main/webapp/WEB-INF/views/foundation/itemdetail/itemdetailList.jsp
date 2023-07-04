@@ -59,12 +59,8 @@
 					<hr width="100%" style="border: 2px solid black">
 					<!-- 상품목록 검색, 등록버튼 -->
 					<div class=btn-container>
-						<button class=btn-search type="submit">
-							<i class='bx bx-search-alt-2'></i> 조회
-						</button>
-						<button class=btn-add onclick="itemUpload();">
-							<i class='bx bx-plus-medical'></i> 추가
-						</button>
+						<input type="submit" class="btn-search" value="품목 조회">
+						<input type="button" class="btn-add" onclick="itemUpload();" value="품목 추가">
 					</div>
 
 					<!-- 품목 검색박스 -->
@@ -75,10 +71,11 @@
 						<tr>
 							<th>품번</th>
 							<td><input type="text" name="item_code" id="item_code"
-								placeholder="품번" readonly></td>
+								placeholder="품번" ></td>
 							<th>품명</th>
 							<td><input type="text" name="item_name" id="item_name"
-								placeholder="품명" onclick="openItem();"></td>
+								placeholder="품명" ></td>
+							<td><input type="button" onclick="openItem();" value="상세 검색"></td>
 						</tr>
 					</table>
 				</div>
