@@ -35,6 +35,7 @@
 		join material_detail md 
 		on i.material_code = md.material_code
 		where i.item_code like concat ('%', #{item_code}, '%')
+		and i.material_code like concat ('%', #{material_code}, '%')
 		order by i.item_code
 		limit #{startRow}, #{pageSize}
 	</select>
@@ -130,6 +131,7 @@
 		on i.item_code= id.item_code
 		join material_detail md
 		on i.material_code = md.material_code
+
 	</select>
 
 	<select id="itemrecipeItemSearchList"
@@ -142,6 +144,8 @@
 		on i.material_code = md.material_code
 		where i.item_code like concat('%', #{item_code}, '%')
 		and id.item_name like concat('%', #{item_name}, '%')
+		limit #{startRow}, #{pageSize}
+
 	</select>
 	<!-- 상품목록 검색 -->
 </mapper>

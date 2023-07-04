@@ -73,12 +73,13 @@
 						<tr>
 							<th>자재코드</th>
 							<td><input type="text" id="material_code"
-								name="material_code" placeholder="자재코드" readonly></td>
+								name="material_code" placeholder="자재코드" onclick="openItem();"></td>
 							<th>자재이름</th>
 							<td><input type="text" id="material_name"
 								name="material_name" placeholder="자재명" onclick="openItem();"></td>
+
 							<th>자재속성</th>
-							<td><select id="material_type" name="material_type" disabled>
+							<td><select id="material_type" name="material_type">
 
 									<option value=""></option>
 									<option value="원자재">원자재</option>
@@ -125,6 +126,7 @@
 			</table>
 
 
+
 			<!-- 페이징처리 -->
 			<%--   		${Search} --%>
 			<div class="container" style="margin-top: 30px; margin-bottom: 30px">
@@ -147,7 +149,6 @@
 					</c:if>
 				</ul>
 			</div>
-
 
 		</div>
 	</div>
