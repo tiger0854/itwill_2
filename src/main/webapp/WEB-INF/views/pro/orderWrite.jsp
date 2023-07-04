@@ -57,7 +57,7 @@ $(document).ready(function() {
 // 	        alert("전송성공!");
 	        if (response === "true") {
 	          
-	        } else {
+	        } else { 
 	        	alert(re_code);
 	        	console.log(re_code);
 		          $("#add").prop("disabled", true);
