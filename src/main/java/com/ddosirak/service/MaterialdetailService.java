@@ -24,10 +24,11 @@ public interface MaterialdetailService {
 	public void deleteM(String material_code);
 	
 	// 상품목록
-	public List<MaterialdetailVO> materialItemList();
+	public List<MaterialdetailVO> materialItemList(PageVO pageVO);
 
 	// 상품목록 검색
 	public List<MaterialdetailVO> materialItemList(Map<String, Object> instrSearch);
+
 
 	// 자재 검색 갯수
 	public Integer materialCount(Map<String, Object> instrSearch);

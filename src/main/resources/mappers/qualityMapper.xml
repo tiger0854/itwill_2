@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.ddosirak.mapper.QualityMapper">
+
+	<!-- 품질현황 목록 출력 -->
+	<select id="qualityList"
+		resultType="com.ddosirak.domain.QualityControlVO">
+		SELECT DISTINCT
+		p.wo_code,
+		p.employee_id,
+		p.line_code,
+		p.item_code,
+		p.sQTY,
+		p.pQTY,
+		p.item_name,
+		(
+		SELECT COALESCE(SUM(pfQTY), 0)
+		FROM prod_perf_add
+		WHERE perf_gobd = 'y'
+		AND wo_code = p.wo_code
+		) +
+		COALESCE(ir.total_error_QTY, 0) as total_error_QTY,
+		p.line_name
+		FROM
+		prod p
+		LEFT OUTER JOIN
+		prod_perf_add pa ON pa.wo_code = p.wo_code
+		LEFT
+		OUTER JOIN
+		items_error_rate ir ON ir.item_code = pa.item_code
+		Limit
+		#{startRow},
+		#{pageSize}
+	</select>
+
+	<!-- 품질현황 검색 목록 출력 -->
+	<select id="qualitySearchList"
+		resultType="com.ddosirak.domain.QualityControlVO">
+		SELECT DISTINCT
+		p.wo_code,
+		p.employee_id,
+		p.line_code,
+		p.item_code,
+		p.sQTY,
+		p.pQTY,
+		p.item_name,
+		(
+		SELECT COALESCE(SUM(pfQTY), 0)
+		FROM
+		prod_perf_add
+		WHERE perf_gobd = 'y'
+		AND wo_code = p.wo_code
+		) +
+		COALESCE(ir.total_error_QTY, 0) as total_error_QTY,
+		p.line_name
+		FROM
+		prod p
+		LEFT OUTER JOIN
+		prod_perf_add pa ON pa.wo_code = p.wo_code
+		LEFT
+		OUTER JOIN
+		items_error_rate ir ON ir.item_code = pa.item_code
+		WHERE
+		p.wo_code LIKE
+		CONCAT('%',
+		#{wo_code}, '%')
+		AND p.line_name LIKE
+		CONCAT('%',
+		#{line_name}, '%')
+		AND
+		p.item_name LIKE CONCAT('%',
+		#{item_name}, '%')
+		AND p.employee_id LIKE
+		CONCAT('%', #{employee_id},
+		'%')
+		LIMIT
+		#{startRow}, #{pageSize}
+	</select>
+
+	<!-- 품질현황 검색 갯수 -->
+	<select id="itemCount" resultType="java.lang.Integer">
+		SELECT count(*) FROM
+		prod where
+		wo_code LIKE
+		CONCAT('%',
+		#{wo_code}, '%')
+		AND line_name LIKE
+		CONCAT('%',
+		#{line_name}, '%')
+		AND
+		item_name LIKE CONCAT('%',
+		#{item_name}, '%')
+		AND
+		employee_id LIKE
+		CONCAT('%', #{employee_id},
+		'%')
+	</select>
+
+	<!-- 품질검사 등록 -->
+	<!-- <insert id="insertInspection" -->
+	<!-- parameterType="com.ddosirak.domain.QualityControlVO"> -->
+	<!-- <selectKey keyProperty="inspection_number" -->
+	<!-- resultType="String" order="BEFORE"> -->
+	<!-- SELECT CONCAT('INSP', -->
+	<!-- LPAD(IFNULL(MAX(CAST(RIGHT(inspection_number, 4) AS -->
+	<!-- UNSIGNED)), 0) + -->
+	<!-- 1, 4, '0')) FROM quality -->
+	<!-- </selectKey> -->
+	<!-- INSERT INTO quality -->
+	<!-- (inspection_number, inspection_date, -->
+	<!-- inspection_result, iQTY, wo_code, -->
+	<!-- inspection_comment, item_name, -->
+	<!-- item_code) -->
+	<!-- VALUES ( -->
+	<!-- #{inspection_number}, -->
+	<!-- #{inspection_date}, -->
+	<!-- #{inspection_result}, -->
+	<!-- #{iQTY}, -->
+	<!-- #{wo_code}, -->
+	<!-- #{inspection_comment}, -->
+	<!-- #{item_name}, -->
+	<!-- #{item_code} -->
+	<!-- ) -->
+	<!-- </insert> -->
+
+	<!-- 품질검사 목록 -->
+	<!-- <select id="inspectionList" -->
+	<!-- resultType="com.ddosirak.domain.QualityControlVO"> -->
+	<!-- select * from quality -->
+	<!-- limit #{startRow}, #{pageSize} -->
+	<!-- </select> -->
+
+	<!-- <select id="inspectionSearchList" -->
+	<!-- resultType="com.ddosirak.domain.QualityControlVO"> -->
+	<!-- select * from quality -->
+	<!-- WHERE -->
+	<!-- inspection_date LIKE CONCAT ('%', -->
+	<!-- #{inspection_date}, '%') -->
+	<!-- <choose> -->
+	<!-- <when test="item_name != null"> -->
+	<!-- AND item_name -->
+	<!-- LIKE CONCAT('%', -->
+	<!-- #{item_name}, '%') -->
+	<!-- </when> -->
+	<!-- <when test="inspection_result != null"> -->
+	<!-- AND -->
+	<!-- inspection_result LIKE CONCAT ('%', -->
+	<!-- #{inspection_result}, '%') -->
+	<!-- </when> -->
+	<!-- <otherwise></otherwise> -->
+	<!-- </choose> -->
+	<!-- limit -->
+	<!-- #{startRow}, #{pageSize} -->
+	<!-- </select> -->
+
+	<!-- 품질검사 검색 갯수 -->
+	<!-- <select id="inspectionCount" resultType="java.lang.Integer"> -->
+	<!-- SELECT count(*) FROM -->
+	<!-- quality -->
+	<!-- WHERE inspection_date LIKE CONCAT ('%', -->
+	<!-- #{inspection_date}, -->
+	<!-- '%') -->
+	<!-- <choose> -->
+	<!-- <when test="item_name != null"> -->
+	<!-- AND item_name -->
+	<!-- LIKE CONCAT('%', -->
+	<!-- #{item_name}, '%') -->
+	<!-- </when> -->
+	<!-- <when test="inspection_result != null"> -->
+	<!-- AND -->
+	<!-- inspection_result LIKE CONCAT ('%', -->
+	<!-- #{inspection_result}, '%') -->
+	<!-- </when> -->
+	<!-- <otherwise></otherwise> -->
+	<!-- </choose> -->
+	<!-- </select> -->
+
+	<!-- max(코드) -->
+	<!-- <select id="getMaxCode" resultType="String"> -->
+	<!-- select max(inspection_number) -->
+	<!-- from quality -->
+	<!-- </select> -->
+	<!-- max(코드) -->
+
+</mapper>
