@@ -182,6 +182,13 @@ public class CookOrderServiceImpl implements CookOrderService {
 	}
 
 
+	//수주번호 체크
+	@Override
+	public Boolean checkrechod(String re_code) {
+		return cdao.checkrecode(re_code);
+	}
+
+
 
 
 

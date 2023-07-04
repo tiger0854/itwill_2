@@ -902,12 +902,11 @@ public class ProductController {
 //	/pro/checkrecode
 	
 	@RequestMapping(value = "/checkrecode", method = RequestMethod.GET)
-	@ResponseBody
 	public Boolean checkrecode(@RequestParam("re_code") String re_code) throws Exception {
 		
-		
-	
-		return true;
+		Boolean result = cService.checkrechod(re_code);
+		logger.debug("result : " + result);
+		return result;
 	}
 	
 	

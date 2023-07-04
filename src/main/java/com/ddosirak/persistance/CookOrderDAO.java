@@ -87,6 +87,9 @@ public interface CookOrderDAO {
 	// 조리실적 수동마감
 	public void codatatusEnd(String co_code);
 
+	// 수주번호 체크
+	public boolean checkrecode(String re_code);
+
 	
 
 

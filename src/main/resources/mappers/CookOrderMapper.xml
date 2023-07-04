@@ -205,8 +205,16 @@
 	  	where co_code=#{co_code}
   	</select> 
   	
-
-  	
+	<!-- checkR -->
+  	<select id="checkR"  resultType="boolean">
+		  SELECT COUNT(*) = (
+		    SELECT COUNT(*)
+		    FROM cook
+		    WHERE so_code = #{re_code} AND cpQTY >= material_con
+		  ) AS availability
+		  FROM cook
+		  WHERE so_code = #{re_code}
+	</select>  
   	
   	
   </mapper>

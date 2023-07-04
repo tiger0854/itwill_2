@@ -196,6 +196,11 @@ public class CookOrderDAOImpl implements CookOrderDAO {
 		sqlSession.selectOne(NAMESPACE+".cookturnend", co_code);
 	}
 
+	@Override
+	public boolean checkrecode(String re_code) {
+		return sqlSession.selectOne(NAMESPACE+".checkR", re_code);
+	}
+
 
 
 

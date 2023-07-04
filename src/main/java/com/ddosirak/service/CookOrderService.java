@@ -58,6 +58,9 @@ public interface CookOrderService {
 	// 실적 수동마감
 	public void costatusEnd(String co_code);
 
+	// 수주번호 체크
+	public Boolean checkrechod(String re_code);
+
 	
 
 	

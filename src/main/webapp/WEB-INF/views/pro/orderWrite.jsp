@@ -45,31 +45,33 @@ $(document).ready(function() {
 });
 	
 $(document).ready(function() {
-	  $("#re_code").keyup(function() {
+// 	  $("#re_code", window.opener.document).change("input", function() {
 	    var re_code = $("#re_code").val(); // re_code 값 가져오기
+	    console.log(re_code);
 
 	    $.ajax({
 	      url: "/pro/checkrecode", // 요청을 보낼 서버의 URL
 	      type: "POST", // HTTP 요청 방식 (POST)
 	      data: { re_code: re_code }, // 전송할 데이터
 	      success: function(response) {
+// 	        alert("전송성공!");
 	        if (response === "true") {
-	          // 유효성 검사 결과가 true일 경우
-	          // 등록 버튼 활성화
-// 	          submitForm();
+	          
 	        } else {
-	          // 유효성 검사 결과가 false일 경우
-	          // 버튼 비활성화 또는 처리할 내용 작성
-	          $(".btn-add").prop("disabled", true);
-	          alert("유효성 검사에 실패하였습니다.");
+	        	alert(re_code);
+	        	console.log(re_code);
+		          $("#add").prop("disabled", true);
+				  $('#ipmsg').show();
+				  $('#ipmsg').css('color','red');
+				  $('#ipmsg').text("수주번호에 해당하는 조리가 완료되지않았습니다"); 
 	        }
 	      },
 	      error: function(xhr, status, error) {
-	    	alert("전송성공!");
+// 	        alert("전송실패!");
 	        console.error("에러 발생:", error);
 	      }
 	    });
-	  });
+// 	  });
 	});
 
 
@@ -107,9 +109,10 @@ $(document).ready(function() {
     <tr>
       <td>수주번호</td>
      <td><div class="input-group">
-	    <input style="width: 40%" type="text" name="so_code" id="re_code" placeholder="수주번호" class="form-control" readonly>
+	    <input style="width: 40%" type="text" name="so_code" id="re_code" placeholder="수주번호" class="form-control">
 	    <input type="button" class="btn btn-primary" onclick="opensucode()" value="검색">
 	</div></td>
+	<span id="ipmsg"></span>
     </tr>
     <tr>
       <td>수주수량</td>
@@ -155,7 +158,7 @@ $(document).ready(function() {
 
 <!-- 작업지시등록, 취소 버튼 -->
 <div style="text-align: center; margin-top: 50px">
-<button type="button" class=btn-add> <i class='bx bx-edit'></i> 등록</button>
+<button type="button" class="btn btn-primary" id="add"> <i class='bx bx-edit'></i> 등록</button>
 <button class=btn-search onclick="window.close()">X 취소</button>
 </div>
 
