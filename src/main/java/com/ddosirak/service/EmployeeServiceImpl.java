@@ -2,6 +2,7 @@ package com.ddosirak.service;
 
 import java.io.File;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,6 +16,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ddosirak.domain.EmployeeCheckVO;
 import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.EmployeevacationVO;
 import com.ddosirak.domain.PageVO;
@@ -58,7 +60,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		// 현재 프로젝트 경로 가져오기
 		String absolutePath = request.getSession().getServletContext().getRealPath("/"); // 서버경로 ..
-		String picPath = absolutePath+"resources\\employee_photo\\";
+		String picPath = absolutePath+"resources\\";
 		
 		logger.debug("picURL: "+picURL);
 		logger.debug("picPath: "+picPath);
@@ -167,7 +169,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<EmployeevacationVO> vacationList() {
 		return edao.vacationList();
 	} // vacationList() method end
-
 	// 사원휴가 신청
 	@Override
 	public void insertVacation(EmployeevacationVO vvo) {
@@ -177,8 +178,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	// 나의 휴가 리스트 출력
 	@Override
-	public List<EmployeevacationVO> myvacationList() {	
-		return edao.myvacationList();
+	public List<EmployeevacationVO> myvacationList(int employee_id) {	
+		System.out.println("service.employee_id"+employee_id);
+		return edao.myvacationList(employee_id);
 	}// myvacationList() method end
 
 	
@@ -199,7 +201,76 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 /////////////////////////////////////////휴가 동작////////////////////////////////////////////////////	
-
 	
+/////////////////////////////////////////AJAX동작////////////////////////////////////////////////////
+	
+	// 일자별 사원 출근 현황 출력
+	@Override
+	public List<EmployeeCheckVO> getCheckList(Timestamp date_time, int employee_id) {
+		return edao.getCheckList(date_time, employee_id);
+	}// getCheckList() method end
+	
+	// 출근자 수
+	@Override
+	public List<EmployeeCheckVO> getInEmp() {
+		return edao.getInEmp();
+	}// getInEmp() method end
+	// 퇴근자 수
+	@Override
+	public List<EmployeeCheckVO> getOutEmp() {
+		return edao.getOutEmp();
+	}// getOutEmp() method end
+	
+	// 출근자 리스트 (페이징)
+	@Override
+	public List<EmployeeCheckVO> getInEmp(PageVO vo) {
+		return edao.getInEmp(vo);
+	}// getInEmp() method end
+	// 퇴근자 리스트 (페이징)
+	@Override
+	public List<EmployeeCheckVO> getOutEmp(PageVO vo) {
+		return edao.getOutEmp(vo);
+	}// getOutEmp() method end
+	
+	// 필터링
+	// 부서
+	@Override
+	public List<EmployeeVO> getEmpList_department_name(String department_name) {
+		return edao.getEmpList_department_name(department_name);
+	}// getEmpList_department_name() method end
+	// 직위
+	@Override
+	public List<EmployeeVO> getEmpList_position(String position) {
+		return edao.getEmpList_position(position);
+	}// getEmpList_position() method end
+	// 재직현황
+	@Override
+	public List<EmployeeVO> getEmpList_employee_status(String employee_status) {
+		return edao.getEmpList_employee_status(employee_status);
+	}// getEmpList_employee_status() method end
+	// 사원이름
+	@Override
+	public List<EmployeeVO> getEmpList_employee_name(String employee_name) {
+		return edao.getEmpList_employee_name(employee_name);
+	}// getEmpList_employee_name() method end
+	// 필터링	
+	
+	
+		
+
+/////////////////////////////////////////AJAX동작////////////////////////////////////////////////////
+	// 휴가 삭제
+	@Override
+	public void vacationdelete(Integer vacation_id) {
+		edao.vacationdelete(vacation_id);
+	}
+	
+	
+	
+	
+	
+	
+	
+/////////////////////////////////////////휴가동작////////////////////////////////////////////////////
 
 } // public class end

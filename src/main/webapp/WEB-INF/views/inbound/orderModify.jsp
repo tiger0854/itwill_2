@@ -30,26 +30,50 @@
 	
 </head>
 <body>
+	<h4 style="text-align: center;">발주서 수정</h4>
+	<hr style="border-width: 1.3px;border-style: solid;">
 	<form id="fr" role="form">
 		
-		발주번호 <input type="text" id="order_number"  name="order_number" readonly="readonly"><br>
-		발주수량 <input type="number" id="order_piece" name="order_piece"><br>
-		발주일자 <input type="date" id="order_date" name="order_date"><br>
-		납기일자 <input type="date" id="pay_date" name="pay_date"><br>
+		<table class="table">
+		<tr>
+		<th>발주번호</th> 
+		<td><input type="text" id="order_number"  name="order_number" readonly="readonly" class="form-control"></td>
+		</tr>
+		<tr>
+		<th>발주수량</th> 
+		<td><input type="number" id="order_piece" name="order_piece"class="form-control"></td>
+		</tr>
+		<tr>
+		<th>발주일자</th> 
+		<td><input type="date" id="order_date" name="order_date"class="form-control"></td>
+		</tr>
+		<tr>
+		<th>납기일자</th>
+		<td><input type="date" id="pay_date" name="pay_date"class="form-control"></td>
+		</tr>
+		<tr>
+		<th>담당자</th>
+		<td>
 		<div class="input-group">
-		담당자
-    <input type="text"placeholder="담당자 검색하기" class="form-control" name="order_resp" id="order_resp" readonly="readonly" >
-    <button class="btn btn-primary" type="button" onclick="openChildWindow2();">검색</button>
-    </div>
-	 	 <div class="input-group">
-	 	 거래처 
-    <input type="text"placeholder="거래처 검색하기" class="form-control" name="order_trade" id="order_trade" readonly="readonly" >
-    <button class="btn btn-primary" type="button" onclick="openChildWindow3();">검색</button>
-    </div>
-    
-	<button type="button" class="btn btn-primary" id="modify">수정완료</button>
-	<input type="button" value="닫기" class="btn btn-secondary" onclick="window.close();">
-	
+		    <input type="text"placeholder="담당자 검색하기" class="form-control" name="order_resp" id="order_resp" readonly="readonly" >
+		    <button class="btn btn-primary" type="button" onclick="openChildWindow2();">검색</button>   
+    	</div>
+    	</td>
+    	</tr>
+    	<tr>
+	 	<th>거래처</th>
+	 	<td>
+	 	 <div class="input-group">  
+		    <input type="text"placeholder="거래처 검색하기" class="form-control" name="order_trade" id="order_trade" readonly="readonly" >
+		    <button class="btn btn-primary" type="button" onclick="openChildWindow3();">검색</button>
+  		</div>
+  		</td>
+  		</tr>
+   	 </table>
+   	 	<div style="margin-top: 10px;float: right;">
+			<button type="button" class="btn btn-primary" id="modify">수정완료</button>
+			<input type="button" value="닫기" class="btn btn-secondary" onclick="window.close();">
+		</div>
 	</form>
 	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

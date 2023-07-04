@@ -65,7 +65,7 @@
 	</div>
 	<div
 		style="display: flex; justify-content: center; margin-bottom: 15px">
-		<img src="../../resources/css/logo.png">
+<!-- 		<img src="../../resources/css/logo.png"> -->
 	</div>
 	<div class="container mt-3">
 		<!--  		<hr width="100%" style="border: 2px solid black"> -->

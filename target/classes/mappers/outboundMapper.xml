@@ -22,12 +22,12 @@
 	</insert>
   	<!-- 출고 등록 -->
 
-  	
-  	
+
   	<!-- 출고 리스트 -->
   	<select id="outList" resultType="com.ddosirak.domain.OutboundVO">
   		select out_num, customer_code, item_name, standard, out_qty, stock_code, due_date, out_state, out_date, employee_id
 		from outbound
+		limit #{startRow}, #{pageSize}
   	</select>
   	<!-- 출고 리스트 -->
   	
@@ -37,6 +37,7 @@
 	    select out_num, customer_code, item_name, out_qty, stock_code, due_date, out_state, out_date, employee_id
 	    from outbound
 	    where out_state = 1
+	    limit #{startRow}, #{pageSize}
 	</select>
   	<!-- 진행중인 출고 리스트 -->
   	
@@ -46,6 +47,7 @@
 	    select out_num, customer_code, item_name, out_qty, stock_code, due_date, out_state, out_date, employee_id
 	    from outbound
 	    where out_state = 0
+	    limit #{startRow}, #{pageSize}
 	</select>
 	<!-- 완료된 출고 리스트 -->
 	
@@ -53,8 +55,8 @@
 	 <!-- 출고 상태 업데이트 (진행중, 출고 완료) -->
 	 <update id="updateOutState" parameterType="map">
         update outbound
-        set out_state = #{newState}
-        where out_num = #{outNum}
+        set out_state = #{out_state}
+        where out_num = #{out_num}
     </update>
 	 <!-- 출고 상태 업데이트 (진행중, 출고 완료) -->
 	 
@@ -65,13 +67,13 @@
   	<select id="outProductList" resultType="com.ddosirak.domain.OutboundVO">
   		select item_code, item_name, standard, out_qty, due_date, out_notes
 		from outbound
-		where out_num=#{outNum}
+		where out_num=#{out_num}
   	</select>
   	<!-- 출고 번호에 따른 출고 상품 리스트 -->
   	
   	<!-- 상품 이름 외 n건 -->
   	<select id="getOutNumCount" parameterType="string" resultType="int">
-  	  SELECT COUNT(out_num) FROM outbound WHERE out_num = #{outNum}
+  	  SELECT COUNT(out_num) FROM outbound WHERE out_num = #{out_num}
 	</select>
   	
   	<!-- 출고 수정 -->

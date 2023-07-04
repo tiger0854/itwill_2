@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ddosirak.domain.OrderVO;
+import com.ddosirak.domain.PageVO;
 
 
 public interface OrderService {
@@ -14,7 +15,7 @@ public interface OrderService {
 	
 	////발주서 작성 페이지////
 	
-	public List<OrderVO> orderAllList(); //발주서 불러오기
+	public List<OrderVO> orderAllList(PageVO vo); //발주서 불러오기
 	
 	public Integer updateOrder(OrderVO vo); //발주서 수정
 	

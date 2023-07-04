@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.ddosirak.domain.OrderVO;
+import com.ddosirak.domain.PageVO;
 
 
 
@@ -34,8 +35,8 @@ public class OrderDAOImpl implements OrderDAO{
 	}//발주서 등록
 
 	@Override
-	public List<OrderVO> orderAllList() {
-		List<OrderVO> orderList = sqlSession.selectList(NAMESPACE+".orderAllList"); 
+	public List<OrderVO> orderAllList(PageVO vo) {
+		List<OrderVO> orderList = sqlSession.selectList(NAMESPACE+".orderAllList",vo); 
 		logger.debug("발주리스트 불러오기 완료!");		
 		return orderList;
 	}

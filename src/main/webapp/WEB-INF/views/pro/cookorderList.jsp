@@ -5,6 +5,7 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <jsp:include page="../common/header.jsp"/>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -103,6 +104,7 @@ function cookOrderDelete(co_code){
     <thead>
       <tr>
         <th>조리지시번호</th>
+        <th>수주번호</th>
         <th>조리지시자</th>
         <th>지시상태</th>
         <th>라인코드</th>
@@ -119,6 +121,8 @@ function cookOrderDelete(co_code){
     <c:forEach var="vo" items="${cookoderList }">
       <tr>
 		<td><a href="/pro/cooketcstatusList?co_code=${vo.co_code}">${vo.co_code}</a></td>
+		<td>${vo.so_code }</td>
+		
         <td>${vo.employee_id}</td>
         <c:choose>
 	  <c:when test="${vo.co_status eq '지시'}">
@@ -137,7 +141,7 @@ function cookOrderDelete(co_code){
         <td>${vo.line_code}</td>
         <td>${vo.item_name}</td>
         <th>${vo.material_name}</th>
-        <td>${vo.coQTY}</td>
+        <td>${vo.material_con}</td>
         <td>${vo.cpQTY}</td>
 		<c:choose>
 		  <c:when test="${vo.co_status eq '지시'}">
@@ -145,8 +149,8 @@ function cookOrderDelete(co_code){
 		    <td><button class="btn-delete" onclick="cookOrderDelete('${vo.co_code}')"><i class="bx bxs-trash"></i></button></td>
 		  </c:when>
 		  <c:otherwise>
-		    <td></td>
-		    <td></td>
+		    <td>-</td>
+		    <td>-</td>
 		  </c:otherwise>
 		</c:choose>
       </tr>

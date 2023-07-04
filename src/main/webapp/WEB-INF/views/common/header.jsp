@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,8 +9,7 @@
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="script">
 <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
@@ -36,6 +35,7 @@ function foundDropdown() {
 	  collapseSale.classList.toggle('show');
 	}
 
+
 document.addEventListener("DOMContentLoaded", function(event) {
 
 	const showNavbar = (toggleId, navId, bodyId, headerId) =>{
@@ -44,6 +44,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	bodypd = document.getElementById(bodyId),
 	headerpd = document.getElementById(headerId)
 
+	const linkVacationHistory = document.getElementById('collapseSale');
+	
 	// Validate that all variables exist
 	if(toggle && nav && bodypd && headerpd){
 	toggle.addEventListener('click', ()=>{
@@ -65,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	const linkColor = document.querySelectorAll('.nav_link')
 
 	function colorLink(){
-	if(linkColor){
+	if(linkColor){	
 	linkColor.forEach(l=> l.classList.remove('active'))
 	this.classList.add('active')
 	}
@@ -78,25 +80,32 @@ document.addEventListener("DOMContentLoaded", function(event) {
 <!-- 판매목록 drop 기능 -->
 
 <body>
-	<header class="header" id="header" style="background-color: white; box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.2);" >
-        <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
-		<button onclick="window.open('hello.jsp','출근','width=430,height=500,location=no,status=no,scrollbars=no');">출근</button>
-		<button onclick="window.open('bye.jsp','퇴근','width=430,height=500,location=no,status=no,scrollbars=no');">퇴근</button>
-        <div> 
-        <c:if test="${empty login_id }">
-        	<a style="margin: 10px;" href="/public/login">로그인</a> <!-- 0619 추가 -->
-        </c:if>
-        <c:if test="${!empty login_id }">
-        	<button onclick='location.href="/emp/info?employee_id=${login_id}"'>사원번호 ${login_id }님, 반갑습니다.</button><!-- 0620 추가 -->
-        	<a style="margin: 10px;" href="/public/logout">로그아웃</a> <!-- 0619 추가 -->
-        </c:if>
-        </div>
-    </header>
-    
-  
-					
-      
-        
+	<header class="header" id="header"
+		style="background-color: white; box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.2);">
+		<div class="header_toggle">
+			<i class='bx bx-menu' id="header-toggle"></i>
+		</div>
+		<button onclick="location.href='/public/in'">출근</button>
+		<button onclick="location.href='/public/out'">퇴근</button>
+		<div>
+			<c:if test="${empty login_id }">
+				<a style="margin: 10px;" href="/public/login">로그인</a>
+				<!-- 0619 추가 -->
+			</c:if>
+			<c:if test="${!empty login_id }">
+				<button onclick='location.href="/emp/info?employee_id=${login_id}"'>사원번호
+					${login_id }님, 반갑습니다.</button>
+				<!-- 0620 추가 -->
+				<a style="margin: 10px;" href="/public/logout">로그아웃</a>
+				<!-- 0619 추가 -->
+			</c:if>
+		</div>
+	</header>
+
+
+
+
+
 	<div class="l-navbar" id="nav-bar">
         <nav class="nav">
             <div> <a href="#" class="nav_logo"> <i class='bx bx-layer nav_logo-icon'></i> <span class="nav_logo-name" style="font-size: 25px;">또시락🍱</span></a>
@@ -131,8 +140,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 <div class="nav_list">
                   <a href="#" class="nav_link" onclick="proDropdown()"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">생산관리 ></span> </a> 
                 <div class="nav_link collapse" id="pro">
-		  			<a href="/pro/oderList" class="nav_link"> - 작업지시</a><br>
-		  		    <a href="/pro/oderList" class="nav_link"> - 실적등록</a><br>
+		  			<a href="/pro/orderList" class="nav_link"> - 작업지시</a><br>
+		  		    <a href="/pro/cookorderList" class="nav_link"> - 조리지시</a><br>
 				</div>
 				</div>
 

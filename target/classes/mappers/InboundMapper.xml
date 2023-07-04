@@ -43,10 +43,19 @@
   		<result property="order_piece" column="order_piece"/>
   	</resultMap>
   	
-  	<select id="inboundAllList" resultMap="inboundVO">
+  	<select id="inboundAllList" parameterType="com.ddosirak.domain.PageVO" resultMap="inboundVO">
   	SELECT in_id,in_number,i.order_number, o.material_name,o.order_piece,in_piece,in_Epiece,in_date,in_resp,wh_code,in_state,in_expir,in_Edate
   	FROM ret_in as i JOIN ret_order as o
-  	WHERE i.order_number = o.order_number
+  	WHERE i.order_number = o.order_number 
+ 	   	<choose>
+  		<when test="kind == 'number'">AND in_number</when>
+  		<when test="kind == 'code'">AND wh_code</when>		
+  		</choose> 
+  		<if test="search != ''">
+  		LIKE CONCAT('%', #{search}, '%')
+  		</if>
+  	ORDER BY in_id DESC
+	LIMIT #{startRow}, #{pageSize}
   	</select>
   	<!-- 입고리스트 불러오기 -->
   	

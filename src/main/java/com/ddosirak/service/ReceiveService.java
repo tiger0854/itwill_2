@@ -2,6 +2,7 @@ package com.ddosirak.service;
 
 import java.util.List;
 
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.ReceiveVO;
 
 public interface ReceiveService {
@@ -10,5 +11,17 @@ public interface ReceiveService {
 	public void receiveInsert(ReceiveVO vo) throws Exception;
 
 	// 수주 목록
-	public List<ReceiveVO> receiveList() throws Exception;
+	public List<ReceiveVO> receiveList(PageVO pageVO) throws Exception;
+	
+	// 수주 상세
+	public ReceiveVO receiveDetail(String re_code) throws Exception;
+	
+	// 수주 수정
+	public void receiveUpdate(ReceiveVO uvo) throws Exception; 
+	
+	// 수주 삭제
+	public Integer receiveRemove(String re_code) throws Exception;
+	
+	
+	
 }

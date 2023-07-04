@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.ddosirak.domain.OutboundVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.persistance.OutboundDAO;
 
 @Service
@@ -15,61 +16,50 @@ public class OutboundServiceImpl implements OutboundService{
 	@Inject
 	private OutboundDAO odao;
 	
-	
+	// 출고등록
 	@Override
 	public void outInsert(OutboundVO vo) {
 		odao.outInsert(vo);
 	}
-
+	
+	// 전체 리스트
 	@Override
-	public List<OutboundVO> getOutList() {
-		return odao.getOutList();
+	public List<OutboundVO> getOutList(PageVO pageVO) {
+		return odao.getOutList(pageVO);
 	}
 	
 	// 진행중 출고 리스트
 	@Override
-	public List<OutboundVO> getOngoingOutList() {
-		return odao.getOngoingOutList(); // out_state가 1인 진행중인 리스트 반환
+	public List<OutboundVO> getOngoingOutList(PageVO pageVO) {
+		return odao.getOngoingOutList(pageVO); // out_state가 1인 진행중인 리스트 반환
 	}
 
 	// 완료된 출고 리스트
 	@Override
-	public List<OutboundVO> getCompletedOutList() {
-		return odao.getCompletedOutList(); // out_state가 0인 완료된 리스트 반환
+	public List<OutboundVO> getCompletedOutList(PageVO pageVO) {
+		return odao.getCompletedOutList(pageVO); // out_state가 0인 완료된 리스트 반환
 	}
 	
 	// 출고 상태 업데이트 (진행중, 출고 완료)
 	@Override
-	public void updateOutState(String outNum, int newState) {
-		odao.updateOutState(outNum, newState);	
+	public void updateOutState(String out_num, int out_state) {
+		odao.updateOutState(out_num, out_state);	
 	}
 
 	// 출고 번호에 따른 출고 상품 목록
 	@Override
-	public List<OutboundVO> getOutProductList(String outNum) {
+	public List<OutboundVO> getOutProductList(String out_num) {
 		
-		return odao.getOutProductList(outNum);
+		return odao.getOutProductList(out_num);
 	}
-	
-	// 상품 이름 외 n건 
-//	@Override
-//    public int getOutNumCount(String outNum) {
-//        return odao.getOutNumCount(outNum);
-//    }
-	
+
+	// 외 n건
 	@Override
-    public int getOutNumCount(String outNum) {
-		 int count = odao.getOutNumCount(outNum);
+    public int getOutNumCount(String out_num) {
+		 int count = odao.getOutNumCount(out_num);
 		    return count;
     }
-	
-//	public int calculateOutNumCount(String outNum) {
-//	    // outNum을 사용하여 out_num 개수 계산 로직 구현
-//	    // 예시로는 DAO 또는 데이터베이스 쿼리를 사용하여 out_num 개수를 가져오는 로직을 구현합니다.
-//	    int count = odao.getOutNumCount(outNum);
-//	    return count;
-//	}
-	
+
 	// 출고 수정
 	@Override
 	public Integer outboundUpdate(OutboundVO vo) {
@@ -81,21 +71,7 @@ public class OutboundServiceImpl implements OutboundService{
 	public Integer outboundDelete(String out_num) {
 		return odao.outboundDelete(out_num);
 	}
-	
-	
 
-//	@Override
-//	public List<OutboundVO> getCustomerList() {
-//		return odao.getCustomerList();
-//	}
-	
-	// 페이징 목록 총 갯수
-	@Override
-	public int count() throws Exception {
-		return odao.count();
-	}
-
-	
 
 
 

@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>사원 급여지급</title>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

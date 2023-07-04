@@ -7,13 +7,22 @@
   <mapper namespace="com.ddosirak.mapper.CustomerMapper">
   
    	<!-- 거래처목록  -->
-  	<select id="selectCustomer" resultType="com.ddosirak.domain.CustomerVO">
-  		SELECT * FROM ret_customer
+  	<select id="selectCus"  parameterType="PageVO" resultType="CustomerVO">
+   		SELECT * FROM ret_customer
+   		<choose>
+   		<when test="kind == 'name'">WHERE cus_name</when>
+   		<when test="kind == 'code'">WHERE cus_code</when>		
+   		</choose> 
+   		<if test="search != ''">
+   		LIKE CONCAT('%', #{search}, '%')
+   		</if>
+  		ORDER BY cus_id DESC
+		LIMIT #{startRow}, #{pageSize} 
   	</select>	
    	<!-- 거래처목록  -->
    	
    	<!-- 거래처 상세목록  -->
-  	<select id="selectCustomerDetail" resultType="com.ddosirak.domain.CustomerVO">
+  	<select id="selectCustomerDetail" resultType="CustomerVO">
   		SELECT * FROM ret_customer
   		WHERE cus_id = #{cus_id}
   	</select>	
@@ -52,5 +61,11 @@
    	</delete>
    	<!-- 거래처 삭제 -->
    	
-   	   	
+   	<!-- 사업자번호 조회 -->
+	<select id="selectCusNumber" resultType="Integer">
+		SELECT count(cus_number) FROM ret_customer WHERE cus_number = #{cus_number}
+	</select>
+   	<!-- 사업자번호 조회 -->
+   	
+
   </mapper>

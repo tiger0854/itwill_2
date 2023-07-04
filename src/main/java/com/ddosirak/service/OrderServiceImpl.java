@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.ddosirak.domain.OrderVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.persistance.EmployeeDAO;
 import com.ddosirak.persistance.OrderDAO
 ;
@@ -23,8 +24,8 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public List<OrderVO> orderAllList() {
-		List<OrderVO> orderList = odao.orderAllList();
+	public List<OrderVO> orderAllList(PageVO vo) {
+		List<OrderVO> orderList = odao.orderAllList(vo);
 		return orderList;
 	}
 

@@ -1,16 +1,17 @@
 package com.ddosirak.persistance;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
+import com.ddosirak.domain.EmployeeCheckVO;
 import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.EmployeevacationVO;
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.SalaryVO;
-// persistance 영속성 > DB관련 처리
+
 
 public interface EmployeeDAO {
-	// 필요한 동작들을 추상메서드를 사용하여 정의! (만들어두기만 한다.)
 /////////////////////////////////////////사원동작////////////////////////////////////////////////////
 	// C - 사원정보 등록
 	public void insertEmployee(EmployeeVO vo); 
@@ -45,14 +46,19 @@ public interface EmployeeDAO {
 	public void insertVacation(EmployeevacationVO vvo);
 	
 	// 나의 휴가 리스트 출력
-	public List<EmployeevacationVO> myvacationList();
+	public List<EmployeevacationVO> myvacationList(int employee_id);
 	
 	// 휴가 수정
 	public Integer vacationmodify(EmployeevacationVO vvo);
 	
 	// 휴가 수정 정보 조회
 	public EmployeevacationVO vacationim(Integer vacation_id);
-
+	
+	// 휴가 삭제
+	public void vacationdelete(Integer vacation_id);
+	
+	
+	
 /////////////////////////////////////////사원동작////////////////////////////////////////////////////
 	
 	
@@ -70,5 +76,22 @@ public interface EmployeeDAO {
 	
 	
 /////////////////////////////////////////급여동작////////////////////////////////////////////////////
-
+	
+/////////////////////////////////////////AJAX동작////////////////////////////////////////////////////
+	
+	// 일자별 사원 출근 현황 출력
+	public List<EmployeeCheckVO> getCheckList(Timestamp date_time, int employee_id);
+	// 전체사원 근태현황 출력
+	public List<EmployeeCheckVO> getInEmp();// 출근
+	public List<EmployeeCheckVO> getOutEmp();// 퇴근
+	public List<EmployeeCheckVO> getInEmp(PageVO vo);// 출근 페이징
+	public List<EmployeeCheckVO> getOutEmp(PageVO vo);// 퇴근 페이징
+	
+	// 필터링
+	public List<EmployeeVO> getEmpList_department_name(String department_name);// 부서
+	public List<EmployeeVO> getEmpList_position(String position);// 직위
+	public List<EmployeeVO> getEmpList_employee_status(String employee_status);// 재직현황
+	public List<EmployeeVO> getEmpList_employee_name(String employee_name);// 이름
+	
+/////////////////////////////////////////AJAX동작////////////////////////////////////////////////////
 }// public interface end

@@ -1,6 +1,8 @@
 package com.ddosirak.persistance;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -10,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.ddosirak.domain.CustomerVO;
+import com.ddosirak.domain.PageVO;
 
 @Repository
 public class CustomerDAOImpl implements CustomerDAO {
@@ -22,9 +25,9 @@ public class CustomerDAOImpl implements CustomerDAO {
 	private static final Logger logger = LoggerFactory.getLogger(InboundDAOImpl.class);
 
 	@Override
-	public List<CustomerVO> customerList() {
+	public List<CustomerVO> customerList(PageVO vo) {
 		
-		return sqlSession.selectList(NAMESPACE+".selectCustomer");
+		return sqlSession.selectList(NAMESPACE+".selectCus",vo);
 	}
 
 	@Override
@@ -49,5 +52,13 @@ public class CustomerDAOImpl implements CustomerDAO {
 		
 		return sqlSession.selectOne(NAMESPACE+".selectCustomerDetail",cus_id);
 	}
+
+	@Override
+	public Integer selectCusNumber(String cus_number) {
+		
+		return sqlSession.selectOne(NAMESPACE+".selectCusNumber",cus_number);
+	}
+
+
 	
 }

@@ -11,10 +11,20 @@ public class PageVO {
 	private int count;
 	private int pageCount;
 	private int endRow;
-	
-	
+	private String kind;
+	private String search;
+
 	// Getter / Setter
 	
+	public String getSearch() {
+		if(this.search==null) {
+			this.search = "";
+		}
+		return search;
+	}
+	public void setSearch(String search) {
+		this.search = search;
+	}
 	public int getPageSize() {
 		return pageSize;
 	}
@@ -26,6 +36,12 @@ public class PageVO {
 	}
 	public void setPageNum(String pageNum) {
 		this.pageNum = pageNum;
+	}
+	public String getKind() {
+		return kind;
+	}
+	public void setKind(String kind) {
+		this.kind = kind;
 	}
 	public int getCurrentPage() {
 		return currentPage;
