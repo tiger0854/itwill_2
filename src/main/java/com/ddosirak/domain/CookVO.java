@@ -145,7 +145,7 @@ public class CookVO {
 				+ ", line_code=" + line_code + ", line_name=" + line_name + ", item_code=" + item_code + ", item_name="
 				+ item_name + ", coQTY=" + coQTY + ", cpQTY=" + cpQTY + ", co_status=" + co_status + ", delivery_date="
 				+ delivery_date + ", co_date=" + co_date + ", co_time=" + co_time + ", material_code=" + material_code
-				+ ", material_name=" + material_name + ", so_code=" + so_code + "]";
+				+ ", material_name=" + material_name + ", so_code=" + so_code + ", material_con=" + material_con + "]";
 	}
 
 	
