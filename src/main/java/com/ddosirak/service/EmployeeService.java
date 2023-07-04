@@ -38,6 +38,7 @@ public interface EmployeeService {
 	public EmployeeVO getEmployee(int employee_id);
 	
 	// 사원 목록 출력
+	public List<EmployeeVO> empList();
 	public List<EmployeeVO> empList(PageVO pageVO);
 	
 	// 사원 정보 수정

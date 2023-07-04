@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.ddosirak.domain.BoardVO;
+import com.ddosirak.domain.ChatVO;
 import com.ddosirak.domain.EmployeeCheckVO;
 import com.ddosirak.domain.LoginVO;
 import com.ddosirak.domain.PageVO;
@@ -97,12 +98,64 @@ public class BoardDAOImpl implements BoardDAO {
 	//=================================게시판====================================================
 
 
+	//=================================사내메신저====================================================
+	// 채팅 입력
+	@Override
+	public void chatSend(ChatVO chatVO) throws Exception {
+		logger.debug("chatSend() 메서드 호출!");
+		sqlSession.insert(NAMESPACE+".chatSend",chatVO);
+	}// chatSend() method end
+
+	// 채팅 리스트 출력
+	@Override
+	public List<ChatVO> chatList(String login_id) throws Exception {
+		logger.debug("chatList() 메서드 호출!");
+		return sqlSession.selectList(NAMESPACE+".getChatList",login_id);
+	}// chatList() method end
+	
+	// 채팅방 출력
+	@Override
+	public List<String> chatRoom(String login_id) throws Exception {
+		logger.debug("chatRoom() 메서드 호출!");
+		return sqlSession.selectList(NAMESPACE+".getChatRoom",login_id);
+	}
 	
 	
 	
-	
+	//=================================사내메신저====================================================
 
 	
-	
-	
 }// public class end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

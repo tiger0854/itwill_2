@@ -3,6 +3,7 @@ package com.ddosirak.service;
 import java.util.List;
 
 import com.ddosirak.domain.BoardVO;
+import com.ddosirak.domain.ChatVO;
 import com.ddosirak.domain.EmployeeCheckVO;
 import com.ddosirak.domain.LoginVO;
 import com.ddosirak.domain.PageVO;
@@ -30,4 +31,13 @@ public interface BoardService {
 	//게시판 글 삭제
 	public void deleteContent(int emp_bno) throws Exception;
 
+	
+	// 채팅
+	// 채팅 입력
+	public void chatSend(ChatVO chatVO) throws Exception;
+	// 채팅 리스트 출력
+	public List<ChatVO> chatList(String login_id) throws Exception;
+	// 채팅방 출력
+	public List<String> chatRoom(String login_id) throws Exception;
+	
 } // public interface end

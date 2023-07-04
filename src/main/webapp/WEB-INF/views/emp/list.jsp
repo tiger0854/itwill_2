@@ -225,7 +225,7 @@
 					}// i-e end
 					
 					$('#pagination').remove();
-					$('#pagingHere').html('<b> 검색결과: '+filtetList_dupVal.length+'명</b>');
+					$('#pagingHere').html('<b> 검색결과: '+filtetList_dupVal.length+'명</b>'); // swal로도 출력할까 고민중.
 					$('#empInfoBody').html(table);
 					
 					

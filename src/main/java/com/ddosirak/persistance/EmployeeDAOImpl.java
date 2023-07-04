@@ -102,8 +102,15 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		EmployeeVO resultVO = sqlSession.selectOne((NAMESPACE)+".getEmployee", employee_id);
 		return resultVO;
 	}// getEmployee() method end
-
+	
 	// 사원목록 출력
+	@Override
+	public List<EmployeeVO> empList() {
+		List<EmployeeVO> empList = sqlSession.selectList(NAMESPACE+".empListAll");
+		return empList;
+	}//empList() method end
+	
+	// 사원목록 출력 (페이징)
 	@Override
 	public List<EmployeeVO> empList(PageVO pageVO) {
 		logger.debug("empList()!");
@@ -305,6 +312,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		logger.debug("vacationdelete()!");
 		sqlSession.delete(NAMESPACE + ".vacationdelete", vacation_id);
 	}// vacationdelete() method end
+
+
 
 
 

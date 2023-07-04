@@ -94,7 +94,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return resultVO;
 	}//getEmployee() method end
 
-	// 사원목록 출력
+	// 사원목록 출력 
+	@Override
+	public List<EmployeeVO> empList() {
+		return edao.empList();
+	}// empList() method
+	// 사원목록 출력 (페이징)
 	@Override
 	public List<EmployeeVO> empList(PageVO pageVO) {
 		return edao.empList(pageVO);

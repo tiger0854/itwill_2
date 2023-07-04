@@ -190,10 +190,6 @@ public class Emp_AJAXController {
 			logger.debug("필터링결과 없음!");
 		}// else end
 		
-		// --------------2. 리스트끼리 중복값 대조하고 중복값 삭제!!!!!!!!!!------------------
-		
-		// --------------3. 리스트 반환------------------
-
 		return filtetList_dupVal;
 	}// filterAJAX() method end
 	
@@ -210,6 +206,16 @@ public class Emp_AJAXController {
 		
 		return eService.getSalaryInfo(vo);
 	}// salaryInfoGET() method end
+	
+	// 사내메신저
+	// 를 위한 전체인원 리스트 출력
+	@RequestMapping(value = "/empListAJAX", method = RequestMethod.POST)
+	@ResponseBody
+	public List<EmployeeVO> empListAJAX() throws Exception{
+		logger.debug("empListAJAX() 호출! Σ(っ °Д °;)っ");
+		return eService.empList();
+	}// empListAJAX( method end)
+	
 
 
 

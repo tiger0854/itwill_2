@@ -70,14 +70,33 @@
 		UPDATE emp_board SET title=#{title}, content=#{content} WHERE emp_bno=#{emp_bno}
 	</update>
 	<!-- 글 정보 수정 -->
-	
 
-	
 	<!-- 글 삭제 -->
 	<delete id="deleteContent">
 		DELETE FROM emp_board WHERE emp_bno=#{emp_bno}
 	</delete>
 	<!-- 글 삭제 -->
-
-
+	
+<!-- 사내메신저-->
+<!-- 채팅 보내기 -->
+	<insert id="chatSend">
+		INSERT INTO emp_chat
+		(chat_receiver, chat_sender, message, chatRoom_code)
+		VALUES (#{chat_receiver}, #{chat_sender}, #{message}, #{chatRoom_code})
+	</insert>
+<!-- 	채팅 내역 -->
+	<select id="getChatList" resultType="com.ddosirak.domain.ChatVO">
+		SELECT * FROM emp_chat 
+		WHERE chat_receiver = #{login_id} OR chat_sender = #{login_id} 
+		ORDER BY time DESC
+	</select>
+<!-- 	채팅방 -->
+	<select id="getChatRoom" resultType="String">
+		SELECT chatRoom_code FROM emp_chat 
+        WHERE SUBSTRING(chatRoom_code,1,4) = #{login_id} OR SUBSTRING(chatRoom_code,5,8) = #{login_id}
+		GROUP BY chatRoom_code;
+	</select>
+	
+	
+	
 </mapper>

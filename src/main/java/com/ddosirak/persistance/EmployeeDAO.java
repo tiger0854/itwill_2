@@ -34,6 +34,7 @@ public interface EmployeeDAO {
 	public EmployeeVO getEmployee(int employee_id);
 	
 	// 사원 리스트 출력
+	public List<EmployeeVO> empList();
 	public List<EmployeeVO> empList(PageVO pageVO);
 	
 	// 사원정보 수정

@@ -18,6 +18,16 @@
 	<div id="messageArea"></div>
 </body>
 <script type="text/javascript">
+	const urlStr = window.location.href;
+	console.log(urlStr);
+	const url = new URL(urlStr);
+	const urlParams = url.searchParams;
+	var chat_sender = urlParams.get('chat_sender');
+	var chat_receiver = urlParams.get('chat_receiver');
+	
+	console.log('sender: '+chat_sender);
+	console.log('receiver: '+chat_receiver);
+
 	$("#sendBtn").click(function() {
 		sendMessage();
 		$('#message').val('')
@@ -28,12 +38,22 @@
 	sock.onclose = onClose;
 	// 메시지 전송
 	function sendMessage() {
-		sock.send($("#message").val());
+		if(parseInt(chat_sender) > parseInt(chat_receiver)){
+			var chatRoom_code = chat_sender+chat_receiver;
+		}else{
+			var chatRoom_code = chat_receiver+chat_sender;
+		}// i-e end
+		var msg = chat_sender+'&'+chat_receiver+'&'+$("#message").val()+'&'+chatRoom_code;
+		sock.send(msg);
 	}
 	// 서버로부터 메시지를 받았을 때
 	function onMessage(msg) {
 		var data = msg.data;
-		$("#messageArea").append(data + "<br/>");
+		var sender =data.split("&")[0];
+		var receiver =data.split("&")[1];
+		var chat =data.split("&")[2];
+		$("#messageArea").append("<p>"+"보낸사람:"+sender +"받은사람:"+receiver +"</p>");
+		$("#messageArea").append("<p>"+chat +"</p>");
 	}
 	// 서버와 연결을 끊었을 때
 	function onClose(evt) {

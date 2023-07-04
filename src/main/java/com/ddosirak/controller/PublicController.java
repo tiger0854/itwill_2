@@ -1,5 +1,9 @@
 package com.ddosirak.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,9 +15,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddosirak.domain.BoardVO;
+import com.ddosirak.domain.ChatVO;
 import com.ddosirak.domain.EmployeeCheckVO;
 import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.LoginVO;
@@ -261,15 +267,35 @@ public class PublicController {
 /////////////////////////////////메신저///////////////////////////////////
 	// http://localhost:8088/public/chatList
 	@RequestMapping(value = "/chatList", method = RequestMethod.GET)
-	public void chatListGET () throws Exception{
-		logger.debug("chatList");
+	public void chatListGET (Model model,HttpSession session) throws Exception{
+		logger.debug("chatListGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
+
+		// 채팅 시작을 위한 리스트
+		List<EmployeeVO> empList = eService.empList();
+		model.addAttribute("empList", empList);
+		
+		// 채팅 내역리스트
+		List<ChatVO> chatList = bService.chatList((String)session.getAttribute("login_id"));
+		model.addAttribute("chatList", chatList);
+		
+		// 채팅방 리스트
+		List<String> chatRoomList = bService.chatRoom((String)session.getAttribute("login_id"));
+		model.addAttribute("chatRoomList", chatRoomList);
+		
 	}// chatListGET() method end
 	
 	// http://localhost:8088/public/chat
 	@RequestMapping(value = "/chat", method = RequestMethod.GET)
-	public void chatGET () throws Exception{
-		logger.debug("chat");
+	public void chatGET (@RequestParam("chat_receiver")String chat_receiver, @RequestParam("chat_sender")String chat_sender) throws Exception{
+		logger.debug("chatGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
+		logger.debug("개설자: "+chat_sender);
+		logger.debug("참여자: "+chat_receiver);
 	}// chat() method end
+	
+	@RequestMapping(value = "/chat2", method = RequestMethod.GET)
+	public void chat() {
+		logger.debug("chat() 호출!(((o(*ﾟ▽ﾟ*)o)))");
+	}
 /////////////////////////////////메신저///////////////////////////////////	
 	
 }// public class end

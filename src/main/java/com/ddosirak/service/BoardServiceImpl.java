@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.ddosirak.domain.BoardVO;
+import com.ddosirak.domain.ChatVO;
 import com.ddosirak.domain.EmployeeCheckVO;
 import com.ddosirak.domain.LoginVO;
 import com.ddosirak.domain.PageVO;
@@ -76,6 +77,25 @@ public class BoardServiceImpl implements BoardService {
 	public void deleteContent(int emp_bno) throws Exception{
 		bdao.deleteContent(emp_bno);
 	}// deleteContent() method end
+	
+	// 채팅
+	// 채팅 전송
+	@Override
+	public void chatSend(ChatVO chatVO) throws Exception {
+		bdao.chatSend(chatVO);
+	}// chatSend() method end
+	// 채팅 리스트 출력
+	@Override
+	public List<ChatVO> chatList(String login_id) throws Exception {
+		return bdao.chatList(login_id);
+	}// chatList() method end
+	// 채팅방 코드 출력
+	@Override
+	public List<String> chatRoom(String login_id) throws Exception {
+		return bdao.chatRoom(login_id);
+	}// chatRoom() method end
+	
+	
 
 	
 
