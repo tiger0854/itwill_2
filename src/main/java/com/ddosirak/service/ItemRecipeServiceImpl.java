@@ -119,16 +119,15 @@ public class ItemRecipeServiceImpl implements ItemRecipeService {
 	}
 
 	@Override
-	public List<MaterialdetailVO> itemrecipeItemList(PageVO pageVO) throws Exception {
+	public List<ItemRecipeListVO> itemrecipeItemList() throws Exception {
 		logger.debug("service : 상품 목록 검색");
-		return dao.itemrecipeItemList(pageVO);
+		return dao.itemrecipeItemList();
 	}
 
 	@Override
 	public List<ItemRecipeListVO> itemrecipeItemList(Map<String, Object> instrSearch) throws Exception {
 		logger.debug("service : 상품 목록 부분 검색");
 		return dao.itemrecipeItemList(instrSearch);
-
 	}
 	
 }

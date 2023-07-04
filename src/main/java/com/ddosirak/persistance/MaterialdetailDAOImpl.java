@@ -74,18 +74,15 @@ public class MaterialdetailDAOImpl implements MaterialdetailDAO {
 	
 	// 상품목록 검색 (팝업창)
 	@Override
-	public List<MaterialdetailVO> materialItemList(PageVO pageVO) {
+	public List<MaterialdetailVO> materialItemList() {
 		logger.debug("dao : materialItemList 전체호출");
-		List<MaterialdetailVO> materialItemList = sqlsession.selectList(NAMESPACE + ".materialItemList", pageVO);
+		List<MaterialdetailVO> materialItemList = sqlsession.selectList(NAMESPACE + ".materialItemList");
 		return materialItemList;
 	}
 	
 	@Override
 	public List<MaterialdetailVO> materialItemList(Map<String, Object> instrSearch) {
-
 		logger.debug("dao : materialItemList 부분호출");
-		instrSearch.put("startRow", pageVO.getStartRow());
-		instrSearch.put("pageSize", pageVO.getPageSize());
 		List<MaterialdetailVO> materialItemList = sqlsession.selectList(NAMESPACE + ".materialItemSearch", instrSearch);
 		return materialItemList;
 	}

@@ -34,36 +34,33 @@
        
 <!--         <hr width="100%" style="border: 2px solid black"> -->
 
-<table class="table" style="width: 100%">
-    <form>
-        <tr>
-            <td>자재코드</td>
-            <td><input type="text" name="material_code" style="width:70%;"></td>
-            <td>자재명</td>
-            <td><input type="text" name="material_name" style="width:70%;"></td>
-            <td><button type="submit" class="btn-add">조회</button></td>
-        </tr>
-    </form>
-</table>
-<table class="table table-hover" style="text-align: center;">
+		<form>
+			<table class="table" style="width: 100%">
+				<tr>
+					<td>품번</td>
+					<td><input type="text" name="item_code" style="width: 70%;"></td>
+					<td>품명</td>
+					<td><input type="text" name="item_name" style="width: 70%;"></td>
+					<td><button type="submit" class="btn-add">조회</button></td>
+				</tr>
+			</table>
+		</form>
+		<table class="table table-hover" style="text-align: center;">
     <%-- ${itemList } --%>
     <tr>
-        <th>자재코드</th>
-        <th>자재명</th>
-        <th>자재속성</th>
+        <th>품번</th>
+        <th>품명</th>
     </tr>
-    <c:forEach var="vo" items="${materialList }">
-        <tr onclick="selectItem('${vo.material_code}', '${vo.material_name}', '${vo.material_type}')">
-            <td id="con">${vo.material_code}</td>
-            <td id="con">${vo.material_name}</td>
-            <td id="con">${vo.material_type}</td>
+    <c:forEach var="vo" items="${itemrecipeList }">
+        <tr onclick="selectItem('${vo.item_code}', '${vo.item_name}')">
+            <td id="con">${vo.item_code}</td>
+            <td id="con">${vo.item_name}</td>
         </tr>
      <script>
-	    function selectItem(a, b, c) {
+	    function selectItem(a, b) {
 	        // 부모 창으로 값 전달하기
-	        opener.document.getElementById("material_code").value = a;
-	        opener.document.getElementById("material_name").value = b;
-	        opener.document.getElementById("material_type").value = c;
+	        opener.document.getElementById("item_code").value = a;
+	        opener.document.getElementById("item_name").value = b;
 	        window.close();
 	    }
 	</script>   
