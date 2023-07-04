@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.ui.Model;
 
 import com.ddosirak.domain.CookAddVO;
+import com.ddosirak.domain.CookListVO;
 import com.ddosirak.domain.CookVO;
 import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.ItemdetailVO;
@@ -16,7 +17,7 @@ import com.ddosirak.domain.ProductionPerformanceVO;
 public interface CookOrderService {
 	
 	// 조리지시 등록
-	public void cookorderInsert(CookVO cvo);
+	public void cookorderInsert(CookVO cvo,CookListVO lcvo);
 	
 	// 조리지시 목록 출력
 	public List<CookVO> cookOrderList(PageVO pageVO);

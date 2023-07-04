@@ -5,11 +5,13 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
+
 <jsp:include page="../common/header.jsp"/>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 function orderwrite() {
   // 새 창을 열기 위한 URL
@@ -37,6 +39,57 @@ function ProOrderDelete(wo_code){
 		}
 	}
 
+
+function itemrecipeList(item_code,item_name){ // 해당 작업지시번호에 맞는 생산실적 ajax로 불러오기
+	var item_code = item_code;
+	item_name = item_name;
+	console.log(item_name);
+// 	alert(instrId);
+
+	$.ajax({
+		type : "get",
+		url : "${pageContext.request.contextPath }/pro/itemrecipeList",
+		data : {"item_code" : item_code},
+// 			   {"item_name" : item_name},
+		dataType : "json",
+		async : false, 
+		/* 동기는 응답을 받을 때까지 기다렸다가 다음 작업을 하는 것 */
+		/* 비동기는 요청에 대한 응답이 끝나기 전에 다음 작업을 먼저 함 */
+		/* asyns는 기본 값이 true, false이면 응답이 끝나면 다음 작업을 수행하라는 의미 */
+		success : function(array,item_name){
+// 			alert("성공");
+			console.log(array,item_name);
+// 			alert("array.length"+ array.length);
+			itemrecipeListPrint(array,item_name);
+
+		} //function(array) 
+		
+	}); // ajax
+} 
+
+function itemrecipeListPrint(array,item_name){ // 해당 생산실적 출력
+
+	var output ="";
+		output=output+"<table class=product-table  style='margin-top: 20px;margin-bottom:20px; width: 100%;'><tr id='th'><tr><th colspan='3'> 레시피</th></tr><th>자재코드</th><th>자재이름</th><th>투입량</th></tr>";
+	for (var i=0; i<array.length; i++) {
+	
+		output=output+"<tr id='con'>";
+		output=output+"<td>"+array[i].material_code+"</td>";
+		output=output+"<td>"+array[i].material_name+"</td>";	
+		output=output+"<td>"+array[i].material_con+"</td>";	
+		output=output+"</tr>";	
+		}
+
+	output=output+"</table>";
+	
+	$("#Require_ajax").html(output); // innerHtml과 같은 역할
+
+		
+} //PerformListPrint(array)
+
+
+
+
 </script>
 
 </head>
@@ -52,14 +105,16 @@ function ProOrderDelete(wo_code){
 
 
 <!-- 작업지시목록 검색박스 -->
-
+<%-- ${login_id } --%>
+<%-- ${dept_name } --%>
 <form id="instr">
 <!-- 작업지시목록 검색, 등록버튼 -->
 <div class=btn-container>
 <button type="submit" class=btn-search><i class='bx bx-search-alt-2'></i> 조회</button>
-<button class=btn-add onclick="orderwrite()"><i class='bx bx-plus-medical'></i> 추가</button>
+<input type="button" class=btn-add onclick="orderwrite()" value="추가">
 </div>
-<table class="product-box"style="margin-top: 20px; width: 100%; " border="1">
+
+<table class=product-box style="margin-top: 20px; width: 100%; " border="1">
 			<tr>
 				<td>라인</td>
 				<td><select name="line_code" class="line_code">
@@ -68,17 +123,22 @@ function ProOrderDelete(wo_code){
 							<option value="${line.line_code}">${line.line_name}</option>
 						</c:forEach>
 					</select></td>
-				<td>지시일자</td>
+<!-- 	<td>작업 지시자</td> -->
+<!-- 	<td><div class="input-group"> -->
+<!-- 	    <input type="text" style="width: 40%" placeholder="상품 이름" class="form-control" name="employee_id" id="employee_id"> -->
+<!-- 	    <input type="button" class="btn btn-primary" onclick="openItem()" value="검색"> -->
+<!-- 	</div></td> -->
+			<td>지시일자</td>
 				<!-- 시작시 기본 날짜 설정은 value를 이용 -->
 				<td><input type="date" id="wo_date" class="form-control" name="wo_date" placeholder="날짜를 선택해주세요" />
 			</tr>
 			<tr>	
 				<td>품번</td>
-				<td><label>
-				  <input type="text" id="item_code" name="item_code" placeholder="품번" onclick="openItem()" width="100%" readonly>
-				  <i class='bx bx-search-alt-2'></i>  
-				  <input type="text" id="item_name" placeholder="품명" style="border:1px solid" readonly></td>
-				</label></td>
+		<td><div class="input-group">
+	    <input type="text" style="width: 40%" placeholder="상품 코드" class="form-control" name="item_code" id="item_code" readonly>
+	    <input type="text" style="width: 40%" placeholder="상품 이름" class="form-control" name="item_name" id="item_name" readonly>
+	    <input type="button" class="btn btn-primary" onclick="openItem()" value="검색">
+	</div></td>
 				<td>지시상태</td>
 				<td colspan="8">
 				<select name="wo_status">
@@ -92,13 +152,16 @@ function ProOrderDelete(wo_code){
   </table>
 </div>
 </form>
+
+
+
 <!-- 작업지시목록 리스트 -->
 <!-- 작업지시상태 시작/지시 :  작업지시 현황 리스트 -->
 <!-- 작업지시상태 마감 :  실적현황 -> 실적등록 -->
 
  <h4 style="margin-top: 100px;"><i class='bx bx-list-ol icon'></i> 작업지시 목록</h4>    
- <span style="color: red; font-size: 13px">* 작업 지시 번호 클릭시 해당작업 실적등록 가능 / 상품번호 클릭시 해당 레시피 확인가능</span> 
-  <table class="product-table"style="margin-top: 20px;width: 100%;">
+ <span style="color: red; font-size: 13px">* 작업 지시 번호 클릭시 해당작업 실적등록 가능</span> 
+  <table class="product-table" style="margin-top: 20px;width: 100%;">
     <thead>
       <tr>
         <th>작업지시번호</th>
@@ -107,11 +170,11 @@ function ProOrderDelete(wo_code){
         <th>지시상태</th>
         <th>납품예정일</th>
         <th>라인코드</th>
-        <th>상품번호</th>
+        <th>상품코드</th>
         <th>상품이름</th>
         <th>지시수량</th>
         <th>생산수량</th>
-<!--         <th>수정</th> -->
+        <th>수정</th>
         <th>삭제</th>
       </tr>
     </thead>
@@ -138,18 +201,18 @@ function ProOrderDelete(wo_code){
 	</c:choose>
         <td>${vo.delivery_date}</td>
         <td>${vo.line_code}</td>
-        <td>${vo.item_code}</td>
+        <td onclick="itemrecipeList('${vo.item_code}','${vo.item_name}');">${vo.item_code}</td>
         <td>${vo.item_name}</td>
         <td>${vo.oQTY}</td>
         <td>${vo.pQTY}</td>
 		<c:choose>
 		  <c:when test="${vo.wo_status eq '지시'}">
-<%-- 		    <td><button class="btn-edit" onclick="orderedit('${vo.wo_code}')"><i class="bx bx-edit"></i></button></td> --%>
+		    <td><button class="btn-edit" onclick="orderedit('${vo.wo_code}')"><i class="bx bx-edit"></i></button></td>
 		    <td><button class="btn-delete" onclick="ProOrderDelete('${vo.wo_code}')"><i class="bx bxs-trash"></i></button></td>
 		  </c:when>
 		  <c:otherwise>
-		    <td></td>
-		    <td></td>
+		    <td>-</td>
+		    <td>-</td>
 		  </c:otherwise>
 		</c:choose>
       </tr>
@@ -177,6 +240,16 @@ function ProOrderDelete(wo_code){
 </div>
 </div>
 
+	
+<br><br><br>
+    <div id="Require_ajax" style="margin-top: 50px">
+	<table class="product-table" style="margin-top: 50px;margin-bottom:20px; width: 100%;">
+<!-- 	<tr id="th"><th>자재코드</th><th>자재이름</th><th>투입량</th></tr> -->
+	<tr id="con"><td> 레시피를 확인하려면 해당 상품코드를 클릭해주세요 </td></tr>
+    </table>
+    </div>
+
+<br><br>
 
 
 </body>

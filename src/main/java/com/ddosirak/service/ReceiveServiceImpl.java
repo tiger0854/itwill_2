@@ -44,8 +44,8 @@ public class ReceiveServiceImpl implements ReceiveService {
 
 	// 수주 삭제
 	@Override
-	public void receiveRemove(String re_code) throws Exception {
-		rdao.receiveRemove(re_code);
+	public Integer receiveRemove(String re_code) throws Exception {
+		return rdao.receiveRemove(re_code);
 	}
 	
 	

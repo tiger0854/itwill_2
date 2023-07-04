@@ -32,8 +32,23 @@ public class CookVO {
 	private String co_time;
 	private String material_code;
 	private String material_name;
+	private String so_code;
+	private String material_con;
 	
 	
+	
+	public String getMaterial_con() {
+		return material_con;
+	}
+	public void setMaterial_con(String material_con) {
+		this.material_con = material_con;
+	}
+	public String getSo_code() {
+		return so_code;
+	}
+	public void setSo_code(String so_code) {
+		this.so_code = so_code;
+	}
 	public String getCo_code() {
 		return co_code;
 	}
@@ -130,7 +145,7 @@ public class CookVO {
 				+ ", line_code=" + line_code + ", line_name=" + line_name + ", item_code=" + item_code + ", item_name="
 				+ item_name + ", coQTY=" + coQTY + ", cpQTY=" + cpQTY + ", co_status=" + co_status + ", delivery_date="
 				+ delivery_date + ", co_date=" + co_date + ", co_time=" + co_time + ", material_code=" + material_code
-				+ ", material_name=" + material_name + "]";
+				+ ", material_name=" + material_name + ", so_code=" + so_code + "]";
 	}
 
 	

@@ -20,7 +20,8 @@ public interface ReceiveService {
 	public void receiveUpdate(ReceiveVO uvo) throws Exception; 
 	
 	// 수주 삭제
-	public void receiveRemove(String re_code) throws Exception;
+	public Integer receiveRemove(String re_code) throws Exception;
+	
 	
 	
 }

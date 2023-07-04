@@ -140,8 +140,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 <div class="nav_list">
                   <a href="#" class="nav_link" onclick="proDropdown()"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">생산관리 ></span> </a> 
                 <div class="nav_link collapse" id="pro">
-		  			<a href="/pro/oderList" class="nav_link"> - 작업지시</a><br>
-		  		    <a href="/pro/oderList" class="nav_link"> - 실적등록</a><br>
+		  			<a href="/pro/orderList" class="nav_link"> - 작업지시</a><br>
+		  		    <a href="/pro/cookorderList" class="nav_link"> - 조리지시</a><br>
 				</div>
 				</div>
 

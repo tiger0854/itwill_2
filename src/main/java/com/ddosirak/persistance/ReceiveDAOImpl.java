@@ -50,8 +50,8 @@ public class ReceiveDAOImpl implements ReceiveDAO {
 
 	// 수주 삭제
 	@Override
-	public void receiveRemove(String re_code) throws Exception {
-		sqlSession.delete(NAMESPACE + ".receiveRemove", re_code);	
+	public Integer receiveRemove(String re_code) throws Exception {
+		return sqlSession.delete(NAMESPACE + ".receiveRemove", re_code);	
 	}
 	
 	

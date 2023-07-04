@@ -13,8 +13,9 @@
 
 	<!-- 수주 등록 -->
 	<insert id="receiveInsert" >
-		insert into receive(re_code, item_code, customer_code, re_date, employee_id, re_qty) 
-		select concat('REC', replace(current_date(), '-', ''), nullif(max(rec_id)+1, 1)),#{item_code},#{customer_code},#{re_date},#{employee_id},#{re_qty}	
+		insert into receive(re_code, item_code, customer_code, re_date, employee_id, re_qty,item_name) 
+		select concat('REC', replace(current_date(), '-', ''), nullif(max(rec_id)+1, 1)),#{item_code},
+		#{customer_code},#{re_date},#{employee_id},#{re_qty},#{item_name}	
 		from receive
 	</insert>
 	<!-- 수주 등록 -->
@@ -23,6 +24,15 @@
 	<select id="receiveList" resultType="ReceiveVO">
 		select *
 		from receive
+		where
+			1=1
+			<choose>
+	  		<when test="kind == 'itemName'">AND item_code</when>
+	  		<when test="kind == 'customerName'">AND customer_code</when>		
+	  		</choose> 
+	  		<if test="search != ''">
+	  		LIKE CONCAT('%', #{search}, '%')
+	  		</if>
 		order by re_date desc
 		limit #{startRow}, #{pageSize}
 	</select>

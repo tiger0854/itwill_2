@@ -11,7 +11,7 @@ public class ReceiveVO {
 	private Date re_date; // 수주 날짜
 	private int employee_id; // 담당자
 	private int re_qty; // 수주 수량
-	
+	private String item_name;
 	
 	
 	public int getRe_id() {
@@ -57,15 +57,23 @@ public class ReceiveVO {
 		this.re_qty = re_qty;
 	}
 	
+	public String getItem_name() {
+		return item_name;
+	}
+	public void setItem_name(String item_name) {
+		this.item_name = item_name;
+	}
 	
 	@Override
 	public String toString() {
 		return "ReceiveVO [re_id=" + re_id + ", re_code=" + re_code + ", item_code=" + item_code + ", customer_code="
-				+ customer_code + ", re_date=" + re_date + ", employee_id=" + employee_id + ", re_qty=" + re_qty + "]";
+				+ customer_code + ", re_date=" + re_date + ", employee_id=" + employee_id + ", re_qty=" + re_qty
+				+ ", item_name=" + item_name + "]";
 	}
+
+
 	
-	
-	
+
 	
 	
 	

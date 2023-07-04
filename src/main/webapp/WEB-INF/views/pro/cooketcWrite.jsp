@@ -110,7 +110,7 @@
 					</tr>
 					<tr>
 						<td>지시수량</td>
-						<td><input type="number" name="coQTY" value="${cvo.coQTY }"
+						<td><input type="number" name="coQTY" value="${cvo.material_con }"
 							readonly></td>
 					</tr>
 					<tr>
