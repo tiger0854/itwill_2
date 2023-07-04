@@ -61,4 +61,10 @@ public class OrderDAOImpl implements OrderDAO{
 		return sqlSession.selectList(NAMESPACE+".selectRequset",vo);
 	}
 
+	@Override
+	public int updateRequestStat(RequestVO vo) {
+		return sqlSession.update(NAMESPACE+".updateRequest",vo);
+		
+	}
+
 }

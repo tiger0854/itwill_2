@@ -53,6 +53,12 @@ public class ReceiveDAOImpl implements ReceiveDAO {
 	public void receiveRemove(String re_code) throws Exception {
 		sqlSession.delete(NAMESPACE + ".receiveRemove", re_code);	
 	}
+
+	@Override
+	public void receiveRequest() throws Exception {
+		sqlSession.insert(NAMESPACE+".receiveRequest");
+		
+	}
 	
 	
 

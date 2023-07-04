@@ -47,6 +47,13 @@ public class ReceiveServiceImpl implements ReceiveService {
 	public void receiveRemove(String re_code) throws Exception {
 		rdao.receiveRemove(re_code);
 	}
+
+	// 레시피요청
+	@Override
+	public void receiveRequest() throws Exception {
+		rdao.receiveRequest();
+		
+	}
 	
 	
 	

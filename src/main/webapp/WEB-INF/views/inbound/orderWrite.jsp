@@ -88,7 +88,7 @@ td{height: 80px !important; vertical-align: middle;}
     <div class="input-group" style="display: flex; align-items: center;">
     <button type="button" class="btn btn-primary" onclick="openChildWindow();" >요청리스트</button>
     <input type="text"placeholder="상품코드 검색하기" class="form-control"  onclick="openChildWindow();" name="material_code" id="material_code" readonly="readonly" style="margin-left: 5px;">
-
+	<input type="hidden" id="request_id" name="request_id">
     </div>
     </td>
     <td>자재이름</td>
@@ -129,6 +129,7 @@ td{height: 80px !important; vertical-align: middle;}
 <button type="reset" class="btn btn-secondary" style="width: 200px; margin-right: 10px;" onclick="clearInputs();" >초기화</button>
 <input type="submit" class="btn btn-primary" style="width: 200px; " value="발주하기" id="submit">
 </div>
+
 </form>
 </div>
 
@@ -148,7 +149,7 @@ function openChildWindow() {
   
 function openChildWindow2() {
 
-    var childWindow2 = window.open("/inbound/empList", "empList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
+    var childWindow2 = window.open("/emp/list?pop=ok", "empList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
 
   } //empList팝업
   

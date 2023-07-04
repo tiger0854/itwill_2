@@ -47,4 +47,10 @@ public class OrderServiceImpl implements OrderService{
 
 		return odao.getRequestList(vo);
 	}
+
+	@Override
+	public int updateRequestStat(RequestVO vo) {
+		return odao.updateRequestStat(vo);
+		
+	}
 }

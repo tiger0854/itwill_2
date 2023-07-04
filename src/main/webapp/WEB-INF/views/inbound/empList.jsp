@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,13 +14,13 @@
 
 </head>
 <body>
-	<h3>품목검색</h3>
+	<h3>사원목록</h3>
 	
-	<div class="input-group" style="margin-bottom: 10px;">
-    <input type="text"placeholder="상품 검색하기" class="form-control">
+<!-- 	<div class="input-group" style="margin-bottom: 10px;">
+    <input type="text"placeholder="사원 검색하기" class="form-control">
     <button type="button" class="btn btn-primary" onclick="openChildWindow();">검색</button>
 
-    </div>
+    </div> -->
 
   <table border="1" class="table table-hover">
   <tr>
@@ -27,21 +28,17 @@
   <th>담당자 이름</th>
 
   </tr>
-  
+  <c:forEach var="vo" items="${empList}">
+	<c:if test="${vo.department_name == '유통과' || vo.department_name == '입고팀'}">
   <tr onclick="sendInfo(this);">
-  <td>001</td>
-  <td>양다영</td>
-
+  <td>${vo.employee_id }</td>
+  <td>${vo.employee_name }</td>
   </tr>
-  
-  <tr>
-  <td>002</td>
-  <td>눈사람</td>
-
-  </tr>
+  </c:if>
+</c:forEach>
   
   </table>
-	
+  <div style="color: red; margin-bottom: 10px;">*유통과 및 입고팀의 사원만 노출됩니다.</div>	
 	
 <script>
     function sendInfo(row) {

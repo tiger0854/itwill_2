@@ -22,5 +22,6 @@ public interface ReceiveService {
 	// 수주 삭제
 	public void receiveRemove(String re_code) throws Exception;
 	
-	
+	// 레시피요청
+	public void receiveRequest() throws Exception;
 }

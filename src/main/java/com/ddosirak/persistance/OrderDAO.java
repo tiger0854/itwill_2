@@ -25,5 +25,6 @@ public interface OrderDAO {
 	
 	public List<RequestVO> getRequestList(PageVO vo); //수주요청한 품목의 레시피 받아오기
 	
+	public int updateRequestStat(RequestVO vo); //수주요청 목록 상태변경
 	
 }

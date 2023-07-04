@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ddosirak.domain.OrderVO;
 import com.ddosirak.domain.PageVO;
+import com.ddosirak.domain.RequestVO;
 import com.ddosirak.service.OrderService;
 import com.ddosirak.service.PageService;
 
@@ -37,11 +38,12 @@ public class OrderController {
 	}//발주서 페이지로 이동
 	
 	@RequestMapping(value="/orderWrite",method=RequestMethod.POST)
-	public String orderWritePOST(OrderVO vo) {
+	public String orderWritePOST(OrderVO vo,RequestVO rvo) {
 		logger.debug("orderWriteGET() 호출!");
 		logger.debug("발주서 정보 = "+vo);
 		
 		oService.insertOrder(vo);
+		oService.updateRequestStat(rvo);
 		logger.info("발주서 등록 완료.!!발주현황 페이지로 이동!!!");
 		return "redirect:/inbound/orderList";
 	}//발주서 등록

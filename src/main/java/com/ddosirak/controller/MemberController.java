@@ -158,7 +158,7 @@ public class MemberController {
 	
 	// http://localhost:8088/emp/list
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public void listGET(Model model,PageVO pageVO, HttpServletRequest request) throws Exception{
+	public String listGET(Model model,PageVO pageVO, HttpServletRequest request,@RequestParam(value ="pop",required = false) String pop) throws Exception{
 		logger.debug("listGET() 호출![]~(￣▽￣)~*");
 		
 		//================================페이징 처리를 위한 값 받아오기 동작========================================
@@ -216,6 +216,11 @@ public class MemberController {
 		model.addAttribute("alCount_am",alCount_am);
 		model.addAttribute("alCount_pm",alCount_pm);
 		model.addAttribute("alCount",alCount);
+		
+		if(pop != null && pop.equals("ok")) {
+			return "/inbound/empList";
+		}
+			return "/emp/list";
 	}//listGET() method end
 	
 	// 출퇴근 조회
