@@ -18,6 +18,7 @@
 		resultType="com.ddosirak.domain.ItemdetailVO">
 		select * from item_detail
 		WHERE item_code LIKE CONCAT('%', #{item_code}, '%')
+		and item_name LIKE CONCAT('%', #{item_name}, '%')
 		order by item_code desc
 		LIMIT #{startRow}, #{pageSize}
 	</select>

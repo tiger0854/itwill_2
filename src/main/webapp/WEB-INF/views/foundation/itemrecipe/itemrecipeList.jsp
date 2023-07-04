@@ -59,12 +59,8 @@
 					<hr width="100%" style="border: 2px solid black">
 					<!-- 상품목록 검색, 등록버튼 -->
 					<div class=btn-container>
-						<button class=btn-search type="submit">
-							<i class='bx bx-search-alt-2'></i> 조회
-						</button>
-						<button class=btn-add onclick="itemrecipeUpload();">
-							<i class='bx bx-plus-medical'></i> 추가 및 수정
-						</button>
+						<input type="submit" class="btn-search" value="레시피 조회"> 
+						<input type="button" class="btn-add" onclick="itemrecipeUpload();" value="레시피 추가 및 수정">
 					</div>
 
 					<!-- 품목 검색박스 -->
@@ -77,16 +73,19 @@
 								placeholder="품번" onclick="openItem();"></td>
 							<th>품명</th>
 							<td><input type="text" name="item_name" id="item_name"
-								placeholder="품명" onclick="openItem();">
-							<td>
-
+								placeholder="품명">
+							
+							<td><input type="button" onclick="openItem();" value="상품 상세 검색"></td>
+						</tr>
+						<tr>
 							<th>자재코드</th>
 							<td><input type="text" name="material_code" id="material_code"
-								placeholder="자재번호" onclick="openMaterialItem();">
-							<td>
+								placeholder="자재번호">
+						
 							<th>자재명</th>
 							<td><input type="text" name="material_name" id="material_name"
-								placeholder="자재명" onclick="openMaterialItem();"></td>
+								placeholder="자재명"></td>
+							<td><input type="button" onclick="openMaterialItem();" value="자재 상세 검색"></td>
 						</tr>
 					</table>
 				</div>
@@ -140,17 +139,17 @@
 					style="margin-top: 20px;">
 					<c:if test="${pageVO.startPage > pageVO.pageBlock}">
 						<li class="page-item"><a class="page-link"
-							href="/foundation/itemrecipe/itemrecipeList?item_code=${Search.item_code }&item_name=${Search.item_name }&pageNum=${pageVO.startPage - pageVO.pageBlock}">
+							href="/foundation/itemrecipe/itemrecipeList?item_code=${Search.item_code }&item_name=${Search.item_name }&material_code=${Search.material_code }&material_name=${Search.material_name }&pageNum=${pageVO.startPage - pageVO.pageBlock}">
 								</a></li>
 					</c:if>
 					<c:forEach var="i" begin="${pageVO.startPage}"
 						end="${pageVO.endPage}" step="1">
 						<li class="page-item"><a class="page-link"
-							href="/foundation/itemrecipe/itemrecipeList?item_code=${Search.item_code }&item_name=${Search.item_name }&pageNum=${i}"><span>${i}</span></a></li>
+							href="/foundation/itemrecipe/itemrecipeList?item_code=${Search.item_code }&item_name=${Search.item_name }&material_code=${Search.material_code }&material_name=${Search.material_name }&pageNum=${i}"><span>${i}</span></a></li>
 					</c:forEach>
 					<c:if test="${pageVO.endPage < pageVO.pageCount}">
 						<li class="page-item"><a class="page-link"
-							href="/foundation/itemrecipe/itemrecipeList?item_code=${Search.item_code }&item_name=${Search.item_name }&pageNum=${pageVO.startPage + pageVO.pageBlock}">
+							href="/foundation/itemrecipe/itemrecipeList?item_code=${Search.item_code }&item_name=${Search.item_name }&material_code=${Search.material_code }&material_name=${Search.material_name }&pageNum=${pageVO.startPage + pageVO.pageBlock}">
 								</a></li>
 					</c:if>
 				</ul>

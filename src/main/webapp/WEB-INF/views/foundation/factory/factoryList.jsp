@@ -54,13 +54,9 @@ function openItem() {
 					<hr width="100%" style="border: 2px solid black">
 					<!-- 창고목록 검색, 등록버튼 -->
 					<div class=btn-container>
-						<button class=btn-search type="submit">
-							<i class='bx bx-search-alt-2'></i> 공장 조회
-						</button>
+						<input class="btn-search" type="submit" value="공장 조회">
 						<!-- <button class=btn-add onclick="location.href='warehouseWrite'"><i class='bx bx-plus-medical'></i> 창고 추가</button> -->
-						<button class=btn-add onclick=factoryUpload()>
-							<i class='bx bx-plus-medical'></i> 공장 추가
-						</button>
+						<input type="button" class="btn-add" onclick="factoryUpload()" value="공장 추가">
 					</div>
 
 					<!-- 창고목록 검색박스 -->
@@ -70,10 +66,11 @@ function openItem() {
 						<tr>
 							<th>공장 코드</th>
 							<td><input type="text" id="factory_code" name="factory_code"
-								placeholder="공장코드" readonly></td>
+								placeholder="공장코드"></td>
 							<th>공장명</th>
 							<td><input type="text" id="factory_name" name="factory_name"
-								placeholder="공장명" onclick="openItem();"></td>
+								placeholder="공장명"></td>
+							<td><input type="button" value="상세 검색" onclick="openItem();"></td>
 						</tr>
 					</table>
 				</div>
