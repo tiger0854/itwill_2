@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ddosirak.domain.ItemRecipeVO;
 import com.ddosirak.domain.OrderVO;
 import com.ddosirak.domain.PageVO;
+import com.ddosirak.domain.RequestVO;
 import com.ddosirak.persistance.EmployeeDAO;
 import com.ddosirak.persistance.OrderDAO
 ;
@@ -42,7 +43,7 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public List<ItemRecipeVO> getRequestList(PageVO vo) {
+	public List<RequestVO> getRequestList(PageVO vo) {
 
 		return odao.getRequestList(vo);
 	}

@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<!-- header && sidebar include -->
@@ -10,15 +11,33 @@
 	<!-- header && sidebar include -->
 <script type="text/javascript">
 
-function datepicker_view(obj) {
-	 $(obj).datepicker().datepicker("show");
-	 
-	}
+	
+$(document).ready(function() {
+    $('#pay_date').click(function() {
+      var orderDateValue = $("input[name='order_date']").val();
+      $('#pay_date').attr("min", orderDateValue);
+    });//납기일자 >= 발주일자 제어
+    
+    $('#fr').submit(function(event) {
+        var materialPrice = $('#material_price').val();
+        var materialCode = $('#material_code').val();
+        var payDate = $('#pay_date').val();
+        var orderDate = $('#order_date').val();
+        var orderResp = $('#order_resp').val();
+        var orderTrade = $('#order_trade').val();
 
-function clearInputs() {
-	//이름 clear()로 했었으나 안되는 이유 --> javascript의 내장객체 이름과 겹쳐서 실행이 안됐던 것.
-	document.forms[0].reset();
-}
+        if (materialPrice == "" || materialCode == "" || payDate == "" || orderDate == "" || orderResp == "" || orderTrade == "") {
+			 event.preventDefault(); // 폼 제출을 막음
+      		Swal.fire({
+            title: "빈칸을 모두 입력해주세요.",
+            icon: "warning"
+          });
+        }
+      }); //빈칸 입력제어
+    
+  }); 
+
+
 </script>	
 	
 <style type="text/css">
@@ -83,10 +102,10 @@ td{height: 80px !important; vertical-align: middle;}
  </tr>
   <tr>
   		
-    	<td><label for="order_date">납기일자</label></td>
+    	<td><label for="order_date">발주일자</label></td>
         <td><input type="date" class="form-control" name="order_date" id="order_date"></td>
-    <td>발주일자</td>
-        <td><input type="date" class="form-control" name="pay_date"></td>
+    <td>납기일자</td>
+        <td><input type="date" class="form-control" name="pay_date" id="pay_date"></td>
   </tr>
   <tr>
     <td>담당자</td>
@@ -107,8 +126,8 @@ td{height: 80px !important; vertical-align: middle;}
   </tr>
 </table>
 <div style="float: right;margin-bottom: 20px;">
-<button type="button" class="btn btn-secondary" style="width: 200px; margin-right: 10px;" onclick="clearInputs();" >초기화</button>
-<input type="submit" class="btn btn-primary" style="width: 200px; " value="발주하기">
+<button type="reset" class="btn btn-secondary" style="width: 200px; margin-right: 10px;" onclick="clearInputs();" >초기화</button>
+<input type="submit" class="btn btn-primary" style="width: 200px; " value="발주하기" id="submit">
 </div>
 </form>
 </div>

@@ -30,7 +30,8 @@ public class InboundController {
 	private PageService pService;
 	
 	
-	// http://localhost:8088/inbound/inboundWrite
+	// http://localhost:8088/inbound
+	//inboundWrite
 	@RequestMapping(value="/inboundWrite",method=RequestMethod.GET)
 	public void inboundWriteGET()  {
 		logger.debug("inboundWriteGET() 호출!");

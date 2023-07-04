@@ -48,28 +48,8 @@
   		
   	<!-- 입고리스트 불러오기 ret_order과 ret_in 테이블 조인 -->
   	
-  	<resultMap type="com.ddosirak.domain.ReceiveVO" id="receiveVO">
-  		<result property="item_code" column="item_code"/>
-  		<result property="re_qty" column="re_qty"/>
-  	</resultMap>
-  	
-  	 <resultMap type="com.ddosirak.domain.MaterialdetailVO" id="materialdetailVO">
-  		<result property="material_name" column="material_name"/>
-  		<result property="material_code" column="material_code"/>
-  		
-  	</resultMap>
-  	
-  	<resultMap type="com.ddosirak.domain.ItemRecipeVO" id="itemRecipeVO">
-  	
-  		<result property="item_code" column="item_code"/>
-  		<result property="material_code" column="material_code"/>
-  		<result property="material_con" column="material_con"/>
-  		<collection property="receiveVO" resultMap="receiveVO"/>
-  		<collection property="materialdetailVO" resultMap="materialdetailVO"/>
-  	</resultMap>
-  	
 
-  	<select id="selectRequset" resultMap="itemRecipeVO" parameterType="com.ddosirak.domain.PageVO">
+  	<select id="selectRequset" resultType="com.ddosirak.domain.RequestVO">
 	  	SELECT m.material_code , material_name, material_con, re_qty , i.item_code
 		FROM receive r JOIN item_recipe i
 		JOIN material_detail m

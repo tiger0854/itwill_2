@@ -5,13 +5,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<!-- header && sidebar include -->
     <jsp:include page="../common/header.jsp"></jsp:include>
    
 	<!-- header && sidebar include -->
 <script type="text/javascript">
-window.onload = function() {
+  window.onload = function() {
 	var now_utc = Date.now()
 	var timeOff = new Date().getTimezoneOffset()*60000;
 	var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
@@ -35,7 +35,27 @@ window.onload = function() {
 	
     };
     
+    $(document).ready(function() {
 
+        
+        $('#fr').submit(function(event) {
+            var orderNumber = $('#order_number').val();
+            var inPiece = $('#in_piece').val();
+            var Date = $('#Date').val();
+            var inResp = $('#in_resp').val();
+            var whCode = $('#wh_code').val();
+            var inExpir = $('#Date1').val();
+
+            if (orderNumber == "" || inPiece == "" || Date == "" || inResp == "" || whCode == "" || inExpir == "") {
+    			 event.preventDefault(); // 폼 제출을 막음
+          		Swal.fire({
+                title: "빈칸을 모두 입력해주세요.",
+                icon: "warning"
+              });
+            }
+          }); //빈칸 입력제어
+        
+      });
    
     
 </script>
@@ -53,7 +73,7 @@ td{height: 80px !important; vertical-align: middle;}
 
 <input type="hidden" id="order_piece"><!-- 발주수량 -->
 
-<form action="" method="post">
+<form action="" method="post" id="fr">
 <table class="table table-borderless" style="margin-top: 30px;">
   <tr>
     <td>발주서</td>
@@ -77,7 +97,7 @@ td{height: 80px !important; vertical-align: middle;}
     <td>담당자</td>
     <td>  
     <div class="input-group">
-    <input type="text"placeholder="담당자 검색하기" class="form-control" name="in_resp">
+    <input type="text"placeholder="담당자 검색하기" class="form-control" name="in_resp" id="in_resp">
     <button class="btn btn-primary" type="button">검색</button>
     </div>
     </td>
@@ -85,14 +105,14 @@ td{height: 80px !important; vertical-align: middle;}
     <td>입고창고</td>
     <td>
   <div class="input-group">
-    <input type="text"placeholder="창고 검색하기" class="form-control" name="wh_code">
+    <input type="text"placeholder="창고 검색하기" class="form-control" name="wh_code" id="wh_code">
     <button class="btn btn-primary" type="button">검색</button>
     </div>
 	</td>
   </tr>
     <tr>
     <td>유통기한</td>
-        <td><input type="date"  id="Date1" class="form-control" name="in_expir" ></td>
+        <td><input type="date"  id="Date1" class="form-control" name="in_expir"></td>
   </tr>
 </table>
 <div style="float: right;margin-bottom: 20px;">

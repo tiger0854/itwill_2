@@ -144,7 +144,7 @@ public class OrderController {
 				model.addAttribute("pageVO", pageVO);
 				//================================페이징 처리를 위한 값 받아오기 동작========================================
 				model.addAttribute("requestList",oService.getRequestList(pageVO));
-				logger.debug("###########"+oService.getRequestList(pageVO).size());
+				logger.debug("###########"+oService.getRequestList(pageVO));
 				
 		logger.debug("inbound/requestList.jsp 뷰페이지로 연결");
 		

@@ -8,9 +8,17 @@
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<script type="text/javascript">
+	$(document).ready(function() {
+	    $('#pay_date').click(function() {
+	      var orderDateValue = $("input[name='order_date']").val();
+	      $('#pay_date').attr("min", orderDateValue);
+	    });
+	  });
 	
 	window.addEventListener("message", function(event) {
 	      var rowData = event.data;

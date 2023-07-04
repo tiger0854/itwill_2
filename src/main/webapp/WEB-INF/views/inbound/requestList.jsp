@@ -27,8 +27,8 @@
   <c:forEach var="vo" items="${requestList}">
   <tr onclick="sendInfo(this);">
   <td>${vo.material_code}</td>
-  <td>${vo.materialdetailVO.material_name}</td>
-  <td>${vo.material_con * vo.receiveVO.re_qty}</td>
+  <td>${vo.material_name}</td>
+  <td>${(vo.material_con * vo.re_qty)+20}</td>
   </tr>
   </c:forEach>
 

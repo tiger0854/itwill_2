@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.ddosirak.domain.ItemRecipeVO;
 import com.ddosirak.domain.OrderVO;
 import com.ddosirak.domain.PageVO;
+import com.ddosirak.domain.RequestVO;
 
 
 
@@ -55,7 +56,7 @@ public class OrderDAOImpl implements OrderDAO{
 	}
 
 	@Override
-	public List<ItemRecipeVO> getRequestList(PageVO vo) {
+	public List<RequestVO> getRequestList(PageVO vo) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(NAMESPACE+".selectRequset",vo);
 	}
