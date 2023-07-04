@@ -47,7 +47,7 @@
 			<form id="instr">
 
 				<h4 style="margin-top: 150px;">
-					<i class="bx bx-book"></i> 품목정보 관리
+					<i class="bx bx-book"></i> 레시피 관리
 				</h4>
 				<div style="margin-top: 10px;">
 					<hr width="100%" style="border: 2px solid black">
@@ -81,7 +81,7 @@
 			<!-- 품목 리스트 -->
 			<!--  품번, 품명, 자재유형(완제품,부자재), 재고단위, 사용여부,단가 등록	 -->
 			<h4 style="margin-top: 50px;">
-				<i class='bx bx-list-ol icon'></i> 품목 목록
+				<i class='bx bx-list-ol icon'></i> 레시피 목록
 			</h4>
 			<table class="product-table" style="margin-top: 20px; width: 100%;">
 				<thead>

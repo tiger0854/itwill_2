@@ -17,10 +17,14 @@
 
 	function itemUpdate(item_code) {
 		// 새 창을 열기 위한 URL
+		if(!item_code.includes("M")){
 		var popupUrl = '/foundation/itemdetail/itemdetailUpdate?item_code='
 				+ item_code;
 		// 새 창 열기
 		window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
+		}else{
+			alert("레시피용 상품은 수정할 수 없습니다");
+		}
 	}
 
 	function itemDelete(item_code, item_name) {

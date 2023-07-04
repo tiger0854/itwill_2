@@ -137,10 +137,8 @@
 		select i.item_code, i.material_code, i.material_con, id.item_name, md.material_name
 		from item_recipe i
 		join item_detail id
-		on
-		i.item_code= id.item_code
-		join
-		material_detail md
+		on i.item_code= id.item_code
+		join material_detail md
 		on i.material_code = md.material_code
 		where i.item_code like concat('%', #{item_code}, '%')
 		and id.item_name like concat('%', #{item_name}, '%')

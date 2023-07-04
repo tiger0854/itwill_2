@@ -35,7 +35,7 @@ public class LineController {
 	FactoryService Fservice;
 	
 	// --------------------- 예웡  (｡･∀･)ﾉﾞﾞ -----------------------------	
-		// http://localhost:8088/line/linList
+		// http://localhost:8088/line/lineList
 		@RequestMapping(value = "/lineList", method = RequestMethod.GET)
 		public void LineListGET(Model model,HttpServletRequest request,PageVO pageVO) {
 			logger.debug("LineListGET() 호출![]~(￣▽￣)~*");

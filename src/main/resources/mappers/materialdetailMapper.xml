@@ -8,12 +8,14 @@
 	<select id="MaterialDetailList"
 		resultType="com.ddosirak.domain.MaterialdetailVO">
 		select * from material_detail 
+		order by material_code desc
 		LIMIT #{startRow}, #{pageSize}
 	</select>
 	<select id="MaterialDetailListSearch"
 		resultType="com.ddosirak.domain.MaterialdetailVO">
 		select * from material_detail 
 		WHERE material_code LIKE CONCAT('%', #{material_code}, '%')
+		order by material_code desc
 		LIMIT #{startRow}, #{pageSize}
 	</select>
 	<!-- 물품 조회 -->

@@ -35,15 +35,17 @@ public class ItemdetailServiceImpl implements ItemdetailService {
 	@Override
 	public Integer insertID(ItemdetailVO vo) throws Exception {
 		logger.debug("service : insertMD 실행");
-		if(dao.getMaxCode()!=null && dao.getMaxCode().contains("I")) {
-			int codeNum=Integer.parseInt(dao.getMaxCode().substring(1));
-			StringBuilder sb = new StringBuilder();
-			sb.append("I");
-			sb.append(String.format("%03d", ++codeNum));
-			vo.setItem_code(sb.toString());
-			}else {
+		if (vo.getItem_code() == null) {
+			if (dao.getMaxCode() != null && dao.getMaxCode().contains("I")) {
+				int codeNum = Integer.parseInt(dao.getMaxCode().substring(1));
+				StringBuilder sb = new StringBuilder();
+				sb.append("I");
+				sb.append(String.format("%03d", ++codeNum));
+				vo.setItem_code(sb.toString());
+			} else {
 				vo.setItem_code("I001");
 			}
+		}
 		return dao.insertID(vo);
 	}
 

@@ -205,7 +205,7 @@
 						<td></td>
 						<td>
 							<input type="hidden" name="item_code" id="item_code"> 
-							<input type="text" id="item_name" onclick="getRelatedMaterials();" readonly="readonly" placeholder="검색 후 클릭"> 
+							<input type="text" id="item_name" onclick="getRelatedMaterials();" required readonly="readonly" placeholder="검색 후 클릭"> 
 						</td>
 					</tr>
 					<tr>

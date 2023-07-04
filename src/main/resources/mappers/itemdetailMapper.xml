@@ -7,7 +7,9 @@
 	<!-- 상품 기초 목록 -->
 	<select id="itemlist"
 		resultType="com.ddosirak.domain.ItemdetailVO">
-		SELECT * FROM item_detail LIMIT #{startRow}, #{pageSize}
+		SELECT * FROM item_detail 
+		order by item_code desc
+		LIMIT #{startRow}, #{pageSize}
 	</select>
 	<!-- 상품 기초 목록 -->
 
@@ -15,8 +17,8 @@
 	<select id="itemDetailSearch"
 		resultType="com.ddosirak.domain.ItemdetailVO">
 		select * from item_detail
-		WHERE item_code LIKE CONCAT('%',
-		#{item_code}, '%')
+		WHERE item_code LIKE CONCAT('%', #{item_code}, '%')
+		order by item_code desc
 		LIMIT #{startRow}, #{pageSize}
 	</select>
 	<!-- 상품 기초 목록 검색 -->
@@ -24,8 +26,7 @@
 
 	<!-- 상품 기초 등록 -->
 	<insert id="insertid">
-		INSERT INTO item_detail (item_code, item_name,
-		item_price, unit)
+		INSERT INTO item_detail (item_code, item_name, item_price, unit)
 		VALUES (#{item_code}, #{item_name}, #{item_price}, #{unit})
 	</insert>
 	<!-- 상품 기초 등록 -->
@@ -40,13 +41,13 @@
 		UPDATE item_detail
 		SET item_name = #{item_name},
 		item_price = #{item_price}, unit = #{unit}
-		WHERE item_code = #{item_code};
+		WHERE item_code = #{item_code}
 	</update>
 	<!-- 상품 기초 수정 -->
 
 	<!-- 상품 삭제 -->
 	<delete id="deleteid">
-		DELETE FROM item_detail WHERE item_code = #{item_code};
+		DELETE FROM item_detail WHERE item_code = #{item_code}
 	</delete>
 	<!-- 상품 삭제 -->
 
