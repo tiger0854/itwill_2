@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.ddosirak.domain.FactoryVO;
 import com.ddosirak.domain.PageVO;
@@ -33,9 +32,9 @@ public class FactoryServiceImpl implements FactoryService {
 	
 
 	@Override
-	public List<FactoryVO> facList(PageVO pageVO, Map<String, Object> instrSearch, Model model) throws Exception {
+	public List<FactoryVO> facList(PageVO pageVO, Map<String, Object> instrSearch) throws Exception {
 		logger.debug("service : 창고 검색 목록 출력");
-		return dao.facList(pageVO, instrSearch, model);
+		return dao.facList(pageVO, instrSearch);
 	}
 
 
@@ -85,9 +84,9 @@ public class FactoryServiceImpl implements FactoryService {
 
 
 	@Override
-	public List<FactoryVO> factoryItemList(Map<String, Object> instrSearch, Model model) {
+	public List<FactoryVO> factoryItemList(Map<String, Object> instrSearch) {
 		logger.debug("service : 공장 검색 부분");
-		return dao.factoryItemList(instrSearch, model);
+		return dao.factoryItemList(instrSearch);
 	}
 
 	@Override

@@ -40,9 +40,9 @@ function openItem() {
 </head>
 
 <body>
-	<form id="instr">
-		<div class="height-100">
-			<div class="container mt-3">
+	<div class="height-100">
+		<div class="container mt-3">
+			<form id="instr">
 
 				<h4 style="margin-top: 150px;">
 					<i class="bx bx-book"></i> 창고관리
@@ -65,12 +65,12 @@ function openItem() {
 						border="1">
 
 						<tr>
-							<th>창고명</th>
-							<td><input type="text" id="wh_name" name="wh_name"
-								placeholder="창고명" onclick="openItem();"></td>
 							<th>창고 코드</th>
 							<td><input type="text" id="wh_code" name="wh_code"
 								placeholder="창고코드" readonly></td>
+							<th>창고명</th>
+							<td><input type="text" id="wh_name" name="wh_name"
+								placeholder="창고명" onclick="openItem();"></td>
 							<th>재고/자재</th>
 							<td><select id="retail_code" name="retail_code" disabled>
 									<option value="전체">전체</option>
@@ -87,70 +87,70 @@ function openItem() {
 						</tr>
 					</table>
 				</div>
-	</form>
-	<!-- 창고 리스트 -->
-	<!-- 	창고명, 창고코드, 자재/재고, 냉장/냉동/상온, 수정/삭제 표시 -->
-	<h4 style="margin-top: 100px;">
-		<i class='bx bx-list-ol icon'></i> 창고 목록
-	</h4>
-	<table class="product-table" style="margin-top: 20px; width: 100%;">
-		<thead>
-			<tr>
-				<th>창고코드</th>
-				<th>창고명</th>
-				<th>재고/자재</th>
-				<th>냉장/냉동/상온</th>
-				<th>수정</th>
-				<th>삭제</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="vo" items="${whList }">
-				<tr>
-					<td>${vo.wh_code }</td>
-					<td>${vo.wh_name }</td>
-					<td>${vo.retail_code }</td>
-					<td>${vo.wh_type }</td>
-					<td><button class=btn-edit type="button"
-							onclick="warehouseUpdate('${vo.wh_code}');">
-							<i class='bx bx-edit'></i>
-						</button></td>
-					<td><button class=btn-delete
-							onclick="warehouseDelete('${vo.wh_code}','${vo.wh_name }');">
-							<i class='bx bxs-trash'></i>
-						</button></td>
-				</tr>
-			</c:forEach>
+			</form>
+			<!-- 창고 리스트 -->
+			<!-- 	창고명, 창고코드, 자재/재고, 냉장/냉동/상온, 수정/삭제 표시 -->
+			<h4 style="margin-top: 100px;">
+				<i class='bx bx-list-ol icon'></i> 창고 목록
+			</h4>
+			<table class="product-table" style="margin-top: 20px; width: 100%;">
+				<thead>
+					<tr>
+						<th>창고코드</th>
+						<th>창고명</th>
+						<th>재고/자재</th>
+						<th>냉장/냉동/상온</th>
+						<th>수정</th>
+						<th>삭제</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="vo" items="${whList }">
+						<tr>
+							<td>${vo.wh_code }</td>
+							<td>${vo.wh_name }</td>
+							<td>${vo.retail_code }</td>
+							<td>${vo.wh_type }</td>
+							<td><button class=btn-edit type="button"
+									onclick="warehouseUpdate('${vo.wh_code}');">
+									<i class='bx bx-edit'></i>
+								</button></td>
+							<td><button class=btn-delete
+									onclick="warehouseDelete('${vo.wh_code}','${vo.wh_name }');">
+									<i class='bx bxs-trash'></i>
+								</button></td>
+						</tr>
+					</c:forEach>
 
-		</tbody>
-	</table>
-
-
-	<!-- 페이징처리 -->
-	<%--   		${Search} --%>
-	<div class="container" style="margin-top: 30px; margin-bottom: 30px">
-		<ul class="pagination justify-content-center" id="pagination"
-			style="margin-top: 20px;">
-			<c:if test="${pageVO.startPage > pageVO.pageBlock}">
-				<li class="page-item"><a class="page-link"
-					href="/foundation/warehouse/warehouseList?wh_code=${Search.wh_code }&wh_name=${Search.wh_name }&pageNum=${pageVO.startPage - pageVO.pageBlock}"><sapn>
-						< </sapn></a></li>
-			</c:if>
-			<c:forEach var="i" begin="${pageVO.startPage}"
-				end="${pageVO.endPage}" step="1">
-				<li class="page-item"><a class="page-link"
-					href="/foundation/warehouse/warehouseList?wh_code=${Search.wh_code }&wh_name=${Search.wh_name }&pageNum=${i}"><span>${i}</span></a></li>
-			</c:forEach>
-			<c:if test="${pageVO.endPage < pageVO.pageCount}">
-				<li class="page-item"><a class="page-link"
-					href="/foundation/warehouse/warehouseList?wh_code=${Search.wh_code }&wh_name=${Search.wh_name }&pageNum=${pageVO.startPage + pageVO.pageBlock}"><span>
-							> </span></a></li>
-			</c:if>
-		</ul>
-	</div>
+				</tbody>
+			</table>
 
 
-	</div>
+			<!-- 페이징처리 -->
+			<%--   		${Search} --%>
+			<div class="container" style="margin-top: 30px; margin-bottom: 30px">
+				<ul class="pagination justify-content-center" id="pagination"
+					style="margin-top: 20px;">
+					<c:if test="${pageVO.startPage > pageVO.pageBlock}">
+						<li class="page-item"><a class="page-link"
+							href="/foundation/warehouse/warehouseList?wh_code=${Search.wh_code }&wh_name=${Search.wh_name }&pageNum=${pageVO.startPage - pageVO.pageBlock}">
+								</a></li>
+					</c:if>
+					<c:forEach var="i" begin="${pageVO.startPage}"
+						end="${pageVO.endPage}" step="1">
+						<li class="page-item"><a class="page-link"
+							href="/foundation/warehouse/warehouseList?wh_code=${Search.wh_code }&wh_name=${Search.wh_name }&pageNum=${i}"><span>${i}</span></a></li>
+					</c:forEach>
+					<c:if test="${pageVO.endPage < pageVO.pageCount}">
+						<li class="page-item"><a class="page-link"
+							href="/foundation/warehouse/warehouseList?wh_code=${Search.wh_code }&wh_name=${Search.wh_name }&pageNum=${pageVO.startPage + pageVO.pageBlock}">
+								</a></li>
+					</c:if>
+				</ul>
+			</div>
+
+
+		</div>
 	</div>
 </body>
 </html>

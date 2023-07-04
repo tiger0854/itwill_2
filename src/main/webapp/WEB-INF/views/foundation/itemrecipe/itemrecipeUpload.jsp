@@ -164,14 +164,14 @@
 			if (materialHeader.children().length == 0) {
 				if (tbody.children().length > 0) {
 					materialHeader.append("<td></td>");
-					materialHeader.append("<td>자재코드</td>");
+					materialHeader.append("<td>자재 명</td>");
 					materialHeader.append("<td>자재소모량</td>");
 				}
 			}
 		}
 		
 		
-		// 배열 사이즈를 받아와서 배열 크기 만큼 .append 해줌
+		// 배열 사이즈를 받아와서 배열 크기 업데이트
 		function changeArraySize(newSize) {
 			materialArray = materialArray.slice(0, newSize);
 			console.log(materialArray.length);
@@ -203,7 +203,7 @@
 						<td></td>
 						<td>
 							<input type="hidden" name="item_code" id="item_code"> 
-							<input type="text" id="item_name" onclick="getRelatedMaterials();" readonly="readonly" placeholder="검색 후 클릭"> 
+							<input type="text" id="item_name" onclick="getRelatedMaterials();" required readonly="readonly" placeholder="검색 후 클릭"> 
 						</td>
 					</tr>
 					<tr>

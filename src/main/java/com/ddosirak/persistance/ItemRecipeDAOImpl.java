@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
-import org.springframework.ui.Model;
 
 import com.ddosirak.domain.ItemRecipeListVO;
 import com.ddosirak.domain.ItemRecipeVO;
@@ -33,8 +32,7 @@ public class ItemRecipeDAOImpl implements ItemRecipeDAO {
 	}
 	
 	@Override
-	public List<ItemRecipeListVO> ItemRecipeList(PageVO pageVO, Map<String, Object> instrSearch, Model model)
-			throws Exception {
+	public List<ItemRecipeListVO> ItemRecipeList(PageVO pageVO, Map<String, Object> instrSearch) throws Exception {
 		logger.debug("DAO: 레시피 목록 부분 출력");
 		instrSearch.put("startRow", pageVO.getStartRow());
 		instrSearch.put("pageSize", pageVO.getPageSize());
@@ -76,15 +74,15 @@ public class ItemRecipeDAOImpl implements ItemRecipeDAO {
 	}
 
 	@Override
-	public List<MaterialdetailVO> materialList(MaterialdetailVO vo) throws Exception {
+	public List<MaterialdetailVO> materialListSearch(Map<String, Object> materialMap) throws Exception {
 		logger.debug("DAO : 자재 목록 조회 : 검색");
-		return sqlsession.selectList(NAMESPACE+".materialSearch",vo);
+		return sqlsession.selectList(NAMESPACE+".materialSearch",materialMap);
 	}
 
 	@Override
-	public List<MaterialdetailVO> materialList() throws Exception {
+	public List<MaterialdetailVO> materialListAll(Map<String, Object> materialMap) throws Exception {
 		logger.debug("DAO : 자재 목록 조회 : 전체");
-		return sqlsession.selectList(NAMESPACE+".materialList");
+		return sqlsession.selectList(NAMESPACE+".materialList", materialMap);
 	}
 
 	@Override
@@ -114,7 +112,7 @@ public class ItemRecipeDAOImpl implements ItemRecipeDAO {
 	}
 
 	@Override
-	public List<ItemRecipeListVO> itemrecipeItemList(Map<String, Object> instrSearch, Model model) throws Exception {
+	public List<ItemRecipeListVO> itemrecipeItemList(Map<String, Object> instrSearch) throws Exception {
 		logger.debug("DAO : 상품목록 부분검색 ");
 		return sqlsession.selectList(NAMESPACE + ".itemrecipeItemSearchList", instrSearch);
 	}

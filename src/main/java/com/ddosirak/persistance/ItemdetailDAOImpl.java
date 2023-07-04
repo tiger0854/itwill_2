@@ -8,11 +8,8 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.ddosirak.domain.ItemdetailVO;
-import com.ddosirak.domain.MaterialdetailVO;
 import com.ddosirak.domain.PageVO;
 
 @Repository
@@ -33,7 +30,7 @@ public class ItemdetailDAOImpl implements ItemdetailDAO {
 	}
 	
 	@Override
-	public List<ItemdetailVO> idList(PageVO pageVO, Map<String, Object> instrSearch, Model model) throws Exception {
+	public List<ItemdetailVO> idList(PageVO pageVO, Map<String, Object> instrSearch) throws Exception {
 		logger.debug("dao : 상품 기초 목록 검색기능 실행");
 		instrSearch.put("startRow", pageVO.getStartRow());
 		instrSearch.put("pageSize", pageVO.getPageSize());

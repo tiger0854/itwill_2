@@ -7,47 +7,43 @@
 	<!-- 물품 조회 -->
 	<select id="MaterialDetailList"
 		resultType="com.ddosirak.domain.MaterialdetailVO">
-		select * from material_detail LIMIT #{startRow},
-		#{pageSize}
+		select * from material_detail 
+		order by material_code desc
+		LIMIT #{startRow}, #{pageSize}
 	</select>
 	<select id="MaterialDetailListSearch"
 		resultType="com.ddosirak.domain.MaterialdetailVO">
-		select * from material_detail WHERE material_code LIKE
-		CONCAT('%',
-		#{material_code}, '%')
+		select * from material_detail 
+		WHERE material_code LIKE CONCAT('%', #{material_code}, '%')
+		order by material_code desc
 		LIMIT #{startRow}, #{pageSize}
 	</select>
 	<!-- 물품 조회 -->
 	<!-- 물품 기초 등록 -->
 	<insert id="insertMaterialDetail">
-		insert into material_detail (material_code,
-		material_name, material_type)
-		values (#{material_code},
-		#{material_name}, #{material_type})
+		insert into material_detail (material_code, material_name, material_type)
+		values (#{material_code}, #{material_name}, #{material_type})
 	</insert>
 	<!-- 물품 기초 등록 -->
 	<!-- 특정 물품 기초 조회 -->
 	<select id="selectMaterialDetail"
 		resultType="com.ddosirak.domain.MaterialdetailVO">
-		select material_code, material_name, material_type from
-		material_detail
+		select material_code, material_name, material_type 
+		from material_detail
 		where material_code = #{material_code}
 	</select>
 	<!-- 특정 물품 기초 조회 -->
 	<!-- 물품 기초 수정 -->
 	<update id="updateMaterialDetail">
 		UPDATE material_detail
-		SET material_name =
-		#{material_name}, material_type = #{material_type}
-		WHERE material_code
-		= #{material_code}
+		SET material_name = #{material_name}, material_type = #{material_type}
+		WHERE material_code = #{material_code}
 	</update>
 	<!-- 물품 기초 수정 -->
 	<!-- 물품 삭제 -->
 	<delete id="deleteMaterial">
 		delete from material_detail
-		where material_code =
-		#{material_code}
+		where material_code = #{material_code}
 	</delete>
 	<!-- 물품 삭제 -->
 
@@ -63,10 +59,8 @@
 		resultType="com.ddosirak.domain.MaterialdetailVO">
 		SELECT * FROM material_detail
 		WHERE material_code LIKE
-		CONCAT('%',
-		#{material_code}, '%')
-		AND material_name LIKE CONCAT('%',
-		#{material_name}, '%')
+		CONCAT('%', #{material_code}, '%')
+		AND material_name LIKE CONCAT('%', #{material_name}, '%')
 	</select>
 	<!-- 상품 검색 (팝업창) -->
 
@@ -81,12 +75,12 @@
 	<select id="matCount" resultType="java.lang.Integer">
 		select count(*) from
 		material_detail
-		<if test="material_code != null and material_name != null">
-			WHERE material_code LIKE CONCAT('%',
-			#{material_code},
-			'%')
+		<if test="material_code != null and material_name != null and material_type != null">
+			WHERE material_code LIKE CONCAT ('%' ,#{material_code}, '%')
 			AND
 			material_name LIKE CONCAT('%', #{material_name}, '%')
+			AND
+			material_type LIKE CONCAT('%', #{material_type}, '%')	
 		</if>
 	</select>
 	<!-- 자재 검색 갯수 -->

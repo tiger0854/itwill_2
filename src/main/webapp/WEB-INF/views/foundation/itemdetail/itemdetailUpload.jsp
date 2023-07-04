@@ -39,6 +39,25 @@
 			}
 		});
 	}
+	
+	function changeForm(){
+		$("tbody").html(
+		"<tr><td></td><td>레시피용 상품 등록의 경우<br> 자재 검색을 통한 등록만 가능합니다</td></tr>"
+		+"<tr><td></td><td><input type='button' value='자재 검색' onclick='materialSearch();'></td>"
+		+"<tr><td>품번</td><td><input type='text' name='item_code' id='material_code' readonly><input type='hidden' id='material_type'></td></tr>"
+		+"<tr><td>품명</td><td><input type='text' name='item_name' id='material_name' readonly></td></tr>"
+		+"<tr><td>재고단위</td><td><input type='number' name='unit'value='1' readonly></td></tr>"
+		+"<tr><td>단가</td><td><input type='number' name='item_price' value='0' readonly></td></tr>"
+		);
+	}
+	
+	function materialSearch() {
+		// 새 창을 열기 위한 URL
+		var popupUrl = '/foundation/materialdetail/materialItemList';
+		// 새 창 열기
+		window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
+	}
+	
 </script>
 <body>
 	<!-- 상품등록 폼 -->
@@ -61,20 +80,23 @@
 				<tbody>
 					<tr>
 						<td>품번</td>
-						<td>품번은 I001 형식으로 자동으로 입력됩니다.</td>
+						<td>품번은 레시피용 상품이 아닐 경우<br> I001 형식으로 자동으로 입력됩니다.</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="button" value="레시피용 상품 등록으로 전환" onclick="changeForm();"></td>
 					</tr>
 					<tr>
 						<td>품명</td>
-						<td><input type="text" name="item_name"></td>
+						<td><input type="text" name="item_name" required></td>
 					</tr>
 					<tr>
 						<td>재고단위</td>
-						<td><input type="text" name="unit"></td>
+						<td><input type="number" name="unit" required></td>
 					</tr>
 					<tr>
-					<tr>
 						<td>단가</td>
-						<td><input type="text" name="item_price"></td>
+						<td><input type="number" name="item_price" required></td>
 					</tr>
 				</tbody>
 			</table>

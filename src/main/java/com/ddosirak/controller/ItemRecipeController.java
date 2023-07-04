@@ -23,6 +23,7 @@ import com.ddosirak.domain.ItemRecipeVO;
 import com.ddosirak.domain.MaterialdetailVO;
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.service.ItemRecipeService;
+import com.ddosirak.service.MaterialdetailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -33,6 +34,9 @@ public class ItemRecipeController {
 
 	@Inject
 	ItemRecipeService service;
+	
+	@Inject
+	MaterialdetailService mService;
 
 	// http://localhost:8088/foundation/itemrecipe/itemrecipeList
 	@RequestMapping(value = "/itemrecipeList", method = RequestMethod.GET)
@@ -103,7 +107,7 @@ public class ItemRecipeController {
 		} else {
 			// 공장 검색 조회
 			logger.debug("productList 검색 호출 ![]~(￣▽￣)~*");
-			resultlist = service.ItemRecipeList(pageVO, instrSearch, model);
+			resultlist = service.ItemRecipeList(pageVO, instrSearch);
 		}
 		model.addAttribute("Search", instrSearch);
 		model.addAttribute("resultlist", resultlist);
@@ -128,14 +132,50 @@ public class ItemRecipeController {
 	// http://localhost:8088/foundation/itemrecipe/materialSerch
 	@RequestMapping(value = "/materialSearch", method = RequestMethod.GET)
 
-	public void materialSerchGET(Model model, MaterialdetailVO vo) throws Exception {
+	public void materialSerchGET(Model model, @RequestParam HashMap<String, Object> requestMap) throws Exception {
 
+		
+		logger.debug("materialSerchGET 실행");
+		
+		
+		//페이징 처리
+		int pageSize = 5; // sql문에 들어가는 항목
+		// 현페이지 번호 가져오기
+		String pageNum = (String) requestMap.get("pageNum");
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		// 페이지번호를 정수형으로 변경
+		int currentPage = Integer.parseInt(pageNum);
+		int startRow = (currentPage - 1) * pageSize + 1; // sql문에 들어가는 항목
+		int endRow = startRow + pageSize - 1;
 
-		logger.debug("idlistGET 실행");
+//		startRow=startRow - 1; // limit startRow (0이 1열이기 때문 1을 뺌)
+		int count = mService.materialCount(requestMap);
+		logger.debug("글 개수 :" + count);
+		// 게시글 개수 가져오기
+		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
+		int startPage = (currentPage - 1) / pageBlock * pageBlock + 1;
+		int endPage = startPage + pageBlock - 1;
+		int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
+		if (endPage > pageCount) {
+			endPage = pageCount;
+		}
+		requestMap.put("count", count);
+		requestMap.put("pageBlock", pageBlock);
+		requestMap.put("startPage", startPage);
+		requestMap.put("endPage", endPage);
+		requestMap.put("pageCount", pageCount);
+		requestMap.put("pageSize", pageSize);
+        requestMap.put("pageNum", pageNum);
+        requestMap.put("currentPage", currentPage);
+        requestMap.put("startRow", startRow - 1);
+        requestMap.put("endRow", endRow);
+		//페이징 처리
+		logger.debug(requestMap + "");
+		List<MaterialdetailVO> materialList = service.materialList(requestMap);
 
-		logger.debug(vo + "");
-		List<MaterialdetailVO> materialList = service.materialList(vo);
-
+		model.addAttribute("search",requestMap);
 		model.addAttribute("resultList", materialList);
 	}
 
@@ -188,7 +228,7 @@ public class ItemRecipeController {
 			// 검색 조회
 			logger.debug("itemrecipeList.jsp 검색 호출 ![]~(￣▽￣)~*");
 //					proOrderList = oService.proOrderList();
-			itemrecipeList = service.itemrecipeItemList(instrSearch, model);
+			itemrecipeList = service.itemrecipeItemList(instrSearch);
 //					int instrSearchCount = instructService.instrCount(instrSearch);
 //					model.addAttribute("instrSearchCount", instrSearchCount);
 		}

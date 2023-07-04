@@ -62,7 +62,7 @@
 					<tr>
 						<td>공장코드</td>
 						<!--       <td><input type="text" name="factory_code" required="required"></td> -->
-						<td>공장 코드는 FAC001 형식으로 자동 입력됩니다.</td>
+						<td>공장 코드는 FAC01 형식으로 자동 입력됩니다.</td>
 					</tr>
 					<tr>
 						<td>공장명</td>

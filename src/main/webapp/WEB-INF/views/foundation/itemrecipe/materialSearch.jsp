@@ -174,6 +174,29 @@
 				</tr>
 			</c:forEach>
 		</table>
+	
+	<!-- 페이징처리 -->
+	<%--   		${Search} --%>
+	<div class="container" style="margin-top: 30px; margin-bottom: 30px">
+		<ul class="pagination justify-content-center" id="pagination"
+			style="margin-top: 20px;">
+			<c:if test="${search.startPage > search.pageBlock}">
+				<li class="page-item"><a class="page-link"
+					href="/foundation/itemrecipe/materialSearch?material_code=${search.material_code }&material_name${search.material_name }&material_type=${search.material_type}&pageNum=${search.startPage - search.pageBlock}">
+				</a></li>
+			</c:if>
+			<c:forEach var="i" begin="${search.startPage}"
+				end="${search.endPage}" step="1">
+				<li class="page-item"><a class="page-link"
+					href="/foundation/itemrecipe/materialSearch?material_code=${search.material_code }&material_name=${search.material_name }&material_type=${search.material_type}&pageNum=${i}"><span>${i}</span></a></li>
+			</c:forEach>
+			<c:if test="${search.endPage < search.pageCount}">
+				<li class="page-item"><a class="page-link"
+					href="/foundation/itemrecipe/materialSearch?material_code=${search.material_code }&material_name=${search.material_name }&material_type=${search.material_type}&pageNum=${search.startPage + search.pageBlock}"><span>
+							> </span></a></li>
+			</c:if>
+		</ul>
+	</div>
 		<br> <hr>
 		<form action="">
 		<table id="checkParameter">

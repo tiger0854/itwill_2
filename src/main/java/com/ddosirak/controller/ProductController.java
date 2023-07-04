@@ -767,7 +767,7 @@ public class ProductController {
 			materialList = mservice.mdList(pageVO);
 		} else {
 			logger.debug("검색 조회");
-			materialList = mservice.mdList(pageVO, instrSearch, model);
+			materialList = mservice.mdList(pageVO, instrSearch);
 		}
 		logger.debug("resultlist 개수 : " + materialList.size());
 		model.addAttribute("Search", instrSearch);
