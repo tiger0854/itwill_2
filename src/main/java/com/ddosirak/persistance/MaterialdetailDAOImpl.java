@@ -81,7 +81,7 @@ public class MaterialdetailDAOImpl implements MaterialdetailDAO {
 	}
 	
 	@Override
-	public List<MaterialdetailVO> materialItemList(Map<String, Object> instrSearch) {
+	public List<MaterialdetailVO> materialItemList(Map<String, Object> instrSearch, PageVO pageVO) {
 
 		logger.debug("dao : materialItemList 부분호출");
 		instrSearch.put("startRow", pageVO.getStartRow());

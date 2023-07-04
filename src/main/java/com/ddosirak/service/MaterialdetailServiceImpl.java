@@ -82,9 +82,9 @@ public class MaterialdetailServiceImpl implements MaterialdetailService {
 	}
 
 	@Override
-	public List<MaterialdetailVO> materialItemList(Map<String, Object> instrSearch) {
+	public List<MaterialdetailVO> materialItemList(Map<String, Object> instrSearch,PageVO pageVO) {
 		logger.debug("service : 자재 목록 검색 호출");
-		return dao.materialItemList(instrSearch);
+		return dao.materialItemList(instrSearch,pageVO);
 
 	}
 

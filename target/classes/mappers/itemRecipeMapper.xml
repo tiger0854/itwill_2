@@ -35,6 +35,7 @@
 		join material_detail md 
 		on i.material_code = md.material_code
 		where i.item_code like concat ('%', #{item_code}, '%')
+		and i.material_code like concat ('%', #{material_code}, '%')
 		order by i.item_code
 		limit #{startRow}, #{pageSize}
 	</select>
@@ -94,11 +95,9 @@
 	<insert id="insertOrUpdateItemRecipe">
 		INSERT INTO item_recipe (item_code,
 		material_code,material_con)
-		VALUES (#{item_code}, #{material_code},
-		#{material_con})
+		VALUES (#{item_code}, #{material_code},#{material_con})
 		ON DUPLICATE KEY UPDATE
-		material_con =
-		VALUES(material_con)
+		material_con = VALUES(material_con)
 	</insert>
 	<!-- 등록/추가 -->
 
@@ -130,6 +129,7 @@
 		on i.item_code= id.item_code
 		join material_detail md
 		on i.material_code = md.material_code
+
 	</select>
 
 	<select id="itemrecipeItemSearchList"
@@ -142,6 +142,8 @@
 		on i.material_code = md.material_code
 		where i.item_code like concat('%', #{item_code}, '%')
 		and id.item_name like concat('%', #{item_name}, '%')
+		limit #{startRow}, #{pageSize}
+
 	</select>
 	<!-- 상품목록 검색 -->
 </mapper>

@@ -208,7 +208,7 @@ public class MaterialdetailController {
 
 			logger.debug("materialdetailList.jsp 검색 호출 ![]~(￣▽￣)~*");
 //				proOrderList = oService.proOrderList();
-			materialList = service.materialItemList(instrSearch);
+			materialList = service.materialItemList(instrSearch,pageVO);
 
 //				int instrSearchCount = instructService.instrCount(instrSearch);
 //				model.addAttribute("instrSearchCount", instrSearchCount);

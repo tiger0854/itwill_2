@@ -27,7 +27,7 @@ public interface MaterialdetailService {
 	public List<MaterialdetailVO> materialItemList(PageVO pageVO);
 
 	// 상품목록 검색
-	public List<MaterialdetailVO> materialItemList(Map<String, Object> instrSearch);
+	public List<MaterialdetailVO> materialItemList(Map<String, Object> instrSearch,PageVO pageVO);
 
 
 	// 자재 검색 갯수

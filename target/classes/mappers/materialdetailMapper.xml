@@ -13,6 +13,7 @@
 	</select>
 	<select id="MaterialDetailListSearch"
 		resultType="com.ddosirak.domain.MaterialdetailVO">
+
 		select * from material_detail 
 		WHERE material_code LIKE CONCAT('%', #{material_code}, '%')
 		order by material_code desc
@@ -52,6 +53,7 @@
 	<select id="materialItemList"
 		resultType="com.ddosirak.domain.MaterialdetailVO">
 		select * from material_detail
+		limit #{startRow}, #{pageSize}
 	</select>
 
 	<!-- 검색 -->
@@ -61,6 +63,8 @@
 		WHERE material_code LIKE
 		CONCAT('%', #{material_code}, '%')
 		AND material_name LIKE CONCAT('%', #{material_name}, '%')
+		limit #{startRow}, #{pageSize}
+
 	</select>
 	<!-- 상품 검색 (팝업창) -->
 

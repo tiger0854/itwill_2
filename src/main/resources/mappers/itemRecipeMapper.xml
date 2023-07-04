@@ -95,11 +95,9 @@
 	<insert id="insertOrUpdateItemRecipe">
 		INSERT INTO item_recipe (item_code,
 		material_code,material_con)
-		VALUES (#{item_code}, #{material_code},
-		#{material_con})
+		VALUES (#{item_code}, #{material_code},#{material_con})
 		ON DUPLICATE KEY UPDATE
-		material_con =
-		VALUES(material_con)
+		material_con = VALUES(material_con)
 	</insert>
 	<!-- 등록/추가 -->
 

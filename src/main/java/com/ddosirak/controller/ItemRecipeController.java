@@ -263,7 +263,7 @@ public class ItemRecipeController {
 
 		model.addAttribute("pageVO", pageVO);
 
-		List<MaterialdetailVO> materialList;
+		List<ItemRecipeListVO> materialList;
 		if (material_code == null && material_name == null) {
 
 			logger.debug("materialdetailList.jsp 전체 호출 ![]~(￣▽￣)~*");
@@ -273,7 +273,7 @@ public class ItemRecipeController {
 
 			logger.debug("materialdetailList.jsp 검색 호출 ![]~(￣▽￣)~*");
 //					proOrderList = oService.proOrderList();
-			itemrecipeList = service.itemrecipeItemList(instrSearch);
+			materialList = service.itemrecipeItemList(instrSearch, pageVO);
 
 //					int instrSearchCount = instructService.instrCount(instrSearch);
 //					model.addAttribute("instrSearchCount", instrSearchCount);
