@@ -63,15 +63,18 @@ tr{border-bottom: 1px solid;}
 		  </tr>
 		  <tr>
 		   <th>거래처분류</th>
-	
-			<c:choose>
-       		<c:when test="${cus.cus_stat == '1'}">
-       		  <td>납입처</td>
-       		</c:when>
-       		<c:otherwise>
-  			 <td>납품처</td>	
-    		 </c:otherwise>
-            </c:choose>
+		    <td>	
+				<select name="cus_stat" class="form-control">
+				<c:if test="${cus.cus_stat == 1}">
+					<option value="1" selected="selected">납입처</option>
+					<option value="2">납품처</option>
+				</c:if>
+				<c:if test="${cus.cus_stat == 2}">
+					<option value="1">납입처</option>
+					<option value="2" selected="selected">납품처</option>
+				</c:if>
+				</select>
+			</td>
 		    <th>사업자번호</th>
 		    <td><input type="text" value="${cus.cus_number}" class="form-control" name="cus_number"></td>
 		  </tr>

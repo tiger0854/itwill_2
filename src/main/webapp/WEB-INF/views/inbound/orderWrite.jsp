@@ -111,7 +111,7 @@ td{height: 80px !important; vertical-align: middle;}
     <td>담당자</td>
     <td>  
     <div class="input-group">
-    <input type="text"placeholder="담당자 검색하기" class="form-control" name="order_resp" readonly="readonly" id="order_resp"  onclick="openChildWindow2();">
+    <input type="text"placeholder="담당자 검색하기" class="form-control" name="order_resp" readonly="readonly" id="resp"  onclick="openChildWindow2();">
     <button type="button" class="btn btn-primary"  onclick="openChildWindow2();">검색</button>
     </div>
     </td>

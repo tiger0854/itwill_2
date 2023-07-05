@@ -48,7 +48,7 @@
         data2.push(cells[i].innerText);
       }
       // 정보를 부모 창으로 전달합니다.
-       window.opener.document.getElementById("order_resp").value = data2[1];
+       window.opener.document.getElementById("resp").value = data2[1];
       window.close();
     }
   </script>

@@ -14,6 +14,7 @@
 		    var rowData = event.data;
 		    
 		    document.getElementById("in_number").value = rowData[1];
+		    document.getElementById("material_code").value = rowData[3];
 		    document.getElementById("in_piece").value = rowData[4];
 		
 		  });
@@ -42,6 +43,8 @@
 		<input type="hidden" id="in_piece">
 	<form id="fr" role="form">
 		입고번호<input type="text" id="in_number"  name="in_number" class="form-control" readonly="readonly"> <br>
+		자재코드<input type="text" id="material_code"  name="material_code" class="form-control" readonly="readonly"> <br>
+		
 		입고 완료 수량<input type="number" id="in_Epiece"  name="in_Epiece" class="form-control" min="0"><span id="ipmsg"></span> <br>
 		
 		입고 완료일 <input type="date" id="in_Edate" name="in_Edate" class="form-control"><br>
@@ -59,9 +62,11 @@
 		    $("#confirm").click(function() {
 		      var frObj = $("#fr");
 		      var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
-
+		      var Epiece = parseInt($('#in_Epiece').val());
+		      var code = $('#material_code').val();
+		      
 		      $.ajax({
-		        url: "/inbound/InboundProcess", // 요청을 보낼 서버의 URL
+		        url: "/inbound/InboundProcess?Epiece="+Epiece+"&Code="+code, // 요청을 보낼 서버의 URL
 		        type: "POST", // HTTP 요청 방식 (POST)
 		        data: formData, // 전송할 데이터 (직렬화된 폼 데이터)
 		        success: function(response) {

@@ -77,6 +77,7 @@ height: 50px; vertical-align: middle; text-align: center;
    		<th><input type="checkbox"  class="form-check-input" name='allCheck'value='selectall' onclick="selectAll(this);"></th>
         <th>입고예정번호</th>
         <th>자재명</th>
+        <th>자재코드</th>
         <th>발주수량</th>
         <th>입고예정수량</th>
         <th>미입고수량</th>        
@@ -107,6 +108,7 @@ height: 50px; vertical-align: middle; text-align: center;
       
         <td>${vo.in_number }</td>
         <td>${vo.orderVO.material_name }</td>
+        <td>${vo.orderVO.material_code }</td>
         <td  style="text-align: right;" >${vo.orderVO.order_piece }</td>
         <td style="text-align: right;">${vo.in_piece }</td>
         <c:choose>

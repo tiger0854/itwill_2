@@ -1,6 +1,7 @@
 package com.ddosirak.persistance;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ddosirak.domain.InboundVO;
 import com.ddosirak.domain.OrderVO;
@@ -23,4 +24,6 @@ public interface InboundDAO {
 	public int updateOrderStateToDefault(String order_number); //입고취소시, 발주상태 변경
 	
 	public void updateInbount(InboundVO vo);// 입고수정
+	
+	public void updateMatrial(Map param); //입고시 자재수량 업뎃
 }

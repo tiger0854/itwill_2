@@ -80,7 +80,7 @@ td{height: 80px !important; vertical-align: middle;}
     <td style="width: 400px;">
   	 <div style="display: flex; align-items: center;">
     <button class="btn btn-primary" type="button" onclick="openChildWindow();"style="width: 200px;">발주서검색</button>
-    <input type="text"placeholder="발주번호" class="form-control" name="order_number" id="order_number" readonly="readonly" style="margin-left: 5px" >
+    <input type="text"placeholder="발주번호" class="form-control" name="order_number" id="order_number" readonly="readonly" style="margin-left: 5px" onclick="openChildWindow();" >
    	 </div>
     </td>
     <td>상품명</td>
@@ -97,16 +97,16 @@ td{height: 80px !important; vertical-align: middle;}
     <td>담당자</td>
     <td>  
     <div class="input-group">
-    <input type="text"placeholder="담당자 검색하기" class="form-control" name="in_resp" id="in_resp">
-    <button class="btn btn-primary" type="button">검색</button>
+    <input type="text"placeholder="담당자 검색하기" class="form-control" name="in_resp" id="resp" readonly="readonly" onclick="openChildWindow3();">
+    <button class="btn btn-primary" type="button" onclick="openChildWindow3();">검색</button>
     </div>
     </td>
     
     <td>입고창고</td>
     <td>
   <div class="input-group">
-    <input type="text"placeholder="창고 검색하기" class="form-control" name="wh_code" id="wh_code">
-    <button class="btn btn-primary" type="button">검색</button>
+    <input type="text"placeholder="창고 검색하기" class="form-control" name="wh_code" id="wh_code" onclick="openChildWindow2();" readonly="readonly">
+    <button class="btn btn-primary" type="button" onclick="openChildWindow2();">검색</button>
     </div>
 	</td>
   </tr>
@@ -122,12 +122,13 @@ td{height: 80px !important; vertical-align: middle;}
 </form>
 </div>
 <script type="text/javascript">
-function openChildWindow() {
 	var popupWidth = 600;
 	var popupHeight = 400;
-
+	
 	var popupX = Math.ceil(( window.screen.width - popupWidth )/2);
-	var popupY = Math.ceil(( window.screen.height - popupHeight )/2); 
+	var popupY = Math.ceil(( window.screen.height - popupHeight )/2);
+
+function openChildWindow() { 
     var childWindow = window.open("/inbound/popOrderList", "popOrderList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
     // 자식 창이 로드되면 정보를 받기 위해 리스너를 등록합니다.
     window.addEventListener("message", function(event) {
@@ -138,6 +139,19 @@ function openChildWindow() {
     	
     });
   }
+function openChildWindow2() {
+
+    var childWindow2 = window.open("/foundation/warehouse/warehouseList?pop=ok", "warehouseList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
+
+  } //productList팝업 
+ 
+  function openChildWindow3() {
+
+	    var childWindow3 = window.open("/emp/list?pop=ok", "empList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
+
+	  } //empList팝업  
+  
+  
 </script> <!-- 팝업창 부르기 -->
 
 

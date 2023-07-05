@@ -1,6 +1,8 @@
 package com.ddosirak.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -114,11 +116,17 @@ public class InboundController {
 	}//입고처리페이지 팝업띄우기
 	
 	@RequestMapping(value="/InboundProcess",method=RequestMethod.POST)
-	public void InboundProcessPOST(InboundVO vo) {
+	public void InboundProcessPOST(InboundVO vo, HttpServletRequest req) throws Exception{
 		logger.debug("InboundProcessGET() 호출!");
 		int result = iService.updateInProcess(vo);
 		
+		Map param = new HashMap<>();
+		
+		param.put("in_Epiece", req.getParameter("Epiece"));
+		param.put("material_code", req.getParameter("Code"));
+		
 		if(result == 1) {
+			iService.updateMatrial(param);
 			logger.info("입고처리 완료!! 입고리스트로 이동");
 		}
 		
