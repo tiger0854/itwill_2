@@ -90,13 +90,39 @@
 		WHERE chat_receiver = #{login_id} OR chat_sender = #{login_id} 
 		ORDER BY time DESC
 	</select>
-<!-- 	채팅방 -->
+<!-- 	채팅방 리스트 -->
 	<select id="getChatRoom" resultType="String">
-		SELECT chatRoom_code FROM emp_chat 
+		SELECT chatRoom_code FROM emp_chatroom 
         WHERE SUBSTRING(chatRoom_code,1,4) = #{login_id} OR SUBSTRING(chatRoom_code,5,8) = #{login_id}
-		GROUP BY chatRoom_code;
 	</select>
+	<!-- 	채팅방 리스트 -->
 	
+	<!-- 한 채팅방 -->
+	<select id="getOneChatRoom" resultType="com.ddosirak.domain.ChatRoomVO">
+		SELECT * FROM emp_chatroom 
+        WHERE chatRoom_code = #{chatRoom_code}
+	</select>
+	<!-- 한 채팅방 -->
 	
+	<!-- 채팅방 만들기 -->
+	<insert id="makeChatRoom">
+		INSERT INTO emp_chatroom
+		(chatRoom_code)
+		VALUES(#{chatRoom_code})
+	</insert>
+	<!-- 채팅방 만들기 -->
+	<!-- 최근채팅으로 날짜 변경 -->
+	<update id="lastChatDate"> 
+		UPDATE emp_chatroom SET chatdate = now() ,last_chat = #{message} 
+		WHERE chatRoom_code=#{chatRoom_code};
+	</update>
+	<!-- 최근채팅으로 날짜 변경 -->
 	
+	<!-- 채팅방의 채팅내역 출력 -->
+	<select id="getChatListAll" resultType="com.ddosirak.domain.ChatVO">
+		SELECT * FROM emp_chat
+		WHERE chatRoom_code = #{chatRoom_code}
+		ORDER BY time ASC
+	</select>
+	<!-- 채팅방의 채팅내역 출력 -->
 </mapper>

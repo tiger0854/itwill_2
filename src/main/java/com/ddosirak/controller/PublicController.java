@@ -275,8 +275,8 @@ public class PublicController {
 		model.addAttribute("empList", empList);
 		
 		// 채팅 내역리스트
-		List<ChatVO> chatList = bService.chatList((String)session.getAttribute("login_id"));
-		model.addAttribute("chatList", chatList);
+//		List<ChatVO> chatList = bService.chatList((String)session.getAttribute("login_id"));
+//		model.addAttribute("chatList", chatList);
 		
 		// 채팅방 리스트
 		List<String> chatRoomList = bService.chatRoom((String)session.getAttribute("login_id"));
@@ -286,16 +286,30 @@ public class PublicController {
 	
 	// http://localhost:8088/public/chat
 	@RequestMapping(value = "/chat", method = RequestMethod.GET)
-	public void chatGET (@RequestParam("chat_receiver")String chat_receiver, @RequestParam("chat_sender")String chat_sender) throws Exception{
+	public String chatGET (@RequestParam("chat_receiver")String chat_receiver, @RequestParam("chat_sender")String chat_sender,
+			RedirectAttributes rttr,Model model) throws Exception{
 		logger.debug("chatGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 		logger.debug("개설자: "+chat_sender);
 		logger.debug("참여자: "+chat_receiver);
+		if(chat_receiver.equals("noSelect")) {
+			rttr.addFlashAttribute("selectCheck", "NOSELECT");
+			return "redirect:/public/chatList";
+		}// 값을 선택하지않을시 동작.
+		
+		String chatRoom_code = "";
+		int sender = Integer.parseInt(chat_sender); // 나임.
+		int receiver = Integer.parseInt(chat_receiver); // 상대방
+		if( sender > receiver ){
+			chatRoom_code = chat_sender+chat_receiver;
+		}else{
+			chatRoom_code = chat_receiver+chat_sender;
+		}// i-e end
+
+//		model.addAttribute("chats", bService.getChatList(chatRoom_code));
+		model.addAttribute("receiverInfo", eService.getEmployee(receiver));
+		return null;
 	}// chat() method end
 	
-	@RequestMapping(value = "/chat2", method = RequestMethod.GET)
-	public void chat() {
-		logger.debug("chat() 호출!(((o(*ﾟ▽ﾟ*)o)))");
-	}
 /////////////////////////////////메신저///////////////////////////////////	
 	
 }// public class end

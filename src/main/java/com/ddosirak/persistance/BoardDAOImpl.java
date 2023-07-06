@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.ddosirak.domain.BoardVO;
+import com.ddosirak.domain.ChatRoomVO;
 import com.ddosirak.domain.ChatVO;
 import com.ddosirak.domain.EmployeeCheckVO;
 import com.ddosirak.domain.LoginVO;
@@ -118,7 +119,37 @@ public class BoardDAOImpl implements BoardDAO {
 	public List<String> chatRoom(String login_id) throws Exception {
 		logger.debug("chatRoom() 메서드 호출!");
 		return sqlSession.selectList(NAMESPACE+".getChatRoom",login_id);
+	}//chatRoom() method end
+	
+	// 채팅방 가져오기
+	@Override
+	public ChatRoomVO getChatRoom(String chatRoom_code) throws Exception {
+		logger.debug("getChatRoom() 메서드 호출!");
+		return sqlSession.selectOne(NAMESPACE+".getOneChatRoom",chatRoom_code);
 	}
+
+	// 채팅방 생성
+	@Override
+	public void chatRoomMake(String chatRoom_code) throws Exception {
+		logger.debug("chatRoomMake() 메서드 호출!");
+		sqlSession.insert(NAMESPACE+".makeChatRoom",chatRoom_code);
+	}// chatRoomMake() method end
+
+	// 채팅칠때 최근채팅일자 입력
+	@Override
+	public void chatDateUpdate(ChatVO chatVO) throws Exception {
+		logger.debug("chatDateUpdate() 메서드 호출!");
+		sqlSession.update(NAMESPACE+".lastChatDate",chatVO);
+	}// chatDateUpdate() method end
+	// 채팅방의 채팅 내역 가져오기
+	@Override
+	public List<ChatVO> getChatList(String chatRoom_code) throws Exception {
+		logger.debug("getChatList() 메서드 호출!");
+		return sqlSession.selectList(NAMESPACE+".getChatListAll",chatRoom_code);
+	}// getChatList() method end
+	
+	
+	
 	
 	
 	

@@ -3,6 +3,7 @@ package com.ddosirak.service;
 import java.util.List;
 
 import com.ddosirak.domain.BoardVO;
+import com.ddosirak.domain.ChatRoomVO;
 import com.ddosirak.domain.ChatVO;
 import com.ddosirak.domain.EmployeeCheckVO;
 import com.ddosirak.domain.LoginVO;
@@ -39,5 +40,14 @@ public interface BoardService {
 	public List<ChatVO> chatList(String login_id) throws Exception;
 	// 채팅방 출력
 	public List<String> chatRoom(String login_id) throws Exception;
+	// 채팅방 가져오기
+	public ChatRoomVO getChatRoom(String chatRoom_code) throws Exception;
+	// 채팅방 생성
+	public void chatRoomMake(String chatRoom_code) throws Exception;
+	// 채팅칠때 최근 채팅 일시 입력
+	public void chatDateUpdate(ChatVO chatVO) throws Exception;
+	// 채팅방의 채팅 내역 가져오기
+	public List<ChatVO> getChatList(String chatRoom_code) throws Exception;
+	
 	
 } // public interface end

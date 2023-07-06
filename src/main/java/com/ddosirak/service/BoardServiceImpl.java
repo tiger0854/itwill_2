@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.ddosirak.domain.BoardVO;
+import com.ddosirak.domain.ChatRoomVO;
 import com.ddosirak.domain.ChatVO;
 import com.ddosirak.domain.EmployeeCheckVO;
 import com.ddosirak.domain.LoginVO;
@@ -89,11 +90,31 @@ public class BoardServiceImpl implements BoardService {
 	public List<ChatVO> chatList(String login_id) throws Exception {
 		return bdao.chatList(login_id);
 	}// chatList() method end
+	//채팅방 하나만 가져오기
+	@Override
+	public ChatRoomVO getChatRoom(String chatRoom_code) throws Exception {
+		return bdao.getChatRoom(chatRoom_code);
+	}// getChatRoom() method end
 	// 채팅방 코드 출력
 	@Override
 	public List<String> chatRoom(String login_id) throws Exception {
 		return bdao.chatRoom(login_id);
 	}// chatRoom() method end
+	// 채팅방 생성
+	@Override
+	public void chatRoomMake(String chatRoom_code) throws Exception {
+		bdao.chatRoomMake(chatRoom_code);
+	}// chatRoomMake() method end
+	// 채팅 입력시 채팅방의 최근채팅일자 넣기
+	@Override
+	public void chatDateUpdate(ChatVO chatVO) throws Exception {
+		bdao.chatDateUpdate(chatVO);
+	}// chatDateUpdate() method end
+	// 채팅방의 채팅내역 가져오기
+	@Override
+	public List<ChatVO> getChatList(String chatRoom_code) throws Exception {
+		return bdao.getChatList(chatRoom_code);
+	}// getChatList() method end
 	
 	
 
