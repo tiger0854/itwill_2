@@ -3,8 +3,6 @@ package com.ddosirak.persistance;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.ui.Model;
-
 import com.ddosirak.domain.ItemRecipeListVO;
 import com.ddosirak.domain.ItemRecipeVO;
 import com.ddosirak.domain.ItemdetailVO;
@@ -18,7 +16,7 @@ public interface ItemRecipeDAO {
 
 	// 레시피 목록 출력
 	public List<ItemRecipeListVO> ItemRecipeList(PageVO pageVO) throws Exception;
-	public List<ItemRecipeListVO> ItemRecipeList(PageVO pageVO, Map<String, Object> instrSearch, Model model) throws Exception;
+	public List<ItemRecipeListVO> ItemRecipeList(PageVO pageVO, Map<String, Object> instrSearch) throws Exception;
 
 	// 레시피 등록
 	public Integer insertItemRecipe(ItemRecipeVO vo) throws Exception;
@@ -38,13 +36,14 @@ public interface ItemRecipeDAO {
 	public void deleteItemRecipeMaterial(ItemRecipeVO vo) throws Exception;
 
 	// 상품목록 검색
-	public List<MaterialdetailVO> materialList() throws Exception;
+	public List<MaterialdetailVO> materialListAll(Map<String, Object> materialMap) throws Exception;
 
-	public List<MaterialdetailVO> materialList(MaterialdetailVO vo) throws Exception;
+	public List<MaterialdetailVO> materialListSearch(Map<String, Object> materialMap) throws Exception;
 	
 	
-	public List<MaterialdetailVO> itemrecipeItemList(PageVO pageVO) throws Exception; 
-	public List<MaterialdetailVO> itemrecipeItemList(PageVO pageVO, Map<String, Object> instrSearch, Model model) throws Exception; 
+	public List<ItemRecipeListVO> itemrecipeItemList(PageVO pageVO) throws Exception; 
+	public List<ItemRecipeListVO> itemrecipeItemList(Map<String, Object> instrSearch,PageVO pageVO) throws Exception; 
+
 
 	// 레시피 검색 갯수
 	public Integer itemrecipeCount(Map<String, Object> instrSearch);

@@ -16,38 +16,28 @@
 	<!-- 레시피 목록 출력 -->
 	<select id="itemRecipeList"
 		resultType="com.ddosirak.domain.ItemRecipeListVO">
-		select i.item_code,
-		i.material_code, i.material_con,
-		id.item_name,
-		md.material_name
-		from
-		item_recipe i
+		select i.item_code, i.material_code, i.material_con, id.item_name, md.material_name
+		from item_recipe i
 		join item_detail id
-		on
-		i.item_code= id.item_code
-		join
-		material_detail md
-		on i.material_code =
-		md.material_code
-		order by
-		i.item_code
+		on i.item_code= id.item_code
+		join material_detail md
+		on i.material_code = md.material_code
+		order by i.item_code
 		limit #{startRow}, #{pageSize}
 	</select>
 
 	<select id="itemRecipeSearchList"
 		resultType="com.ddosirak.domain.ItemRecipeListVO">
-		select i.item_code, i.material_code, i.material_con,
-		id.item_name,
-		md.material_name
+		select i.item_code, i.material_code, i.material_con, id.item_name, md.material_name
 		from item_recipe i
 		join item_detail id
-		on
-		i.item_code= id.item_code
-		join material_detail md
-		on i.material_code =
-		md.material_code
+		on i.item_code = id.item_code
+		join material_detail md 
+		on i.material_code = md.material_code
 		where i.item_code like concat ('%', #{item_code}, '%')
+		and id.item_name like concat ('%', #{item_name}, '%')
 		and i.material_code like concat ('%', #{material_code}, '%')
+		and md.material_name like concat ('%', #{material_name}, '%')
 		order by i.item_code
 		limit #{startRow}, #{pageSize}
 	</select>
@@ -65,7 +55,7 @@
 	<select id="selectItemRecipe" resultType="com.ddosirak.domain.ItemRecipeListVO">
 		select ir.material_code, ir.material_con, m.material_name 
 		from item_recipe ir join material_detail m
-		on ir.material_code = m.material_name
+		on ir.material_code = m.material_code
 		where item_code=#{item_code}
 	</select>
 	<update id="updateItemRecipe">
@@ -89,18 +79,17 @@
 	<!-- 자재 검색 -->
 	<select id="materialList"
 		resultType="com.ddosirak.domain.MaterialdetailVO">
-		SELECT * FROM material_detail
+		SELECT * FROM material_detail 
+		LIMIT #{startRow}, #{pageSize}
 	</select>
 
 	<select id="materialSearch"
 		resultType="com.ddosirak.domain.MaterialdetailVO">
 		select * from material_detail
-		WHERE material_code LIKE
-		CONCAT('%', #{material_code}, '%')
-		AND material_name LIKE CONCAT('%',
-		#{material_name}, '%')
-		AND material_type LIKE CONCAT('%',
-		#{material_type}, '%')
+		WHERE material_code LIKE CONCAT('%', #{material_code}, '%')
+		AND material_name LIKE CONCAT('%', #{material_name}, '%')
+		AND material_type LIKE CONCAT('%', #{material_type}, '%')
+		LIMIT #{startRow}, #{pageSize}
 	</select>
 	<!-- 자재 검색 -->
 
@@ -108,11 +97,9 @@
 	<insert id="insertOrUpdateItemRecipe">
 		INSERT INTO item_recipe (item_code,
 		material_code,material_con)
-		VALUES (#{item_code}, #{material_code},
-		#{material_con})
+		VALUES (#{item_code}, #{material_code},#{material_con})
 		ON DUPLICATE KEY UPDATE
-		material_con =
-		VALUES(material_con)
+		material_con = VALUES(material_con)
 	</insert>
 	<!-- 등록/추가 -->
 
@@ -123,21 +110,13 @@
 		FROM item_recipe ir
 		LEFT OUTER JOIN item_detail id ON
 		ir.item_code = id.item_code
-		LEFT OUTER JOIN material_detail md ON
-		ir.material_code = md.material_code
+		LEFT OUTER JOIN material_detail md 
+		ON ir.material_code = md.material_code
 		<if test="item_code != null and item_name != null and material_code != null and material_name != null">
-			WHERE ir.item_code
-			LIKE CONCAT('%',
-			#{item_code}, '%')
-			AND
-			id.item_name LIKE CONCAT('%',
-			#{item_name}, '%')
-			AND
-			ir.material_code LIKE CONCAT('%',
-			#{material_code}, '%')
-			AND
-			md.material_name LIKE CONCAT('%',
-			#{material_name}, '%')
+			WHERE ir.item_code LIKE CONCAT('%', #{item_code}, '%')
+			AND id.item_name LIKE CONCAT('%', #{item_name}, '%')
+			AND ir.material_code LIKE CONCAT('%', #{material_code}, '%')
+			AND md.material_name LIKE CONCAT('%', #{material_name}, '%')
 		</if>
 	</select>
 	<!-- 레시피 검색 갯수 -->
@@ -146,39 +125,27 @@
 	<select id="itemrecipeItemList"
 		resultType="com.ddosirak.domain.ItemRecipeListVO">
 		select i.item_code,
-		i.material_code, i.material_con,
-		id.item_name,
-		md.material_name
-		from
-		item_recipe i
+		i.material_code, i.material_con, id.item_name, md.material_name
+		from item_recipe i
 		join item_detail id
-		on
-		i.item_code= id.item_code
-		join
-		material_detail md
-		on i.material_code =
-		md.material_code
-		limit #{startRow}, #{pageSize}
+		on i.item_code= id.item_code
+		join material_detail md
+		on i.material_code = md.material_code
+
 	</select>
 
 	<select id="itemrecipeItemSearchList"
 		resultType="com.ddosirak.domain.ItemRecipeListVO">
-		select i.item_code,
-		i.material_code, i.material_con,
-		id.item_name,
-		md.material_name
-		from
-		item_recipe i
+		select i.item_code, i.material_code, i.material_con, id.item_name, md.material_name
+		from item_recipe i
 		join item_detail id
-		on
-		i.item_code= id.item_code
-		join
-		material_detail md
-		on i.material_code =
-		md.material_code
-		where i.material_code like concat('%', #{material_code}, '%')
-		and md.material_name like concat('%', #{material_name}, '%')
+		on i.item_code= id.item_code
+		join material_detail md
+		on i.material_code = md.material_code
+		where i.item_code like concat('%', #{item_code}, '%')
+		and id.item_name like concat('%', #{item_name}, '%')
 		limit #{startRow}, #{pageSize}
+
 	</select>
 	<!-- 상품목록 검색 -->
 </mapper>

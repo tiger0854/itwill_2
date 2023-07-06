@@ -8,9 +8,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
-import org.springframework.ui.Model;
 
-import com.ddosirak.domain.FactoryVO;
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.WarehouseVO;
 
@@ -33,7 +31,7 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 	}
 
 	@Override
-	public List<WarehouseVO> whList(PageVO pageVO, Map<String, Object> instrSearch, Model model) {
+	public List<WarehouseVO> whList(PageVO pageVO, Map<String, Object> instrSearch) {
 		logger.debug("dao:warehouselist 검색 호출");
 		instrSearch.put("startRow", pageVO.getStartRow());
 		instrSearch.put("pageSize", pageVO.getPageSize());
@@ -78,7 +76,7 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 	}
 
 	@Override
-	public List<WarehouseVO> warehouseItemList(Map<String, Object> instrSearch, Model model) {
+	public List<WarehouseVO> warehouseItemList(Map<String, Object> instrSearch) {
 		logger.debug("dao : 창고 검색 호출");
 		List<WarehouseVO> warehouseItemList = sqlsession.selectList(NAMESPACE + ".warehouseItemSearch", instrSearch);
 		return warehouseItemList;
