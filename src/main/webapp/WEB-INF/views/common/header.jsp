@@ -149,12 +149,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					<a href="#" class="nav_link" onclick="toggleDropdown2()"> <i class="bx bxs-cart-alt nav_icon"></i> <span class="nav_name">입/출고관리</span> </a> 
 					<div class="nav_link collapse" id="collapseSale2">
 					<!--입출고-->
-						  <a href="/inbound/orderWrite" class="nav_link"> - 발주등록</a><br>
-						  <a href="/inbound/orderList" class="nav_link"> - 발주현황</a><br>
-						  <a href="/inbound/inboundWrite" class="nav_link"> - 입고등록</a><br>
-						  <a href="/inbound/inboundList" class="nav_link"> - 입고현황</a><br>
-						  <a href="/outbound/insert" class="nav_link"> - 출고등록</a><br>
-						  <a href="/outbound/list" class="nav_link"> - 출고현황</a><br>
+						<a href="/foundation/warehouse/warehouseList" class="nav_link"> - 창고관리</a><br>
+		  		    		<a href="/foundation/materialdetail/materialdetailList" class="nav_link"> - 자재관리</a><br>
+		  		   	 	<a href="/foundation/itemdetail/itemdetailList" class="nav_link"> - 상품관리</a><br>
+		  		    		<a href="/foundation/itemrecipe/itemrecipeList" class="nav_link"> - 레시피관리</a><br>
+		  		    		<a href="/pro/oderList" class="nav_link"> - 재고관리</a><br>
+		  		    		<a href="/foundation/factory/factoryList" class="nav_link"> - 공장관리</a><br>
+		  		    		<a href="/line/lineList" class="nav_link"> - 라인관리</a><br>
 					  <!--입출고-->
 	
 				  </div>
