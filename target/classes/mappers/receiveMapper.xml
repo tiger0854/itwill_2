@@ -13,8 +13,8 @@
 
 	<!-- 수주 등록 -->
 	<insert id="receiveInsert" >
-		insert into receive(re_code, item_code, customer_code, re_date, employee_id, re_qty) 
-		select concat('REC', replace(current_date(), '-', ''), nullif(max(rec_id)+1, 1)),#{item_code},#{customer_code},#{re_date},#{employee_id},#{re_qty}	
+		insert into receive(re_code, item_code, item_name, re_customerNm, re_date, re_empCd, re_empNm, re_qty) 
+		select concat('REC', replace(current_date(), '-', ''), ifnull(max(rec_id)+1, 1)),#{item_code},#{item_name},#{re_customerNm},#{re_date},#{re_empCd},#{re_empNm},#{re_qty}	
 		from receive
 	</insert>
 	<!-- 수주 등록 -->
@@ -26,13 +26,14 @@
 		where
 			1=1
 			<choose>
-	  		<when test="kind == 'itemName'">AND item_code</when>
-	  		<when test="kind == 'customerName'">AND customer_code</when>		
+	  		<when test="kind == 'itemName'">AND item_name</when>
+	  		<when test="kind == 'customerName'">AND re_customerNm</when>		
+	  		<when test="kind == 'reCd'">AND re_code</when>		
 	  		</choose> 
 	  		<if test="search != ''">
 	  		LIKE CONCAT('%', #{search}, '%')
 	  		</if>
-		order by re_date desc
+		order by re_code desc
 		limit #{startRow}, #{pageSize}
 	</select>
 	<!-- 수주 목록 -->
@@ -48,8 +49,8 @@
 	<!-- 수주 수정 -->
 	<update id="receiveUpdate">
 		update receive
-		set re_date=#{re_date}, employee_id=#{employee_id}, re_qty=#{re_qty}
-		where re_code=#{re_code}
+		set re_date=#{re_date}, re_empCd=#{re_empCd}, re_empNm=#{re_empNm}, re_qty=#{re_qty}
+		where re_code = #{re_code}
 	</update>
 	<!-- 수주 수정 -->
 	
@@ -59,6 +60,7 @@
 		where re_code=#{re_code}
 	</delete>
 	<!-- 수주 삭제 -->
+  
   
   
   </mapper>

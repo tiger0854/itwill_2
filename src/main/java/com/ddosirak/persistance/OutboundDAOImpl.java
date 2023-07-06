@@ -82,6 +82,29 @@ public class OutboundDAOImpl implements OutboundDAO {
 	  }
 
 
+	  // rec_code
+	  @Override
+	  public String recCd(String out_num) {
+	  	  return sqlSession.selectOne(NAMESPACE + ".recCd", out_num);
+	  }
+
+	  
+	  // 수주 상태 수정
+	  @Override
+	  public void recStateUpdate(String re_code) throws Exception {
+	  	 logger.debug("수주 상태 수정 완룡 DAO지롱");
+		 sqlSession.update(NAMESPACE + ".recStateUpdate", re_code);
+      }
+
+
+	  // 재고 리스트
+	  @Override
+	  public List<OutboundVO> getStockList(String out_num) {
+		return sqlSession.selectList(NAMESPACE + ".getStockList", out_num);
+	  }
+		
+		
+
 	
 	
 	

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,35 +32,61 @@
 	<h1>productSearch.jsp</h1>
 	
 	 품목 검색
-  <input type="text" placeholder="제품">
-  <button>Search</button>
+	  <form action="" >		
+<!--   		<select id="kind" name="kind" > -->
+<!--   			<option value="code">품목코드</option> -->
+<!--   			<option value="name">품목명</option> -->
+<!--   		</select> -->
+		
+  		
+	품목코드  	<input type="text" name="item_code" id="item_code"><br>
+<!--   	품목명	<input type="text" name="item_name" id="item_name"> -->
+<%--   		<input type="text" name="search" value="${pageVO.search }"> --%>
+  		<button type="submit">Search</button>
+  		<input type="hidden" name="pop" value="rec">
+  	</form>
   
-  <form action="receiveInsert.jsp">
   <table border="1" class="table table-bordered">
   <tr>
   <td>품목코드</td> <!-- 클릭하면 팝업창 꺼지면서 폼에 입력 -->
   <td>품목명</td> <!-- 클릭하면 팝업창 꺼지면서 폼에 입력 -->
   </tr>
   
+   <c:forEach var="vo" items="${itemList }">
   <tr onclick="sendInfo(this);">
-  <td>0001</td>
-  <td>스팸마요 도시락</td>
+  <td>${vo.item_code }</td>
+  <td>${vo.item_name }</td>
   </tr>
-  
-   <tr onclick="sendInfo(this);">
-  <td>0002</td>
-  <td>참치마요 도시락</td>
-  </tr>
-  
-  <tr onclick="sendInfo(this);">
-  <td>0003</td>
-  <td>제육덮밥 도시락</td>
-  </tr>
-  
+  </c:forEach>
   </table>
-  
-  
-  </form>
+  <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
+	 		<ul class="pagination" id="pagination">
+		<c:choose>
+			<c:when test="${pageVO.startPage > pageVO.pageBlock}">
+				<li class="page-item"><a
+					href="/foundation/itemdetail/itemdetailList?pop=rec&pageNum=${pageVO.startPage - pageVO.pageBlock}"
+					class="page-link">이전</a></li>
+			</c:when>
+			<c:otherwise>
+			</c:otherwise>
+		</c:choose>
 
+			<c:if test="${pageVO.startPage > pageVO.pageBlock}">
+				<li class="page-item"><a class="page-link"
+					href="/foundation/itemdetail/itemdetailList?pop=rec&item_code=${Search.item_code}&pageNum=${pageVO.startPage - pageVO.pageBlock}">
+						</a></li>
+			</c:if>
+			<c:forEach var="i" begin="${pageVO.startPage}"
+				end="${pageVO.endPage}" step="1">
+				<li class="page-item"><a class="page-link"
+					href="/foundation/itemdetail/itemdetailList?pop=rec&item_code=${Search.item_code}&pageNum=${i}">${i}</a></li>
+			</c:forEach>
+			<c:if test="${pageVO.endPage < pageVO.pageCount}">
+				<li class="page-item"><a class="page-link"
+					href="/foundation/itemdetail/itemdetailList?pop=rec&item_code=${Search.item_code}&pageNum=${pageVO.startPage + pageVO.pageBlock}">
+							다음</a></li>
+			</c:if>
+		</ul>
+ <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
 </body>
 </html>

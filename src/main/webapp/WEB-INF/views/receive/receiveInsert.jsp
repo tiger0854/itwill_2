@@ -22,27 +22,34 @@
   <form action="" method="post">
   <table border="1" class="table table-bordered">
   <tr>
-  <th>업체 코드</th>
-  <th>거래처명(수주업체명)</th>
-  <th>품목코드</th>
-  <th>품목명</th>
-  <th>수주일자</th>
-  <th>담당자</th>
-  <th>수주수량</th>
+  <th>수주업체코드</th>
+  <td><input type="text" id="re_customerCd" name="re_customerCd" placeholder="수주업체코드" 
+	  		onclick="openChildWindow1();" ></td>
+  <th>수주업체명</th>
+  <td><input type="text" id="re_customerNm" name="re_customerNm" placeholder="수주업체명" 
+	  		onclick="openChildWindow1();" > </td>
   </tr>
   <tr>
-    <td><input type="text" id="customer_code" name="customer_code" placeholder="업체코드" 
-	  		onclick="openChildWindow1();" ></td>
-	  <td><input type="text" id="customer_name" name="customer_name" placeholder="수주업체명" 
-	  		onclick="openChildWindow1();" > </td>
-	  <td><input type="text" id="item_code" name="item_code" placeholder="상품코드" 
+  <th>품목코드</th>
+  <td><input type="text" id="item_code" name="item_code" placeholder="품목코드" 
 	  		onclick="openChildWindow3();" > </td>
-	  <td><input type="text" id="item_name" name="item_name" placeholder="품목명" 
+  <th>품목명</th>
+  <td><input type="text" id="item_name" name="item_name" placeholder="품목명" 
 	   		onclick="openChildWindow3();"> </td>
-	  <td><input type="date" name="re_date" placeholder="년-월-일"></td>
-	  <td><input type="text" id="employee_id" name="employee_id" placeholder="담당자" 
+  </tr>
+  <tr>
+  <th>담당자코드</th>
+  <td><input type="text" id="re_empCd" name="re_empCd" placeholder="담당자코드" 
 	  		onclick="openChildWindow2();"></td>
+  <th>담당자명</th>
+  <td><input type="text" id="re_empNm" name="re_empNm" placeholder="담당자명" 
+	  		onclick="openChildWindow2();"></td>
+  </tr>
+  <tr>
+  <th>수주수량</th>
 	  <td><input type="text" name="re_qty" placeholder="수주수량"></td>
+  <th>수주일자</th>
+  <td><input type="date" name="re_date" placeholder="년-월-일"></td>
   </tr>
   </table>
     <button type="submit">수주등록</button>
@@ -59,15 +66,15 @@
 	var popupY = Math.ceil(( window.screen.height - popupHeight )/2);
 		
 	function openChildWindow1() {	
-	var childWindow = window.open("/receive/customerList", "customerList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);	   
+	var childWindow = window.open("/customer/customerList?pop=rec", "customerList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);	   
 	  }
 	
 	function openChildWindow2() {	
-	    var childWindow = window.open("/receive/empList", "empList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);		
+	    var childWindow = window.open("/emp/list?pop=rec", "empList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);		
 	  }
 	
 	function openChildWindow3() {		
-	    var childWindow = window.open("/receive/productList", "productList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
+	    var childWindow = window.open("/foundation/itemdetail/itemdetailList?pop=rec", "productList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
 	    childWindow.opener = window;
 	  }
 	// 팝업창 오픈

@@ -10,14 +10,15 @@
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
+
 function sendInfo(row) {
     var data = [];
     var cells = row.getElementsByTagName("td");
     for (var i = 0; i < cells.length; i++) {
       data.push(cells[i].innerText);
     }
-    // 정보를 부모 창으로 전달합니다.
-    window.opener.document.getElementById("customer_code").value = data[1];
+    // 정보를 부모 창으로 전달
+    window.opener.document.getElementById("out_customerNm").value = data[1];
     window.close();
   }  
 
@@ -30,47 +31,70 @@ function sendInfo(row) {
 	<jsp:include page="../common/header.jsp"/>
 
 <body>
-  <h1>customer.jsp</h1>
-  거래처 검색
-    <input type="text" placeholder="담당자">
-    <button>Search</button>
-<!--   <form action="" id="customerForm" method="post">		 -->
-<!--   		<select id="searchSelect" name="searchSelect"> -->
-<!--   			<option value="0">거래처코드</option> -->
-<!--   			<option value="1">거래처명</option> -->
-<!--   		</select> -->
+ 	 거래처 검색
+<!--     <input type="text" placeholder="담당자"> -->
+<!--     <button>Search</button> -->
+ 	 <form action="" >		
+  		<select id="kind" name="kind" >
+  			<option value="code">거래처코드</option>
+  			<option value="name">거래처명</option>
+  		</select>
   		
-<!--   		<input type="text" name="searchText"> -->
-<!--   		<input type="button" value="Search" id="searchBtn"> -->
-<!--   </form> -->
+  		<input type="text" name="search" value="${pageVO.search }">
+  		<button type="submit">Search</button>
+  		<input type="hidden" name="pop" value="out">
+  	</form>
 
-  <form action="outboundInsert.jsp">
   <table border="1" class="table table-bordered">
-  <tr>
-  <td>거래처코드</td> <!-- 클릭하면 팝업창 꺼지면서 폼에 입력 -->
-  <td>거래처명</td> <!-- 클릭하면 팝업창 꺼지면서 폼에 입력 -->
-  </tr>
-
-  <tr onclick="sendInfo(this);">
-  <td>001</td>
-  <td>마켓퀄리</td>
-  </tr>
-  
-  <tr onclick="sendInfo(this);" >
-  <td>002</td>
-  <td>에스지</td>
-  </tr>
-  
-   <tr onclick="sendInfo(this);" >
-  <td>003</td>
-  <td>지유</td>
-  </tr>
+	  <tr>
+	 	 <td>거래처코드</td> <!-- 클릭하면 팝업창 꺼지면서 폼에 입력 -->
+	 	 <td>거래처명</td> <!-- 클릭하면 팝업창 꺼지면서 폼에 입력 -->
+	  </tr>
+	
+	  <c:forEach var="vo" items="${customerList }">
+	 	 <c:if test="${vo.cus_stat == 1 }">
+	 		 <tr onclick="sendInfo(this);">
+				  <td>${vo.cus_code }</td>
+				  <td>${vo.cus_name }</td>
+			 </tr>
+		  </c:if>
+	  </c:forEach>
   </table>
-  
-  
-  </form>
- 
-  
-  
+	
+ <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
+	 		<ul class="pagination" id="pagination">
+		<c:choose>
+			<c:when test="${pageVO.startPage > pageVO.pageBlock}">
+				<li class="page-item"><a
+					href="/customer/customerList?pop=out&pageNum=${pageVO.startPage - pageVO.pageBlock}"
+					class="page-link">이전</a></li>
+			</c:when>
+			<c:otherwise>
+			</c:otherwise>
+		</c:choose>
+
+	<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
+				<c:choose>
+					<c:when test="${pageVO.kind != null }">
+					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/customer/customerList?pop=out&pageNum=${i}&kind=${pageVO.kind}&search=${pageVO.search}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
+					</c:when>
+					<c:otherwise>
+					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/customer/customerList?pop=out&pageNum=${i}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
+					</c:otherwise>
+				</c:choose>
+		</c:forEach>
+
+		<c:choose>
+			<c:when test="${pageVO.endPage < pageVO.pageCount}">
+				<li class="page-item"><a
+					href="/customer/customerList?pageNum=${pageVO.startPage + pageVO.pageBlock}"
+					class="page-link">다음</a></li>
+			</c:when>
+			<c:otherwise>
+			</c:otherwise>
+		</c:choose>
+	</ul>
+<!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->	
+
 </body>
 </html>

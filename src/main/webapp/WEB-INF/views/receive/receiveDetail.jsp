@@ -28,11 +28,11 @@
 		});	
 		
 		// 삭제
-		$(".btn-del").click(function(){
-			frObj.attr("action","/receive/receiveRemove");
-			frObj.attr("method", "post");
-			frObj.submit();
-		});
+// 		$(".btn-del").click(function(){
+// 			frObj.attr("action","/receive/receiveRemove");
+// 			frObj.attr("method", "post");
+// 			frObj.submit();
+// 		});
 
 	});
 
@@ -54,7 +54,6 @@
   <table border="1" class="table table-bordered">
   <tr>
   <th>수주번호</th>
-  <th>수주업체코드</th>
   <th>수주업체명</th>
   <th>상품코드</th>
   <th>상품명</th>
@@ -66,13 +65,12 @@
 
 	   <tr>
 	    <td>${vo.re_code }</td>
-	    <td>${vo.customer_code }</td>
-	    <td>거래처명</td>
+	    <td>${vo.re_customerNm }</td>
 	    <td>${vo.item_code }</td>
-	    <td>상품명</td>
+	    <td>${vo.item_name }</td>
 	    <td>${vo.re_date }</td>
-	    <td>${vo.employee_id }</td>
-	    <td>담당자명</td>
+	    <td>${vo.re_empCd }</td>
+	    <td>${vo.re_empNm }</td>
 	    <td>${vo.re_qty }</td>
 	  </tr>
 
@@ -80,7 +78,7 @@
   </table>
   
 	  <button class="btn-update">수정</button>
-	  <button class="btn-del">삭제</button>
+<!-- 	  <button class="btn-del">삭제</button> -->
 	  <button class="btn-list">목록</button>
 
 

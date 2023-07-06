@@ -30,9 +30,15 @@ public interface OutboundDAO {
 	
 	// 출고 처리
 	public Integer outProcessModify(OutboundVO vo);
+	
+	// rec_code
+	public String recCd(String out_num);
 
+	// 수주 상태 수정
+	public void recStateUpdate(String re_code) throws Exception;
 	
 
-	
+	// 재고 리스트
+	public List<OutboundVO> getStockList(String out_num);
 
 }

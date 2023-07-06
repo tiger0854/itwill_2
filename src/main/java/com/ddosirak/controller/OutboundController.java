@@ -20,8 +20,10 @@ import com.ddosirak.domain.InboundVO;
 import com.ddosirak.domain.OutboundListVO;
 import com.ddosirak.domain.OutboundVO;
 import com.ddosirak.domain.PageVO;
+import com.ddosirak.domain.ReceiveVO;
 import com.ddosirak.service.OutboundService;
 import com.ddosirak.service.PageService;
+import com.ddosirak.service.ReceiveService;
 
 
 @Controller
@@ -35,6 +37,7 @@ public class OutboundController {
 	
 	@Inject
 	private PageService pService;
+	
 	
 	// http://localhost:8088/outbound/outboundInsert
 	// 출고 상품 등록
@@ -53,6 +56,8 @@ public class OutboundController {
 			oService.outInsert(vo);
 		}
 		logger.debug(olVo + "");
+		
+		
 		
 		return "redirect:/outbound/outboundList";
 	}
@@ -181,14 +186,31 @@ public class OutboundController {
 	
 	// 출고 재고 
 	@RequestMapping(value = "/outboundStock", method = RequestMethod.GET)
-	public String outboundStockGET(@RequestParam(name = "out_num", required = false) String out_num, Model model) {
+	public String outboundStockGET(@RequestParam(name = "out_num", required = false) String out_num, Model model) throws Exception {
 		logger.debug("outboundStockGET() 호출");
-		List<OutboundVO> outList = oService.getOutProductList(out_num);
+		List<OutboundVO> outList = oService.getStockList(out_num);
 		logger.debug("outList : " + outList);
 
 		model.addAttribute("outList", outList);
 		return "/outbound/outboundStock";	
 	}
+	
+	// 출고 처리
+//	@RequestMapping(value = "/outProcess", method = RequestMethod.GET)
+//	public void outProcessGET() {
+//		logger.debug("outProcessGET() 호출");
+//	}
+//	
+//	@RequestMapping(value="/outProcess",method=RequestMethod.POST)
+//	public void outProcessPOST(OutboundVO vo) {
+//		logger.debug("outProcessGET() 호출!");
+//		int result = oService.outProcessModify(vo);
+//		
+//		if(result == 1) {
+//			logger.info("출고완료");
+//		}
+//	}
+	
 	
 	// 출고 처리
 	@RequestMapping(value = "/outProcess", method = RequestMethod.GET)
@@ -197,13 +219,17 @@ public class OutboundController {
 	}
 	
 	@RequestMapping(value="/outProcess",method=RequestMethod.POST)
-	public void outProcessPOST(OutboundVO vo) {
+	public void outProcessPOST(OutboundVO vo, @RequestParam(name = "out_num", required = false) String out_num) throws Exception {
 		logger.debug("outProcessGET() 호출!");
-		int result = oService.outProcessModify(vo);
 		
-		if(result == 1) {
-			logger.info("출고완료");
-		}
+		oService.outProcessModify(vo);
+		
+		String re_code = oService.recCd(out_num);
+		logger.debug("re_code !~~~~~~~~~~~~~~~~~~~~~~~~~#@#!@#$@$: " + re_code);
+		oService.recStateUpdate(re_code);
+	
+		logger.debug("수주 상태 수정 완료");
+		
 	}
 
 	
@@ -222,13 +248,14 @@ public class OutboundController {
 	
 	//출고 삭제
 	@RequestMapping(value = "/outboundDelete",method=RequestMethod.POST )
-	public String outboundDeletePOST(String out_num, HttpServletRequest req) throws Exception {
+	public String outboundDeletePOST(String out_num, HttpServletRequest req, OutboundVO vo) throws Exception {
 		logger.debug(" outboundDeletePOST(String out_num) 호출!");
 		String[] checkArr = req.getParameterValues("valArr");
 
 		int result = 0;
 		for(int i = 0 ; i < checkArr.length ; i++) {
 			result = oService.outboundDelete(checkArr[i]);
+			
 			logger.debug("출고 취소 완료");
 		}
 		

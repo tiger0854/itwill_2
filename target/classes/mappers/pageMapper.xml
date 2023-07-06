@@ -93,23 +93,7 @@
   	</select>
   	<!-- 퇴근사원수 -->
   	
-  	
-  	
-  	
-  	
-  	<!-- 수주 등록 거래처목록 팝업 페이징 처리를 위한 쿼리 -->
-	<select id="countReCusList"  parameterType="com.ddosirak.domain.PageVO" resultType="Integer">
-		SELECT COUNT(*) FROM ret_customer	 
-		where cus_stat = 1
-		<choose>
-  				<when test="kind == 'name'">WHERE cus_name</when>
-  				<when test="kind == 'code'">WHERE cus_code</when>
-  		</choose> 
-  		<if test="search != ''">	
-		LIKE CONCAT('%', #{search}, '%')
-		</if>
-	</select>
-	<!-- 수주 등록시 거래처목록 팝업 페이징 처리를 위한 쿼리 -->
+ 
   	
   	
   	

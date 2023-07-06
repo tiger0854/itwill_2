@@ -21,5 +21,7 @@ public interface ReceiveDAO {
 
 	// 수주 삭제
 	public Integer receiveRemove(String re_code) throws Exception;
+	
+	
 }
  

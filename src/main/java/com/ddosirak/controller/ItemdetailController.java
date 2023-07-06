@@ -31,7 +31,7 @@ public class ItemdetailController {
 	// http://localhost:8088/foundation/itemdetail/itemdetailList
 	//상품 기초 목록 
 	@RequestMapping(value="/itemdetailList", method=RequestMethod.GET)
-	public void idlistGET(Model model, HttpServletRequest request, PageVO pageVO) throws Exception {
+	public String idlistGET(Model model, HttpServletRequest request, PageVO pageVO, @RequestParam(value ="pop",required = false) String pop) throws Exception {
 
 		logger.debug("idlistGET 실행");
 		
@@ -103,6 +103,14 @@ public class ItemdetailController {
 
 		model.addAttribute("Search", instrSearch);
 		model.addAttribute("itemList", itemList);
+		
+		if(pop != null && pop.equals("rec")) {
+			return "/receive/productList";
+		} if(pop != null && pop.equals("out")) {
+			return "/outbound/itemList";
+		}
+		return "/foundation/itemdetail/itemdetailList";
+		
 	}
 	
 	//상품 기초 등록

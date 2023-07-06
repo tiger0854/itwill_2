@@ -12,6 +12,9 @@ public interface OutboundService {
 
 	// 출고 리스트
 	public List<OutboundVO> getOutList(Map<String, Object> param);
+
+	// 재고 리스트
+	public List<OutboundVO> getStockList(String out_num);
 	
 	// 출고 버튼 클릭시 out_state 업데이트
 	public void updateOutState(String out_num, int out_state);
@@ -30,6 +33,12 @@ public interface OutboundService {
 
 	// 출고 처리
 	public Integer outProcessModify(OutboundVO vo);
+
+	// re_code
+	public String recCd(String out_num);
+	
+	// 수주 상태 변경
+	public void recStateUpdate(String re_code) throws Exception;
 	
 
 }

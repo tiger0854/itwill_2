@@ -66,6 +66,25 @@ public class OutboundServiceImpl implements OutboundService{
 		return odao.outProcessModify(vo);
 	}
 
+	// re_code
+	@Override
+	public String recCd(String out_num) {
+		return odao.recCd(out_num);
+	}
+
+	// 수주 상태 변경
+	@Override
+	public void recStateUpdate(String re_code) throws Exception {
+		odao.recStateUpdate(re_code);
+		
+	}
+
+	
+	// 재고 리스트
+	@Override
+	public List<OutboundVO> getStockList(String out_num) {
+		return odao.getStockList(out_num);
+	}
 	
 
 

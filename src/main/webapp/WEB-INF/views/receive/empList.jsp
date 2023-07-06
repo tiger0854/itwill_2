@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +19,8 @@
 	      data.push(cells[i].innerText);
 	    }
 	    // 정보를 부모 창으로 전달합니다.
-	    window.opener.document.getElementById("employee_id").value = data[0];
+	    window.opener.document.getElementById("re_empCd").value = data[0];
+	    window.opener.document.getElementById("re_empNm").value = data[1];
 	    window.close();
 	  }  
 </script>
@@ -30,32 +32,64 @@
 
   <h1>user.jsp</h1>
   담당자 검색
-  <input type="text" placeholder="담당자">
-  <button>Search</button>
+  	 <form action="" >		
+  		<select id="kind" name="kind" >
+  			<option value="code">담당자코드</option>
+  			<option value="name">담당자명</option>
+  		</select>
+  		
+  		<input type="text" name="search" value="${pageVO.search }">
+  		<button type="submit">Search</button>
+  		<input type="hidden" name="pop" value="rec">
+  	</form>
   
-  <form action="receiveInsert.jsp" >
   <table border="1" class="table table-bordered">
   <tr>
-  <td>사원번호(코드)</td> <!-- 클릭하면 팝업창 꺼지면서 폼에 입력 -->
-  <td>사원명</td> <!-- 클릭하면 팝업창 꺼지면서 폼에 입력 -->
+  <td>담당자코드</td> <!-- 클릭하면 팝업창 꺼지면서 폼에 입력 -->
+  <td>담당자명</td> <!-- 클릭하면 팝업창 꺼지면서 폼에 입력 -->
   </tr>
   
+ <c:forEach var="vo" items="${empList }">
   <tr onclick="sendInfo(this);">
-  <td>001</td>
-  <td>챠효진</td>
+  <td>${vo.employee_id }</td>
+  <td>${vo.employee_name }</td>
   </tr>
-  
-  <tr onclick="sendInfo(this);">
-  <td>002</td>
-  <td>챠프린</td>
-  </tr>
-  
+  </c:forEach>
   </table>
-  
-  
-  </form>
- 
-  
-  
+ <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
+	 		<ul class="pagination" id="pagination">
+		<c:choose>
+			<c:when test="${pageVO.startPage > pageVO.pageBlock}">
+				<li class="page-item"><a
+					href="/emp/list?pop=rec&pageNum=${pageVO.startPage - pageVO.pageBlock}"
+					class="page-link">이전</a></li>
+			</c:when>
+			<c:otherwise>
+			</c:otherwise>
+		</c:choose>
+
+	<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
+				<c:choose>
+					<c:when test="${pageVO.kind != null }">
+					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/emp/list?pop=rec&pageNum=${i}&kind=${pageVO.kind}&search=${pageVO.search}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
+					</c:when>
+					<c:otherwise>
+					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/emp/list?pop=rec&pageNum=${i}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
+					</c:otherwise>
+				</c:choose>
+		</c:forEach>
+
+		<c:choose>
+			<c:when test="${pageVO.endPage < pageVO.pageCount}">
+				<li class="page-item"><a
+					href="/emp/list?pageNum=${pageVO.startPage + pageVO.pageBlock}"
+					class="page-link">다음</a></li>
+			</c:when>
+			<c:otherwise>
+			</c:otherwise>
+		</c:choose>
+	</ul>
+<!---------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->	
+
 </body>
 </html>

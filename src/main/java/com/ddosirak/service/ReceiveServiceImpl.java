@@ -47,6 +47,8 @@ public class ReceiveServiceImpl implements ReceiveService {
 	public Integer receiveRemove(String re_code) throws Exception {
 		return rdao.receiveRemove(re_code);
 	}
+
+	
 	
 	
 	

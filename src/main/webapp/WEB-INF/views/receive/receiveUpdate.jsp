@@ -35,36 +35,46 @@
 		});
 		
 	});
-
+	
 
 </script>
 </head>
 <body id="body-pd" style="font-family: 'TheJamsil5';">
 <jsp:include page="../common/header.jsp"/>
 
+	
+
+	
 <h1>receiveUpdate.jsp</h1>
   <h1>수주수정</h1>
   
+  NO. <input type="text" name="re_code" readonly value="${vo.re_code }">
   <form role="form" id="fr">
+  <hr>
   <table border="1" class="table table-bordered">
   <tr>
-  <th>업체 코드</th>
-  <th>거래처명(수주업체명)</th>
-  <th>품목코드</th>
-  <th>품목명</th>
-  <th>수주일자</th>
-  <th>담당자</th>
-  <th>수주수량</th>
+  <th>수주업체명</th>
+    <td colspan="3"><input type="text" name="re_customerNm" readonly value="${vo.re_customerNm }"></td>
   </tr>
   <tr>
-    <td><input type="text" name="customer_code" readonly value="${vo.customer_code }"></td>
-	  <td><input type="text" name="customer_name" readonly value="거래처명" > </td>
-	  <td><input type="text" name="item_code" readonly value="${vo.item_code }" > </td>
-	  <td><input type="text" name="item_name" readonly value="품목명" > </td>
-	  <td><input type="date" name="re_date" value="${vo.re_date }"></td>
-	  <td><input type="text" id="employee_id" name="employee_id" placeholder="담당자" 
+  <th>품목코드</th>
+    <td><input type="text" name="item_code" readonly value="${vo.item_code }" > </td>
+  <th>품목명</th>
+    <td><input type="text" name="item_name" readonly value="${vo.item_name }" > </td>
+  </tr>
+  <tr>
+  <th>담당자코드</th>
+    <td><input type="text" id="re_empCd" name="re_empCd" placeholder="담당자코드" 
 	  		onclick="openChildWindow1();"></td>
-	  <td><input type="text" name="re_qty" value="${vo.re_qty }"></td>
+  <th>담당자명</th>
+    <td><input type="text" id="re_empNm" name="re_empNm" placeholder="담당자명" 
+	  		onclick="openChildWindow1();"></td>
+  </tr>
+  <tr>
+  <th>수주수량</th>
+    <td><input type="text" name="re_qty" value="${vo.re_qty }"></td>
+  <th>수주일자</th>
+    <td><input type="date" name="re_date" value="${vo.re_date }"></td>
   </tr>
   </table>
     <button type="submit" class="btn-update">수정</button>

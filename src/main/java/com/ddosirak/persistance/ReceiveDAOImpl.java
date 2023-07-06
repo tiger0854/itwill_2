@@ -46,6 +46,7 @@ public class ReceiveDAOImpl implements ReceiveDAO {
 	@Override
 	public void receiveUpdate(ReceiveVO uvo) throws Exception {
 		sqlSession.update(NAMESPACE + ".receiveUpdate", uvo);
+		logger.debug(" 수주 수정 완료");
 	}
 
 	// 수주 삭제
@@ -53,8 +54,8 @@ public class ReceiveDAOImpl implements ReceiveDAO {
 	public Integer receiveRemove(String re_code) throws Exception {
 		return sqlSession.delete(NAMESPACE + ".receiveRemove", re_code);	
 	}
-	
-	
+
+
 
 	
 

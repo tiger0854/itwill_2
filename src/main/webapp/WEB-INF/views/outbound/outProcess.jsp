@@ -14,8 +14,9 @@
 	window.addEventListener("message", function(event) {
     var rowData = event.data;
     
-    document.getElementById("out_num").value = rowData[1];
-    document.getElementById("out_qty").value = rowData[4];
+//     document.getElementById("re_code").value = rowData[0];
+    document.getElementById("out_num").value = rowData[2];
+    document.getElementById("out_qty").value = rowData[5];
    });
       
  </script>
@@ -28,6 +29,7 @@
   <h1>출고 처리</h1>
   <br>
    <form role="form" id="fr">
+   <input type="hidden" name="re_code" id="re_code"><br>
     출고 번호 <input type="text" name="out_num" id="out_num" readonly><br>
     <br>
     출고 예정 수량 <input type="text" name="out_qty" id="out_qty" ><br>
@@ -80,7 +82,11 @@
 
 	    $("#outCompleted").click(function() {
 	      var frObj = $("#fr");
+// 	      var reCodeValue = $("#re_code").val(); // re_code 요소의 값을 가져옵니다.
 	      var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
+	      
+	   // formData 변수에 re_code 값을 추가합니다.
+// 	      formData += "&re_code=" + encodeURIComponent(reCodeValue);
 
 	      $.ajax({
 	        url: "/outbound/outProcess", // 요청을 보낼 서버의 URL

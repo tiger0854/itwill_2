@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.ReceiveVO;
@@ -54,16 +55,9 @@ public class ReceiveController {
 	
 	// 거래처 리스트(pop)
 	@RequestMapping(value = "/customerList", method = RequestMethod.GET)
-	public void customerListGET(PageVO pageVO, Model model, HttpServletRequest request) throws Exception {
+	public void customerListGET()  {
 		logger.debug("customertListGET() 호출");
-		
-	
-		
-		
-		List<ReceiveVO> receiveList = rService.receiveList(pageVO);
-		logger.debug("receiveList : " + receiveList);
-		
-		model.addAttribute("receiveList", receiveList);
+
 	} 
 		
 		
@@ -81,11 +75,10 @@ public class ReceiveController {
 	} 
 		
 	
-
 	// http://localhost:8088/receive/receiveList
 	// 수주 리스트 
 	@RequestMapping(value = "/receiveList", method = RequestMethod.GET)
-	public String receiveListGET(PageVO pageVO, Model model, HttpServletRequest request) throws Exception {
+	public String receiveListGET(PageVO pageVO, Model model, HttpServletRequest request, @RequestParam(value ="pop",required = false) String pop) throws Exception {
 		logger.debug("receiveListGET() 호출");
 		
 		//================================페이징 처리를 위한 값 받아오기 동작========================================
@@ -134,7 +127,12 @@ public class ReceiveController {
 		
 		model.addAttribute("receiveList", receiveList);
 		
-		return "receive/receiveList";
+		if(pop != null && pop.equals("out")) {
+			return "/outbound/recConnection";
+		}	
+			return "/receive/receiveList";
+		
+//		return "receive/receiveList";
 	}
 	
 
@@ -155,14 +153,6 @@ public class ReceiveController {
 	public void receiveUpdateGET(Model model, @RequestParam("re_code") String re_code) throws Exception {
 		logger.debug("receiveUpdateGET() 호출");
 		model.addAttribute("vo", rService.receiveDetail(re_code));	
-	}
-	
-	@RequestMapping(value = "/receiveUpdate", method = RequestMethod.POST)
-	public String receiveUpdatePOST(ReceiveVO uvo) throws Exception {
-		logger.debug("receiveUpdatePOST() 호출");
-		logger.debug("uvo : " + uvo);
-		rService.receiveUpdate(uvo);
-		return "redirect:/receive/receiveList";
 	}
 	
 	

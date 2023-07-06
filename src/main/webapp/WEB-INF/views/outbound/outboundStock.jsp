@@ -36,7 +36,7 @@
   <th>납기일</th>
   <td>${vo.due_date }</td>
   <th>출고 담당자</th>
-  <td>${vo.employee_id }</td>
+  <td>${vo.out_empNm }</td>
   </tr>
   </c:forEach>
   </table>
@@ -47,18 +47,17 @@
   <th>출고번호</th>
   <th>상품명</th> 
   <th>거래처명</th>
-  <th>총출고예정수량</th>
-  <th>필요수량</th>
-  <th>창고재고</th>
+  <th>출고예정수량</th>
+  <th>생산수량</th>
   </tr>
   <c:forEach var="vo" items="${outList }">
   <tr>
     <td>${vo.out_num }</td>
     <td>${vo.item_name }</td>
-    <td>${vo.customer_code }</td>
+    <td>${vo.out_customerNm }</td>
     <td>${vo.out_qty }</td>
-    <td>${vo.out_qty -10}</td>
-    <td>10</td>
+<%--     <td>${vo.out_qty -10}</td><!-- 창고에서 수량 끌고오기 --> --%>
+    <td>${vo.proOrderVO.pQTY }</td>
   </tr>
    </c:forEach>
 

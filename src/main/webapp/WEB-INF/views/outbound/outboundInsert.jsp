@@ -17,36 +17,44 @@
    
 
 
-  <h1>outbound.jsp용dyd</h1>
+  <h1>출고 list</h1>
  
   <form action="" method="post">
-   거래처: <input type="text" id="customer_code" name ="outboundList[0].customer_code" onclick="openChildWindow1();"><br> 
-   담당자: <input type="text" id="employee_id" name ="outboundList[0].employee_id" onclick="openChildWindow2();"><br> 
+<!--    수주번호: <input type="text" id="re_code" name= "outboundList[0].re_code" onclick="openChildWindow();" readonly><br> -->
+   거래처명: <input type="text" id="out_customerNm" name="outboundList[0].out_customerNm" onclick="openChildWindow();" readonly><br> 
   <hr>
+   담당자코드: <input type="text" id="out_empCd" name="outboundList[0].out_empCd" onclick="openChildWindow2();" readonly><br> 
+   담당자명: <input type="text" id="out_empNm" name="outboundList[0].out_empNm" onclick="openChildWindow2();" readonly><br>    
+  <hr>
+  <font color="red" size="small">* 행 추가시, 동일 거래처 수주 번호만 등록 가능합니다.</font>
+  
   <table id="tbl" border="1" class="table table-bordered">
    <thead>
     <tr>
+	  <td>수주번호</td>
 	  <td>품목코드</td>
 	  <td>품목명</td>
 	  <td>수량</td>
       <td>단가</td>
 	  <td>납기일자</td>  
-	  <td>창고</td>  
+<!-- 	  <td>창고</td>   -->
 	  <td>적요</td>
     </tr>
    </thead>
    <tbody>
    <tr name="trProduct" id="trProduct">
+	  <td><input type="text" id="re_code" name="outboundList[0].re_code"  
+	  		onclick="openChildWindow();" readonly></td>
 	  <td><input type="text" id="item_code" name="outboundList[0].item_code"  
-	  		onclick="openChildWindow4();" ></td>
+	  		onclick="openChildWindow();" readonly></td>
 	  <td><input type="text" id="item_name" name="outboundList[0].item_name"  
-	  		onclick="openChildWindow4();" > </td>
-	  <td><input type="text" class="out_qty" name="outboundList[0].out_qty" placeholder="수량"></td>
+	  		onclick="openChildWindow();" readonly> </td>
+	  <td><input type="text" id="out_qty" class="out_qty" name="outboundList[0].out_qty" onclick="openChildWindow();"></td>
 	  <td><input type="text" class="price" name="outboundList[0].price" placeholder="단가" 
-	  		onclick="openChildWindow4();"></td>
+	  		onclick="openChildWindow4();" readonly></td>
 	  <td><input type="date" name="outboundList[0].due_date" placeholder="년-월-일"></td>
-	  <td><input type="text" id="factory_code" name ="outboundList[0].factory_code" 
-	  		onclick="openChildWindow3();" ></td>
+<!-- 	  <td><input type="text" id="factory_code" name ="outboundList[0].factory_code"  -->
+<!-- 	  		onclick="openChildWindow3();" ></td> -->
 	  <td><input type="text" name="outboundList[0].out_notes" placeholder="적요"></td>
 	  <td colspan="8"><input type="button" value="del" id="delProduct"></td>   	
     </tr>
@@ -95,17 +103,22 @@
  	  $(document).ready(function(){
  		  var idx=1;
 	  $(document).on("click","input[name=addProduct]", function(){
-		  var trade=document.getElementById("customer_code").value;
-		  var employee=document.getElementById("employee_id").value;
+		  var trade=document.getElementById("out_customerNm").value;
+		  var employeeCd=document.getElementById("out_empCd").value;
+		  var employeeNm=document.getElementById("out_empNm").value;
+// 		  var recCd=document.getElementById("re_code").value;
 		  var addProduct = ' <tr name="trProduct">'+
-		 	' <input type="hidden" id="customer_code" name ="outboundList['+(idx)+'].customer_code" value='+trade+'>'+
-		    ' <input type="hidden" id="employee_id" name ="outboundList['+(idx)+'].employee_id" value='+employee+'>'+
-			'  <td><input type="text" id="item_code" name="outboundList['+(idx)+'].item_code" onclick="openChildWindow4();"></td>' +
-			'  <td><input type="text" id="item_name" name="outboundList['+(idx)+'].item_name" onclick="openChildWindow4();"> </td>' +
-			'  <td><input type="text" class="out_qty" name="outboundList['+(idx)+'].out_qty" placeholder="수량"></td>' +
-			'  <td><input type="text" class="price" name="outboundList['+(idx)+'].price" placeholder="단가" onclick="openChildWindow4();"></td>' +
+		 	' <input type="hidden" id="out_customerNm" name ="outboundList['+(idx)+'].out_customerNm" value='+trade+'>'+
+		    ' <input type="hidden" id="out_empCd" name ="outboundList['+(idx)+'].out_empCd" value='+employeeCd+'>'+
+		    ' <input type="hidden" id="out_empNm" name ="outboundList['+(idx)+'].out_empNm" value='+employeeNm+'>'+
+// 		    ' <input type="hidden" id="out_empNm" name ="outboundList['+(idx)+'].out_empNm" value='+recCd+'>'+
+			'  <td><input type="text" id="re_code" name="outboundList['+(idx)+'].re_code" onclick="openChildWindow();" readonly></td>' +
+			'  <td><input type="text" id="item_code" name="outboundList['+(idx)+'].item_code" onclick="openChildWindow();" readonly></td>' +
+			'  <td><input type="text" id="item_name" name="outboundList['+(idx)+'].item_name" onclick="openChildWindow();" readonly> </td>' +
+			'  <td><input type="text" class="out_qty" id="out_qty" name="outboundList['+(idx)+'].out_qty" onclick="openChildWindow();" placeholder="수량"></td>' +
+			'  <td><input type="text" class="price" name="outboundList['+(idx)+'].price" placeholder="단가" onclick="openChildWindow4();" readonly></td>' +
 			'  <td><input type="date" name="outboundList['+(idx)+'].due_date" placeholder="년-월-일"></td>' +
-			'  <td><input type="text" id="factory_code" name ="outboundList['+(idx)+'].factory_code" onclick="openChildWindow3();" ></td>' +
+// 			'  <td><input type="text" id="factory_code" name ="outboundList['+(idx)+'].factory_code" onclick="openChildWindow3();" ></td>' +
 			'  <td><input type="text" name="outboundList['+(idx)+'].out_notes" placeholder="적요"></td>' +
 			'  <td><input type="button" value="del" id="delProduct"></td>' +
 			' </tr>';
@@ -138,20 +151,26 @@
 		var popupX = Math.ceil(( window.screen.width - popupWidth )/2);
 		var popupY = Math.ceil(( window.screen.height - popupHeight )/2);
   		
-	  function openChildWindow1() {	
-	    var childWindow = window.open("/outbound/customerList", "customerList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);	   
+	 
+	  function openChildWindow() {	
+	    var childWindow = window.open("/receive/receiveList?pop=out", "recConnection", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);	   
 		  }
+	  
+// 	  function openChildWindow1() {	
+// 	    var childWindow = window.open("/customer/customerList?pop=out", "customerList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);	   
+// 		  }
  
 	  function openChildWindow2() {	
-		    var childWindow = window.open("/outbound/empList", "empList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);		
+		    var childWindow = window.open("/emp/list?pop=out", "empList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);		
+// 		    var childWindow = window.open("/emp/list?pop=ok", "empList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);		
 		  }
 	  
-	  function openChildWindow3() {			
-		    var childWindow = window.open("/outbound/factoryList", "factoryList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);		
-		  }	  
+// 	  function openChildWindow3() {			
+// 		    var childWindow = window.open("/outbound/factoryList", "factoryList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);		
+// 		  }	  
 	  
 	  function openChildWindow4() {		
-		    var childWindow = window.open("/outbound/itemList", "itemList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
+		    var childWindow = window.open("/foundation/itemdetail/itemdetailList?pop=out", "itemList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
 		  }
 		// 팝업창
 

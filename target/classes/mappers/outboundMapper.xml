@@ -5,38 +5,74 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.ddosirak.mapper.outboundMapper">
+  
  	<!-- 가져올 VO객체 정보 매핑 -->
 	<resultMap type="com.ddosirak.domain.OutboundVO" id="outbound">
+		<result property="out_id" column="out_id"/>
+		<result property="out_empCd" column="out_empCd"/>
+		<result property="item_code" column="item_code"/>
+		<result property="out_notes" column="out_notes"/>
+		<result property="out_Cqty" column="out_Cqty"/>
+		<result property="price" column="price"/>
+		<result property="stock_code" column="stock_code"/>
+		<result property="factory_code" column="factory_code"/>
+		<result property="out_date" column="out_date"/>
+		<result property="create_date" column="create_date"/>
+		
+		<result property="out_state" column="out_state"/>
+		<result property="due_date" column="due_date"/>
+		<result property="out_empNm" column="out_empNm"/>
+		<result property="out_num" column="out_num"/>
 		<result property="item_name" column="item_name"/>
-		<result property="standard" column="standard"/>
+		<result property="out_customerNm" column="out_customerNm"/>
+		<result property="out_qty" column="out_qty"/>
+		<result property="re_code" column="re_code"/>
+		<collection property="proOrderVO" resultMap="proOrderVO"/>
 	</resultMap>
-  
+  	
+  	<!-- 생산 상품 관리 테이블 -->
+	<resultMap type="com.ddosirak.domain.ProOrderVO" id="proOrderVO">
+  		<result property="so_code" column="so_code"/>
+  		<result property="pQTY" column="pQTY"/>
+  	</resultMap>
+  	<!-- 생산 상품 관리 테이블 -->
+	
+  	
+  	<!-- 재고 리스트 -->
+	<select id="getStockList" resultType="com.ddosirak.domain.OutboundVO" resultMap="outbound"> 
+		select o.out_state, o.due_date, o.out_empNm, o.out_num, o.item_name, o.out_customerNm, o.out_qty, o.re_code, p.so_code, p.pQTY
+		from outbound o join prod p
+		where out_num=#{out_num} 
+	</select>
+  	<!-- 재고 리스트 -->
+  	
   
   	<!-- SQL 쿼리 적는 곳 -->
   	
   	<!-- 출고 등록 -->
 	<insert id="outInsert">
-		insert into outbound (out_num,customer_code,employee_id,item_code,item_name,out_notes,out_qty,price,stock_code,factory_code,due_date,create_date) 
-		SELECT CONCAT('OUT', REPLACE(current_date(), '-', ''), nullif(MAX(out_id)+1, 1)),#{customer_code},#{employee_id},#{item_code},#{item_name},#{out_notes},#{out_qty},#{price},#{stock_code},#{factory_code},#{due_date},now()
+		insert into outbound (out_num,out_customerNm,out_empCd,out_empNm,item_code,item_name,out_notes,out_qty,price,stock_code,factory_code,due_date,create_date,re_code) 
+		SELECT CONCAT('OUT', REPLACE(current_date(), '-', ''), ifnull(MAX(out_id)+1, 1)),#{out_customerNm},#{out_empCd},#{out_empNm},#{item_code},#{item_name},#{out_notes},#{out_qty},#{price},#{stock_code},#{factory_code},#{due_date},now(),#{re_code}
 		from outbound
 	</insert>
   	<!-- 출고 등록 -->
 
 
   	<!-- 출고 리스트 -->
-  	<select id="outList" resultType="com.ddosirak.domain.OutboundVO" parameterType="map">
+  	<select id="outList" parameterType="map" resultType="com.ddosirak.domain.OutboundVO" resultMap="outbound">
   		select 
-  			*
-		from outbound
+  			o.*, p.pQTY, p.so_code
+		from outbound o
+		join prod p
 		where
-			1=1
+			o.re_code = p.so_code
 		<if test="state != null">
-			and out_state = #{state}
+			and o.out_state = #{state}
 		</if>
 		<if test="pageVO.search != null">
-			and item_name like CONCAT('%',#{pageVO.search},'%')
+			and o.item_name like CONCAT('%',#{pageVO.search},'%')
 		</if>
-		order by out_num desc
+		order by o.out_id desc
 		limit #{pageVO.startRow}, #{pageVO.pageSize}
   	</select>
   	<!-- 출고 리스트 -->
@@ -61,13 +97,15 @@
   	
   	<!-- 상품 이름 외 n건 -->
   	<select id="getOutNumCount" parameterType="string" resultType="int">
-  	  SELECT COUNT(out_num) FROM outbound WHERE out_num = #{out_num}
+  	  select count(out_num) 
+  	  from outbound 
+  	  where out_num = #{out_num}
 	</select>
   	
   	<!-- 출고 수정 -->
   	<update id="outboundUpdate">	
-  		UPDATE outbound SET out_qty = #{out_qty}, due_date = #{due_date}, out_notes = #{out_notes}
-  		WHERE out_num=#{out_num}
+  		update outbound set out_qty = #{out_qty}, due_date = #{due_date}, out_notes = #{out_notes}
+  		where out_num=#{out_num}
   	</update>
   	<!-- 출고 수정 -->
   	
@@ -79,12 +117,27 @@
   	
   	<!-- 출고 처리 -->
   	<update id="outProcessModify">
-  	UPDATE outbound set out_Cqty = #{out_Cqty}, out_date = #{out_date} , out_state = 0
-  	WHERE out_num = #{out_num}
-  	<!-- 출고 처리 -->
+  		update outbound set out_Cqty = #{out_Cqty}, out_date = #{out_date} , out_state = 0
+  		where out_num = #{out_num}
   	</update>
+  	<!-- 출고 처리 -->
   	
   	
+  	<!-- rec_code -->
+	<select id="recCd" resultType="string">
+		 select re_code 
+		 from outbound 
+		 where out_num = #{out_num}
+	</select>
+  	<!-- rec_code -->
+  	
+	<!-- 수주 상태 수정 -->
+	<update id="recStateUpdate" >
+		update receive
+		set re_state=0
+		where re_code=#{re_code}
+	</update>
+  	<!-- 수주 상태 수정 -->
   	
   
   

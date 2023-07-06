@@ -10,15 +10,21 @@
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
+
 function sendInfo(row) {
     var data = [];
     var cells = row.getElementsByTagName("td");
     for (var i = 0; i < cells.length; i++) {
       data.push(cells[i].innerText);
     }
-    // 정보를 부모 창으로 전달합니다.
-    window.opener.document.getElementById("re_customerCd").value = data[0];
-    window.opener.document.getElementById("re_customerNm").value = data[1];
+    // 정보를 부모 창으로 전달
+     var newRow = window.opener.$("tr[name=trProduct]:last"); 
+     newRow.find("input[id=re_code]").val(data[0]);
+     window.opener.document.getElementById("out_customerNm").value = data[1];
+     newRow.find("input[id=item_code]").val(data[2]);
+     newRow.find("input[id=item_name]").val(data[3]);
+     newRow.find("input[id=out_qty]").val(data[4]);
+   
     window.close();
   }  
 
@@ -31,41 +37,48 @@ function sendInfo(row) {
 	<jsp:include page="../common/header.jsp"/>
 
 <body>
- 	 거래처 검색
+ 	 수주 검색
 <!--     <input type="text" placeholder="담당자"> -->
 <!--     <button>Search</button> -->
  	 <form action="" >		
   		<select id="kind" name="kind" >
-  			<option value="code">거래처코드</option>
-  			<option value="name">거래처명</option>
+  			<option value="reCd">수주번호</option>
+  			<option value="customerName">거래처명</option>
   		</select>
   		
   		<input type="text" name="search" value="${pageVO.search }">
   		<button type="submit">Search</button>
-  		<input type="hidden" name="pop" value="rec">
+  		<input type="hidden" name="pop" value="out">
   	</form>
 
   <table border="1" class="table table-bordered">
-  <tr>
-  <td>거래처코드</td> <!-- 클릭하면 팝업창 꺼지면서 폼에 입력 -->
-  <td>거래처명</td> <!-- 클릭하면 팝업창 꺼지면서 폼에 입력 -->
-  </tr>
-
-  <c:forEach var="vo" items="${customerList }">
-  <c:if test="${vo.cus_stat == 1 }">
-  <tr onclick="sendInfo(this);">
-  <td>${vo.cus_code }</td>
-  <td>${vo.cus_name }</td>
-  </tr>
-  </c:if>
-  </c:forEach>
+	  <tr>
+	 	 <th>수주번호</th> <!-- 클릭하면 팝업창 꺼지면서 폼에 입력 -->
+	 	 <th>수주업체</th>
+	 	 <th>상품코드</th>
+	 	 <th>상품명</th>
+	 	 <th>수주수량</th>
+	  </tr>
+	
+	  <c:forEach var="vo" items="${receiveList }">
+	 		<c:if test="${vo.re_state == 1 }">
+	 		 <tr onclick="sendInfo(this);">
+				  <td>${vo.re_code }</td>
+				  <td>${vo.re_customerNm }</td>
+				  <td>${vo.item_code }</td>
+				  <td>${vo.item_name }</td>
+				  <td>${vo.re_qty }</td>
+			 </tr>
+			 </c:if>
+	  </c:forEach>
   </table>
+	
  <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
 	 		<ul class="pagination" id="pagination">
 		<c:choose>
 			<c:when test="${pageVO.startPage > pageVO.pageBlock}">
 				<li class="page-item"><a
-					href="/customer/customerList?pop=rec&pageNum=${pageVO.startPage - pageVO.pageBlock}"
+					href="/receive/receiveList?pop=out&pageNum=${pageVO.startPage - pageVO.pageBlock}"
 					class="page-link">이전</a></li>
 			</c:when>
 			<c:otherwise>
@@ -75,10 +88,10 @@ function sendInfo(row) {
 	<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
 				<c:choose>
 					<c:when test="${pageVO.kind != null }">
-					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/customer/customerList?pop=rec&pageNum=${i}&kind=${pageVO.kind}&search=${pageVO.search}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
+					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/receive/receiveList?pop=out&pageNum=${i}&kind=${pageVO.kind}&search=${pageVO.search}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
 					</c:when>
 					<c:otherwise>
-					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/customer/customerList?pop=rec&pageNum=${i}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
+					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/receive/receiveList?pop=out&pageNum=${i}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
 					</c:otherwise>
 				</c:choose>
 		</c:forEach>
@@ -86,7 +99,7 @@ function sendInfo(row) {
 		<c:choose>
 			<c:when test="${pageVO.endPage < pageVO.pageCount}">
 				<li class="page-item"><a
-					href="/customer/customerList?pageNum=${pageVO.startPage + pageVO.pageBlock}"
+					href="/receive/receiveList?pageNum=${pageVO.startPage + pageVO.pageBlock}"
 					class="page-link">다음</a></li>
 			</c:when>
 			<c:otherwise>

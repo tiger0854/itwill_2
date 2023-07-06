@@ -84,6 +84,10 @@ public class CustomerController {
 		
 		if(pop != null && pop.equals("ok")) {
 			return "/inbound/tradeList";
+		} else if(pop != null && pop.equals("rec")) {
+			return "/receive/customerList";
+		} else if(pop != null && pop.equals("out")) {
+			return "/outbound/customerList";
 		}
 			return "/customer/customerList";
 		

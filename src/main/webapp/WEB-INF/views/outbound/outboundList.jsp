@@ -13,51 +13,28 @@
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.all.min.js"></script>
  <script type="text/javascript">
 
- function outboundDelete() {
-		var valArr = new Array();
-		var list = $("input[name='rowCheck']");
-		for(var i=0; i<list.length;i++){
-			if(list[i].checked){
-			valArr.push(list[i].value);
-		  }	
-		}
-		if(valArr.length == 0){
-	    	Swal.fire("선택된 목록이 없습니다.")
-		}else{
-	      	Swal.fire({
-	            title: "출고를 취소하겠습니까?",
-	            text: "선택된 출고 목록 수 :"+valArr.length,
-				icon: "warning",
-	           	   showCancelButton: true, 
-	           	   confirmButtonColor: '#3085d6', 
-	           	   cancelButtonColor: '#d33',
-	           	   confirmButtonText: '예', 
-	           	   cancelButtonText: '아니오', 
-	            }).then(result => {
-	                if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
-	          		  $.ajax({
-	    				  url : "/outbound/outboundDelete",
-	    				  type : 'POST',
-	    				  traditional : true,
-	    				  data: {
-	    					  valArr : valArr
-	    				  },
-	    				  success:function(data){
-	    						 Swal.fire({
-	    				                title: "출고 취소가 완료되었습니다.",
-	    				                text: "",
-	    				                icon: "success"
-	    				              }).then(function() {
-	    				            	  location.reload()
-	    				              });
-	    				  }//success 
-	    			  });// ajax
-	                } else if (result.isDismissed) { // 만약 모달창에서 cancel 버튼을 눌렀다면
-	                	// ...실행
-	                }
-	            });
-			}
-		}
+ 
+	 $(document).ready(function(){
+			// 디비 - 서비스 - 컨트롤러 -> 뷰(jsp) -> JS -> AJAX
+				
+				var data = "${result}";
+				
+				if(data == "CREATEOK"){
+			
+					callModal("글 쓰기 완료");
+				}	
+				if(data == "MODOK"){
+					callModal("수주 수정 완료");
+				}
+				if(data == "DELOK"){
+					callModal("글 삭제 완료");
+				}
+				
+			function callModal(txt){
+				$(".modal-body").html(txt);
+				$("#myModal").modal("show");
+				}
+			});
 	
 </script>
 
@@ -70,13 +47,20 @@
   <h1>출고 리스트</h1>
   
   <div>
-  <form action="/outbound/outboundList" method="get" id="searchFrm">
+  <form action="" method="get" id="searchFrm">
 	  출고번호 <input type="text" style="width:50px;" >
 	  출고일자 <input type="date" placeholder="날짜 선택"> ~ <input type="date" placeholder="날짜 선택">
 	  담당자 <input type="text"  style="width:50px;">
 	  품목명 <input type="text" id="itemNm" name="search" value="${search}"> 
 	  <input type="hidden" name="state" value="${state}">
   	<button type="submit">Search</button>
+<!-- 	<select name="kind" id="kind"> -->
+<!--   		<option value="itemNm">품목명</option> -->
+<!--   		<option value="customerNm">담당자</option> -->
+<!-- 		<option value="outNm">출고번호</option> -->
+<!--   	</select> -->
+<%--   <input type="text" placeholder="검색어를 입력하세요" name="search" value="${pageVO.search }">  --%>
+<!--   <button type="submit" class="btn btn-outline-info">Search</button> -->
   </form>
   </div>
   <hr>
@@ -93,7 +77,7 @@
   <th>거래처명</th>
   <th>품목명</th>
   <th>수량</th>
-  <th>재고</th>
+  <th>생산수량</th>
   <th>납기일자</th>
   <th>진행상태</th>
   <th>출고일자</th> 
@@ -104,7 +88,7 @@
   
   <c:forEach var="vo" items="${outList }">
   <tr>
-  
+  	
   <c:choose>
   	<c:when test="${vo.out_state == 1 }">
   		<td class="text_ct"><input type="checkbox" name="rowCheck" value="${vo.out_num }"/></td>
@@ -114,8 +98,10 @@
  	</c:otherwise>
   </c:choose>
   
+<%--   <td>${vo.re_code }</td> --%>
+  <td id="hidden" style="display:none;">${vo.re_code }</td>
   <td onclick="location.href='/outbound/outProductList?out_num=${vo.out_num}'">${vo.out_num }</td>
-  <td>${vo.customer_code }</td>
+  <td>${vo.out_customerNm }</td>
   
   <c:choose>
      <c:when test="${vo.outNumCount > 1}">
@@ -131,11 +117,12 @@
   
   <c:choose>
   	<c:when test="${vo.out_state == 1 }">
-  		<c:if test="${vo.out_qty > 50 }">
-  			<td onclick="location.href='/outbound/outboundStock?out_num=${vo.out_num}'">출고불가능</td>
+  		<c:if test="${vo.out_qty > vo.proOrderVO.pQTY }">
+  			<td onclick="location.href='/outbound/outboundStock?out_num=${vo.out_num}'">${vo.proOrderVO.pQTY }<br>생산중</td>
   		</c:if>
-  		<c:if test="${vo.out_qty < 50 }">
-  			<td onclick="location.href='/outbound/outboundStock?out_num=${vo.out_num}'"><font color="blue">출고가능</font></td>
+  		<c:if test="${vo.out_qty <= vo.proOrderVO.pQTY }">
+  			<td
+  			 onclick="location.href='/outbound/outboundStock?out_num=${vo.out_num}'"><font color="blue">${vo.proOrderVO.pQTY }<br>생산완료</font></td>
   		</c:if>
   	</c:when>
   	<c:when test="${vo.out_state == 0 }">
@@ -167,7 +154,7 @@
     </c:otherwise>
  </c:choose>
  
-  <td>${vo.employee_id }</td>
+  <td>${vo.out_empNm }</td>
   
  <c:choose>
     <c:when test="${vo.out_state==1 }">
@@ -201,27 +188,31 @@
 			</c:otherwise>
 		</c:choose>
 
-		<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}"
-			step="1">
+		<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">  
 			<li
- 				class="page-item<c:if test="${pageVO.pageNum eq i}"> active</c:if>"> 
-				<a href="/outbound/outboundList?pageNum=${i}${state}${search}" class="page-link">${i}</a> 
- 			</li>
-	    </c:forEach>
+ 				class="page-item<c:if test="${pageVO.pageNum eq i}"> active</c:if>">  
+ 				<a href="/outbound/outboundList?pageNum=${i}${state}${search}" class="page-link">${i}</a> 
+			</li> 
+	    </c:forEach> 
 
-		<c:choose>
-			<c:when test="${pageVO.endPage < pageVO.pageCount}">
-				<li class="page-item"><a
-					href="/outbound/outboundList?pageNum=${pageVO.startPage + pageVO.pageBlock}${state}${search}"
-					class="page-link">다음</a></li>
-			</c:when>
-			<c:otherwise>
-			</c:otherwise>
+ 		<c:choose> 
+ 			<c:when test="${pageVO.endPage < pageVO.pageCount}"> 
+ 				<li class="page-item"><a 
+ 					href="/outbound/outboundList?pageNum=${pageVO.startPage + pageVO.pageBlock}${state}${search}" 
+					class="page-link">다음</a></li> 
+ 			</c:when> 
+ 			<c:otherwise> 
+ 			</c:otherwise>
 		</c:choose>
-	</ul>
+ 	</ul>
 <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
   
-  <button type="button" class="btn btn-outline-info" onclick="outboundDelete(this);">출고 취소</button>
+  
+
+  
+  
+  
+  <button type="button" class="btn btn-outline-info" onclick="outboundRemove(this);">출고 취소</button>
   <button type="button" class="btn btn-outline-info" onclick="location.href='/outbound/outboundInsert';">출고 예정 등록</button>
   
   <!-- 진행상태 체크한것 일괄 변경 셀렉트버튼 추가 -->
@@ -231,6 +222,56 @@
 
 
   <script type="text/javascript">
+  
+  
+  
+	 function outboundRemove() {
+			var valArr = new Array();
+			var list = $("input[name='rowCheck']");
+			for(var i=0; i<list.length;i++){
+				if(list[i].checked){
+				valArr.push(list[i].value);
+			  }	
+			}
+			if(valArr.length == 0){
+		    	Swal.fire("선택된 목록이 없습니다.")
+			}else{
+		      	Swal.fire({
+		            title: "출고를 취소하겠습니까?",
+		            text: "선택된 출고 목록 수 :"+valArr.length,
+					icon: "warning",
+		           	   showCancelButton: true, 
+		           	   confirmButtonColor: '#3085d6', 
+		           	   cancelButtonColor: '#d33',
+		           	   confirmButtonText: '예', 
+		           	   cancelButtonText: '아니오', 
+		            }).then(result => {
+		                if (result.isConfirmed) { 
+		          		  $.ajax({
+		    				  url : "/outbound/outboundDelete",
+		    				  type : 'POST',
+		    				  traditional : true,
+		    				  data: {
+		    					  valArr : valArr
+		    				  },
+		    				  success:function(data){
+		    						 Swal.fire({
+		    				                title: "출고 취소가 완료되었습니다.",
+		    				                text: "",
+		    				                icon: "success"
+		    				              }).then(function() {
+		    				            	  location.reload()
+		    				              });
+		    				  }
+		    			  });
+		                } else if (result.isDismissed) { 
+		                }
+		            });
+				}
+			}
+	 
+	 
+	 
   
 	// 출고 처리 popUp
 	 function openChildWindow2(button) {

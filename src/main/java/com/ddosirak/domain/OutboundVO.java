@@ -7,8 +7,9 @@ public class OutboundVO {
 
 	private int out_id; // 출고아이디
 	private String out_num; // 출고번호 
-	private String customer_code; // 거래처 
-	private int employee_id; // 사원번호
+	private String out_customerNm; // 거래처 
+	private int out_empCd; // 사원코드
+	private String out_empNm; // 사원명
 	private String item_code; // 상품코드 
 	private String item_name; // 상품명
 	private String out_notes; // 적요
@@ -22,6 +23,8 @@ public class OutboundVO {
 	private Date out_date; // 출고일자
 	private Date create_date; // 작성일자
 	private int outNumCount; // outNum 카운트
+	private String re_code; // 수주 번호
+	private ProOrderVO proOrderVO; // proOrderVO와 join을 위해
 	
 	
 	public int getOut_id() {
@@ -30,11 +33,14 @@ public class OutboundVO {
 	public String getOut_num() {
 		return out_num;
 	}
-	public String getCustomer_code() {
-		return customer_code;
+	public String getOut_customerNm() {
+		return out_customerNm;
 	}
-	public int getEmployee_id() {
-		return employee_id;
+	public int getOut_empCd() {
+		return out_empCd;
+	}
+	public String getOut_empNm() {
+		return out_empNm;
 	}
 	public String getItem_code() {
 		return item_code;
@@ -75,17 +81,26 @@ public class OutboundVO {
 	public int getOutNumCount() {
 		return outNumCount;
 	}
+	public String getRe_code() {
+		return re_code;
+	}
+	public ProOrderVO getProOrderVO() {
+		return proOrderVO;
+	}
 	public void setOut_id(int out_id) {
 		this.out_id = out_id;
 	}
 	public void setOut_num(String out_num) {
 		this.out_num = out_num;
 	}
-	public void setCustomer_code(String customer_code) {
-		this.customer_code = customer_code;
+	public void setOut_customerNm(String out_customerNm) {
+		this.out_customerNm = out_customerNm;
 	}
-	public void setEmployee_id(int employee_id) {
-		this.employee_id = employee_id;
+	public void setOut_empCd(int out_empCd) {
+		this.out_empCd = out_empCd;
+	}
+	public void setOut_empNm(String out_empNm) {
+		this.out_empNm = out_empNm;
 	}
 	public void setItem_code(String item_code) {
 		this.item_code = item_code;
@@ -126,18 +141,31 @@ public class OutboundVO {
 	public void setOutNumCount(int outNumCount) {
 		this.outNumCount = outNumCount;
 	}
+	public void setRe_code(String re_code) {
+		this.re_code = re_code;
+	}
+	public void setProOrderVO(ProOrderVO proOrderVO) {
+		this.proOrderVO = proOrderVO;
+	}
 	
 	
 	@Override
 	public String toString() {
-		return "OutboundVO [out_id=" + out_id + ", out_num=" + out_num + ", customer_code=" + customer_code
-				+ ", employee_id=" + employee_id + ", item_code=" + item_code + ", item_name=" + item_name
-				+ ", out_notes=" + out_notes + ", out_Cqty=" + out_Cqty + ", out_qty=" + out_qty + ", price=" + price
-				+ ", stock_code=" + stock_code + ", factory_code=" + factory_code + ", out_state=" + out_state
-				+ ", due_date=" + due_date + ", out_date=" + out_date + ", create_date=" + create_date
-				+ ", outNumCount=" + outNumCount + "]";
+		return "OutboundVO [out_id=" + out_id + ", out_num=" + out_num + ", out_customerNm=" + out_customerNm
+				+ ", out_empCd=" + out_empCd + ", out_empNm=" + out_empNm + ", item_code=" + item_code + ", item_name="
+				+ item_name + ", out_notes=" + out_notes + ", out_Cqty=" + out_Cqty + ", out_qty=" + out_qty
+				+ ", price=" + price + ", stock_code=" + stock_code + ", factory_code=" + factory_code + ", out_state="
+				+ out_state + ", due_date=" + due_date + ", out_date=" + out_date + ", create_date=" + create_date
+				+ ", outNumCount=" + outNumCount + ", re_code=" + re_code + ", proOrderVO=" + proOrderVO + "]";
 	}
-
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 	

@@ -15,7 +15,7 @@
     
     document.getElementById("out_num").value = rowData[1];
     document.getElementById("item_name").value = rowData[3];
-    document.getElementById("employee_name").value = rowData[9];
+    document.getElementById("out_empNm").value = rowData[9];
     document.getElementById("out_qty").value = rowData[4];
     document.getElementById("due_date").value = rowData[6];
     document.getElementById("out_notes").value;
@@ -42,7 +42,7 @@
     </tr>
     <tr>
 	  <td><input type="text" name="item_name" id="item_name" readonly></td>
-	  <td><input type="text" name="employee_name" id="employee_name" readonly></td>
+	  <td><input type="text" name="out_empNm" id="out_empNm" readonly></td>
 	  <td><input type="text" name="out_qty" id="out_qty"></td>
 	  <td><input type="date" name="due_date" id="due_date"></td>
 	  <td><input type="text" name="out_notes" id="out_notes"></td>
@@ -56,12 +56,12 @@
   <script type="text/javascript">
   $("#update").click(function() {
 	    var frObj = $("#fr");
-	    var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
+	    var formData = frObj.serialize(); 
 
 	    $.ajax({
-	      url: "/outbound/outboundUpdate", // 요청을 보낼 서버의 URL
-	      type: "POST", // HTTP 요청 방식 (POST)
-	      data: formData, // 전송할 데이터 (직렬화된 폼 데이터)
+	      url: "/outbound/outboundUpdate", 
+	      type: "POST", 
+	      data: formData, 
 	      success: function(response) {
 	      	Swal.fire({
 	              title: "수정 완료",
