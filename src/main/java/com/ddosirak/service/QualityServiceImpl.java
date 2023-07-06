@@ -8,15 +8,8 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import com.ddosirak.domain.EmployeeVO;
-import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.PageVO;
-import com.ddosirak.domain.ProOrderVO;
-import com.ddosirak.domain.ProductionPerformanceVO;
 import com.ddosirak.domain.QualityControlVO;
-import com.ddosirak.persistance.EmployeeDAO;
-import com.ddosirak.persistance.ProOrderDAO;
-import com.ddosirak.persistance.ProductionPerformanceDAO;
 import com.ddosirak.persistance.QualityDAO;
 
 
@@ -68,7 +61,33 @@ public class QualityServiceImpl implements QualityService {
 	public Integer inspectionCount(Map<String, Object> instrSearch) throws Exception {
 		return qdao.inspectionCount(instrSearch);
 	}
-	
 
+	// 불량리스트
+	@Override
+	public List<QualityControlVO> errorList(PageVO pageVO) throws Exception {
+		return qdao.errorList(pageVO);
+	}
+
+	@Override
+	public List<QualityControlVO> errorList(PageVO pageVO, Map<String, Object> instrSearch, Model model)
+			throws Exception {
+		return qdao.errorList(pageVO, instrSearch, model);
+	}
+	
+	@Override
+	public Integer insertStatus(QualityControlVO ivo) throws Exception {
+		return qdao.insertStatus(ivo);
+	}
+
+	@Override
+	public Integer errorCount(Map<String, Object> instrSearch) throws Exception {
+		return qdao.errorCount(instrSearch);
+	}
+	
+	
+	
+	
+	
+	
 
 } // public class end

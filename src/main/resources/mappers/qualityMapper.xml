@@ -82,23 +82,129 @@
 		#{startRow}, #{pageSize}
 	</select>
 
-	<!-- 품질현황 검색 갯수 -->
+	<!-- 품질 현황 검색 갯수 -->
 	<select id="itemCount" resultType="java.lang.Integer">
-		SELECT count(*) FROM
-		prod where
-		wo_code LIKE
-		CONCAT('%',
-		#{wo_code}, '%')
-		AND line_name LIKE
-		CONCAT('%',
-		#{line_name}, '%')
-		AND
-		item_name LIKE CONCAT('%',
-		#{item_name}, '%')
-		AND
-		employee_id LIKE
-		CONCAT('%', #{employee_id},
-		'%')
+		SELECT count(*) FROM prod
+		<if
+			test="line_name != null and item_name != null and employee_id != null and wo_code != null">
+			where wo_code like concat('%', #{wo_code}, '%')
+			and line_name
+			like concat('%', #{line_name}, '%')
+			and employee_id like concat('%',
+			#{employee_id}, '%')
+			and item_name like concat('%', #{item_name}, '%')
+		</if>
+	</select>
+
+	<!-- 불량리스트 -->
+	<select id="errorList"
+		resultType="com.ddosirak.domain.QualityControlVO">
+		SELECT
+		ppa.item_code,
+		SUM(ppa.pfQTY) AS total_QTY,
+		SUM(CASE
+		WHEN ppa.perf_gobd = 'Y' THEN ppa.pfQTY ELSE 0 END) AS
+		total_error_QTY,
+		ie.error_status
+		FROM
+		prod p
+		LEFT OUTER JOIN prod_perf_add
+		ppa ON p.wo_code = ppa.wo_code
+		LEFT OUTER JOIN items_error_rate ie ON
+		ie.item_code = ppa.item_code
+		WHERE
+		ppa.item_code IS NOT NULL
+		GROUP BY
+		ppa.item_code, ie.error_status
+		ORDER BY ppa.item_code asc
+		limit
+		#{startRow},
+		#{pageSize}
+	</select>
+
+	<select id="errorSearchList"
+		resultType="com.ddosirak.domain.QualityControlVO">
+		SELECT
+		ppa.item_code,
+		SUM(ppa.pfQTY) AS total_QTY,
+		SUM(CASE
+		WHEN
+		ppa.perf_gobd = 'Y' THEN ppa.pfQTY ELSE 0 END) AS
+		total_error_QTY,
+		ie.error_status
+		FROM
+		prod p
+		LEFT OUTER JOIN prod_perf_add
+		ppa ON p.wo_code
+		= ppa.wo_code
+		LEFT OUTER JOIN items_error_rate ie ON
+		ie.item_code =
+		ppa.item_code
+		WHERE
+		ppa.item_code IS NOT NULL
+		AND ppa.item_code LIKE
+		CONCAT('%', #{item_code}, '%')
+		<if test="error_status != null and error_status != ''">
+			AND ie.error_status LIKE CONCAT('%', #{error_status}, '%')
+		</if>
+		GROUP BY
+		ppa.item_code,
+		ie.error_status
+		ORDER BY ppa.item_code asc
+		LIMIT
+		#{startRow},
+		#{pageSize}
+	</select>
+
+	<!-- 불량 상태 등록 -->
+
+	<insert id="insertStatus">
+		INSERT INTO items_error_rate (item_code,
+		error_status)
+		SELECT
+		p.item_code,
+		#{error_status}
+		FROM
+		prod p
+		LEFT OUTER
+		JOIN prod_perf_add ppa ON p.wo_code = ppa.wo_code
+		LEFT OUTER JOIN
+		items_error_rate ie ON ie.item_code = p.item_code AND
+		ie.wo_code =
+		p.wo_code
+		where p.item_code = #{item_code}
+		GROUP BY p.item_code, p.pQTY
+	</insert>
+
+	<!-- 불량 현황 검색 갯수 -->
+	<select id="errorCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS count
+		FROM (
+		SELECT
+		ppa.item_code,
+		SUM(ppa.pfQTY) AS
+		total_QTY,
+		SUM(CASE WHEN ppa.perf_gobd = 'Y' THEN ppa.pfQTY ELSE 0 END)
+		AS
+		total_error_QTY,
+		ie.error_status
+		FROM prod p
+		LEFT OUTER JOIN
+		prod_perf_add ppa ON p.wo_code = ppa.wo_code
+		LEFT OUTER JOIN
+		items_error_rate ie ON ie.item_code = ppa.item_code
+		WHERE ppa.item_code
+		IS NOT NULL
+		<if test="item_code != null">
+			AND ppa.item_code LIKE CONCAT('%', #{item_code}, '%')
+		</if>
+		<if test="error_status != null and error_status != ''">
+			AND ie.error_status LIKE CONCAT('%', #{error_status}, '%')
+		</if>
+		GROUP BY ppa.item_code, ie.error_status
+		) AS subquery
+
+
 	</select>
 
 	<!-- 품질검사 등록 -->

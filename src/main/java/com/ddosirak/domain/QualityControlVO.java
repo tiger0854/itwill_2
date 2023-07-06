@@ -13,6 +13,10 @@ public class QualityControlVO {
 	private int sQTY; // 수주수량
 	private int pQTY; // 생산수량
 	private int total_error_QTY; // 불량수량
+	private int total_QTY;
+	private int error_rate;
+	private String error_status;
+	
 	public String getWo_code() {
 		return wo_code;
 	}
@@ -67,18 +71,31 @@ public class QualityControlVO {
 	public void setTotal_error_QTY(int total_error_QTY) {
 		this.total_error_QTY = total_error_QTY;
 	}
+	public int getTotal_QTY() {
+		return total_QTY;
+	}
+	public void setTotal_QTY(int total_QTY) {
+		this.total_QTY = total_QTY;
+	}
+	public int getError_rate() {
+		return error_rate;
+	}
+	public void setError_rate(int error_rate) {
+		this.error_rate = error_rate;
+	}
+	public String getError_status() {
+		return error_status;
+	}
+	public void setError_status(String error_status) {
+		this.error_status = error_status;
+	}
 	@Override
 	public String toString() {
 		return "QualityControlVO [wo_code=" + wo_code + ", line_name=" + line_name + ", line_code=" + line_code
 				+ ", item_name=" + item_name + ", item_code=" + item_code + ", employee_id=" + employee_id + ", sQTY="
-				+ sQTY + ", pQTY=" + pQTY + ", total_error_QTY=" + total_error_QTY + "]";
+				+ sQTY + ", pQTY=" + pQTY + ", total_error_QTY=" + total_error_QTY + ", total_QTY=" + total_QTY
+				+ ", error_rate=" + error_rate + ", error_status=" + error_status + "]";
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	

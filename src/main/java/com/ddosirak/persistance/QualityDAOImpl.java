@@ -92,6 +92,36 @@ public class QualityDAOImpl implements QualityDAO {
 		logger.debug("inspectionCount()!");
 		return sqlSession.selectOne(NAMESPACE + ".inspectionCount", instrSearch);
 	}
+
+	// 불량 리스트
+	@Override
+	public List<QualityControlVO> errorList(PageVO pageVO) throws Exception {
+		logger.debug("errorList(PageVO pageVO)!");
+		return sqlSession.selectList(NAMESPACE + ".errorList", pageVO);
+	}
+
+	@Override
+	public List<QualityControlVO> errorList(PageVO pageVO, Map<String, Object> instrSearch, Model model)
+			throws Exception {
+		logger.debug("errorList(PageVO pageVO, Map<String, Object> instrSearch, Model model)!");
+		instrSearch.put("startRow", pageVO.getStartRow());
+		instrSearch.put("pageSize", pageVO.getPageSize());
+		return sqlSession.selectList(NAMESPACE + ".errorSearchList", instrSearch);
+	}
+	
+	@Override
+	public Integer insertStatus(QualityControlVO ivo) {
+		logger.debug("insertStatus(QualityControlVO vo)!");
+		return sqlSession.insert(NAMESPACE + ".insertStatus", ivo);
+	}
+
+	@Override
+	public Integer errorCount(Map<String, Object> instrSearch) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".errorCount", instrSearch);
+	}
+	
+	
+	
 	
 	
 	

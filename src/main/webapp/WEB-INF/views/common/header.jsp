@@ -133,6 +133,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 <div class="nav_link collapse" id="pro">
 		  			<a href="/pro/oderList" class="nav_link"> - 작업지시</a><br>
 		  		    <a href="/pro/oderList" class="nav_link"> - 실적등록</a><br>
+		  		    <a href="/qc/qualityList" class="nav_link"> - 품질현황</a><br>
 				</div>
 				</div>
 

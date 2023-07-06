@@ -34,7 +34,7 @@
 		window.open("/pro/itemList", "popup",
 				"width=500, height=600,left=100, top=100");
 	}
-	
+
 	//레시피 검색 팝업창 (자재)
 	function openMaterialItem() {
 		window.open("/foundation/itemrecipe/materialItemList", "popup",
@@ -80,12 +80,14 @@
 								placeholder="품명" onclick="openItem();">
 							<td>
 							<th>자재코드</th>
-							<td><input type="text" name="material_code" id="material_code"
-								placeholder="자재번호" onclick="openMaterialItem();">
+							<td><input type="text" name="material_code"
+								id="material_code" placeholder="자재번호"
+								onclick="openMaterialItem();">
 							<td>
 							<th>자재명</th>
-							<td><input type="text" name="material_name" id="material_name"
-								placeholder="자재명" onclick="openMaterialItem();"></td>
+							<td><input type="text" name="material_name"
+								id="material_name" placeholder="자재명"
+								onclick="openMaterialItem();"></td>
 						</tr>
 					</table>
 				</div>

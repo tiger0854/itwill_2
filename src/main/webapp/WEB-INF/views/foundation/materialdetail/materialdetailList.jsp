@@ -83,8 +83,7 @@
 									<option value=""></option>
 									<option value="원자재">원자재</option>
 									<option value="부자재">부자재</option>
-							</select>
-							<td></td>
+							</select></td>
 						</tr>
 					</table>
 				</div>
@@ -111,7 +110,6 @@
 					<td>${vo.material_name }</td>
 					<td>${vo.material_type }</td>
 					<td><button class=btn-edit type="button"
-
 							onclick="materialUpdate('${vo.material_code}');">
 							<i class='bx bx-edit'></i>
 						</button></td>
