@@ -12,7 +12,7 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
 	rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="../css/product.css">
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <script
 	src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
 </head>
@@ -207,7 +207,7 @@
 						<td></td>
 						<td>
 							<input type="hidden" name="item_code" id="item_code"> 
-							<input type="text" id="item_name" required readonly="readonly" placeholder="검색 후 클릭"> 
+							<input type="text" id="item_name" required readonly="readonly" onclick="itemSearch();"> 
 						</td>
 					</tr>
 					<tr>
@@ -221,10 +221,10 @@
 			</table>
 
 			<div style="text-align: center; margin-top: 50px">
-				<button type="button" class="btn-add" onclick="onInsert();">
+				<button type="button" class="btn btn-outline-primary" onclick="onInsert();">
 					<i class='bx bx-edit'></i> 등록
 				</button>
-				<button class="btn-search" onclick="window.close()">X 취소</button>
+				<button class="btn btn-danger" onclick="window.close()">X 취소</button>
 			</div>
 		</form>
 

@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <title>Insert title here</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
@@ -43,7 +44,7 @@
 				window.close(); // 윈도우 창을 닫습니다.
 			},
 			error : function(xhr, status, error) {
-				console.error("에러 발생:", error);
+				alert("빈칸을 입력해주세요!");
 			}
 		});
 	}
@@ -79,7 +80,7 @@
 					</tr>
 					<tr>
 						<td>재고단위</td>
-						<td><input type="number" name="unit" value="${vo.unit }" required></td>
+						<td><input type="text" name="unit" value="${vo.unit }" required></td>
 					</tr>
 
 					<tr>
@@ -93,11 +94,11 @@
 
 			<!-- 작업지시등록, 취소 버튼 -->
 			<div style="text-align: center; margin-top: 50px">
-				<button type="button" class=btn-add
+				<button type="button" class="btn btn-outline-primary"
 					onclick="onUpdate('${vo.item_code }');">
 					<i class='bx bx-edit'></i> 등록
 				</button>
-				<button class=btn-search onclick="window.close()">X 취소</button>
+				<button class="btn btn-danger" onclick="window.close()">X 취소</button>
 			</div>
 
 		</form>

@@ -5,6 +5,7 @@
 <html>
 <head>
 <jsp:include page="../../common/header.jsp" />
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
@@ -54,9 +55,9 @@ function openItem() {
 					<hr width="100%" style="border: 2px solid black">
 					<!-- 창고목록 검색, 등록버튼 -->
 					<div class=btn-container>
-						<input class="btn-search" type="submit" value="공장 조회">
+						<input class="btn btn-primary" type="submit" value="공장 조회">
 						<!-- <button class=btn-add onclick="location.href='warehouseWrite'"><i class='bx bx-plus-medical'></i> 창고 추가</button> -->
-						<input type="button" class="btn-add" onclick="factoryUpload()" value="공장 추가">
+						<input type="button" class="btn btn-outline-primary" onclick="factoryUpload()" value="공장 추가">
 					</div>
 
 					<!-- 창고목록 검색박스 -->
@@ -70,7 +71,7 @@ function openItem() {
 							<th>공장명</th>
 							<td><input type="text" id="factory_name" name="factory_name"
 								placeholder="공장명"></td>
-							<td><input type="button" value="상세 검색" onclick="openItem();"></td>
+							<td><input type="button" value="상세 검색" onclick="openItem();" class="btn btn-primary"></td>
 						</tr>
 					</table>
 				</div>

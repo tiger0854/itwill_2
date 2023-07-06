@@ -24,14 +24,14 @@
 	<!-- 물품 조회 -->
 	<!-- 물품 기초 등록 -->
 	<insert id="insertMaterialDetail">
-		insert into material_detail (material_code, material_name, material_type)
-		values (#{material_code}, #{material_name}, #{material_type})
+		insert into material_detail (material_code, material_name, material_type, material_unit)
+		values (#{material_code}, #{material_name}, #{material_type}, #{material_unit})
 	</insert>
 	<!-- 물품 기초 등록 -->
 	<!-- 특정 물품 기초 조회 -->
 	<select id="selectMaterialDetail"
 		resultType="com.ddosirak.domain.MaterialdetailVO">
-		select material_code, material_name, material_type 
+		select material_code, material_name, material_type, material_unit
 		from material_detail
 		where material_code = #{material_code}
 	</select>
@@ -39,7 +39,7 @@
 	<!-- 물품 기초 수정 -->
 	<update id="updateMaterialDetail">
 		UPDATE material_detail
-		SET material_name = #{material_name}, material_type = #{material_type}
+		SET material_name = #{material_name}, material_type = #{material_type}, material_unit=#{material_unit}
 		WHERE material_code = #{material_code}
 	</update>
 	<!-- 물품 기초 수정 -->

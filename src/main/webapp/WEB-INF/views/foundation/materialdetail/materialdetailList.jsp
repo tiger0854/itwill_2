@@ -5,6 +5,7 @@
 <html>
 <head>
 <jsp:include page="../../common/header.jsp" />
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
@@ -55,11 +56,11 @@
 					<hr width="100%" style="border: 2px solid black">
 					<!-- 자재목록 검색, 등록버튼 -->
 					<div class=btn-container>
-						<button class=btn-search type="submit">
+						<button class="btn btn-primary" type="submit">
 							<i class='bx bx-search-alt-2'></i> 조회
 						</button>
 						<!-- <button class=btn-add onclick="orderwrite()"><i class='bx bx-plus-medical'></i> 추가</button> -->
-						<button class=btn-add onclick="materialUpload();">
+						<button class="btn btn-outline-primary" onclick="materialUpload();" >
 
 							<i class='bx bx-plus-medical'></i> 추가
 						</button>
@@ -85,7 +86,7 @@
 									<option value="원자재">원자재</option>
 									<option value="부자재">부자재</option>
 							</select>
-							<td><input type="button" value="상세검색" onclick="openItem();"></td>
+							<td><input type="button" value="상세검색" onclick="openItem();" class="btn btn-primary"></td>
 						</tr>
 					</table>
 				</div>
@@ -100,6 +101,7 @@
 					<tr>
 						<th>자재코드</th>
 						<th>자재이름</th>
+						<th>자재단위</th>
 						<th>자재속성</th>
 						<th>수정</th>
 						<th>삭제</th>
@@ -110,6 +112,7 @@
 						<tr>
 							<td>${vo.material_code }</td>
 							<td>${vo.material_name }</td>
+							<td>${vo.material_unit }</td>
 							<td>${vo.material_type }</td>
 							<td><button class=btn-edit type="button"
 									onclick="materialUpdate('${vo.material_code}');">

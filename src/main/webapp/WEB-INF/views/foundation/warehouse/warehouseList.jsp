@@ -5,6 +5,7 @@
 <html>
 <head>
 <jsp:include page="../../common/header.jsp" />
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
@@ -33,6 +34,8 @@ function openItem() {
 	window.open("/foundation/warehouse/warehouseItemList", "popup",
 			"width=500, height=600,left=100, top=100");
 }
+
+
 </script>
 
 
@@ -51,11 +54,11 @@ function openItem() {
 					<hr width="100%" style="border: 2px solid black">
 					<!-- 창고목록 검색, 등록버튼 -->
 					<div class=btn-container>
-						<button class=btn-search type="submit">
+						<button class="btn btn-primary" type="submit">
 							<i class='bx bx-search-alt-2'></i> 창고 조회
 						</button>
 						<!-- <button class=btn-add onclick="location.href='warehouseWrite'"><i class='bx bx-plus-medical'></i> 창고 추가</button> -->
-						<button class=btn-add onclick=warehouseUpload()>
+						<button class="btn btn-outline-primary" onclick=warehouseUpload()>
 							<i class='bx bx-plus-medical'></i> 창고 추가
 						</button>
 					</div>
@@ -71,6 +74,7 @@ function openItem() {
 							<th>창고명</th>
 							<td><input type="text" id="wh_name" name="wh_name"
 								placeholder="창고명"></td>
+							<td colspan="2"><input type="button" value="상세검색" onclick="openItem();" class="btn btn-primary"></td>
 						</tr>
 						<tr>	
 							<th>재고/자재</th>
@@ -86,7 +90,11 @@ function openItem() {
 									<option value="냉동">냉동</option>
 									<option value="상온">상온</option>
 							</select></td>
-							<td><input type="button" value="상세검색" onclick="openItem();"></td>
+							<th>창고 용량</th>
+							<td>
+							<input type="number" name="minsize" width="200" placeholder="최소용량" min="0" max="999999">~
+							<input type="number" name="maxsize" placeholder="최대용량" min="0" max="999999">
+							</td>
 						</tr>
 					</table>
 				</div>
@@ -103,6 +111,7 @@ function openItem() {
 						<th>창고명</th>
 						<th>재고/자재</th>
 						<th>냉장/냉동/상온</th>
+						<th>최대 용량</th>
 						<th>수정</th>
 						<th>삭제</th>
 					</tr>
@@ -114,6 +123,7 @@ function openItem() {
 							<td>${vo.wh_name }</td>
 							<td>${vo.retail_code }</td>
 							<td>${vo.wh_type }</td>
+							<td>${vo.wh_size }</td>
 							<td><button class=btn-edit type="button"
 									onclick="warehouseUpdate('${vo.wh_code}');">
 									<i class='bx bx-edit'></i>
@@ -136,17 +146,17 @@ function openItem() {
 					style="margin-top: 20px;">
 					<c:if test="${pageVO.startPage > pageVO.pageBlock}">
 						<li class="page-item"><a class="page-link"
-							href="/foundation/warehouse/warehouseList?wh_code=${Search.wh_code }&wh_name=${Search.wh_name }&wh_type=${Search.wh_type }&retail_code=${Search.retail_code }&pageNum=${pageVO.startPage - pageVO.pageBlock}">
+							href="/foundation/warehouse/warehouseList?wh_code=${Search.wh_code }&wh_name=${Search.wh_name }&wh_type=${Search.wh_type }&retail_code=${Search.retail_code }&minsize=${Search.minsize }&maxsize=${Search.maxsize }&pageNum=${pageVO.startPage - pageVO.pageBlock}">
 								</a></li>
 					</c:if>
 					<c:forEach var="i" begin="${pageVO.startPage}"
 						end="${pageVO.endPage}" step="1">
 						<li class="page-item"><a class="page-link"
-							href="/foundation/warehouse/warehouseList?wh_code=${Search.wh_code }&wh_name=${Search.wh_name }&wh_type=${Search.wh_type }&retail_code=${Search.retail_code }&pageNum=${i}"><span>${i}</span></a></li>
+							href="/foundation/warehouse/warehouseList?wh_code=${Search.wh_code }&wh_name=${Search.wh_name }&wh_type=${Search.wh_type }&retail_code=${Search.retail_code }&minsize=${Search.minsize }&maxsize=${Search.maxsize }&pageNum=${i}"><span>${i}</span></a></li>
 					</c:forEach>
 					<c:if test="${pageVO.endPage < pageVO.pageCount}">
 						<li class="page-item"><a class="page-link"
-							href="/foundation/warehouse/warehouseList?wh_code=${Search.wh_code }&wh_name=${Search.wh_name }&wh_type=${Search.wh_type }&retail_code=${Search.retail_code }&pageNum=${pageVO.startPage + pageVO.pageBlock}">
+							href="/foundation/warehouse/warehouseList?wh_code=${Search.wh_code }&wh_name=${Search.wh_name }&wh_type=${Search.wh_type }&retail_code=${Search.retail_code }&minsize=${Search.minsize }&maxsize=${Search.maxsize }&pageNum=${pageVO.startPage + pageVO.pageBlock}">
 								</a></li>
 					</c:if>
 				</ul>

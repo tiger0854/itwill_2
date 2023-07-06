@@ -10,6 +10,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <!-- <link rel="stylesheet" type="text/css" href="../css/css.css"> -->
 <link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -93,7 +94,7 @@
 		  for (var i = 0; i < checkedValues.length; i++) {
 
 		    var row = "<tr id='" + checkedValues[i].material_code + "'>" + "<td>자재 코드: "
-		              + checkedValues[i].material_code + " 자재 명 : "+checkedValues[i].material_name+"</td><td><input type='button' value='제거' onclick='deleteMaterial(\"" + checkedValues[i].material_code + "\", \"" + checkedValues[i].material_name + "\");'></td>" + "</tr>";
+		              + checkedValues[i].material_code + " 자재 명 : "+checkedValues[i].material_name+"</td><td><input type='button' value='제거' class='btn btn-danger' onclick='deleteMaterial(\"" + checkedValues[i].material_code + "\", \"" + checkedValues[i].material_name + "\");'></td>" + "</tr>";
 
 		    table.append(row);
 		  }
@@ -202,7 +203,7 @@
 		<table id="checkParameter">
 			
 		</table>
-		<input type="button" value="등록" onclick="postParam();">
+		<input type="button" value="등록" class="btn btn-outline-primary" onclick="postParam();">
 		</form>
 	</div>
 </body>

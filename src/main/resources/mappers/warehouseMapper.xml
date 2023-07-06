@@ -17,6 +17,8 @@
 		and wh_name LIKE concat('%', #{wh_name}, '%') 
 		and wh_type LIKE concat('%', #{wh_type}, '%') 
 		and retail_code LIKE concat('%', #{retail_code}, '%') 
+		and wh_size &gt;= #{minsize}
+		and wh_size &lt;= #{maxsize}
 		LIMIT #{startRow}, #{pageSize}
 	</select>
 	<!-- 창고 조회 -->
@@ -35,7 +37,7 @@
 	<!-- 창고 수정 -->
 	<update id="updateWarehouse">
 		UPDATE warehouse
-		SET wh_name = #{wh_name}, retail_code = #{retail_code}, wh_type = #{wh_type}
+		SET wh_name = #{wh_name}, retail_code = #{retail_code}, wh_type = #{wh_type}, wh_size=#{wh_size}
 		WHERE wh_code = #{wh_code}
 	</update>
 	<!-- 창고 수정 -->
@@ -55,8 +57,7 @@
 		SELECT * FROM warehouse
 		where wh_code LIKE concat('%', #{wh_code}, '%') 
 		and wh_name LIKE concat('%', #{wh_name}, '%') 
-		and wh_type LIKE concat('%', #{wh_type}, '%') 
-		and retail_code LIKE concat('%', #{retail_code}, '%') 
+
 	</select>
 	<!-- 상품 검색 (팝업창) -->
 
@@ -64,7 +65,12 @@
 	<select id="getMaxCode" resultType="String">
 		select max(wh_code)
 		from warehouse
-		where wh_type=#{wh_type} and retail_code=#{retail_code}
+		where wh_code LIKE concat('%', #{wh_code}, '%') 
+		and wh_name LIKE concat('%', #{wh_name}, '%')
+		and wh_type LIKE concat('%', #{wh_type}, '%') 
+		and retail_code LIKE concat('%', #{retail_code}, '%') 
+		and wh_size &gt;= #{minsize}
+		and wh_size &lt;= #{maxsize}
 	</select>
 	<!-- max(코드) -->
 
@@ -72,10 +78,14 @@
 	<select id="wareCount" resultType="java.lang.Integer">
 		select count(*) from
 		warehouse
-		<if test="wh_code != null and wh_name != null">
-			where wh_code LIKE concat('%', #{wh_code}, '%')
-			and 
-			wh_name LIKE concat('%', #{wh_name}, '%')
+		<if test="wh_code != null and wh_name != null and wh_type != null and retail_code != null and minsize != null and maxsize != null">
+			where wh_code LIKE concat('%', #{wh_code}, '%') 
+			and wh_name LIKE concat('%', #{wh_name}, '%')
+			and wh_type LIKE concat('%', #{wh_type}, '%') 
+			and retail_code LIKE concat('%', #{retail_code}, '%') 
+			and wh_size &gt;= #{minsize}
+			and wh_size &lt;= #{maxsize}
+			
 		</if>
 	</select>
 	<!-- 창고 검색 갯수 -->

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -186,9 +187,9 @@ public class ItemRecipeController {
 	public String getMaterialsGET(@RequestParam("item_code") String itemCode) throws Exception {
 		List<ItemRecipeListVO> itemList = service.selectItemRecipe(itemCode);
 		logger.debug(itemList.size() + "");
+	
 		// ObjectMapper 객체 생성
 		ObjectMapper objectMapper = new ObjectMapper();
-
 		// List를 JSON 문자열로 변환
 		String jsonString = objectMapper.writeValueAsString(itemList);
 		return jsonString;

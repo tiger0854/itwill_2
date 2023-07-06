@@ -19,6 +19,7 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
 	rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <!-- <link rel="stylesheet" type="text/css" href="../css/css.css"> -->
 <link rel="stylesheet" type="text/css"
 	href="../../resources/css/product.css">

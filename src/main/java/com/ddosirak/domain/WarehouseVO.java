@@ -5,6 +5,30 @@ public class WarehouseVO {
 	private String wh_name;
 	private String retail_code;
 	private String wh_type;
+	private Integer wh_size;
+	private Integer minsize;
+	private Integer maxsize;
+	
+	
+	
+	public Integer getWh_size() {
+		return wh_size;
+	}
+	public void setWh_size(Integer wh_size) {
+		this.wh_size = wh_size;
+	}
+	public Integer getMinsize() {
+		return minsize;
+	}
+	public void setMinsize(Integer minsize) {
+		this.minsize = minsize;
+	}
+	public Integer getMaxsize() {
+		return maxsize;
+	}
+	public void setMaxsize(Integer maxsize) {
+		this.maxsize = maxsize;
+	}
 	public String getWh_code() {
 		return wh_code;
 	}

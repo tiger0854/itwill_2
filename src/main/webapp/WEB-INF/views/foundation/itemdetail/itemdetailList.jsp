@@ -5,6 +5,7 @@
 <html>
 <head>
 <jsp:include page="../../common/header.jsp" />
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
@@ -59,8 +60,8 @@
 					<hr width="100%" style="border: 2px solid black">
 					<!-- 상품목록 검색, 등록버튼 -->
 					<div class=btn-container>
-						<input type="submit" class="btn-search" value="품목 조회">
-						<input type="button" class="btn-add" onclick="itemUpload();" value="품목 추가">
+						<input type="submit" class="btn btn-primary" value="품목 조회">
+						<input type="button" class="btn btn-outline-primary" onclick="itemUpload();" value="품목 추가">
 					</div>
 
 					<!-- 품목 검색박스 -->
@@ -75,7 +76,7 @@
 							<th>품명</th>
 							<td><input type="text" name="item_name" id="item_name"
 								placeholder="품명" ></td>
-							<td><input type="button" onclick="openItem();" value="상세 검색"></td>
+							<td><input type="button" onclick="openItem();" value="상세 검색" class="btn btn-primary"></td>
 						</tr>
 					</table>
 				</div>

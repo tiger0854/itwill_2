@@ -5,6 +5,7 @@
 <html>
 <head>
 <jsp:include page="../../common/header.jsp" />
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
@@ -59,8 +60,8 @@
 					<hr width="100%" style="border: 2px solid black">
 					<!-- 상품목록 검색, 등록버튼 -->
 					<div class=btn-container>
-						<input type="submit" class="btn-search" value="레시피 조회"> 
-						<input type="button" class="btn-add" onclick="itemrecipeUpload();" value="레시피 추가 및 수정">
+						<input type="submit" class="btn btn-primary" value="레시피 조회"> 
+						<input type="button" class="btn btn-outline-primary" onclick="itemrecipeUpload();" value="레시피 추가 및 수정">
 					</div>
 
 					<!-- 품목 검색박스 -->
@@ -70,12 +71,12 @@
 						<tr>
 							<th>품번</th>
 							<td><input type="text" name="item_code" id="item_code"
-								placeholder="품번" onclick="openItem();"></td>
+								placeholder="품번"></td>
 							<th>품명</th>
 							<td><input type="text" name="item_name" id="item_name"
 								placeholder="품명">
 							
-							<td><input type="button" onclick="openItem();" value="상품 상세 검색"></td>
+							<td><input type="button" onclick="openItem();" value="상품 상세 검색" class="btn btn-primary"></td>
 						</tr>
 						<tr>
 							<th>자재코드</th>
@@ -85,7 +86,7 @@
 							<th>자재명</th>
 							<td><input type="text" name="material_name" id="material_name"
 								placeholder="자재명"></td>
-							<td><input type="button" onclick="openMaterialItem();" value="자재 상세 검색"></td>
+							<td><input type="button" onclick="openMaterialItem();" value="자재 상세 검색" class="btn btn-primary"></td>
 						</tr>
 					</table>
 				</div>
