@@ -85,11 +85,13 @@
 	// 소켓연결동작
 	function onOpen(){
 		var openMsg = chat_sender+'&'+chat_receiver+'&'+'ENTER-CHAT'+'&'+chatRoom_code;
+		console.log(openMsg);
 		sock.send(openMsg);
 	} 
 	// 메시지 전송
 	function sendMessage() {
 		var msg = chat_sender+'&'+chat_receiver+'&'+$("#message").val()+'&'+chatRoom_code;
+		console.log(msg);
 		sock.send(msg);
 		scrollDown();
 	}

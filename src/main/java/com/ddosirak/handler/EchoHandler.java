@@ -62,15 +62,16 @@ public class EchoHandler extends TextWebSocketHandler{
         
         // 채팅방 찾아오기
         ChatRoomVO chatRoomVO = bService.getChatRoom(chatRoom_code);
-        if(RoomList.get(chatRoomVO.getChatRoom_code()) == null && chat.equals("ENTER-CHAT") && chatRoomVO != null) {
+
+        if(chatRoomVO == null && chat.equals("ENTER-CHAT")) { // 이 조건을 건드리면 됨 ...
             // 채팅방에 들어갈 session들
             ArrayList<WebSocketSession> sessionTwo = new ArrayList<>();
             // session 추가
             sessionTwo.add(session);
             // sessionList에 추가
-            sessionList.put(session, chatRoomVO.getChatRoom_code());
+            sessionList.put(session, chatRoom_code);// 이쪽이 문제다 !!!!
             // RoomList에 추가
-            RoomList.put(chatRoomVO.getChatRoom_code(), sessionTwo);
+            RoomList.put(chatRoom_code, sessionTwo); // 이쪽이 문제다 !!!!
             // 확인용
             logger.info("채팅방 생성");
         }else if(RoomList.get(chatRoomVO.getChatRoom_code()) != null && chat.equals("ENTER-CHAT") && chatRoomVO != null) {
