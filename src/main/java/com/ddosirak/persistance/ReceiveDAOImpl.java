@@ -55,11 +55,16 @@ public class ReceiveDAOImpl implements ReceiveDAO {
 	}
 
 	@Override
-	public void receiveRequest() throws Exception {
-		sqlSession.insert(NAMESPACE+".receiveRequest");
-		
+	public String receiveRecodeGet() throws Exception {
+		return sqlSession.selectOne(NAMESPACE+".receiveRecodeGet");
 	}
 	
+	@Override
+	public void receiveRequest(String re_code) throws Exception {
+	
+		sqlSession.insert(NAMESPACE+".receiveRequest",re_code);
+		
+	}
 	
 
 	

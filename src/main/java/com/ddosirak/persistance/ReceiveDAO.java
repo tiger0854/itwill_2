@@ -22,8 +22,11 @@ public interface ReceiveDAO {
 	// 수주 삭제
 	public void receiveRemove(String re_code) throws Exception;
 	
-	// 레시피요청
-	public void receiveRequest() throws Exception;
+	// 레시피요청(re_code가져오기)
+	public String receiveRecodeGet() throws Exception;
+	
+	// 레시피요청(자재insert)
+	public void receiveRequest(String re_code) throws Exception;
 	
 }
  

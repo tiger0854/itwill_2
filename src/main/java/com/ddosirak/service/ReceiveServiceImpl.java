@@ -49,13 +49,18 @@ public class ReceiveServiceImpl implements ReceiveService {
 	}
 
 	// 레시피요청
+
 	@Override
-	public void receiveRequest() throws Exception {
-		rdao.receiveRequest();
-		
+	public String receiveRecodeGet() throws Exception {
+		return rdao.receiveRecodeGet();
 	}
 	
+	@Override
+	public void receiveRequest(String re_code) throws Exception {
 	
+		rdao.receiveRequest(re_code);
+		
+	}
 	
 	
 	

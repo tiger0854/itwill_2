@@ -24,12 +24,11 @@
 			<when test="state == 'input'">WHERE cus_stat = 1</when>
 			<when test="state == 'output'">WHERE cus_stat = 2</when>
   		</choose> 
-   		
+   		<if test="search != ''">	
    		<choose>
 	   		<when test="kind == 'name'">AND cus_name</when>
 	   		<when test="kind == 'code'">AND cus_code</when>		
    		</choose>
-  		<if test="search != ''">	
 		LIKE CONCAT('%', #{search}, '%')
 		</if>
 	</select>
@@ -45,11 +44,11 @@
   				<when test="state == 'finish'">WHERE in_state = 1</when>
   		</choose> 
 		 
+		<if test="search != ''">
 		<choose>
   				<when test="kind == 'code'">AND wh_code</when>
   				<when test="kind == 'number'">AND in_number</when>
-  		</choose> 
-  		<if test="search != ''">	
+  		</choose> 	
 		LIKE CONCAT('%', #{search}, '%')
 		</if>
 	</select>
@@ -64,12 +63,12 @@
   				<when test="state == 'finish'">WHERE order_state = 1</when>
   		</choose> 
 		
+		<if test="search != ''">	
 		<choose>
   				<when test="kind == 'number'">AND order_number</when>
   				<when test="kind == 'code'">AND material_code</when>
   				<when test="kind == 'name'">AND material_name</when>
   		</choose> 
-  		<if test="search != ''">	
 		LIKE CONCAT('%', #{search}, '%')
 		</if>
 	</select>

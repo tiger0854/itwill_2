@@ -11,6 +11,8 @@
 
 <script type="text/javascript">
 
+
+
 function orderDelete(button) {
 		   var row = button.parentNode.parentNode;
 		   var cells = row.getElementsByTagName("td");
@@ -34,7 +36,7 @@ function orderDelete(button) {
 	            }).then(result => {
 	                if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
 	                	location.href="/inbound/orderDelete?order_number="+rowData[0];
-	            	    
+	                	
 	                } else if (result.isDismissed) { // 만약 모달창에서 cancel 버튼을 눌렀다면
 	                	// ...실행
 	                }
@@ -43,6 +45,8 @@ function orderDelete(button) {
 
 	 
 };
+
+
 	
 	
 
@@ -208,6 +212,7 @@ height: 50px; vertical-align: middle; text-align: center;
     </div>
  
  <script type="text/javascript">
+
  
  function openChildWindow(button) {
    var row = button.parentNode.parentNode;

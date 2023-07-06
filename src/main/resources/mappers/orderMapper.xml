@@ -23,13 +23,12 @@
   				<when test="state == 'ready'">WHERE order_state = 0</when>
   				<when test="state == 'finish'">WHERE order_state = 1</when>
   			</choose>
+  			<if test="search != ''">
 	  		<choose>
   				<when test="kind == 'number'">AND order_number</when>
   				<when test="kind == 'code'">AND material_code</when>
   				<when test="kind == 'name'">AND material_name</when>
 	   		</choose> 
-	   		
-	   		<if test="search != ''">
 	   		LIKE CONCAT('%', #{search}, '%')
 	   		</if>
   		ORDER BY order_date DESC

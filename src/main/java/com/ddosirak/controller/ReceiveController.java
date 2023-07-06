@@ -47,7 +47,8 @@ public class ReceiveController {
 		logger.debug(vo+"");
 		
 		rService.receiveInsert(vo);
-		rService.receiveRequest();
+		String re_code = rService.receiveRecodeGet();
+		rService.receiveRequest(re_code);
 		
 		return "redirect:/receive/receiveList";
 	} 

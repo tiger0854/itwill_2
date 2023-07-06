@@ -15,7 +15,7 @@
 
 </head>
 <body>
-	<h3>수주요청 리스트</h3>
+	<h3>자재 요청 목록</h3>
 
   <table border="1" class="table table-hover">
   <tr>

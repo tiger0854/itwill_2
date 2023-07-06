@@ -14,12 +14,12 @@
 			<when test="state == 'input'">WHERE cus_stat = 1</when>
 			<when test="state == 'output'">WHERE cus_stat = 2</when>
   		</choose> 
-   		
+   		<if test="search != ''">
    		<choose>
 	   		<when test="kind == 'name'">AND cus_name</when>
 	   		<when test="kind == 'code'">AND cus_code</when>		
    		</choose> 
-   		<if test="search != ''">
+   	
    		LIKE CONCAT('%', #{search}, '%')
    		</if>
   		ORDER BY cus_id DESC

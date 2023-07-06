@@ -53,11 +53,11 @@
   				<when test="state == 'ready'">AND in_state = 0</when>
   				<when test="state == 'finish'">AND in_state = 1</when>
   		</choose> 
+ 	    <if test="search != ''">
  	   	<choose>
-  		<when test="kind == 'number'">AND in_number</when>
-  		<when test="kind == 'code'">AND wh_code</when>		
+		  		<when test="kind == 'number'">AND in_number</when>
+		  		<when test="kind == 'code'">AND wh_code</when>		
   		</choose> 
-  		<if test="search != ''">
   		LIKE CONCAT('%', #{search}, '%')
   		</if>
   	ORDER BY in_id DESC

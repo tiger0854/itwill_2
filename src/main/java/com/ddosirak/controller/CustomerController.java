@@ -128,7 +128,7 @@ public class CustomerController {
 	
 
 	@RequestMapping(value = "/customerDelete",method = RequestMethod.POST)
-	public String InboundDeletePOST(HttpServletRequest req) throws Exception {
+	public String InboundDeletePOST(HttpServletRequest req,RedirectAttributes rttr) throws Exception {
 		logger.info("@@@@@@@@@customerDeletePOST() 호출!");
 		String[] idArr = req.getParameterValues("valArr");
 		
@@ -136,6 +136,7 @@ public class CustomerController {
 		
 			 cService.deleteCustomer(idArr[i]); //거래처 삭제서비스 
 	}
+		rttr.addFlashAttribute("result","DELETEOK");
 		return "redirect:/customer/customerList";
 
 	}//거래처삭제
