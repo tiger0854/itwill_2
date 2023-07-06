@@ -102,8 +102,15 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		EmployeeVO resultVO = sqlSession.selectOne((NAMESPACE)+".getEmployee", employee_id);
 		return resultVO;
 	}// getEmployee() method end
-
+	
 	// 사원목록 출력
+	@Override
+	public List<EmployeeVO> empList() {
+		List<EmployeeVO> empList = sqlSession.selectList(NAMESPACE+".empListAll");
+		return empList;
+	}//empList() method end
+	
+	// 사원목록 출력 (페이징)
 	@Override
 	public List<EmployeeVO> empList(PageVO pageVO) {
 		logger.debug("empList()!");
@@ -125,25 +132,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		return sqlSession.selectOne(NAMESPACE+".empCount");
 	}// empCount() method end
 
-	// 사원 휴가 리스트 출력(관리자)
-	@Override
-	public List<EmployeevacationVO> vacationList() {
-		logger.debug("vacationList()!");
-		List<EmployeevacationVO> vacationList = sqlSession.selectList(NAMESPACE+".vacationList");
-		return vacationList;
-	}// vacationList() method end
-
-	// 사원휴가 신청
-	@Override
-	public void insertVacation(EmployeevacationVO vvo) {
-		// 1,2 DB 연결
-		// 3, SQL작성, pstmt
-		// 4. SQL 실행
-		sqlSession.insert(NAMESPACE+".insertVacation", vvo);
-		
-		logger.debug("휴가 신청 완료!");
-		logger.debug("휴가 신청 완료!"+vvo);
-	}// insertVacation() method end
 
 	public Integer alCount_all() {
 		return sqlSession.selectOne(NAMESPACE+".alCount_all");
@@ -164,8 +152,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	@Override
 	public List<SalaryVO> getSalaryInfo(int employee_id) {
 		logger.debug("getSalaryInfo() !");
-		List<SalaryVO> salaryList = sqlSession.selectList(NAMESPACE+".getSalaryinfo",employee_id);
-		return salaryList;
+		return sqlSession.selectList(NAMESPACE+".getSalaryinfo",employee_id);
+	}// getSalaryInfo() method end
+	// 급여정보 조회(월별)
+	@Override
+	public List<SalaryVO> getSalaryInfo(SalaryVO vo) {
+		logger.debug("getSalaryInfo_MONTH() !");
+		return sqlSession.selectList(NAMESPACE+".getSalaryinfo_ajax",vo);
 	}// getSalaryInfo() method end
 	
 	// 급여 정보 등록
@@ -198,6 +191,27 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 /////////////////////////////////////////급여동작////////////////////////////////////////////////////	
 	
 /////////////////////////////////////////휴가동작////////////////////////////////////////////////////	
+	
+	// 사원 휴가 리스트 출력(관리자)
+		@Override
+		public List<EmployeevacationVO> vacationList(PageVO pageVO) {
+			logger.debug("vacationList()!");
+			List<EmployeevacationVO> vacationList = sqlSession.selectList(NAMESPACE+".vacationList",pageVO);
+			return vacationList;
+		}// vacationList() method end
+
+		// 사원휴가 신청
+		@Override
+		public void insertVacation(EmployeevacationVO vvo) {
+			// 1,2 DB 연결
+			// 3, SQL작성, pstmt
+			// 4. SQL 실행
+			sqlSession.insert(NAMESPACE+".insertVacation", vvo);
+			
+			logger.debug("휴가 신청 완료!");
+			logger.debug("휴가 신청 완료!"+vvo);
+		}// insertVacation() method end
+	
 	// 나의 휴가 리스트 출력
 	@Override
 	public List<EmployeevacationVO> myvacationList(int employee_id) {
@@ -209,6 +223,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	// 휴가 수정
 	@Override
 	public Integer vacationmodify(EmployeevacationVO vvo) {
+		
+		logger.debug("vvo"+vvo);
 		Integer result = sqlSession.selectOne(NAMESPACE+".vacationmodify",vvo);
 		return result;
 	}// vacationmodify() method end
@@ -221,6 +237,51 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		EmployeevacationVO resultEVO = sqlSession.selectOne((NAMESPACE)+".vacationim", vacation_id);
 		return resultEVO;
 	}
+	
+	// 휴가 삭제
+		@Override
+		public void vacationdelete(Integer vacation_id) {
+			logger.debug("vacationdelete()!");
+			sqlSession.delete(NAMESPACE + ".vacationdelete", vacation_id);
+		}// vacationdelete() method end
+	
+	// 휴가 승인
+		@Override
+		public Integer vacationapprove(Integer vacation_id, int id) {
+			Map<String, Object> vacationmap=new HashMap<String, Object>();
+			vacationmap.put("vacation_id", vacation_id);
+			vacationmap.put("id", id);
+			vacationmap.put("approve_emp", "윤찬우");
+			logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+vacationmap);
+			Integer result = sqlSession.update(NAMESPACE+".vacationapprove",vacationmap);
+			return result;
+		}
+		
+	// 휴가 반려
+		@Override
+		public Integer vacationreturn(Integer vacation_id, int id) {
+			String vacationfind=sqlSession.selectOne(NAMESPACE+"vacationfind", id);
+			Map<String, Object> vacationmap=new HashMap<String, Object>();
+			vacationmap.put("vacation_id", vacation_id);
+			vacationmap.put("approve_emp", vacationfind);
+			Integer result = sqlSession.update(NAMESPACE+".vacationreturn",vacationmap);
+			return result;
+		}
+	// 아이디 찾기
+		@Override
+		public String vacationfind(int id) {
+			
+			return sqlSession.selectOne(NAMESPACE+"vacationfind", id);
+		}
+		
+	// 사원 휴가관리 페이지 페이징
+		@Override
+		public Integer countRetOrdList(PageVO pageVO) {
+			logger.debug("countRetOrdList()!!");
+			return sqlSession.selectOne(NAMESPACE+".vacationcount",pageVO);
+		}
+	
+	
 /////////////////////////////////////////휴가동작////////////////////////////////////////////////////	
 
 	
@@ -235,6 +296,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		vo.setEmployee_id(employee_id);
 		return sqlSession.selectList(NAMESPACE+".getCheckList", vo);
 	}// getCheckList() method end
+
+
+	
+
 
 	// 출근인원 조회
 	@Override
@@ -294,12 +359,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 
 
-	// 휴가 삭제
-	@Override
-	public void vacationdelete(Integer vacation_id) {
-		logger.debug("vacationdelete()!");
-		sqlSession.delete(NAMESPACE + ".vacationdelete", vacation_id);
-	}// vacationdelete() method end
+	
+
+
+
+
 
 	
 	

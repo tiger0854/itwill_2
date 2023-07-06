@@ -1,6 +1,8 @@
 package com.ddosirak.controller;
 
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -99,11 +101,12 @@ public class MemberController {
 	}// alInsertGET() method end
 	// 일용직 일괄등록 > 동작
 	@RequestMapping(value="/insert_al",method=RequestMethod.POST)	
-	public String alInsertPOST(@ModelAttribute(value="EmployeeListVO") EmployeeListVO voList) {	 // List로 여러 내용을 받아오는 방법.
+	public String alInsertPOST(@ModelAttribute(value="EmployeeListVO") EmployeeListVO voList, Date emp_date) {	 // List로 여러 내용을 받아오는 방법.
 		logger.debug("alInsertPOST() 호출![]~(￣▽￣)~*");
 		// 사원번호 부여 동작
 		for(int i=0;i<voList.getEmployeelist().size();i++) {
 			EmployeeVO emp = voList.getEmployeelist().get(i);
+			emp.setEmp_date(emp_date);
 			logger.debug("!!!!"+emp.getPosition());
 			if(emp.getPosition().equals("일용")) {
 				emp.setEmployee_id(eService.getMaxId_al());// 일용직 사원의 직번
@@ -138,11 +141,12 @@ public class MemberController {
 		model.addAttribute("evo",evo);
 		employee_id = evo.getEmployee_id();
 		
+		// 주석처리
 		// 서비스 - DB에 저장된 글 정보를 가져오기
-		List<EmployeevacationVO> myvacationList = eService.myvacationList(employee_id);
-		logger.debug("myvacationList", myvacationList);
+//		List<EmployeevacationVO> myvacationList = eService.myvacationList(employee_id);
+//		logger.debug("myvacationList", myvacationList);
 		// 연결된 뷰페이지로 전달(뷰-출력)
-		model.addAttribute("myvacationList", myvacationList);
+//		model.addAttribute("myvacationList", myvacationList);
 		
 	}//employeeInfoGET() method end
 	
@@ -536,30 +540,128 @@ public class MemberController {
 //	 http://localhost:8088/emp/vacationlist
 		// 휴가관리 리스트페이지(관리자)
 		@RequestMapping(value = "/vacationlist", method = RequestMethod.GET)
-		public void vacationGET(Model model) {
+		public void vacationGET(Model model, PageVO pageVO, HttpServletRequest request) {
 			logger.debug("vacationGET() 호출![]~(￣▽￣)~*");
 			logger.debug("페이지 이동!");
+			//================================페이징 처리를 위한 값 받아오기 동작========================================
+			// 준비물 : Inject > PageVO , 파라미터값 PageVO pageVO, HttpServletRequest request
+			//   		리스트를 반환하는 DAO - Service 메서드에 PageVO 추가, 쿼리에 LIMIT #{startRow}, #{pageSize} 추가.
+			// 페이징 처리
+			// 한 화면에 보여줄 글 개수 설정
+			int pageSize = 10; // sql문에 들어가는 항목
 			
+			// 현페이지 번호 가져오기
+			String pageNum = request.getParameter("pageNum");
+			if(pageNum==null) {
+				pageNum="1";
+			}
+			// 페이지번호를 정수형으로 변경
+			int currentPage=Integer.parseInt(pageNum);
+			pageVO.setPageSize(pageSize);
+			pageVO.setPageNum(pageNum);
+			pageVO.setCurrentPage(currentPage);
+			int startRow=(pageVO.getCurrentPage()-1)*pageVO.getPageSize()+1; // sql문에 들어가는 항목
+			int endRow = startRow+pageVO.getPageSize()-1;
+			
+			pageVO.setStartRow(startRow-1); // limit startRow (0이 1열이기 때문 1을 뺌)
+			pageVO.setEndRow(endRow);
+			
+			// 게시글 개수 가져오기
+			int count = eService.countRetOrdList(pageVO); // 요 동작만 각자 페이지에 맞게 수정하면 됨!!
+
+			int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
+			int startPage=(currentPage-1)/pageBlock*pageBlock+1;
+			int endPage=startPage+pageBlock-1;
+			int pageCount=count/pageSize+(count%pageSize==0?0:1);
+			if(endPage > pageCount){
+			 	endPage = pageCount;
+			 }
+			pageVO.setCount(count);
+			pageVO.setPageBlock(pageBlock);
+			pageVO.setStartPage(startPage);
+			pageVO.setEndPage(endPage);
+			pageVO.setPageCount(pageCount);
+			
+			model.addAttribute("pageVO", pageVO);
+			//================================페이징 처리를 위한 값 받아오기 동작========================================
 			// 사원 목록 불러오기
-			List<EmployeevacationVO> vacationList = eService.vacationList();
+			List<EmployeevacationVO> vacationList = eService.vacationList(pageVO);
 			model.addAttribute("vacationList",vacationList);
 			
 			
 		}// vacationGET() method end
 		
+//	 http://localhost:8088/emp/vacationcheck
+		// 휴가신청 승인/반려 페이지(관리자)
+		@RequestMapping(value = "/vacationcheck", method = RequestMethod.GET)
+		public String vacationcheck(@RequestParam("vacation_id")Integer vacation_id,
+				@RequestParam("approve")String approve, RedirectAttributes rttr, Date approve_date, String approve_emp, int id) {
+			logger.debug("vacationcheck() 호출![]~(￣▽￣)~*");
+			logger.debug("페이지 이동!");
+			// 페이지 전달 데이터 저장
+			logger.debug("vacation_id :",vacation_id,id);
+
+			if (approve.equals("승인")) {
+			    eService.vacationapprove(vacation_id,id);
+			} else if (approve.equals("반려")) {
+			    eService.vacationreturn(vacation_id,id);
+			}
+			
+			// 리시트로 정보를 전달 (rttr)
+			rttr.addFlashAttribute("result", "CREATEOK");
+			rttr.addFlashAttribute("vacation_id", vacation_id);
+			rttr.addFlashAttribute("approve", approve);
+			rttr.addFlashAttribute("approve_date", approve_date);
+			rttr.addFlashAttribute("approve_emp", approve_emp);
+			
+			return "redirect:/emp/vacationlist";
+			
+		}// vacationGET() method end
+		
+		// 사원휴가 정보
+		@RequestMapping(value = "/vacationinf", method = RequestMethod.GET)
+		public void vacationinf(int employee_id, Model model, Integer vacation_id) {
+			logger.debug("employeeInfoGET() 호출![]~(￣▽￣)~*");
+			// 0609, 페이지 이동간에 정보전달 방법 찾아본 후 마저 코드 짜기. // 해결
+			EmployeeVO evo = eService.getEmployee(employee_id);
+			model.addAttribute("evo",evo);
+			employee_id = evo.getEmployee_id();
+			EmployeevacationVO vvo = eService.vacationim(vacation_id);
+			
+			// 서비스 - DB에 저장된 글 정보를 가져오기
+			List<EmployeevacationVO> myvacationList = eService.myvacationList(employee_id);
+			logger.debug("myvacationList", myvacationList);
+			// 연결된 뷰페이지로 전달(뷰-출력)
+			model.addAttribute("myvacationList", myvacationList);
+			
+		}//employeeInfoGET() method end
+		
+		@RequestMapping(value = "/vacationinf", method = RequestMethod.POST)
+		public String vacationinf(EmployeeVO vo) { 
+			logger.debug("employeeUpdate() 호출![]~(￣▽￣)~*");
+			logger.debug("vo > "+vo);
+			
+			 eService.updateEmployee(vo);
+			 
+			return "redirect:/emp/vacationinf?employee_id="+vo.getEmployee_id();
+		}// employeeUpdate() method end
+		
+		
 		// http://localhost:8088/emp/myvacationList
 		// 나의 휴가내역 리스트 페이지
 		@RequestMapping(value = "/myvacationList", method = RequestMethod.GET)
-		public String myvacationList(Model model, @ModelAttribute("result")String result) {
+		public String myvacationList(Model model, @ModelAttribute("result")String result, Integer vacation_id) {
 			logger.debug("myvacation() 호출!");
 			logger.debug("result :"+result);
 			
 //			 서비스 - DB에 저장된 글 정보를 가져오기
-//			List<EmployeevacationVO> myvacationList = eService.myvacationList();
-//			logger.debug("myvacationList", myvacationList);
-//			// 연결된 뷰페이지로 전달(뷰-출력)
-//			model.addAttribute("myvacationList", myvacationList);
-		return "/emp/myvacationList";
+			List<EmployeevacationVO> myvacationList = eService.myvacationList(vacation_id);
+			logger.debug("myvacationList", myvacationList);
+			// 연결된 뷰페이지로 전달(뷰-출력)
+			model.addAttribute("myvacationList", myvacationList);
+			
+			
+		return "/emp/vacationList";
 		}
 		
 		
@@ -574,6 +676,7 @@ public class MemberController {
 			logger.debug("vacationregist() 호출!");
 			logger.debug("/emp/vacationregist.jsp페이지 이동");
 			logger.debug("@@@@@@@@@@@@@@@@@@@" + vvo);
+			
 			model.addAttribute("vvo", vvo);
 			model.addAttribute("employee_id", vvo.getEmployee_id());
 			
@@ -589,7 +692,7 @@ public class MemberController {
 			// 한글처리(필터를 만들어 놓아서 생략)
 			// 페이지 전달 데이터 저장
 			logger.debug("evo :",vvo);
-			
+			vvo.setVacation_date((int) Math.ceil((vvo.getVacation_finish().getTime() - vvo.getVacation_start().getTime()) / (1000.0 * 60 * 60 * 24)) + 1);
 			// 서비스 - 글쓰기 동작 호출
 			eService.insertVacation(vvo);
 			
@@ -597,7 +700,6 @@ public class MemberController {
 			rttr.addFlashAttribute("result", "CREATEOK");
 			
 			// 나의휴가 내역페이지로 이동
-			
 			
 			return "redirect:/emp/myvacationList";
 			
@@ -625,9 +727,11 @@ public class MemberController {
 			
 			// 서비스 - 휴가수정 동작 호출
 			eService.vacationmodify(vvo);
+
 			
 			// 리시트로 정보를 전달 (rttr)
 			rttr.addFlashAttribute("result", "CREATEOK");
+
 			
 			// 나의휴가 내역페이지로 이동
 			
@@ -637,13 +741,16 @@ public class MemberController {
 		
 		// 휴가 삭제하기
 		@RequestMapping(value = "/vacationdelete", method = RequestMethod.GET)
-		public String vacationdelete(Model model,Integer vacation_id) throws Exception {
+		public String vacationdelete(Model model,Integer vacation_id,int employee_id) throws Exception {
 			// 수정하기 - /emp/modify (GET)
+			
 			logger.debug("vacationdelete() 호출!");
+			logger.debug("@@@@@@@@@@@@vacation_id"+vacation_id);
 			logger.debug("/emp/vacationdelete.jsp페이지 이동");
+			
 			// 서비스 - 휴가 삭제 동작 호출
 			eService.vacationdelete(vacation_id);
-			return "redirect:/emp/info?vacation_id="+vacation_id;
+			return "redirect:/emp/vacationinf?employee_id="+employee_id;
 		}
 		
 		

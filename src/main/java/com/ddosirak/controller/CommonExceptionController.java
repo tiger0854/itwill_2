@@ -17,7 +17,7 @@ public class CommonExceptionController { // 컨트롤러의 역할을 하지는 
 	@ExceptionHandler(Exception.class)
 	public String common(Model model, Exception e) {
 		logger.debug("예외발생!!!!");
-		
+		logger.debug("e :"+e);
 		model.addAttribute("err", e);
 		
 		return "/err/errorPage";

@@ -20,6 +20,15 @@ $(document).ready(function() {
 	  $(".btn-add").click(function() {
 	    var frObj = $("#fr");
 	    var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
+	    
+	   	  // 휴가 시작일과 휴가 종료일의 값을 가져옵니다.
+	      var vacationStart = new Date($("input[name='vacation_start']").val());
+	      var vacationFinish = new Date($("input[name='vacation_finish']").val());
+	      
+	      // 날짜 차이를 계산하여 연차 일 수에 대입합니다.
+	      var vacationDate = Math.ceil((vacationFinish - vacationStart) / (1000 * 60 * 60 * 24));
+	      $("input[name='vacation_date']").val(vacationDate);
+	    
 	    $.ajax({
 	      url: "/emp/vacationmodify", // 요청을 보낼 서버의 URL
 	      type: "POST", // HTTP 요청 방식 (POST)
@@ -79,8 +88,8 @@ $(document).ready(function() {
             <label for="sub">대체인:</label>
             <input type="text" name="subsitute" value="${vvo.subsitute}" required>
             
-            <button class="btn-add">수정하기</button>
         </form>
+            <button class="btn-add">수정하기</button>
     </div>
 
 </body>

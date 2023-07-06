@@ -1,7 +1,12 @@
 package com.ddosirak.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -10,9 +15,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddosirak.domain.BoardVO;
+import com.ddosirak.domain.ChatVO;
 import com.ddosirak.domain.EmployeeCheckVO;
 import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.LoginVO;
@@ -199,9 +206,12 @@ public class PublicController {
 	public String inPOST(EmployeeCheckVO vo,RedirectAttributes rttr) throws Exception{
 		logger.debug("inPOST() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 		
-		bService.employeeIn(vo);
-		
-		rttr.addAttribute("result", "INSUCC");
+		if(eService.getEmployee(vo.getEmployee_id()) == null) {
+			rttr.addAttribute("result", "INFAIL");
+		}else {
+			bService.employeeIn(vo);
+			rttr.addAttribute("result", "INSUCC");
+		}// i-e end
 		
 		return "redirect:/public/login";
 	}//inPOST() method end
@@ -216,19 +226,90 @@ public class PublicController {
 	public String outPOST(EmployeeCheckVO vo,LoginVO lvo, RedirectAttributes rttr
 			,HttpSession session) throws Exception{
 		logger.debug("outPOST() 호출!(((o(*ﾟ▽ﾟ*)o)))");
-		
-		if(bService.checkIDPW(lvo) == null) {		
-			logger.debug("퇴근확인 실패!!!");
-			rttr.addFlashAttribute("result","OUTFAIL");
-			return "redirect:/public/login";
-		}// if end
+		// 일용직 퇴근
+		if(vo.getEmployee_id() > 10000) {
+			int result = bService.al_out(vo.getEmployee_id());
+			if(result == 1) {
+				// 퇴근성공
+				bService.employeeOut(vo);
+				session.invalidate();
+				rttr.addFlashAttribute("result", "EMPOUT");
+			}else {
+				// 퇴근 실패
+				rttr.addFlashAttribute("result","OUTFAIL");
+			}
+		}// if end (일용직 체크)
 		else {
-			bService.employeeOut(vo);
-			session.invalidate();
-			rttr.addFlashAttribute("result", "EMPOUT");
-		}// else end
+			// 일반직원 퇴근
+			if(bService.checkIDPW(lvo) == null) {		
+				logger.debug("퇴근확인 실패!!!");
+				rttr.addFlashAttribute("result","OUTFAIL");
+			}// if end
+			else {
+				bService.employeeOut(vo);
+				session.invalidate();
+				rttr.addFlashAttribute("result", "EMPOUT");
+			}// else end
+		} // else end(일반직원 퇴근 체크)
+		
 		return "redirect:/public/login";
 	}//outPOST() method end
 /////////////////////////////////로그인///////////////////////////////////
+	
+/////////////////////////////////대시보드///////////////////////////////////
+	// 대시보드 페이지
+	@RequestMapping(value = "/dashBoard", method = RequestMethod.GET)
+	public void dashBoardGET() throws Exception{
+		logger.debug("dashBoardGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
+	}//dashBoardGET() method end
+/////////////////////////////////대시보드///////////////////////////////////
+	
+/////////////////////////////////메신저///////////////////////////////////
+	// http://localhost:8088/public/chatList
+	@RequestMapping(value = "/chatList", method = RequestMethod.GET)
+	public void chatListGET (Model model,HttpSession session) throws Exception{
+		logger.debug("chatListGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
+
+		// 채팅 시작을 위한 리스트
+		List<EmployeeVO> empList = eService.empList();
+		model.addAttribute("empList", empList);
+		
+		// 채팅 내역리스트
+//		List<ChatVO> chatList = bService.chatList((String)session.getAttribute("login_id"));
+//		model.addAttribute("chatList", chatList);
+		
+		// 채팅방 리스트
+		List<String> chatRoomList = bService.chatRoom((String)session.getAttribute("login_id"));
+		model.addAttribute("chatRoomList", chatRoomList);
+		
+	}// chatListGET() method end
+	
+	// http://localhost:8088/public/chat
+	@RequestMapping(value = "/chat", method = RequestMethod.GET)
+	public String chatGET (@RequestParam("chat_receiver")String chat_receiver, @RequestParam("chat_sender")String chat_sender,
+			RedirectAttributes rttr,Model model) throws Exception{
+		logger.debug("chatGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
+		logger.debug("개설자: "+chat_sender);
+		logger.debug("참여자: "+chat_receiver);
+		if(chat_receiver.equals("noSelect")) {
+			rttr.addFlashAttribute("selectCheck", "NOSELECT");
+			return "redirect:/public/chatList";
+		}// 값을 선택하지않을시 동작.
+		
+		String chatRoom_code = "";
+		int sender = Integer.parseInt(chat_sender); // 나임.
+		int receiver = Integer.parseInt(chat_receiver); // 상대방
+		if( sender > receiver ){
+			chatRoom_code = chat_sender+chat_receiver;
+		}else{
+			chatRoom_code = chat_receiver+chat_sender;
+		}// i-e end
+
+//		model.addAttribute("chats", bService.getChatList(chatRoom_code));
+		model.addAttribute("receiverInfo", eService.getEmployee(receiver));
+		return null;
+	}// chat() method end
+	
+/////////////////////////////////메신저///////////////////////////////////	
 	
 }// public class end

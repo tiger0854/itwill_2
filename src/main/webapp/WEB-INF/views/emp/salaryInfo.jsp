@@ -2,11 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>사원 급여지급</title>
+<jsp:include page="../common/header.jsp"/>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -33,12 +35,78 @@ $(document).ready(function(){
 	$("#department_name").val("${evo.department_name}").prop("selected", true); 
 	$("#employee_status").val("${evo.employee_status}").prop("selected", true); 
 	
+	var dateData = "${evo.emp_date}";
+	console.log(dateData.substring(8,10));
+	$('#sal_date_tmp').val(dateData.substring(8,10)+'일');
+	
+	$('#salaryPayInfoAlert').on('click',function(){
+		Swal.fire({
+			title: "지급일 안내",
+			text: "지급예정일은 사원의 입사일을 기준으로하여 지정되고, 만약 지급일이 월 내에 없거나 주말인 경우, 해당일에서 가장 가까운 일이 예정일이 됩니다.",
+			icon: "info",
+			  
+// 				  showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+				  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+// 				  cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+				  confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+// 				  cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
+			})
+// 			.then(result => {
+// 				if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
+// 					location.href="/inbound/orderDelete?order_number="+rowData[0];
+					
+// 				} else if (result.isDismissed) { // 만약 모달창에서 cancel 버튼을 눌렀다면
+// 					// ...실행
+// 				}
+// 			});
+	})// click end
+	
+	$('#salDate').on('change',function(){
+		
+		var employee_id ="${evo.employee_id}";
+		var dateData = $('#salDate').val()+"-01";
+		
+		var formdata = {
+				'employee_id': employee_id ,
+				'dateData': dateData
+		};
+		
+		$.ajax({
+			url:"/emp_ajax/salaryInfoAJAX",
+			data:formdata,
+			type:"POST",
+			success:function(vo){
+				console.log(vo);
+				var table= '';
+				for(var i=0;i<vo.length;i++){
+					// ms단위 시간 표기 변환
+					var tmp = new Date(vo[i].sal_date);
+					var sal_date =  tmp.getFullYear() +
+					'-' + ( (tmp.getMonth()+1) < 9 ? "0" + (tmp.getMonth()+1) : (tmp.getMonth()+1) )+
+					'-' + ( (tmp.getDate()) < 9 ? "0" + (tmp.getDate()) : (tmp.getDate()) );
+					
+					// 금액 변환
+					var salary = (vo[i].salary)*10000
+					
+					table += '<tr>';
+					table += '<td>'+sal_date+'</td>';
+					table += '<td>'+salary.toLocaleString()+' 원 </td>';
+					table += '<td>'+'지급완료'+'</td>';
+					table += '<td>'+'<a href="/emp/salaryDetail?employee_id=${evo.employee_id}&sal_date='+sal_date+'"><i class="bx bx-detail"></i></a><a href="#"></a>'+'</td>';
+					table += '</tr>';
+				}// for end
+				$('#salInfoTable').html(table);
+			}// success
+		});// ajax end
+
+	})// change end
+	
 	});// jQ end
 
 </script>
 </head>
 <body id="body-pd" style="font-family: 'TheJamsil5';">
-<jsp:include page="../common/header.jsp"/>
+
 	<div>
 	<br>
 	    <h1>사원 급여 정보</h1>
@@ -101,7 +169,8 @@ $(document).ready(function(){
 		            <td>휴대폰 번호</td>
 		            <td><input type="text" size="50" value="${evo.phone_num }" id="phone_num" name="phone_num" readonly></td>
 		            <td>지급예정일</td>
-		            <td><input type="date" value="2023-06-01" id="emp_date" name="emp_date" readonly></td>
+		            <td><input type="text" value="30일" id="sal_date_tmp" readonly><a href="#" id="salaryPayInfoAlert"> <i class='bx bx-info-circle nav-icon'></i></a></td>
+		            
 		        </tr>
 		        <tr>
 		            <td>이메일</td>
@@ -117,27 +186,15 @@ $(document).ready(function(){
 	    
 	 <div>
 		<table class="table table-striped" style="margin-top: 10px;" >
-			<tr>
-				<td>지급일자</td>
-				<td>지급액수</td>
-				<td>지급현황</td>
-				<td>상세조회</td>
-			</tr>
-			<c:if test="${empty salaryList }">
-			<tr>
-				<td colspan="4">지급내역 없음</td>
-			</tr>
-			</c:if>
-				<c:if test="${!empty salaryList }">
-					<c:forEach var="svo" items="${salaryList}">
-						<tr>
-							<td>${svo.sal_date }</td>
-							<td><fmt:formatNumber value="${svo.salary*10000}"/> 원</td>
-							<td>지급완료</td>
-							<td><a href="/emp/salaryDetail?employee_id=${evo.employee_id}&sal_date=${svo.sal_date}">상세조회(아이콘)</a></td>
-						</tr>
-					</c:forEach>
-				</c:if>
+			<thead>
+				<tr>
+					<td><input type="month" name="salDate" id="salDate"></td>
+					<td>지급액수</td>
+					<td>지급현황</td>
+					<td>상세조회</td>
+				</tr>
+			</thead>
+			<tbody id="salInfoTable"></tbody>
 		</table>
 	 </div>
 

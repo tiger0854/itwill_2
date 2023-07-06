@@ -1,4 +1,4 @@
-package com.ddosirak.persistance;
+package com.ddosirak.persistance ;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -34,13 +34,14 @@ public interface EmployeeDAO {
 	public EmployeeVO getEmployee(int employee_id);
 	
 	// 사원 리스트 출력
+	public List<EmployeeVO> empList();
 	public List<EmployeeVO> empList(PageVO pageVO);
 	
 	// 사원정보 수정
 	public Integer updateEmployee(EmployeeVO vo);
 	
 	// 사원 휴가 목록 출력(관리자)
-	public List<EmployeevacationVO> vacationList();
+	public List<EmployeevacationVO> vacationList(PageVO pageVO);
 	
 	// 사원휴가 신청
 	public void insertVacation(EmployeevacationVO vvo);
@@ -57,6 +58,17 @@ public interface EmployeeDAO {
 	// 휴가 삭제
 	public void vacationdelete(Integer vacation_id);
 	
+	// 휴가 승인
+	public Integer vacationapprove(Integer vacation_id, int id);
+	
+	// 휴가 반려
+	public Integer vacationreturn(Integer vacation_id, int id);
+	
+	// 아이디 찾기
+	public String vacationfind(int id);
+	
+	// 사원 휴가관리 페이지 페이징
+	public Integer countRetOrdList(PageVO pageVO);
 	
 	
 /////////////////////////////////////////사원동작////////////////////////////////////////////////////
@@ -65,6 +77,8 @@ public interface EmployeeDAO {
 /////////////////////////////////////////급여동작////////////////////////////////////////////////////
 	// 급여정보 조회
 	public List<SalaryVO> getSalaryInfo(int employee_id);
+	// 급여정보 조회
+	public List<SalaryVO> getSalaryInfo(SalaryVO vo);
 	// 급여정보 등록
 	public void salaryInsert(EmployeeVO vo);
 	// 급여 지급

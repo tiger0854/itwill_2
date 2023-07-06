@@ -12,8 +12,8 @@
 <!-- <img src="https://chart.apis.google.com/chart?cht=qr&chs=250x250&chl=https://naver.com/" alt="qr"> -->
 <h1>사원 퇴근</h1>
 <form action="" method="post">
-	<input type="text" name="employee_id" placeholder="사원번호를 입력해주세요.">
-	<input type="password" name="employee_pw" placeholder="비밀번호를 입력해주세요.">
+	<input type="text" name="employee_id" placeholder="사원번호를 입력해주세요." class="form-control">
+	<input type="password" name="employee_pw" placeholder="비밀번호를 입력해주세요." class="form-control" >
 	<input type="hidden" name="emp_out" value="퇴근">
 	<input type="submit" value="퇴근하기">
 </form>
