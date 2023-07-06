@@ -8,9 +8,17 @@
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<script type="text/javascript">
+	$(document).ready(function() {
+	    $('#pay_date').click(function() {
+	      var orderDateValue = $("input[name='order_date']").val();
+	      $('#pay_date').attr("min", orderDateValue);
+	    });
+	  });
 	
 	window.addEventListener("message", function(event) {
 	      var rowData = event.data;
@@ -19,7 +27,7 @@
 	      document.getElementById("order_piece").value = rowData[3];
 	      document.getElementById("order_date").value = rowData[4];
 	      document.getElementById("pay_date").value = rowData[5];
-	      document.getElementById("order_resp").value = rowData[8];
+	      document.getElementById("resp").value = rowData[8];
 	      document.getElementById("order_trade").value = rowData[9];
 	    });
 		  
@@ -55,7 +63,7 @@
 		<th>담당자</th>
 		<td>
 		<div class="input-group">
-		    <input type="text"placeholder="담당자 검색하기" class="form-control" name="order_resp" id="order_resp" readonly="readonly" >
+		    <input type="text"placeholder="담당자 검색하기" class="form-control" name="order_resp" id="resp" readonly="readonly"  onclick="openChildWindow2();">
 		    <button class="btn btn-primary" type="button" onclick="openChildWindow2();">검색</button>   
     	</div>
     	</td>
@@ -64,7 +72,7 @@
 	 	<th>거래처</th>
 	 	<td>
 	 	 <div class="input-group">  
-		    <input type="text"placeholder="거래처 검색하기" class="form-control" name="order_trade" id="order_trade" readonly="readonly" >
+		    <input type="text"placeholder="거래처 검색하기" class="form-control" name="order_trade" id="order_trade" readonly="readonly"onclick="openChildWindow3();" >
 		    <button class="btn btn-primary" type="button" onclick="openChildWindow3();">검색</button>
   		</div>
   		</td>
@@ -115,13 +123,13 @@
 		    
 		    function openChildWindow2() {
 
-		        var childWindow2 = window.open("/inbound/empList", "empList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
+		    	   var childWindow2 = window.open("/emp/list?pop=ok", "empList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
 
 		      } //empList팝업
 		      
 		    function openChildWindow3() {
 
-		        var childWindow3 = window.open("/inbound/tradeList", "tradeList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
+		    	 var childWindow3 = window.open("/customer/customerList?pop=ok", "tradeList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
 		     
 		      } //tradeList팝업   
 	

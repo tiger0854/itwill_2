@@ -17,13 +17,18 @@
   	
   	<!-- 발주현황 리스트 -->
   	<select id="orderAllList" parameterType="com.ddosirak.domain.PageVO"  resultType="com.ddosirak.domain.OrderVO">
-  		SELECT * FROM ret_order 
+  		SELECT * FROM ret_order   		
 	  		<choose>
-  				<when test="kind == 'number'">WHERE order_number</when>
-  				<when test="kind == 'code'">WHERE material_code</when>
-  				<when test="kind == 'name'">WHERE material_name</when>
+  				<when test="state == 'all'">WHERE order_state>= 0</when>
+  				<when test="state == 'ready'">WHERE order_state = 0</when>
+  				<when test="state == 'finish'">WHERE order_state = 1</when>
+  			</choose>
+  			<if test="search != ''">
+	  		<choose>
+  				<when test="kind == 'number'">AND order_number</when>
+  				<when test="kind == 'code'">AND material_code</when>
+  				<when test="kind == 'name'">AND material_name</when>
 	   		</choose> 
-	   		<if test="search != ''">
 	   		LIKE CONCAT('%', #{search}, '%')
 	   		</if>
   		ORDER BY order_date DESC
@@ -43,6 +48,19 @@
   		delete from ret_order where order_number = #{order_number}
   	</delete>
   	<!-- 발주서 삭제 -->
-
+  	
+  	<!-- 수주요청-> 레시피에 따른 자재리스트 가져오기  -->
+  	<select id="selectRequset" resultType="com.ddosirak.domain.RequestVO">
+	  	select * from ret_request
+  	</select>
+	<!-- 수주요청-> 레시피에 따른 자재리스트 가져오기  -->
+	
+	<!-- 요청완료시 상태업데이트 -->
+	<update id="updateRequest">
+		UPDATE ret_request SET state = 1 
+		WHERE request_id = #{request_id}
+	</update>
+	<!-- 요청완료시 상태업데이트 -->
+	
   	
   </mapper>

@@ -44,10 +44,16 @@ public class PageDAOImpl implements PageDAO {
 
 	@Override
 	public Integer countRetOrdList(PageVO vo) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(NAMESPACE+".countOrdList",vo);
-	}
 
+		return sqlSession.selectOne(NAMESPACE+".countOrdList",vo);
+	}//발주리스트
+	
+	@Override
+	public Integer countRequestList() {
+	
+		return sqlSession.selectOne(NAMESPACE+".countRequest");
+	}// 발주등록시 자재리스트
+	
 
 
 	// 수주목록 페이징
@@ -77,6 +83,7 @@ public class PageDAOImpl implements PageDAO {
 		logger.debug("countOutList() 메서드 호출");
 		return sqlSession.selectOne(NAMESPACE + ".countOutList", param);
 	}
-	
+
+
 
 }// public class end

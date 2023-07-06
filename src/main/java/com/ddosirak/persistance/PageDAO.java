@@ -18,6 +18,10 @@ public interface PageDAO {
 	
 	///////////발주리스트 페이징////////////
 	public Integer countRetOrdList(PageVO vo);
+	
+	///////////발주등록시 수주&레시피 조인 목록 페이징////////////
+	public Integer countRequestList();
+	
 	// 수주목록 페이징처리
 	public Integer countReceiveList();
 	

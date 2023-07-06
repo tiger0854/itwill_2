@@ -81,7 +81,10 @@
 	}); 
 
 </script>
+<style type="text/css">
+th{height: 60px;}
 
+</style>
 
 
 
@@ -95,7 +98,7 @@
 	
 		<div class="container" >
 		
-  <table style="margin: auto;width: 80%;">
+  <table style="margin: auto;width: 80%;" class="table">
   <tr>
     <th>거래처명</th>
     <td><input type="text" name="cus_name" class="form-control"></td>
@@ -143,16 +146,19 @@
   <tr>
     <th>주소</th>
     
-    <td><input type="text" id="zipcode" onclick="addr();">
-    <input type="text" name="cus_address" class="form-control" onclick="addr();" id="cus_address">
-    <input type="text" name="address2" id="cus_address2" placeholder="상세주소를 입력해주세요.">
+    <td><input type="hidden" id="zipcode" onclick="addr();">
+     <div class="input-group" style="display: flex; align-items: center;">
+    <input type="button" value="주소검색" class="btn btn-secondary" onclick="addr();" >
+    <input type="text" name="cus_address" class="form-control" onclick="addr();" id="cus_address" readonly="readonly">
+    </div>
+    <input type="text" name="address2" id="cus_address2" placeholder="상세주소를 입력해주세요." class="form-control" style="margin-top: 10px;">
     </td>
    	<tr>
 					
   </tr>
   <tr>
     <th>적요</th>
-    <td><textarea rows="" cols="" name="cus_memo" class="form-control"></textarea></td>
+    <td style="height: 100px !important;"><textarea rows="" cols="" name="cus_memo" class="form-control"></textarea></td>
   </tr>
  
 </table>

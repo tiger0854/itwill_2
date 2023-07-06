@@ -18,12 +18,17 @@
 	
 	<!-- 거래처목록 페이징 처리를 위한 쿼리 -->
 	<select id="countCusList"  parameterType="com.ddosirak.domain.PageVO" resultType="Integer">
-		SELECT COUNT(*) FROM ret_customer	 
+		SELECT COUNT(*) FROM ret_customer	 	
 		<choose>
-  				<when test="kind == 'name'">WHERE cus_name</when>
-  				<when test="kind == 'code'">WHERE cus_code</when>
+			<when test="state == 'all'">WHERE cus_stat>= 1</when>
+			<when test="state == 'input'">WHERE cus_stat = 1</when>
+			<when test="state == 'output'">WHERE cus_stat = 2</when>
   		</choose> 
-  		<if test="search != ''">	
+   		<if test="search != ''">	
+   		<choose>
+	   		<when test="kind == 'name'">AND cus_name</when>
+	   		<when test="kind == 'code'">AND cus_code</when>		
+   		</choose>
 		LIKE CONCAT('%', #{search}, '%')
 		</if>
 	</select>
@@ -31,30 +36,43 @@
 	
 	<!-- 입고리스트 페이징 처리를 위한 쿼리 -->
 	<select id="countInbountList"  parameterType="com.ddosirak.domain.PageVO" resultType="Integer">
-		SELECT COUNT(*) FROM ret_in	 
+		SELECT COUNT(*) FROM ret_in	
+		
 		<choose>
-  				<when test="kind == 'code'">WHERE wh_code</when>
-  				<when test="kind == 'number'">WHERE in_number</when>
+  				<when test="state == 'all'">WHERE in_state>= 0</when>
+  				<when test="state == 'ready'">WHERE in_state = 0</when>
+  				<when test="state == 'finish'">WHERE in_state = 1</when>
   		</choose> 
-  		<if test="search != ''">	
+		 
+		<if test="search != ''">
+		<choose>
+  				<when test="kind == 'code'">AND wh_code</when>
+  				<when test="kind == 'number'">AND in_number</when>
+  		</choose> 	
 		LIKE CONCAT('%', #{search}, '%')
 		</if>
 	</select>
-	<!-- 거래처목록 페이징 처리를 위한 쿼리 -->
+	<!-- 입고목록 페이징 처리를 위한 쿼리 -->
 	
 	<!-- 발주리스트 페이징 처리를 위한 쿼리 -->
 	<select id="countOrdList"  parameterType="com.ddosirak.domain.PageVO" resultType="Integer">
 		SELECT COUNT(*) FROM ret_order
 		<choose>
-  				<when test="kind == 'number'">WHERE order_number</when>
-  				<when test="kind == 'code'">WHERE material_code</when>
-  				<when test="kind == 'name'">WHERE material_name</when>
+  				<when test="state == 'all'">WHERE order_state>= 0</when>
+  				<when test="state == 'ready'">WHERE order_state = 0</when>
+  				<when test="state == 'finish'">WHERE order_state = 1</when>
   		</choose> 
-  		<if test="search != ''">	
+		
+		<if test="search != ''">	
+		<choose>
+  				<when test="kind == 'number'">AND order_number</when>
+  				<when test="kind == 'code'">AND material_code</when>
+  				<when test="kind == 'name'">AND material_name</when>
+  		</choose> 
 		LIKE CONCAT('%', #{search}, '%')
 		</if>
 	</select>
-	<!-- 거래처목록 페이징 처리를 위한 쿼리 -->
+	<!-- 발주리스트 페이징 처리를 위한 쿼리 -->
 	
 
 	
@@ -93,10 +111,15 @@
   	</select>
   	<!-- 퇴근사원수 -->
   	
- 
+  	<!-- 발주등록으로 가져올 수주요청과 레시피 join-->
+  	<select id="countRequest" resultType="Integer">
+  	    select count(*)
+		from receive r JOIN item_recipe i
+		JOIN material_detail m
+		WHERE r.item_code = i.item_code and
+		m.material_code = i.material_code;
+  	</select>
   	
-  	
-  	
-  	
+  	<!-- 발주등록으로 가져올 수주요청과 레시피 join-->
   
   </mapper>

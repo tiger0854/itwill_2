@@ -4,6 +4,23 @@ public class ItemRecipeVO {
 	private String item_code;
 	private String material_code;
 	private int material_con;
+	private ReceiveVO receiveVO;
+	private MaterialdetailVO materialdetailVO;
+	
+	
+	
+	public ReceiveVO getReceiveVO() {
+		return receiveVO;
+	}
+	public void setReceiveVO(ReceiveVO receiveVO) {
+		this.receiveVO = receiveVO;
+	}
+	public MaterialdetailVO getMaterialdetailVO() {
+		return materialdetailVO;
+	}
+	public void setMaterialdetailVO(MaterialdetailVO materialdetailVO) {
+		this.materialdetailVO = materialdetailVO;
+	}
 	public String getItem_code() {
 		return item_code;
 	}

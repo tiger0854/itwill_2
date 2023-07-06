@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ddosirak.domain.FactoryVO;
 import com.ddosirak.domain.MaterialdetailVO;
@@ -31,7 +32,7 @@ public class WarehouseController {
 	// http://localhost:8088/foundation/warehouse/warehouseList
 	// 창고 목록
 	@RequestMapping(value = "/warehouseList", method = RequestMethod.GET)
-	public void warehouseListGET(Model model, HttpServletRequest request, PageVO pageVO) throws Exception {
+	public String warehouseListGET(Model model, HttpServletRequest request, PageVO pageVO,@RequestParam( value = "pop", required = false) String pop) throws Exception {
 
 		logger.debug("warehouseListGET호출");
 
@@ -102,6 +103,13 @@ public class WarehouseController {
 		logger.debug("whlist 개수 : " + whList.size());
 		model.addAttribute("Search", instrSearch);
 		model.addAttribute("whList", whList);
+		
+		if(pop!=null && pop.equals("ok")) {
+			return "/inbound/warehouseList";
+		}else {
+			return "/foundation/warehouse/warehouseList";
+		}
+		
 	}
 
 	// 창고 등록

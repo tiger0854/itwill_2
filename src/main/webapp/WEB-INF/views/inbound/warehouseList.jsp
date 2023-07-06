@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,56 +11,38 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
-
 </head>
 <body>
-	<h3>품목검색</h3>
-	
-	<div class="input-group" style="margin-bottom: 10px;">
-    <input type="text"placeholder="상품 검색하기" class="form-control">
-    <button type="button" class="btn btn-primary" onclick="openChildWindow();">검색</button>
-
-    </div>
-
+	<h3>창고목록</h3>
   <table border="1" class="table table-hover">
   <tr>
-  <th>품목코드</th> 
-  <th>품목명[규격명]</th>
-  <th>단가</th> 
-  <th>전체재고</th>
+  <th>창고 코드</th> 
+  <th>창고 이름</th>
+
   </tr>
-  
+  <c:forEach var="vo" items="${whList}">
+	<c:if test="${vo.retail_code == '자재'}">
   <tr onclick="sendInfo(this);">
-  <td>001</td>
-  <td>양반김</td>
-  <td>100</td>
-  <td>100</td>
+  <td>${vo.wh_code }</td>
+  <td>${vo.wh_name }</td>
   </tr>
-  
-  <tr>
-  <td>002</td>
-  <td>샌드위치햄</td>
-  <td>100원</td>
-  <td>100</td>
-  </tr>
+  </c:if>
+</c:forEach>
   
   </table>
-	
+  <div style="color: red; margin-bottom: 10px;">*자재 창고만 노출됩니다.</div>	
 	
 <script>
     function sendInfo(row) {
-      var data = [];
+      var data2 = [];
       var cells = row.getElementsByTagName("td");
       for (var i = 0; i < cells.length; i++) {
-        data.push(cells[i].innerText);
+        data2.push(cells[i].innerText);
       }
       // 정보를 부모 창으로 전달합니다.
-     window.opener.document.getElementById("material_code").value = data[0];
-     window.opener.document.getElementById("material_name").value = data[1];
-     window.opener.document.getElementById("material_price").value = data[2];
+       window.opener.document.getElementById("wh_code").value = data2[0];
       window.close();
     }
   </script>
-
 </body>
 </html>

@@ -62,7 +62,12 @@ public class PageServiceImpl implements PageService {
 		logger.debug("service: countRetOrdList(PageVO vo)");
 		return pdao.countRetOrdList(vo);
 	}//발주리스트 페이징
-
+	
+	@Override
+	public Integer countRequestList() {
+		
+		return pdao.countRequestList();
+	}//발주등록시 자재목록 페이징
 	
 
 	// 수주 목록 페이징
@@ -78,6 +83,8 @@ public class PageServiceImpl implements PageService {
 		logger.debug("service: countOutList()");
 		return pdao.countOutList(param);
 	}
+
+
 	
 	
 	

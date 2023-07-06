@@ -162,7 +162,7 @@ public class MemberController {
 	
 	// http://localhost:8088/emp/list
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String listGET(Model model,PageVO pageVO, HttpServletRequest request, @RequestParam(value ="pop",required = false) String pop) throws Exception{
+	public String listGET(Model model,PageVO pageVO, HttpServletRequest request,@RequestParam(value ="pop",required = false) String pop) throws Exception{
 		logger.debug("listGET() 호출![]~(￣▽￣)~*");
 		
 		//================================페이징 처리를 위한 값 받아오기 동작========================================
@@ -225,6 +225,8 @@ public class MemberController {
 			return "/receive/empList";
 		} else if(pop != null && pop.equals("out")) {
 			return "/outbound/empList";
+		} else if(pop != null && pop.equals("ok")) {
+			return "/inbound/empList";
 		}
 			return "/emp/list";
 	}//listGET() method end

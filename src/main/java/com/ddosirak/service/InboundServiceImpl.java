@@ -1,6 +1,7 @@
 package com.ddosirak.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -62,6 +63,12 @@ public class InboundServiceImpl implements InboundService {
 	@Override
 	public void updateInbound(InboundVO vo) {
 		idao.updateInbount(vo);
+		
+	}
+
+	@Override
+	public void updateMatrial(Map param) {
+		idao.updateMatrial(param);
 		
 	}
 

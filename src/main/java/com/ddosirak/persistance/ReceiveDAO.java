@@ -20,8 +20,13 @@ public interface ReceiveDAO {
 	public void receiveUpdate(ReceiveVO uvo) throws Exception;
 
 	// 수주 삭제
-	public Integer receiveRemove(String re_code) throws Exception;
+	public void receiveRemove(String re_code) throws Exception;
 	
+	// 레시피요청(re_code가져오기)
+	public String receiveRecodeGet() throws Exception;
+	
+	// 레시피요청(자재insert)
+	public void receiveRequest(String re_code) throws Exception;
 	
 }
  
