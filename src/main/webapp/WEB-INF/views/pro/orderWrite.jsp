@@ -18,7 +18,7 @@
 
 <script>
 $(document).ready(function() {
-	  $(".btn-add").click(function() {
+	  $("#add").click(function() {
 	    var frObj = $("#fr");
 	    var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
 
@@ -42,44 +42,40 @@ $(document).ready(function() {
 	      alert("입력란을 채워주세요!");
 	    }
 	  });
-});
-	
-$(document).ready(function() {
-// 	  $("#re_code", window.opener.document).change("input", function() {
-	    var re_code = $("#re_code").val(); // re_code 값 가져오기
-	    console.log(re_code);
-
-	    $.ajax({
-	      url: "/pro/checkrecode", // 요청을 보낼 서버의 URL
-	      type: "POST", // HTTP 요청 방식 (POST)
-	      data: { re_code: re_code }, // 전송할 데이터
-	      success: function(response) {
-// 	        alert("전송성공!");
-	        if (response === "true") {
-	          
-	        } else { 
-	        	alert(re_code);
-	        	console.log(re_code);
-		          $("#add").prop("disabled", true);
-				  $('#ipmsg').show();
-				  $('#ipmsg').css('color','red');
-				  $('#ipmsg').text("수주번호에 해당하는 조리가 완료되지않았습니다"); 
-	        }
-	      },
-	      error: function(xhr, status, error) {
-// 	        alert("전송실패!");
-	        console.error("에러 발생:", error);
-	      }
-	    });
-// 	  });
 	});
 
-
+	
+function recodecheck() {
+	  var re_code = $("#re_code").val(); // re_code 값 가져오기
+	  console.log(re_code);
+	  $.ajax({
+	    url: "/pro/checkrecode", // 요청을 보낼 서버의 URL
+	    type: "GET", // HTTP 요청 방식 (GET)
+	    data: { re_code: re_code }, // 전송할 데이터
+	    success: function(response) {
+	      if (response === true) {
+	        $("#add").prop("disabled", false);
+	        $('#ipmsg').show();
+	        $('#ipmsg').css('color', 'green');
+	        $('#ipmsg').text("*수주번호에 해당하는 조리가 완료되었습니다");
+	      } else {
+	        $("#add").prop("disabled", true);
+	        $('#ipmsg').show();
+	        $('#ipmsg').css('color', 'red');
+	        $('#ipmsg').text("*수주번호에 해당하는 조리가 완료되지 않았습니다");
+	      }
+	    },
+	    error: function(xhr, status, error) {
+	      console.error("에러 발생:", error);
+	    }
+	  });
+	}
 
 //품명 검색 팝업창
-  function opensucode(){
-      window.open("/pro/suList","popup", "width=500, height=600,left=100, top=100");
-  }
+function opensucode() {
+  var childWindow = window.open("/pro/suList", "popup", "width=500, height=600, left=100, top=100");
+  childWindow.onunload = recodecheck;
+}
   
 </script>
 <!-- 	        opener.document.getElementById("re_code").value = a; -->
@@ -109,8 +105,8 @@ $(document).ready(function() {
     <tr>
       <td>수주번호</td>
      <td><div class="input-group">
-	    <input style="width: 40%" type="text" name="so_code" id="re_code" placeholder="수주번호" class="form-control">
-	    <input type="button" class="btn btn-primary" onclick="opensucode()" value="검색">
+	    <input style="width: 40%" type="text" name="so_code" onclick="recodecheck()" id="re_code" placeholder="수주번호" class="form-control">
+	    <input type="button" class="btn btn-primary" onclick="opensucode();" value="검색">
 	</div></td>
 	<span id="ipmsg"></span>
     </tr>

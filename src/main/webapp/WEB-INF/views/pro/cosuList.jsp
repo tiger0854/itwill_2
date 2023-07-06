@@ -87,7 +87,7 @@
 		<c:choose>
 			<c:when test="${pageVO.startPage > pageVO.pageBlock}">
 				<li class="page-item"><a
-					href="/receive/receiveList?pageNum=${pageVO.startPage - pageVO.pageBlock}"
+					href="/pro/cosuList?pageNum=${pageVO.startPage - pageVO.pageBlock}"
 					class="page-link">이전</a></li>
 			</c:when>
 			<c:otherwise>
@@ -97,10 +97,10 @@
 	<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
 				<c:choose>
 					<c:when test="${pageVO.kind != null }">
-					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/receive/receiveList?pageNum=${i}&kind=${pageVO.kind}&search=${pageVO.search}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
+					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/pro/cosuList?pageNum=${i}&kind=${pageVO.kind}&search=${pageVO.search}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
 					</c:when>
 					<c:otherwise>
-					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/receive/receiveList?pageNum=${i}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
+					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/pro/cosuList?pageNum=${i}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
 					</c:otherwise>
 				</c:choose>
 		</c:forEach>
@@ -108,7 +108,7 @@
 		<c:choose>
 			<c:when test="${pageVO.endPage < pageVO.pageCount}">
 				<li class="page-item"><a
-					href="/receive/receiveList?pageNum=${pageVO.startPage + pageVO.pageBlock}"
+					href="/pro/cosuList?pageNum=${pageVO.startPage + pageVO.pageBlock}"
 					class="page-link">다음</a></li>
 			</c:when>
 			<c:otherwise>

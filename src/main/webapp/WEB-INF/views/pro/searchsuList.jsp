@@ -60,7 +60,7 @@
         <th>작업지시자</th>
     </tr>
     <c:forEach var="vo" items="${receiveList }">
-        <tr onclick="selectItem('${vo.re_code}', '${vo.re_qty}','${vo.item_code}','${vo.item_name}','${vo.employee_id}','${vo.re_qty}')">
+        <tr onclick="selectItem('${vo.re_code}')">
             <td id="con">${vo.re_code}</td>
             <td id="con">${vo.re_qty}</td>
             <td id="con">${vo.item_code}</td>
@@ -68,14 +68,9 @@
             <td id="con">${vo.employee_id}</td>
         </tr>
     <script>
-	    function selectItem(a, b, c, d, e, f) {
+	    function selectItem(a) {
 	        // 부모 창으로 값 전달하기
 	        opener.document.getElementById("re_code").value = a;
-	        opener.document.getElementById("re_qty").value = b;
-	        opener.document.getElementById("item_code").value = c;
-	        opener.document.getElementById("item_name").value = d;
-	        opener.document.getElementById("employee_id").value = e;
-	        opener.document.getElementById("re_qty2").value = f;
 	        window.close();
 	    }
 	</script>
@@ -88,7 +83,7 @@
 		<c:choose>
 			<c:when test="${pageVO.startPage > pageVO.pageBlock}">
 				<li class="page-item"><a
-					href="/pro/suList?pageNum=${pageVO.startPage - pageVO.pageBlock}"
+					href="/pro/searchsuList?pageNum=${pageVO.startPage - pageVO.pageBlock}"
 					class="page-link">이전</a></li>
 			</c:when>
 			<c:otherwise>
@@ -98,10 +93,10 @@
 	<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
 				<c:choose>
 					<c:when test="${pageVO.kind != null }">
-					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/pro/suList?pageNum=${i}&kind=${pageVO.kind}&search=${pageVO.search}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
+					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/pro/searchsuList?pageNum=${i}&kind=${pageVO.kind}&search=${pageVO.search}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
 					</c:when>
 					<c:otherwise>
-					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/pro/suList?pageNum=${i}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
+					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/pro/searchsuList?pageNum=${i}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
 					</c:otherwise>
 				</c:choose>
 		</c:forEach>
@@ -109,7 +104,7 @@
 		<c:choose>
 			<c:when test="${pageVO.endPage < pageVO.pageCount}">
 				<li class="page-item"><a
-					href="/pro/suList?pageNum=${pageVO.startPage + pageVO.pageBlock}"
+					href="/pro/searchsuList?pageNum=${pageVO.startPage + pageVO.pageBlock}"
 					class="page-link">다음</a></li>
 			</c:when>
 			<c:otherwise>

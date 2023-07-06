@@ -38,6 +38,12 @@ function cookOrderDelete(co_code){
 		}
 	}
 
+//품명 검색 팝업창
+function opensucode() {
+  var childWindow = window.open("/pro/searchsuList", "popup", "width=500, height=600, left=100, top=100");
+  childWindow.onunload = recodecheck;
+}
+
 </script>
 
 </head>
@@ -74,13 +80,11 @@ function cookOrderDelete(co_code){
 				<td><input type="date" id="co_date" class="form-control" name="co_date" placeholder="날짜를 선택해주세요" />
 				</tr>
 				<tr>	
-				<td>자재코드</td>
-				<td>
-				<label>
-				  <input type="text" id="material_code" name="material_code" placeholder="자재코드" onclick="openmaterial()" width="100%" readonly>
-				  <i class='bx bx-search-alt-2'></i>  
-				  <input type="text" id="material_name" placeholder="자재이름" style="border:1px solid" readonly>
-				</label></td>
+				<td>수주번호</td>
+				<td><div class="input-group">
+	   		<input style="width: 30%" type="text" name="so_code" id="re_code" placeholder="수주번호" class="form-control">
+	    	<input type="button" class="btn btn-primary" onclick="opensucode();" value="검색">
+				</div></td>
 				<td>지시상태</td>
 				<td colspan="8">
 				<select name="co_status">
@@ -164,13 +168,13 @@ function cookOrderDelete(co_code){
 	<div class="container" style="margin-top: 30px; margin-bottom: 30px">
 	  <ul class="pagination justify-content-center" id="pagination" style="margin-top: 20px;">
 	    <c:if test="${pageVO.startPage > pageVO.pageBlock}"> 
-	      <li class="page-item"><a class="page-link" href="/pro/cookorderList?line_code=${Search.line_code}&co_date=${Search.co_date}&material_code=${Search.material_code}&co_status=${Search.co_status}&pageNum=${pageVO.startPage - pageVO.pageBlock}"><sapn> < </sapn></a></li>
+	      <li class="page-item"><a class="page-link" href="/pro/cookorderList?line_code=${Search.line_code}&co_date=${Search.co_date}&so_code=${Search.so_code}&co_status=${Search.co_status}&pageNum=${pageVO.startPage - pageVO.pageBlock}"><sapn> < </sapn></a></li>
 	    </c:if>
 	    <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
-	      <li class="page-item"><a class="page-link" href="/pro/cookorderList?line_code=${Search.line_code}&co_date=${Search.co_date}&material_code=${Search.material_code}&co_status=${Search.co_status}&pageNum=${i}"><span>${i}</span></a></li>
+	      <li class="page-item"><a class="page-link" href="/pro/cookorderList?line_code=${Search.line_code}&co_date=${Search.co_date}&so_code=${Search.so_code}&co_status=${Search.co_status}&pageNum=${i}"><span>${i}</span></a></li>
 	    </c:forEach>
 	    <c:if test="${pageVO.endPage < pageVO.pageCount}">
-	      <li class="page-item"><a class="page-link" href="/pro/cookorderList?line_code=${Search.line_code}&co_date=${Search.co_date}&material_code=${Search.material_code}&co_status=${Search.co_status}&pageNum=${pageVO.startPage + pageVO.pageBlock}"><span> > </span></a></li>
+	      <li class="page-item"><a class="page-link" href="/pro/cookorderList?line_code=${Search.line_code}&co_date=${Search.co_date}&so_code=${Search.so_code}&co_status=${Search.co_status}&pageNum=${pageVO.startPage + pageVO.pageBlock}"><span> > </span></a></li>
 	    </c:if>
 	  </ul>
 	</div>

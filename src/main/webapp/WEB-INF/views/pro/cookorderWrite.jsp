@@ -56,7 +56,8 @@
 	}
 	//품명 검색 팝업창
 	  function opensucode(){
-	      window.open("/pro/cosuList","popup", "width=500, height=600,left=100, top=100");
+		  var childWindow = window.open("/pro/cosuList","popup", "width=500, height=600,left=100, top=100");
+	      childWindow.onbeforeunload =getRelatedMaterials;
 	}	
 	
 		$(document).ready(function() {
@@ -156,7 +157,7 @@
 		function tbodyBuilder() {
 			var tbody = $("#tbody");
 			var materialHeader = $("#materialHeader");
-
+			
 			// 기존 내용 초기화
 			tbody.empty();
 			materialHeader.empty();
@@ -165,11 +166,12 @@
 			for (var i = 0; i < materialArray.length; i++) {
 				var vo = materialArray[i];
 				var re_qty = $("#re_qty").val();	
+				
 				var row = $("<tr>");
-// 				row.append("<td>자재이름</td><td>자재소모량</td>"); cookListvo
-				row.append("<td><input type='hidden' name='cookListvo[" + i + "].material_code' value='" + vo.material_code + "'>");
+// 				row.append("<td></td>");
+				row.append("<td><input type='hidden'style='width: 40%' name='cookListvo[" + i + "].material_code' value='" + vo.material_code + "'>");
 				row.append("<input type='text' name='cookListvo[" + i + "].material_name' value='" + vo.material_name + "' readonly='readonly'></td>");
-				row.append("<td><input type='text' name='cookListvo[" + i + "].material_con' value='" + vo.material_con*re_qty + "' placeholder='" + vo.material_code + "의 소모량' required></td>");
+				row.append("<td><input type='text' style='width: 40%' name='cookListvo[" + i + "].material_con' value='" + vo.material_con*re_qty + "' placeholder='" + vo.material_code + "의 소모량' required></td>");
 				tbody.append(row);
 
 			}
@@ -178,7 +180,7 @@
 			if (materialHeader.children().length == 0) {
 				if (tbody.children().length > 0) {
 					materialHeader.append("<td></td>");
-					materialHeader.append("<td>자재코드</td>");
+					materialHeader.append("<td>자재 명</td>");
 					materialHeader.append("<td>자재소모량</td>");
 				}
 			}
@@ -265,14 +267,25 @@
 <!-- 					</tr> -->
 					<tr>
 						<td>수주수량</td>
-						<td><input type="number" name="coQTY" id="re_qty"></td>
-					</tr>										
+						<td><input type="number" name="coQTY" id="re_qty" read></td>
+					</tr>	
+					
+					<tr id="materialHeader">
+					</tr>	
+				<tbody id="tbody">
 				</tbody>
-				
-			<tbody id="tbody">
-			</tbody>
-				
+														
+				</tbody>
 			</table>
+			
+
+			
+
+			
+
+			
+			
+			
 			<!--     <hr width="100%" style="border: 2px solid black"> -->
 
 
