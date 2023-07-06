@@ -48,9 +48,16 @@
   	<!-- 사원 정보 조회 -->
   	
   	<!-- 사원 목록 출력-->
+  	<select id="empListAll" resultType="com.ddosirak.domain.EmployeeVO">
+		SELECT * FROM emp_main
+		ORDER BY FIELD (position, '이사', '과장', '팀장', '주임', '사원')
+  	</select>
+  	<!-- 사원 목록 출력 -->
+  	
+  	<!-- 사원 목록 출력-->
   	<select id="empList" resultType="com.ddosirak.domain.EmployeeVO">
 		SELECT * FROM emp_main
-		ORDER BY emp_date DESC
+		ORDER BY FIELD (position, '이사', '과장', '팀장', '주임', '사원')
 		LIMIT #{startRow}, #{pageSize}
   	</select>
   	<!-- 사원 목록 출력 -->
@@ -66,13 +73,13 @@
   	
   	<!-- 일용직 직원 수 -->
   		<select id="alCount_all" resultType="Integer">
-  			SELECT COUNT(employee_id) FROM emp_main WHERE position='일용' AND working_hours='전일반'  
+  			SELECT COUNT(employee_id) FROM emp_main WHERE position='일용' AND working_hours='전일반' AND emp_date=curdate(); 
   		</select>
   		<select id="alCount_am" resultType="Integer">
-  			SELECT COUNT(employee_id) FROM emp_main WHERE position='일용' AND working_hours='오전반'
+  			SELECT COUNT(employee_id) FROM emp_main WHERE position='일용' AND working_hours='오전반' AND emp_date=curdate();
   		</select>
   		<select id="alCount_pm" resultType="Integer">
-  			SELECT COUNT(employee_id) FROM emp_main WHERE position='일용' AND working_hours='오후반'
+  			SELECT COUNT(employee_id) FROM emp_main WHERE position='일용' AND working_hours='오후반' AND emp_date=curdate();
   		</select>
   	<!-- 일용직 직원 수 -->
   	<!-- 임직원 수 -->
@@ -168,6 +175,15 @@
 		SELECT * FROM emp_salary WHERE employee_id = #{employee_id}
 	</select>
 	<!-- 급여 정보 조회 -->
+	
+	<!-- 급여 정보 조회 - ajax -->
+	<select id="getSalaryinfo_ajax" resultType="com.ddosirak.domain.SalaryVO">
+		SELECT * FROM emp_salary 
+		WHERE employee_id = #{employee_id} AND YEAR(sal_date) = YEAR(#{sal_date}) AND MONTH(sal_date) = MONTH(#{sal_date}) 
+		ORDER BY sal_date DESC
+	</select>
+	<!-- 급여 정보 조회 -->
+	
 	<!-- 급여 정보 조회 (명세서) -->
 	<select id="getEmpSalaryinfo" resultType="com.ddosirak.domain.SalaryVO">
 		SELECT * FROM emp_salary WHERE employee_id = #{employee_id} AND sal_date = #{sal_date} limit 1
@@ -237,24 +253,28 @@
    	<select id="getEmpList_department_name" resultType="com.ddosirak.domain.EmployeeVO">
    		SELECT * FROM emp_main
    		WHERE department_name = #{department_name}
+   		ORDER BY emp_date DESC
    	</select>
    <!-- 부서 -->
    <!-- 직위 -->
    	<select id="getEmpList_position" resultType="com.ddosirak.domain.EmployeeVO">
    		SELECT * FROM emp_main
    		WHERE position = #{position}
+   		ORDER BY emp_date DESC
    	</select>
    <!-- 직위 -->
    <!-- 재직현황 -->
    	<select id="getEmpList_employee_status" resultType="com.ddosirak.domain.EmployeeVO">
    		SELECT * FROM emp_main
    		WHERE employee_status = #{employee_status}
+   		ORDER BY emp_date DESC
    	</select>
    <!-- 재직현황 -->
    <!-- 이름 -->
    	<select id="getEmpList_employee_name" resultType="com.ddosirak.domain.EmployeeVO">
    		SELECT * FROM emp_main
-   		WHERE employee_name LIKE CONCAT('%',#{employee_name},'%');
+   		WHERE employee_name LIKE CONCAT('%',#{employee_name},'%')
+   		ORDER BY emp_date DESC
    	</select>
    <!-- 이름 -->
    

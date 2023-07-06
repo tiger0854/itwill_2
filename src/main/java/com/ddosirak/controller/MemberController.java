@@ -101,11 +101,12 @@ public class MemberController {
 	}// alInsertGET() method end
 	// 일용직 일괄등록 > 동작
 	@RequestMapping(value="/insert_al",method=RequestMethod.POST)	
-	public String alInsertPOST(@ModelAttribute(value="EmployeeListVO") EmployeeListVO voList) {	 // List로 여러 내용을 받아오는 방법.
+	public String alInsertPOST(@ModelAttribute(value="EmployeeListVO") EmployeeListVO voList, Date emp_date) {	 // List로 여러 내용을 받아오는 방법.
 		logger.debug("alInsertPOST() 호출![]~(￣▽￣)~*");
 		// 사원번호 부여 동작
 		for(int i=0;i<voList.getEmployeelist().size();i++) {
 			EmployeeVO emp = voList.getEmployeelist().get(i);
+			emp.setEmp_date(emp_date);
 			logger.debug("!!!!"+emp.getPosition());
 			if(emp.getPosition().equals("일용")) {
 				emp.setEmployee_id(eService.getMaxId_al());// 일용직 사원의 직번
@@ -140,11 +141,12 @@ public class MemberController {
 		model.addAttribute("evo",evo);
 		employee_id = evo.getEmployee_id();
 		
+		// 주석처리
 		// 서비스 - DB에 저장된 글 정보를 가져오기
-		List<EmployeevacationVO> myvacationList = eService.myvacationList(employee_id);
-		logger.debug("myvacationList", myvacationList);
+//		List<EmployeevacationVO> myvacationList = eService.myvacationList(employee_id);
+//		logger.debug("myvacationList", myvacationList);
 		// 연결된 뷰페이지로 전달(뷰-출력)
-		model.addAttribute("myvacationList", myvacationList);
+//		model.addAttribute("myvacationList", myvacationList);
 		
 	}//employeeInfoGET() method end
 	

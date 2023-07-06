@@ -102,8 +102,15 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		EmployeeVO resultVO = sqlSession.selectOne((NAMESPACE)+".getEmployee", employee_id);
 		return resultVO;
 	}// getEmployee() method end
-
+	
 	// 사원목록 출력
+	@Override
+	public List<EmployeeVO> empList() {
+		List<EmployeeVO> empList = sqlSession.selectList(NAMESPACE+".empListAll");
+		return empList;
+	}//empList() method end
+	
+	// 사원목록 출력 (페이징)
 	@Override
 	public List<EmployeeVO> empList(PageVO pageVO) {
 		logger.debug("empList()!");
@@ -145,8 +152,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	@Override
 	public List<SalaryVO> getSalaryInfo(int employee_id) {
 		logger.debug("getSalaryInfo() !");
-		List<SalaryVO> salaryList = sqlSession.selectList(NAMESPACE+".getSalaryinfo",employee_id);
-		return salaryList;
+		return sqlSession.selectList(NAMESPACE+".getSalaryinfo",employee_id);
+	}// getSalaryInfo() method end
+	// 급여정보 조회(월별)
+	@Override
+	public List<SalaryVO> getSalaryInfo(SalaryVO vo) {
+		logger.debug("getSalaryInfo_MONTH() !");
+		return sqlSession.selectList(NAMESPACE+".getSalaryinfo_ajax",vo);
 	}// getSalaryInfo() method end
 	
 	// 급여 정보 등록
@@ -348,6 +360,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 
 	
+
+
+
+
 
 	
 	

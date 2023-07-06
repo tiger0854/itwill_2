@@ -94,7 +94,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return resultVO;
 	}//getEmployee() method end
 
-	// 사원목록 출력
+	// 사원목록 출력 
+	@Override
+	public List<EmployeeVO> empList() {
+		return edao.empList();
+	}// empList() method
+	// 사원목록 출력 (페이징)
 	@Override
 	public List<EmployeeVO> empList(PageVO pageVO) {
 		return edao.empList(pageVO);
@@ -132,6 +137,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<SalaryVO> getSalaryInfo(int employee_id) {
 		return edao.getSalaryInfo(employee_id);
 	}//getSalaryInfo() method end
+	
+	// 급여정보 조회_월별
+	@Override
+	public List<SalaryVO> getSalaryInfo(SalaryVO vo) {
+		return edao.getSalaryInfo(vo);
+	}//getSalaryInfo() method end
+	
 	
 	// 급여 등록
 	@Override
@@ -287,6 +299,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void vacationdelete(Integer vacation_id) {
 		edao.vacationdelete(vacation_id);
 	}
+
 	
 	
 	

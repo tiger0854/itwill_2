@@ -38,6 +38,10 @@ $(document).ready(function(){
 		alert('출근 확인!');
 // 		hold()
 	}// if end
+	if(data == "INFAIL" ){
+		alert('출근 실패!');
+// 		hold()
+	}// if end
 	
 });// jQ end
 

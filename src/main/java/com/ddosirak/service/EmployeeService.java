@@ -38,6 +38,7 @@ public interface EmployeeService {
 	public EmployeeVO getEmployee(int employee_id);
 	
 	// 사원 목록 출력
+	public List<EmployeeVO> empList();
 	public List<EmployeeVO> empList(PageVO pageVO);
 	
 	// 사원 정보 수정
@@ -47,6 +48,8 @@ public interface EmployeeService {
 /////////////////////////////////////////급여동작////////////////////////////////////////////////////
 	// 급여정보 조회
 	public List<SalaryVO> getSalaryInfo(int employee_id);
+	// 급여정보 조회_월별
+	public List<SalaryVO> getSalaryInfo(SalaryVO vo);
 	// 급여정보 등록
 	public void salaryInsert(EmployeeVO vo);
 	// 급여 지급
