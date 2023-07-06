@@ -25,8 +25,8 @@ public class ProOrderVO {
 	private String factory_code;
 	private String line_code;
 	private String item_code;
-	private String oQTY;
-	private String pQTY;
+	private String oQTY; // 지시수량
+	private String pQTY; // 생산수량
 	private String wo_status;
 	private Date wo_date;
 	private String remark;

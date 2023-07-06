@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.ddosirak.domain.CustomerVO;
 import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.MaterialdetailVO;
 import com.ddosirak.domain.PageVO;
@@ -81,6 +82,8 @@ public class ItemdetailDAOImpl implements ItemdetailDAO {
 		return sqlsession.selectOne(NAMESPACE + ".itemCount", instrSearch);
 	}
 	
+	
+
 	
 
 }

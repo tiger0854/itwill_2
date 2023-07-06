@@ -74,7 +74,5 @@ public class ItemdetailServiceImpl implements ItemdetailService {
 	}
 	
 	
-	
-	
 
 }
