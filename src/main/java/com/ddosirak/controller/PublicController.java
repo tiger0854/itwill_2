@@ -1,7 +1,5 @@
 package com.ddosirak.controller;
 
-import java.util.Objects;
-
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddosirak.domain.BoardVO;
+import com.ddosirak.domain.EmployeeCheckVO;
 import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.LoginVO;
 import com.ddosirak.domain.PageVO;
@@ -41,13 +40,13 @@ public class PublicController {
 	// http://localhost:8088/public/write
 	// 게시판 업로드 페이지
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
-	public void boardWriteGET() {
+	public void boardWriteGET() throws Exception{
 		logger.debug("boardWriteGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 		logger.debug("/public/write.jsp로 이동!");
 	}//boardWriteGET() method end
 	//게시판 업로드 동작 C
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String boardWritePOST(HttpSession session, BoardVO vo) {
+	public String boardWritePOST(HttpSession session, BoardVO vo) throws Exception{
 		logger.debug("boardWritePOST() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 		EmployeeVO evo = eService.getEmployee(Integer.parseInt(session.getAttribute("login_id").toString()));
 		vo.setEmployee_id((String)session.getAttribute("login_id"));
@@ -62,7 +61,7 @@ public class PublicController {
 	// http://localhost:8088/public/boardList
 	// 게시판 리스트 페이지 R 
 	@RequestMapping(value = "/boardList", method = RequestMethod.GET)
-	public void boardListGET(Model model, PageVO pageVO, HttpServletRequest request) {
+	public void boardListGET(Model model, PageVO pageVO, HttpServletRequest request) throws Exception{
 		logger.debug("boardListGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 		logger.debug("/public/boardList.jsp로 이동!");
 		
@@ -113,7 +112,7 @@ public class PublicController {
 	
 	// 게시판 글 조회
 	@RequestMapping(value = "/content", method = RequestMethod.GET)
-	public void contentGET(int emp_bno, Model model) {
+	public void contentGET(int emp_bno, Model model) throws Exception{
 		logger.debug("contentGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 		logger.debug("/public/content?emp_bno="+emp_bno+"로 이동!");
 		
@@ -121,7 +120,7 @@ public class PublicController {
 	}// contentGET() method end
 	// 게시판 글 수정 > POST
 	@RequestMapping(value = "/content", method = RequestMethod.POST)
-	public String contentPOST(BoardVO vo, RedirectAttributes rttr) {
+	public String contentPOST(BoardVO vo, RedirectAttributes rttr) throws Exception{
 		logger.debug("contentPOST() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 		
 		bService.contentUpdate(vo);
@@ -131,7 +130,7 @@ public class PublicController {
 	}// contentPOST() method end
 	// 게시판 글 삭제
 	@RequestMapping(value = "/contentDelete")
-	public String contentDelete(int emp_bno) {
+	public String contentDelete(int emp_bno) throws Exception{
 		logger.debug("contentDelete() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 		
 		bService.deleteContent(emp_bno);
@@ -146,7 +145,7 @@ public class PublicController {
 	// http://localhost:8088/public/login
 	// 로그인 페이지로 이동
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public void loginGET() {
+	public void loginGET() throws Exception{
 		logger.debug("loginGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 		logger.debug("/public/login.jsp로 이동!");
 	}//loginGET() method end
@@ -184,11 +183,52 @@ public class PublicController {
 	
 	//비밀번호 찾기
 	@RequestMapping(value = "/findPw", method = RequestMethod.GET)
-	public void findPWGET() {
+	public void findPWGET() throws Exception{
 		logger.debug("findPWGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 		
 		
 	}//findPWGET() method end
+	
+	// 출근페이지
+	@RequestMapping(value = "/in", method = RequestMethod.GET)
+	public void inGET() throws Exception{
+		logger.debug("inGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
+	}//inGET() method end
+	// 출근페이지 POST
+	@RequestMapping(value = "/in", method = RequestMethod.POST)
+	public String inPOST(EmployeeCheckVO vo,RedirectAttributes rttr) throws Exception{
+		logger.debug("inPOST() 호출!(((o(*ﾟ▽ﾟ*)o)))");
+		
+		bService.employeeIn(vo);
+		
+		rttr.addAttribute("result", "INSUCC");
+		
+		return "redirect:/public/login";
+	}//inPOST() method end
+	
+	// 퇴근페이지
+	@RequestMapping(value = "/out", method = RequestMethod.GET)
+	public void outGET() throws Exception{
+		logger.debug("outGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
+	}//outGET() method end
+	// 퇴근페이지 POST
+	@RequestMapping(value = "/out", method = RequestMethod.POST)
+	public String outPOST(EmployeeCheckVO vo,LoginVO lvo, RedirectAttributes rttr
+			,HttpSession session) throws Exception{
+		logger.debug("outPOST() 호출!(((o(*ﾟ▽ﾟ*)o)))");
+		
+		if(bService.checkIDPW(lvo) == null) {		
+			logger.debug("퇴근확인 실패!!!");
+			rttr.addFlashAttribute("result","OUTFAIL");
+			return "redirect:/public/login";
+		}// if end
+		else {
+			bService.employeeOut(vo);
+			session.invalidate();
+			rttr.addFlashAttribute("result", "EMPOUT");
+		}// else end
+		return "redirect:/public/login";
+	}//outPOST() method end
 /////////////////////////////////로그인///////////////////////////////////
 	
 }// public class end

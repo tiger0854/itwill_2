@@ -5,6 +5,7 @@
 <html>
 <head>
 <jsp:include page="../common/header.jsp" />
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>

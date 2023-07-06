@@ -53,11 +53,12 @@
 
 	<!-- 레시피 수정 -->
 	<select id="selectItemRecipe" resultType="com.ddosirak.domain.ItemRecipeListVO">
-		select ir.material_code, ir.material_con, m.material_name 
+		select ir.material_code, ir.material_con, m.material_name
 		from item_recipe ir join material_detail m
 		on ir.material_code = m.material_code
 		where item_code=#{item_code}
 	</select>
+	
 	<update id="updateItemRecipe">
 		update item_recipe
 		set item_code=#{item_code},

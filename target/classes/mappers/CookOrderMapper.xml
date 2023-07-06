@@ -15,13 +15,14 @@
 	  </selectKey>
 		  INSERT INTO cook
 		  (co_code, employee_id, line_code, item_code, co_date,
-		  coQTY, cpQTY,item_name,material_code,material_name,line_name)
+		  coQTY, cpQTY,item_name,material_code,material_name,line_name,so_code,material_con)
 		  VALUES (
 		  #{co_code}, #{employee_id}, #{line_code}, #{item_code},
 		  CURDATE(), #{coQTY}, #{cpQTY},#{item_name},
-		  #{material_code},#{material_name},#{line_name}
+		  #{material_code},#{material_name},#{line_name},#{so_code},#{material_con}
 		  )
-	</insert>
+	</insert> 
+
 
   	
   	<!-- 조리지시 목록 출력-->
@@ -42,7 +43,7 @@
 	      AND co_status = #{co_status}
 	    </otherwise>
 	  </choose>
-	  AND material_code LIKE CONCAT('%', #{material_code}, '%')
+	  AND so_code LIKE CONCAT('%', #{so_code}, '%')
 	  LIMIT #{startRow}, #{pageSize}
   	</select>
 
@@ -51,7 +52,7 @@
     <select id="cookcount" resultType="java.lang.Integer">
 		SELECT count(*) FROM cook
 		<if test="co_date != null and co_status != null and
-		 line_code != null and material_code != null">
+		 line_code != null and so_code != null">
 		WHERE line_code LIKE CONCAT('%', #{line_code}, '%')
 	  <if test="wo_date != null and wo_date != ''">
 	    AND co_date = #{co_date}
@@ -62,10 +63,10 @@
 	      AND co_status = #{co_status}
 	    </otherwise>
 	  </choose>
-	  AND material_code LIKE CONCAT('%', #{material_code}, '%')
+	  AND so_code LIKE CONCAT('%', #{so_code}, '%')
 	  </if>	
   	</select>
-  	
+ 
 <!-- 	.getcookOrder 조리지시 조회 -->
   	<!-- 작업지시 정보 -->
   	<select id="getcookOrder" resultType="com.ddosirak.domain.CookVO">
@@ -168,13 +169,13 @@
 		count(*)
 		from
 		(select
-		it.coQTY,
+		it.material_con,
 	    sum(if(p.cerf_gobd='n',p.cfQTY,0)) as "n"
 		from cook_add p join cook it
 		on it.co_code = p.co_code
 	    where it.co_code = #{co_code}
 	    group by it.co_code
-		having it.coQTY &lt;= sum(if(p.cerf_gobd='n',p.cfQTY,0))) as table1
+		having it.material_con &lt;= sum(if(p.cerf_gobd='n',p.cfQTY,0))) as table1
 	</select>  
 	
   	<!-- addQTY -->
@@ -205,8 +206,17 @@
 	  	where co_code=#{co_code}
   	</select> 
   	
-
   	
+	<!-- checkR -->
+  	<select id="checkR"  resultType="boolean">
+		  SELECT COUNT(*) = EXISTS (
+		    SELECT COUNT(*)
+		    FROM cook
+		    WHERE so_code = #{re_code} OR cpQTY >= material_con
+		  ) AS availability
+		  FROM cook
+		  WHERE so_code = #{re_code}
+	</select>  
   	
   	
   </mapper>

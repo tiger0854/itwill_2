@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.ui.Model;
 
 import com.ddosirak.domain.CookAddVO;
+import com.ddosirak.domain.CookListVO;
 import com.ddosirak.domain.CookVO;
 import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.ItemdetailVO;
@@ -19,7 +20,7 @@ public interface CookOrderDAO {
 	// 필요한 동작들을 추상메서드를 사용하여 정의! (만들어두기만 한다.)
 
 	// C - 조리지시등록
-	public void cookOrder(CookVO cvo); 
+	public void cookOrder(CookVO cvo);
 	
 	// 조리지시 목록
 	public List<CookVO> cookOrderList(PageVO pageVO);
@@ -85,6 +86,9 @@ public interface CookOrderDAO {
 	
 	// 조리실적 수동마감
 	public void codatatusEnd(String co_code);
+
+	// 수주번호 체크
+	public boolean checkrecode(String re_code);
 
 	
 

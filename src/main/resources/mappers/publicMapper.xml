@@ -12,6 +12,29 @@
 	</select>
 	<!-- IDPW 비교 -->
 	
+	<!-- 출근 -->
+	<insert id="employeeIn">
+		INSERT INTO emp_check
+		(employee_id, emp_in)
+		VALUES (#{employee_id}, #{emp_in})
+	</insert>
+	<!-- 출근 -->
+	
+	<!-- 퇴근 -->
+	<insert id="employeeOut">
+		INSERT INTO emp_check
+		(employee_id, emp_out)
+		VALUES (#{employee_id}, #{emp_out})
+	</insert>
+	<!-- 퇴근 -->
+	
+	<!-- 근태 리스트 -->
+	<select id="getInOutList" resultType="com.ddosirak.domain.EmployeeCheckVO">
+		SELECT * FROM emp_check WHERE employee_id = #{employee_id}
+	</select>
+	<!-- 근태 리스트 -->
+	
+	
 	<!-- 게시판 업로드 -->
 	<insert id="writeBoard">
 		INSERT INTO emp_board 

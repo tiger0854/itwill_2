@@ -4,12 +4,13 @@ import java.util.List;
 
 import com.ddosirak.domain.InboundVO;
 import com.ddosirak.domain.OrderVO;
+import com.ddosirak.domain.PageVO;
 
 public interface InboundDAO {
 	
 	public void insertInbound(InboundVO vo); //입고예정등록
 	
-	public List<InboundVO> inboundAllList(); //입고리스트  불러오기
+	public List<InboundVO> inboundAllList(PageVO vo); //입고리스트  불러오기
 	
 	public int updateOrderState(String order_number); //입고등록시 발주상태변경
 	

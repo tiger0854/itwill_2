@@ -153,13 +153,11 @@
 			// 체크된 값들을 테이블에 추가
 			for (var i = 0; i < materialArray.length; i++) {
 				var vo = materialArray[i];
-
 				var row = $("<tr>");
 // 				row.append("<td></td>");
 				row.append("<td><input type='hidden' name='itemRecipeUploadvo[" + i + "].material_code' value='" + vo.material_code + "'>");
 				row.append("<input type='text' value='" + vo.material_name + "' readonly='readonly'></td>");
 				row.append("<td><input type='text' name='itemRecipeUploadvo[" + i + "].material_con' value='" + vo.material_con + "' placeholder='" + vo.material_code + "의 소모량' required></td>");
-
 				tbody.append(row);
 
 			}

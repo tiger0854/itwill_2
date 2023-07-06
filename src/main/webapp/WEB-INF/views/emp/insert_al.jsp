@@ -31,6 +31,7 @@ $(document).ready(function(){
 	}) // first add end
 	
 	$('#add').on('click',function(){
+		if(count <= 20){
 		var table = '<tr>';
 		table += '<td>'+count+'</td>';
 		table += '<td><input type="text" size="8" name="employeelist['+(count-1)+'].employee_name"></td>';
@@ -47,6 +48,9 @@ $(document).ready(function(){
 		table += '</tr>';
 		$('#alTable > tbody:last').append(table);
 		count++;
+		}else if(count > 20){
+			alert('20명 이상 일괄등록할 수 없습니다!');
+		}
 	}) // add end
 	
 	  $('#delete').on('click',function() {
