@@ -32,23 +32,26 @@
 	function onUpdate(material_code) {
 		var frObj = $("#fr");
 		var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
-		$
-				.ajax({
-					url : "/foundation/materialdetail/materialdetailUpdate?material_code="
-							+ material_code, // 요청을 보낼 서버의 URL
-					type : "POST", // HTTP 요청 방식 (POST)
-					data : formData, // 전송할 데이터 (직렬화된 폼 데이터)
-					success : function(response) {
-						alert("작성 성공!");
-						opener.location.reload();
-						window.close(); // 윈도우 창을 닫습니다.
-					},
-					error : function(xhr, status, error) {
-						alert("빈칸을 입력해주세요!");
-					}
-				});
+		if (frObj[0].checkValidity()) {
+		$.ajax({
+			url : "/foundation/materialdetail/materialdetailUpdate?material_code="
+					+ material_code, // 요청을 보낼 서버의 URL
+			type : "POST", // HTTP 요청 방식 (POST)
+			data : formData, // 전송할 데이터 (직렬화된 폼 데이터)
+			success : function(response) {
+				alert("작성 성공!");
+				opener.location.reload();
+				window.close(); // 윈도우 창을 닫습니다.
+			},
+			error : function(xhr, status, error) {
+				alert("빈칸을 입력해주세요!");
+			}
+		});
 
-	}
+	}else {
+	      alert("입력란을 채워주세요!");
+    }
+}
 </script>
 <body>
 	<!-- 창고등록 폼 -->

@@ -104,7 +104,8 @@
 						<th>품명</th>
 						<th>자재코드</th>
 						<th>자재명</th>
-						<th>소모량</th>
+						<th>자재 소모량</th>
+						<th>자재 단위</th>
 						<th>자재 개별 삭제</th>
 						<th>레시피 전체 삭제</th>
 					</tr>
@@ -117,6 +118,7 @@
 							<td>${vo.material_code}</td>
 							<td>${vo.material_name}</td>
 							<td>${vo.material_con }</td>
+							<td>${vo.material_unit }</td>
 							<td><button class=btn-delete type="button"
 									onclick="recipeDeleteMaterial('${vo.item_code}','${vo.item_name }','${vo.material_code }','${vo.material_name }');">
 									<i class='bx bxs-trash'></i>

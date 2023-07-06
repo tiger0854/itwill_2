@@ -37,6 +37,7 @@
 
 			var frObj = $("#fr");
 			var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
+			if (frObj[0].checkValidity()) {
 			$.ajax({
 				url : "/foundation/itemrecipe/itemrecipeUpload", // 요청을 보낼 서버의 URL
 				type : "POST", // HTTP 요청 방식 (POST)
@@ -50,7 +51,10 @@
 					alert("최소한 하나의 자재는 등록해야합니다");
 				}
 			});
-		}
+		} else {
+	      alert("입력란을 채워주세요!");
+	    }
+	}
 		
 		
 		// 상품 검색 후 자재 가져오기
@@ -150,7 +154,7 @@
 			tbody.empty();
 			materialHeader.empty();
 			
-			// 체크된 값들을 테이블에 추가
+			// 배열에 든 값들을 테이블에 추가
 			for (var i = 0; i < materialArray.length; i++) {
 				var vo = materialArray[i];
 				var row = $("<tr>");
@@ -158,6 +162,7 @@
 				row.append("<td><input type='hidden' name='itemRecipeUploadvo[" + i + "].material_code' value='" + vo.material_code + "'>");
 				row.append("<input type='text' value='" + vo.material_name + "' readonly='readonly'></td>");
 				row.append("<td><input type='text' name='itemRecipeUploadvo[" + i + "].material_con' value='" + vo.material_con + "' placeholder='" + vo.material_code + "의 소모량' required></td>");
+				row.append("<td><input type='text' name='itemRecipeUploadvo[" + i + "].material_unit' value='" + vo.material_unit + "' readonly ></td>");
 				tbody.append(row);
 
 			}
@@ -168,6 +173,7 @@
 					materialHeader.append("<td></td>");
 					materialHeader.append("<td>자재 명</td>");
 					materialHeader.append("<td>자재소모량</td>");
+					materialHeader.append("<td>자재단위</td>");
 				}
 			}
 		}

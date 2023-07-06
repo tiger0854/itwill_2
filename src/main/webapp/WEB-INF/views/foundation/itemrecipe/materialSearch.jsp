@@ -46,8 +46,8 @@
 				if ($(this).is(":checked")) {
 					// 	var checkboxName = $(this).attr("name");
 					var checkboxValue = $(this).val();
-					 var checkboxName = $(this).siblings("input[type='hidden']").val();
-
+					var checkboxName = $(this).siblings("#material_name").val();
+					var checkboxUnit = $(this).siblings("#material_unit").val();
 					var isDuplicate = checkedValues.some(function(item) {
 						return item.material_code === checkboxValue;
 					});
@@ -55,7 +55,8 @@
 						checkedValues.push({
 							"material_code" : checkboxValue,
 							"material_con" : "",// material_con을 공백으로 설정
-							"material_name" : checkboxName
+							"material_name" : checkboxName,
+							"material_unit" : checkboxUnit
 						});
 					} else {
 						alert("자재 번호 : "+checkboxValue+"은 이미 선택된 자재입니다.");
@@ -94,7 +95,7 @@
 		  for (var i = 0; i < checkedValues.length; i++) {
 
 		    var row = "<tr id='" + checkedValues[i].material_code + "'>" + "<td>자재 코드: "
-		              + checkedValues[i].material_code + " 자재 명 : "+checkedValues[i].material_name+"</td><td><input type='button' value='제거' class='btn btn-danger' onclick='deleteMaterial(\"" + checkedValues[i].material_code + "\", \"" + checkedValues[i].material_name + "\");'></td>" + "</tr>";
+		              + checkedValues[i].material_code + "/ 자재 명 : "+checkedValues[i].material_name+"/ 자재 단위 : "+checkedValues[i].material_unit+"</td><td><input type='button' value='제거' class='btn btn-danger' onclick='deleteMaterial(\"" + checkedValues[i].material_code + "\", \"" + checkedValues[i].material_name + "\");'></td>" + "</tr>";
 
 		    table.append(row);
 		  }
@@ -162,15 +163,18 @@
 				<th>#</th>
 				<th>자재코드</th>
 				<th>자재명</th>
+				<th>자재단위</th>
 				<th>자재유형</th>
 			</tr>
 			<c:forEach var="vo" items="${resultList }">
 				<tr>
 					<td><input type="checkbox" id="${vo.material_code }" value="${vo.material_code }">
-						<input type="hidden" value="${vo.material_name }">
+						<input id="material_name" type="hidden" value="${vo.material_name }">
+						<input id="material_unit" type="hidden" value="${vo.material_unit}">
 					</td>
 					<td>${vo.material_code}</td>
 					<td>${vo.material_name}</td>
+					<td>${vo.material_unit}</td>
 					<td>${vo.material_type}</td>
 				</tr>
 			</c:forEach>

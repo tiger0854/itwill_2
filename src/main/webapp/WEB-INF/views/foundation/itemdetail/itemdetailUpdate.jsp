@@ -33,6 +33,7 @@
 	function onUpdate(item_code) {
 		var frObj = $("#fr");
 		var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
+		if (frObj[0].checkValidity()) {
 		$.ajax({
 			url : "/foundation/itemdetail/itemdetailUpdate?item_code="
 					+ item_code, // 요청을 보낼 서버의 URL
@@ -47,6 +48,9 @@
 				alert("빈칸을 입력해주세요!");
 			}
 		});
+	}else {
+		alert("입력란을 채워주세요!");
+	}
 	}
 </script>
 <body>
