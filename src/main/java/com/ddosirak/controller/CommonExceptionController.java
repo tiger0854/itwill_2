@@ -12,7 +12,7 @@ public class CommonExceptionController { // 컨트롤러의 역할을 하지는 
 
 		
 	private static final Logger logger = LoggerFactory.getLogger(CommonExceptionController.class);
-	
+	  
 	// http://localhost:8088/board/read?bno=a
 	@ExceptionHandler(Exception.class)
 	public String common(Model model, Exception e) {
