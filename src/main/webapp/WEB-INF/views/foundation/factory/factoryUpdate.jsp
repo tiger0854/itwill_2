@@ -17,6 +17,7 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
 	rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <!-- <link rel="stylesheet" type="text/css" href="../css/css.css"> -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/product.css">
@@ -36,7 +37,7 @@
 				window.close(); // 윈도우 창을 닫습니다.
 			},
 			error : function(xhr, status, error) {
-				console.error("에러 발생:", error);
+				alert("빈칸을 입력해주세요!");
 			}
 		});
 	}
@@ -75,11 +76,11 @@
 
 			<!-- 창고등록, 취소 버튼 -->
 			<div style="text-align: center; margin-top: 50px">
-				<button type="button" class=btn-add
+				<button type="button" class="btn btn-outline-primary"
 					onclick="onUpdate('${vo.factory_code}');">
 					<i class='bx bx-edit'></i> 수정
 				</button>
-				<button class=btn-search onclick="window.close()">X 취소</button>
+				<button class="btn btn-danger"  onclick="window.close()">X 취소</button>
 			</div>
 
 		</form>

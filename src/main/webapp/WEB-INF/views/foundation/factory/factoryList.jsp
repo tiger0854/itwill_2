@@ -5,6 +5,7 @@
 <html>
 <head>
 <jsp:include page="../../common/header.jsp" />
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
@@ -43,9 +44,9 @@ function openItem() {
 </head>
 
 <body>
-	<form id="instr">
 		<div class="height-100">
 			<div class="container mt-3">
+	<form id="instr">
 
 				<h4 style="margin-top: 150px;">
 					<i class="bx bx-book"></i> 공장관리
@@ -54,13 +55,9 @@ function openItem() {
 					<hr width="100%" style="border: 2px solid black">
 					<!-- 창고목록 검색, 등록버튼 -->
 					<div class=btn-container>
-						<button class=btn-search type="submit">
-							<i class='bx bx-search-alt-2'></i> 공장 조회
-						</button>
+						<input class="btn btn-primary" type="submit" value="공장 조회">
 						<!-- <button class=btn-add onclick="location.href='warehouseWrite'"><i class='bx bx-plus-medical'></i> 창고 추가</button> -->
-						<button class=btn-add onclick=factoryUpload()>
-							<i class='bx bx-plus-medical'></i> 공장 추가
-						</button>
+						<input type="button" class="btn btn-outline-primary" onclick="factoryUpload()" value="공장 추가">
 					</div>
 
 					<!-- 창고목록 검색박스 -->
@@ -68,12 +65,13 @@ function openItem() {
 						border="1">
 
 						<tr>
-							<th>공장명</th>
-							<td><input type="text" id="factory_name" name="factory_name"
-								placeholder="공장명" onclick="openItem();"></td>
 							<th>공장 코드</th>
 							<td><input type="text" id="factory_code" name="factory_code"
-								placeholder="공장코드" readonly></td>
+								placeholder="공장코드"></td>
+							<th>공장명</th>
+							<td><input type="text" id="factory_name" name="factory_name"
+								placeholder="공장명"></td>
+							<td><input type="button" value="상세 검색" onclick="openItem();" class="btn btn-primary"></td>
 						</tr>
 					</table>
 				</div>
@@ -119,8 +117,8 @@ function openItem() {
 			style="margin-top: 20px;">
 			<c:if test="${pageVO.startPage > pageVO.pageBlock}">
 				<li class="page-item"><a class="page-link"
-					href="/foundation/factory/factoryList?factory_code=${Search.factory_code }&factory_name=${Search.factory_name }&pageNum=${pageVO.startPage - pageVO.pageBlock}"><sapn>
-						< </sapn></a></li>
+					href="/foundation/factory/factoryList?factory_code=${Search.factory_code }&factory_name=${Search.factory_name }&pageNum=${pageVO.startPage - pageVO.pageBlock}">
+						</a></li>
 			</c:if>
 			<c:forEach var="i" begin="${pageVO.startPage}"
 				end="${pageVO.endPage}" step="1">
@@ -129,8 +127,8 @@ function openItem() {
 			</c:forEach>
 			<c:if test="${pageVO.endPage < pageVO.pageCount}">	
 				<li class="page-item"><a class="page-link"
-					href="/foundation/factory/factoryList?factory_code=${Search.factory_code }&factory_name=${Search.factory_name }&pageNum=${pageVO.startPage + pageVO.pageBlock}"><span>
-							> </span></a></li>
+					href="/foundation/factory/factoryList?factory_code=${Search.factory_code }&factory_name=${Search.factory_name }&pageNum=${pageVO.startPage + pageVO.pageBlock}">
+							</a></li>
 			</c:if>
 		</ul>
 	</div>

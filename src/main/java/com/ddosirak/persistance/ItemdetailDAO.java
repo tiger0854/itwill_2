@@ -15,7 +15,7 @@ public interface ItemdetailDAO {
 	public List<ItemdetailVO> idList(PageVO pageVO) throws Exception;
 
 	// 자재 목록 검색
-	public List<ItemdetailVO> idList(PageVO pageVO, Map<String, Object> instrSearch, Model model) throws Exception;
+	public List<ItemdetailVO> idList(PageVO pageVO, Map<String, Object> instrSearch) throws Exception;
 
 	// 자재 기초 등록
 	public Integer insertID(ItemdetailVO vo) throws Exception;

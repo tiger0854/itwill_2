@@ -1,5 +1,6 @@
 package com.ddosirak.controller;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,11 +97,10 @@ public class ItemdetailController {
 			// 공장 검색 조회
 			logger.debug("itemList 검색 호출 ![]~(￣▽￣)~*");
 //					proOrderList = oService.proOrderList();
-			itemList = service.idList(pageVO, instrSearch, model);
+			itemList = service.idList(pageVO, instrSearch);
 //					int instrSearchCount = instructService.instrCount(instrSearch);
 //					model.addAttribute("instrSearchCount", instrSearchCount);
 		}
-
 		model.addAttribute("Search", instrSearch);
 		model.addAttribute("itemList", itemList);
 		

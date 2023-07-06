@@ -116,7 +116,7 @@ public class FactoryController {
 			// 공장 검색 조회
 			logger.debug("productList 검색 호출 ![]~(￣▽￣)~*");
 //					proOrderList = oService.proOrderList();
-			factoryList = service.facList(pageVO, instrSearch, model);
+			factoryList = service.facList(pageVO, instrSearch);
 //					int instrSearchCount = instructService.instrCount(instrSearch);
 //					model.addAttribute("instrSearchCount", instrSearchCount);
 		}
@@ -186,7 +186,7 @@ public class FactoryController {
 			// 작업지시 검색 조회
 			logger.debug("factoryItemList.jsp 검색 호출 ![]~(￣▽￣)~*");
 //					proOrderList = oService.proOrderList();
-			factoryList = service.factoryItemList(instrSearch, model);
+			factoryList = service.factoryItemList(instrSearch);
 //					int instrSearchCount = instructService.instrCount(instrSearch);
 //					model.addAttribute("instrSearchCount", instrSearchCount);
 		}

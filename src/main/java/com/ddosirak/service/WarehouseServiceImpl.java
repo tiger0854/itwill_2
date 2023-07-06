@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.WarehouseVO;
@@ -32,9 +31,9 @@ public class WarehouseServiceImpl implements WarehouseService {
 	
 	//창고 검색 목록
 	@Override
-	public List<WarehouseVO> warehouseList(PageVO pageVO, Map<String, Object> instrSearch, Model model) {
+	public List<WarehouseVO> warehouseList(PageVO pageVO, Map<String, Object> instrSearch) {
 		logger.debug("dao : warehouselist 검색 호출");
-		List<WarehouseVO> voList=dao.whList(pageVO, instrSearch, model);
+		List<WarehouseVO> voList=dao.whList(pageVO, instrSearch);
 		logger.debug("voList의 개수 : "+voList.size());
 		return voList;
 	}
@@ -122,9 +121,9 @@ public class WarehouseServiceImpl implements WarehouseService {
 	}
 
 	@Override
-	public List<WarehouseVO> warehouseItemList(Map<String, Object> instrSearch, Model model) {
+	public List<WarehouseVO> warehouseItemList(Map<String, Object> instrSearch) {
 		logger.debug("service : 창고 검색");
-		return dao.warehouseItemList(instrSearch, model);
+		return dao.warehouseItemList(instrSearch);
 	}
 
 	@Override

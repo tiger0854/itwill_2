@@ -9,10 +9,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.ui.Model;
 
 import com.ddosirak.domain.FactoryVO;
-import com.ddosirak.domain.MaterialdetailVO;
 import com.ddosirak.domain.PageVO;
 
 @Repository
@@ -33,7 +31,7 @@ public class FactoryDAOImpl implements FactoryDAO {
 	
 
 	@Override
-	public List<FactoryVO> facList(PageVO pageVO, Map<String, Object> instrSearch, Model model) {
+	public List<FactoryVO> facList(PageVO pageVO, Map<String, Object> instrSearch) {
 		logger.debug("dao : 공장 검색 목록 출력");
 		instrSearch.put("startRow", pageVO.getStartRow());
 		instrSearch.put("pageSize", pageVO.getPageSize());
@@ -82,7 +80,7 @@ public class FactoryDAOImpl implements FactoryDAO {
 	}
 
 	@Override
-	public List<FactoryVO> factoryItemList(Map<String, Object> instrSearch, Model model) {
+	public List<FactoryVO> factoryItemList(Map<String, Object> instrSearch) {
 		logger.debug("dao : 공장 검색 부분");
 		List<FactoryVO> factoryItemList = sqlsession.selectList(NAMESPACE + ".factoryItemSearch", instrSearch);
 		return factoryItemList;

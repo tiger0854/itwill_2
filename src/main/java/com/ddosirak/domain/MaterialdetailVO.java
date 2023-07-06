@@ -4,6 +4,14 @@ public class MaterialdetailVO {
 	private String material_code;
     private String material_name;
     private String material_type;
+    private String material_unit;
+    
+	public String getMaterial_unit() {
+		return material_unit;
+	}
+	public void setMaterial_unit(String material_unit) {
+		this.material_unit = material_unit;
+	}
 	public String getMaterial_code() {
 		return material_code;
 	}

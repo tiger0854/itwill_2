@@ -17,6 +17,7 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
 	rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <!-- <link rel="stylesheet" type="text/css" href="../css/css.css"> -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/product.css">
@@ -36,7 +37,7 @@
 				window.close(); // 윈도우 창을 닫습니다.
 			},
 			error : function(xhr, status, error) {
-				console.error("에러 발생:", error);
+				alert("빈칸을 입력해주세요!");
 			}
 		});
 	}
@@ -69,6 +70,11 @@
 							value="${resultvo.wh_name }" required="required"></td>
 					</tr>
 					<tr>
+						<td>창고용량</td>
+						<td><input type="number" name="wh_size"
+							value="${resultvo.wh_size }" required="required"></td>
+					</tr>
+					<tr>
 						<td>재고/자재</td>
 						<td><select name="retail_code">
 								<option value="재고" ${resultvo.retail_code == '재고' ? 'selected' : ''}>재고 창고</option>
@@ -90,10 +96,10 @@
 
 			<!-- 창고등록, 취소 버튼 -->
 			<div style="text-align: center; margin-top: 50px">
-				<button type="button" class=btn-add onclick="onUpdate('${resultvo.wh_code}');">
+				<button type="button" class="btn btn-outline-primary" onclick="onUpdate('${resultvo.wh_code}');">
 					<i class='bx bx-edit'></i> 수정
 				</button>
-				<button class=btn-search onclick="window.close()">X 취소</button>
+				<button class="btn btn-danger" onclick="window.close()">X 취소</button>
 			</div>
 
 		</form>

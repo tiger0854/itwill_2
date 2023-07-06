@@ -10,6 +10,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <!-- <link rel="stylesheet" type="text/css" href="../css/css.css"> -->
 <link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -93,7 +94,7 @@
 		  for (var i = 0; i < checkedValues.length; i++) {
 
 		    var row = "<tr id='" + checkedValues[i].material_code + "'>" + "<td>자재 코드: "
-		              + checkedValues[i].material_code + " 자재 명 : "+checkedValues[i].material_name+"</td><td><input type='button' value='제거' onclick='deleteMaterial(\"" + checkedValues[i].material_code + "\", \"" + checkedValues[i].material_name + "\");'></td>" + "</tr>";
+		              + checkedValues[i].material_code + " 자재 명 : "+checkedValues[i].material_name+"</td><td><input type='button' value='제거' class='btn btn-danger' onclick='deleteMaterial(\"" + checkedValues[i].material_code + "\", \"" + checkedValues[i].material_name + "\");'></td>" + "</tr>";
 
 		    table.append(row);
 		  }
@@ -174,12 +175,35 @@
 				</tr>
 			</c:forEach>
 		</table>
+	
+	<!-- 페이징처리 -->
+	<%--   		${Search} --%>
+	<div class="container" style="margin-top: 30px; margin-bottom: 30px">
+		<ul class="pagination justify-content-center" id="pagination"
+			style="margin-top: 20px;">
+			<c:if test="${search.startPage > search.pageBlock}">
+				<li class="page-item"><a class="page-link"
+					href="/foundation/itemrecipe/materialSearch?material_code=${search.material_code }&material_name${search.material_name }&material_type=${search.material_type}&pageNum=${search.startPage - search.pageBlock}">
+				</a></li>
+			</c:if>
+			<c:forEach var="i" begin="${search.startPage}"
+				end="${search.endPage}" step="1">
+				<li class="page-item"><a class="page-link"
+					href="/foundation/itemrecipe/materialSearch?material_code=${search.material_code }&material_name=${search.material_name }&material_type=${search.material_type}&pageNum=${i}"><span>${i}</span></a></li>
+			</c:forEach>
+			<c:if test="${search.endPage < search.pageCount}">
+				<li class="page-item"><a class="page-link"
+					href="/foundation/itemrecipe/materialSearch?material_code=${search.material_code }&material_name=${search.material_name }&material_type=${search.material_type}&pageNum=${search.startPage + search.pageBlock}"><span>
+							> </span></a></li>
+			</c:if>
+		</ul>
+	</div>
 		<br> <hr>
 		<form action="">
 		<table id="checkParameter">
 			
 		</table>
-		<input type="button" value="등록" onclick="postParam();">
+		<input type="button" value="등록" class="btn btn-outline-primary" onclick="postParam();">
 		</form>
 	</div>
 </body>

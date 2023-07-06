@@ -15,30 +15,40 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddosirak.domain.CookAddVO;
+import com.ddosirak.domain.CookListVO;
 import com.ddosirak.domain.CookVO;
 import com.ddosirak.domain.IntegrationCodeVO;
+import com.ddosirak.domain.ItemRecipeListVO;
 import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.LineVO;
 import com.ddosirak.domain.MaterialdetailVO;
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.ProOrderVO;
 import com.ddosirak.domain.ProductionPerformanceVO;
+import com.ddosirak.domain.ReceiveVO;
 import com.ddosirak.persistance.ProductionPerformanceDAO;
 import com.ddosirak.service.CookOrderService;
+import com.ddosirak.service.ItemRecipeService;
 import com.ddosirak.service.ItemdetailService;
 import com.ddosirak.service.LineService;
 import com.ddosirak.service.MaterialdetailService;
 import com.ddosirak.service.MaterialsService;
+import com.ddosirak.service.PageService;
 import com.ddosirak.service.ProOrderService;
 import com.ddosirak.service.ProductionPerformanceService;
+import com.ddosirak.service.ReceiveService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 // 컨트롤러 구현 전 정하면 좋은 것들.
 // - 컨트롤러별 공통 주소 (URI) 설계
@@ -70,28 +80,46 @@ public class ProductController {
 	@Inject
 	private MaterialdetailService mservice;
 	// 동작 구현 > 메서드 설계
-
+	@Inject
+	private ItemRecipeService Rservice;
+	@Inject
+	private PageService pService;
+	
+	@Inject
+	private ReceiveService rService;
+	
+	
 ///////////////////////////////////////////////////생산관리//////////////////////////////////////////////////////////////////////////////
 	
 // --------------------- 예웡  (｡･∀･)ﾉﾞﾞ -----------------------------	
 	// http://localhost:8088/pro/orderList
 	// 작업지시 목록
 	@RequestMapping(value = "/orderList", method = RequestMethod.GET)
-	public void productListGET(Model model,HttpServletRequest request,PageVO pageVO) {
+	public void productListGET(Model model,HttpServletRequest request,PageVO pageVO,HttpSession session) {
 		logger.debug("productListGET() 호출![]~(￣▽￣)~*");
 		logger.debug("/pro/oderList.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
+//		String employeeIdString = (String) session.getAttribute("login_id");
+//		int employee_id = Integer.parseInt(employeeIdString);
+//		logger.debug("@@@@@@@@@@@@@@@@@@@@@@ employee_id  :  "+employee_id);
+//		dept_name 
+//		String dept_name = (String) session.getAttribute("dept_name");
+//		logger.debug("@@@@@@@@@@@@@@@@@@@@@@ dept_name  :  "+dept_name);
+		
+
+		
 		
 		String line_code = request.getParameter("line_code");
 		String wo_date = request.getParameter("wo_date");
 		String item_code = request.getParameter("item_code");
 		String wo_status = request.getParameter("wo_status");
+//		Integer employee_id = Integer.parseInt(request.getParameter("employee_id"));
 		
 		Map<String, Object> instrSearch = new HashMap<String, Object>();
 		instrSearch.put("line_code", line_code);
 		instrSearch.put("wo_date", wo_date);
 		instrSearch.put("item_code", item_code);
 		instrSearch.put("wo_status", wo_status);
-		
+//		instrSearch.put("employee_id", employee_id);
 		//================================페이징 처리를 위한 값 받아오기 동작========================================
 		// 준비물 : Inject > PageVO , 파라미터값 PageVO pageVO, HttpServletRequest request
 		//   		리스트를 반환하는 DAO - Service 메서드에 PageVO 추가, 쿼리에 LIMIT #{startRow}, #{pageSize} 추가.
@@ -123,6 +151,7 @@ public class ProductController {
 		if(endPage > pageCount){
 		 	endPage = pageCount;
 		 }
+		
 		pageVO.setCount(count);
 		pageVO.setPageBlock(pageBlock);
 		pageVO.setStartPage(startPage);
@@ -130,23 +159,21 @@ public class ProductController {
 		pageVO.setPageCount(pageCount);
 		
 		model.addAttribute("pageVO", pageVO);
-		logger.debug("startRow @@@@@@@@@@2"+startRow);
-		logger.debug("pageSize @@@@@@@@@@2"+pageSize);
+		logger.debug("startRow @@@@@@@@@@"+startRow);
+		logger.debug("pageSize @@@@@@@@@@"+pageSize);
 //		List<ProOrderVO> proOrderList = oService.proOrderList();
 		List<ProOrderVO> proOrderList;
-		if(line_code == null && wo_date == null && item_code == null && wo_status == null) {
+
+		if(line_code == null && wo_date == null && item_code == null && wo_status == null ) {
 			// 작업지시 전체 조회
 			logger.debug("productList 전체 호출 ![]~(￣▽￣)~*");
 			proOrderList = oService.proOrderList(pageVO);
-//			int instrSearchCount = instructService.instrCount(instrSearch);
-//			model.addAttribute("instrSearchCount", instrSearchCount);
+
 		} else {
 			// 작업지시 검색 조회
 			logger.debug("productList 검색 호출 ![]~(￣▽￣)~*");
 //			proOrderList = oService.proOrderList();
 			proOrderList = oService.proOrderList(instrSearch, model,pageVO);
-//			int instrSearchCount = instructService.instrCount(instrSearch);
-//			model.addAttribute("instrSearchCount", instrSearchCount);
 		}
 
 		model.addAttribute("oderList", proOrderList);
@@ -449,10 +476,13 @@ public class ProductController {
 	//조리지시 글작성
 	// http://localhost:8088/pro/cookorderWrite
 	@RequestMapping(value = "/cookorderWrite", method = RequestMethod.POST)
-	public void proCookOrderWritePost(CookVO cvo) {
+	public void proCookOrderWritePost(CookVO cvo,CookListVO lcvo) {
 		logger.debug("proCookOrderWritePOST 호출![]~(￣▽￣)~*");
-		logger.debug(cvo+" ");
-		cService.cookorderInsert(cvo);
+		logger.debug(cvo+" "+lcvo);
+		
+		
+		
+		cService.cookorderInsert(cvo,lcvo);
 	}// productWriteGET() method end
 		// 생산관리 - 조리지시글작성
 	
@@ -465,13 +495,13 @@ public class ProductController {
 	
 		String line_code = request.getParameter("line_code");
 		String co_date = request.getParameter("co_date");
-		String material_code = request.getParameter("material_code");
+		String so_code = request.getParameter("so_code");
 		String co_status = request.getParameter("co_status");
 		
 		Map<String, Object> instrSearch = new HashMap<String, Object>();
 		instrSearch.put("line_code", line_code);
 		instrSearch.put("co_date", co_date);
-		instrSearch.put("material_code", material_code);
+		instrSearch.put("so_code", so_code);
 		instrSearch.put("co_status", co_status);
 		
 		//================================페이징 처리를 위한 값 받아오기 동작========================================
@@ -516,7 +546,7 @@ public class ProductController {
 		logger.debug("pageSize @@@@@@@@@@"+pageSize);
 //		List<ProOrderVO> proOrderList = oService.proOrderList();
 		List<CookVO> cookOrderList;
-		if(line_code == null && co_date == null && material_code == null && co_status == null) {
+		if(line_code == null && co_date == null && so_code == null && co_status == null) {
 			// 조리지시 전체 조회
 			logger.debug("productList 전체 호출 ![]~(￣▽￣)~*");
 			cookOrderList = cService.cookOrderList(pageVO);
@@ -737,13 +767,203 @@ public class ProductController {
 			materialList = mservice.mdList(pageVO);
 		} else {
 			logger.debug("검색 조회");
-			materialList = mservice.mdList(pageVO, instrSearch, model);
+			materialList = mservice.mdList(pageVO, instrSearch);
 		}
 		logger.debug("resultlist 개수 : " + materialList.size());
 		model.addAttribute("Search", instrSearch);
 		model.addAttribute("materialList", materialList);
 	}// productEtcWriteGET() method end
 		// 생산관리 - 실적 삭제
+	
+	// ------------------- 레시피 --------------------------------
+	 
+//	/pro/itemrecipeList
+	
+	// 상품 검색 시 자재를 가져오는 ajax
+	@RequestMapping(value = "/itemrecipeList", method = RequestMethod.GET)
+	@ResponseBody
+	public String getMaterialsGET(@RequestParam("item_code") String itemCode) throws Exception {
+		List<ItemRecipeListVO> itemList = Rservice.selectItemRecipe(itemCode);
+		logger.debug(itemList.size() + "");
+		// ObjectMapper 객체 생성
+		ObjectMapper objectMapper = new ObjectMapper();
+		// List를 JSON 문자열로 변환
+		String jsonString = objectMapper.writeValueAsString(itemList);
+		return jsonString;
+	}
+	
+// 	 http://localhost:8088/pro/suList
+	@RequestMapping(value = "/suList", method = RequestMethod.GET)
+	public void suList(HttpServletRequest request, Model model,PageVO pageVO) throws Exception {
+
+		
+		//================================페이징 처리를 위한 값 받아오기 동작========================================
+		// 페이징 처리
+		// 한 화면에 보여줄 글 개수 설정
+		int pageSize = 5; // sql문에 들어가는 항목
+		
+		// 현페이지 번호 가져오기
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum==null) {
+			pageNum="1";
+		}
+		// 페이지번호를 정수형으로 변경
+		int currentPage=Integer.parseInt(pageNum);
+		pageVO.setPageSize(pageSize);
+		pageVO.setPageNum(pageNum);
+		pageVO.setCurrentPage(currentPage);
+		int startRow=(pageVO.getCurrentPage()-1)*pageVO.getPageSize()+1; // sql문에 들어가는 항목
+		int endRow = startRow+pageVO.getPageSize()-1;
+		
+		pageVO.setStartRow(startRow-1); // limit startRow (0이 1열이기 때문 1을 뺌)
+		pageVO.setEndRow(endRow);
+		
+		// 게시글 개수 가져오기
+		int count = pService.countReceiveList(); // 요 동작만 각자 페이지에 맞게 수정하면 됨!!
+
+		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
+		int startPage=(currentPage-1)/pageBlock*pageBlock+1;
+		int endPage=startPage+pageBlock-1;
+		int pageCount=count/pageSize+(count%pageSize==0?0:1);
+		if(endPage > pageCount){
+		 	endPage = pageCount;
+		 }
+		pageVO.setCount(count);
+		pageVO.setPageBlock(pageBlock);
+		pageVO.setStartPage(startPage);
+		pageVO.setEndPage(endPage);
+		pageVO.setPageCount(pageCount);
+		
+		model.addAttribute("pageVO", pageVO);
+		//================================페이징 처리를 위한 값 받아오기 동작========================================
+		
+		
+		List<ReceiveVO> receiveList = rService.receiveList(pageVO);
+		logger.debug("receiveList : " + receiveList);
+		
+		model.addAttribute("receiveList", receiveList);
+		
+	}// p
+	
+//	 http://localhost:8088/pro/cosuList
+	@RequestMapping(value = "/cosuList", method = RequestMethod.GET)
+	public void cosuList(HttpServletRequest request, Model model,PageVO pageVO) throws Exception {
+
+		
+		//================================페이징 처리를 위한 값 받아오기 동작========================================
+		// 페이징 처리
+		// 한 화면에 보여줄 글 개수 설정
+		int pageSize = 5; // sql문에 들어가는 항목
+		
+		// 현페이지 번호 가져오기
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum==null) {
+			pageNum="1";
+		}
+		// 페이지번호를 정수형으로 변경
+		int currentPage=Integer.parseInt(pageNum);
+		pageVO.setPageSize(pageSize);
+		pageVO.setPageNum(pageNum);
+		pageVO.setCurrentPage(currentPage);
+		int startRow=(pageVO.getCurrentPage()-1)*pageVO.getPageSize()+1; // sql문에 들어가는 항목
+		int endRow = startRow+pageVO.getPageSize()-1;
+		
+		pageVO.setStartRow(startRow-1); // limit startRow (0이 1열이기 때문 1을 뺌)
+		pageVO.setEndRow(endRow);
+		
+		// 게시글 개수 가져오기
+		int count = pService.countReceiveList(); // 요 동작만 각자 페이지에 맞게 수정하면 됨!!
+
+		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
+		int startPage=(currentPage-1)/pageBlock*pageBlock+1;
+		int endPage=startPage+pageBlock-1;
+		int pageCount=count/pageSize+(count%pageSize==0?0:1);
+		if(endPage > pageCount){
+		 	endPage = pageCount;
+		 }
+		pageVO.setCount(count);
+		pageVO.setPageBlock(pageBlock);
+		pageVO.setStartPage(startPage);
+		pageVO.setEndPage(endPage);
+		pageVO.setPageCount(pageCount);
+		
+		model.addAttribute("pageVO", pageVO);
+		//================================페이징 처리를 위한 값 받아오기 동작========================================
+		
+		
+		List<ReceiveVO> receiveList = rService.receiveList(pageVO);
+		logger.debug("receiveList : " + receiveList);
+		
+		model.addAttribute("receiveList", receiveList);
+		
+	}// p
+	
+	
+//	/pro/checkrecode
+	
+	@RequestMapping(value = "/checkrecode", method = RequestMethod.GET)
+	@ResponseBody
+	public Boolean checkrecode(@RequestParam("re_code") String re_code) throws Exception {
+		logger.debug("@@@@@@@@@@@@@@@@@@@@ re_code : " + re_code);
+		Boolean result = cService.checkrechod(re_code);
+		logger.debug("@@@@@@@@@@@@@@@@@@@@ result : " + result);
+		return result;
+	}
+	
+	
+//	/pro/searchsuList	
+	
+	@RequestMapping(value = "/searchsuList", method = RequestMethod.GET)
+	public void searchsuList(HttpServletRequest request, Model model,PageVO pageVO) throws Exception {
+
+		
+		//================================페이징 처리를 위한 값 받아오기 동작========================================
+		// 페이징 처리
+		// 한 화면에 보여줄 글 개수 설정
+		int pageSize = 5; // sql문에 들어가는 항목
+		
+		// 현페이지 번호 가져오기
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum==null) {
+			pageNum="1";
+		}
+		// 페이지번호를 정수형으로 변경
+		int currentPage=Integer.parseInt(pageNum);
+		pageVO.setPageSize(pageSize);
+		pageVO.setPageNum(pageNum);
+		pageVO.setCurrentPage(currentPage);
+		int startRow=(pageVO.getCurrentPage()-1)*pageVO.getPageSize()+1; // sql문에 들어가는 항목
+		int endRow = startRow+pageVO.getPageSize()-1;
+		
+		pageVO.setStartRow(startRow-1); // limit startRow (0이 1열이기 때문 1을 뺌)
+		pageVO.setEndRow(endRow);
+		
+		// 게시글 개수 가져오기
+		int count = pService.countReceiveList(); // 요 동작만 각자 페이지에 맞게 수정하면 됨!!
+
+		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
+		int startPage=(currentPage-1)/pageBlock*pageBlock+1;
+		int endPage=startPage+pageBlock-1;
+		int pageCount=count/pageSize+(count%pageSize==0?0:1);
+		if(endPage > pageCount){
+		 	endPage = pageCount;
+		 }
+		pageVO.setCount(count);
+		pageVO.setPageBlock(pageBlock);
+		pageVO.setStartPage(startPage);
+		pageVO.setEndPage(endPage);
+		pageVO.setPageCount(pageCount);
+		
+		model.addAttribute("pageVO", pageVO);
+		//================================페이징 처리를 위한 값 받아오기 동작========================================
+		
+		
+		List<ReceiveVO> receiveList = rService.receiveList(pageVO);
+		logger.debug("receiveList : " + receiveList);
+		
+		model.addAttribute("receiveList", receiveList);
+		
+	}// p
 	
 	
 	

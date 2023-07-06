@@ -35,7 +35,7 @@ public class LineController {
 	FactoryService Fservice;
 	
 	// --------------------- 예웡  (｡･∀･)ﾉﾞﾞ -----------------------------	
-		// http://localhost:8088/line/linList
+		// http://localhost:8088/line/lineList
 		@RequestMapping(value = "/lineList", method = RequestMethod.GET)
 		public void LineListGET(Model model,HttpServletRequest request,PageVO pageVO) {
 			logger.debug("LineListGET() 호출![]~(￣▽￣)~*");
@@ -227,7 +227,7 @@ public class LineController {
 				// 공장 검색 조회
 				logger.debug("productList 검색 호출 ![]~(￣▽￣)~*");
 //						proOrderList = oService.proOrderList();
-				factoryList = Fservice.facList(pageVO, instrSearch, model);
+				factoryList = Fservice.facList(pageVO, instrSearch);
 //						int instrSearchCount = instructService.instrCount(instrSearch);
 //						model.addAttribute("instrSearchCount", instrSearchCount);
 			}

@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.ddosirak.domain.MaterialdetailVO;
 import com.ddosirak.domain.PageVO;
@@ -31,9 +30,9 @@ public class MaterialdetailServiceImpl implements MaterialdetailService {
 	}
 	
 	@Override
-	public List<MaterialdetailVO> mdList(PageVO pageVO, Map<String, Object> instrSearch, Model model) {
+	public List<MaterialdetailVO> mdList(PageVO pageVO, Map<String, Object> instrSearch) {
 		logger.debug("service : 자재 목록 호출");
-		List<MaterialdetailVO> resultlist=dao.mdList(pageVO, instrSearch, model);
+		List<MaterialdetailVO> resultlist=dao.mdList(pageVO, instrSearch);
 		logger.debug("service : 자재 목록 완료");
 		return resultlist;
 	}
@@ -77,15 +76,16 @@ public class MaterialdetailServiceImpl implements MaterialdetailService {
 	}
 
 	@Override
-	public List<MaterialdetailVO> materialItemList() {
+	public List<MaterialdetailVO> materialItemList(PageVO pageVO) {
 		logger.debug("service : 자재 목록 전체 호출");
-		return dao.materialItemList();
+		return dao.materialItemList(pageVO);
 	}
 
 	@Override
-	public List<MaterialdetailVO> materialItemList(Map<String, Object> instrSearch, Model model) {
+	public List<MaterialdetailVO> materialItemList(Map<String, Object> instrSearch,PageVO pageVO) {
 		logger.debug("service : 자재 목록 검색 호출");
-		return dao.materialItemList(instrSearch, model);
+		return dao.materialItemList(instrSearch,pageVO);
+
 	}
 
 	@Override

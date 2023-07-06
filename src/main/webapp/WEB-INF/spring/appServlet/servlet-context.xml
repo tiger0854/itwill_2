@@ -32,4 +32,17 @@
 	</websocket:handlers>
 
 	<context:component-scan base-package="com.ddosirak.controller" />
+
+	<!-- @responsebody할때 한글 깨짐(UTF-8로 설정) -->
+	<annotation-driven>
+	         <!-- messageConvertert -->
+	         <message-converters>
+	                  <beans:bean class="org.springframework.http.converter.StringHttpMessageConverter">
+	                           <beans:property name="supportedMediaTypes" value="text/html; charset=UTF-8"/>
+	                  </beans:bean>
+	         </message-converters>
+	</annotation-driven>
+	
+	<context:component-scan base-package="com.ddosirak.controller" />
+
 </beans:beans>

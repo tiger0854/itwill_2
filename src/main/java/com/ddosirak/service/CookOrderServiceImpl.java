@@ -1,5 +1,6 @@
 package com.ddosirak.service;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -11,8 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.ddosirak.domain.CookAddVO;
+import com.ddosirak.domain.CookListVO;
 import com.ddosirak.domain.CookVO;
 import com.ddosirak.domain.EmployeeVO;
+import com.ddosirak.domain.ItemRecipeVO;
 import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.ProOrderVO;
@@ -36,8 +39,30 @@ public class CookOrderServiceImpl implements CookOrderService {
 	private CookOrderDAO cdao;
 
 	@Override
-	public void cookorderInsert(CookVO cvo) {
-		cdao.cookOrder(cvo);
+	public void cookorderInsert(CookVO cvo,CookListVO lcvo) {
+		
+		 List<CookVO> cookListvo = lcvo.getCookListvo(); // ItemRecipeUploadVO 객체에서 리스트를 가져옴
+		 Iterator<CookVO> iterator = cookListvo.iterator(); // Iterator 객체 생성
+
+		    while (iterator.hasNext()) {
+		    	CookVO item = iterator.next();
+		        item.setItem_code(cvo.getItem_code());
+		        item.setItem_name(cvo.getItem_name());// 값을 설정
+		        item.setCoQTY(cvo.getCoQTY());
+		        item.setCpQTY(cvo.getCpQTY());
+		        item.setLine_code(cvo.getLine_code());
+		        item.setLine_name(cvo.getLine_name());
+		        item.setEmployee_id(cvo.getEmployee_id());
+		        item.setSo_code(cvo.getSo_code());
+		        cdao.cookOrder(item);
+//		            dao.insertOrUpdateItemRecipe(item); // 변경된 ItemRecipeVO 객체를 사용하여 레시피 등록
+		    }
+		
+		
+		
+		
+		
+		
 	}
 
 
@@ -154,6 +179,13 @@ public class CookOrderServiceImpl implements CookOrderService {
 	@Override
 	public void costatusEnd(String co_code) {
 		cdao.codatatusEnd(co_code);
+	}
+
+
+	//수주번호 체크
+	@Override
+	public Boolean checkrechod(String re_code) {
+		return cdao.checkrecode(re_code);
 	}
 
 

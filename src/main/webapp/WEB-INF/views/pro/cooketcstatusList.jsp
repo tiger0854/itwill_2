@@ -5,6 +5,7 @@
 <html>
 <head>
 <jsp:include page="../common/header.jsp" />
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
@@ -97,7 +98,7 @@
         <td>${cvo.line_code}</td>
         <td>${cvo.item_name}</td>
         <th>${cvo.material_name}</th>
-        <td>${cvo.coQTY}</td>
+        <td>${cvo.material_con}</td>
         <td>${cvo.cpQTY}</td>
       </tr>
     </tbody>

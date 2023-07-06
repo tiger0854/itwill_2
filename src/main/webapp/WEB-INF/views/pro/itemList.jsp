@@ -27,24 +27,24 @@
 <div class="black-bar"> <h4 style="text-align: center; color: white; padding-top: 8px">  <i class='bx bx-edit'></i> 상품검색 </h4></div>
 <!-- 작업지시등록 폼 -->
 		<div style="display: flex; justify-content: center; margin-bottom: 27px" >
-		  <img src="../../resources/css/logo.png">
+<!-- 		  <img src="../../resources/css/logo.png"> -->
 		</div>
 <div class="container mt-3">
 <!--  		<hr width="100%" style="border: 2px solid black"> -->
        
 <!--         <hr width="100%" style="border: 2px solid black"> -->
-
 <table class="table" style="width: 100%">
     <form>
         <tr>
-            <td>품목코드</td>
-            <td><input type="text" name="item_code" style="width:70%;"></td>
-            <td>품명</td>
-            <td><input type="text" name="item_name" style="width:70%;"></td>
-            <td><button type="submit" class="btn-add">조회</button></td>
+   <td><div class="input-group">
+	    <input type="text" style="width: 40%" placeholder="상품 코드" class="form-control" name="item_code">
+	    <input type="text" style="width: 40%" placeholder="상품 이름" class="form-control" name="item_name">
+	    <button type="submit" class="btn btn-primary">검색</button>
+	</div></td>
         </tr>
     </form>
 </table>
+
 <table class="table table-hover" style="text-align: center;">
     <%-- ${itemList } --%>
     <tr>
@@ -56,6 +56,7 @@
             <td id="con">${vo.item_code}</td>
             <td id="con">${vo.item_name}</td>
         </tr>
+        
     <script>
 	    function selectItem(a, b) {
 	        // 부모 창으로 값 전달하기
@@ -63,8 +64,8 @@
 	        opener.document.getElementById("item_name").value = b;
 	        window.close();
 	    }
-	</script>   
-        
+	</script>
+	
     </c:forEach>
 </table>
 <br>

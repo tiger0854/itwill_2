@@ -40,13 +40,24 @@ public class WarehouseController {
 		String wh_name = request.getParameter("wh_name");
 		String retail_code = request.getParameter("retail_code");
 		String wh_type = request.getParameter("wh_type");
-
+		String minsize=request.getParameter("minsize");
+		String maxsize=request.getParameter("maxsize");
+		
+		if(minsize=="") {
+			minsize="0";
+		}
+		if(maxsize=="") {
+			maxsize="999999";
+		}
+		
 		Map<String, Object> instrSearch = new HashMap<String, Object>();
 		instrSearch.put("wh_code", wh_code);
 		instrSearch.put("wh_name", wh_name);
 		instrSearch.put("retail_code", retail_code);
 		instrSearch.put("wh_type", wh_type);
-
+		
+		instrSearch.put("minsize",minsize);
+		instrSearch.put("maxsize",maxsize);
 		// ================================페이징 처리를 위한 값 받아오기
 		// 동작========================================
 		// 준비물 : Inject > PageVO , 파라미터값 PageVO pageVO, HttpServletRequest request
@@ -97,7 +108,7 @@ public class WarehouseController {
 			logger.debug(whList + "");
 		} else {
 			logger.debug("검색 조회");
-			whList = service.warehouseList(pageVO, instrSearch, model);
+			whList = service.warehouseList(pageVO, instrSearch);
 			logger.debug(whList + "");
 		}
 		logger.debug("whlist 개수 : " + whList.size());
@@ -167,7 +178,7 @@ public class WarehouseController {
 			// 작업지시 검색 조회
 			logger.debug("warehouseItemList.jsp 검색 호출 ![]~(￣▽￣)~*");
 //						proOrderList = oService.proOrderList();
-			warehouseList = service.warehouseItemList(instrSearch, model);
+			warehouseList = service.warehouseItemList(instrSearch);
 //						int instrSearchCount = instructService.instrCount(instrSearch);
 //						model.addAttribute("instrSearchCount", instrSearchCount);
 		}

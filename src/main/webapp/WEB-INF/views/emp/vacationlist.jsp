@@ -189,6 +189,7 @@
             <td>${vc.approve_date}</td>
             <td>${vc.vacation_start}</td>
             <td>${vc.vacation_finish}</td>
+
 <!-- 			<td><script> -->
 <%-- //             var vacationStart = new Date('${vc.vacation_start}'); --%>
 <%-- //             var vacationFinish = new Date('${vc.vacation_finish}'); --%>
@@ -196,6 +197,7 @@
 <!-- //             document.write(vacationDate); -->
 <!--         	</script></td> -->
 			<td>${vc.vacation_date}</td>
+
             <td>${vc.vacation_reason}</td>
              <td class="approve-cell"><c:choose>
                     <c:when test="${vc.approve == '승인'}">승인</c:when>
@@ -216,16 +218,19 @@
             <td>${vc.subsitute}</td>
             <td>${vc.vacation_id}</td>
 
+
 <%-- 				 <td><a href="vacationcheck?vacation_id=${vc.vacation_id}&approve=승인">승인</a></td> --%>
 <%--             	 <td><a href="vacationcheck?vacation_id=${vc.vacation_id}&approve=반려">반려</a></td> --%>
             	 <td><a href="vacationcheck?vacation_id=${vc.vacation_id}&approve=승인&id=${sessionscope.id}">승인</a></td>
             	 <td><a href="vacationcheck?vacation_id=${vc.vacation_id}&approve=반려&id=${sessionscope.id}">반려</a></td>
+
 
             <td><button class="btn-add btn-modify" data-vacation-id="${vc.vacation_id}">수정하기</button></td>
             <td><button id="btn-delete" class="btn-add" onclick="vacationdelete('${vc.vacation_id}','${vc.employee_id}')">삭제하기</button></td>
         </tr>
     </c:forEach>
 </table>
+
 <!-- -------------------------------------------------------------------------------페이징 구현부------------------------------------------------------------------------ -->
 	<ul class="pagination" id="pagination">
 		<c:choose>
@@ -257,5 +262,6 @@
 		</c:choose>
 	</ul>
 	<!-- -------------------------------------------------------------------------------페이징 구현부--------------------------------------------------------------------------- -->
+
 </body>
 </html>

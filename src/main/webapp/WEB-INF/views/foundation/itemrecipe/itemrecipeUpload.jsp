@@ -12,7 +12,7 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
 	rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="../css/product.css">
+<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <script
 	src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
 </head>
@@ -47,11 +47,12 @@
 					window.close(); // 윈도우 창을 닫습니다.
 				},
 				error : function(xhr, status, error) {
-					console.error("에러 발생:", error);
+					alert("최소한 하나의 자재는 등록해야합니다");
 				}
 			});
 		}
-
+		
+		
 		// 상품 검색 후 자재 가져오기
 		function getRelatedMaterials() {
 			var itemCode = document.getElementById("item_code").value;
@@ -83,8 +84,9 @@
 
 		//상품 검색
 		function itemSearch() {
-			window.open("/pro/itemList", "popup",
+			var childWindow = window.open("/pro/itemList", "popup",
 					"width=500, height=600,left=100, top=100");
+			childWindow.onbeforeunload =getRelatedMaterials;
 		}
 
 		//자재 검색
@@ -151,13 +153,11 @@
 			// 체크된 값들을 테이블에 추가
 			for (var i = 0; i < materialArray.length; i++) {
 				var vo = materialArray[i];
-
 				var row = $("<tr>");
 // 				row.append("<td></td>");
 				row.append("<td><input type='hidden' name='itemRecipeUploadvo[" + i + "].material_code' value='" + vo.material_code + "'>");
 				row.append("<input type='text' value='" + vo.material_name + "' readonly='readonly'></td>");
 				row.append("<td><input type='text' name='itemRecipeUploadvo[" + i + "].material_con' value='" + vo.material_con + "' placeholder='" + vo.material_code + "의 소모량' required></td>");
-
 				tbody.append(row);
 
 			}
@@ -166,14 +166,14 @@
 			if (materialHeader.children().length == 0) {
 				if (tbody.children().length > 0) {
 					materialHeader.append("<td></td>");
-					materialHeader.append("<td>자재코드</td>");
+					materialHeader.append("<td>자재 명</td>");
 					materialHeader.append("<td>자재소모량</td>");
 				}
 			}
 		}
 		
 		
-		// 배열 사이즈를 받아와서 배열 크기 만큼 .append 해줌
+		// 배열 사이즈를 받아와서 배열 크기 업데이트
 		function changeArraySize(newSize) {
 			materialArray = materialArray.slice(0, newSize);
 			console.log(materialArray.length);
@@ -205,7 +205,7 @@
 						<td></td>
 						<td>
 							<input type="hidden" name="item_code" id="item_code"> 
-							<input type="text" id="item_name" onclick="getRelatedMaterials();" readonly="readonly" placeholder="검색 후 클릭"> 
+							<input type="text" id="item_name" required readonly="readonly" onclick="itemSearch();"> 
 						</td>
 					</tr>
 					<tr>
@@ -219,10 +219,10 @@
 			</table>
 
 			<div style="text-align: center; margin-top: 50px">
-				<button type="button" class="btn-add" onclick="onInsert();">
+				<button type="button" class="btn btn-outline-primary" onclick="onInsert();">
 					<i class='bx bx-edit'></i> 등록
 				</button>
-				<button class="btn-search" onclick="window.close()">X 취소</button>
+				<button class="btn btn-danger" onclick="window.close()">X 취소</button>
 			</div>
 		</form>
 

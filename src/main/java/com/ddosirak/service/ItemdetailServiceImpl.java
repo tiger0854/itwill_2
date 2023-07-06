@@ -8,9 +8,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
-import com.ddosirak.domain.ItemRecipeListVO;
 import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.persistance.ItemdetailDAO;
@@ -29,23 +27,25 @@ public class ItemdetailServiceImpl implements ItemdetailService {
 	}
 	
 	@Override
-	public List<ItemdetailVO> idList(PageVO pageVO, Map<String, Object> instrSearch, Model model) throws Exception {
+	public List<ItemdetailVO> idList(PageVO pageVO, Map<String, Object> instrSearch) throws Exception {
 		// TODO Auto-generated method stub
-		return dao.idList(pageVO, instrSearch, model);
+		return dao.idList(pageVO, instrSearch);
 	}
 
 	@Override
 	public Integer insertID(ItemdetailVO vo) throws Exception {
 		logger.debug("service : insertMD 실행");
-		if(dao.getMaxCode()!=null && dao.getMaxCode().contains("I")) {
-			int codeNum=Integer.parseInt(dao.getMaxCode().substring(1));
-			StringBuilder sb = new StringBuilder();
-			sb.append("I");
-			sb.append(String.format("%03d", ++codeNum));
-			vo.setItem_code(sb.toString());
-			}else {
+		if (vo.getItem_code() == null) {
+			if (dao.getMaxCode() != null && dao.getMaxCode().contains("I")) {
+				int codeNum = Integer.parseInt(dao.getMaxCode().substring(1));
+				StringBuilder sb = new StringBuilder();
+				sb.append("I");
+				sb.append(String.format("%03d", ++codeNum));
+				vo.setItem_code(sb.toString());
+			} else {
 				vo.setItem_code("I001");
 			}
+		}
 		return dao.insertID(vo);
 	}
 
