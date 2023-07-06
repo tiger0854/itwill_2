@@ -24,7 +24,35 @@ $(document).ready(function() {
     	
       var startDate = $("input[name='vacation_start']").val();
       var endDate = $("input[name='vacation_finish']").val();
+      var employeeId = $("input[name='employee_id']").val();
+      var position = $("input[name='position']").val();
+      var departmentName = $("input[name='department_name']").val();
+      var vacationManagement = $("select[name='vacation_management']").val();
+      var vacationStart = $("input[name='vacation_start']").val();
+      var vacationFinish = $("input[name='vacation_finish']").val();
+      var vacationReason = $("select[name='vacation_reason']").val();
+      var subsitute = $("input[name='subsitute']").val();
+      var employeeName = $("input[name='employee_name']").val();
+      var propDate = $("input[name='prop_date']").val();
+	
+      // 필수 입력 필드 중 하나라도 비어 있는지 확인하고 비어있으면 입력해야 된다고 설정.
+      if (
+        employeeId === "" ||
+        position === "" ||
+        departmentName === "" ||
+        vacationManagement === null ||
+        vacationStart === "" ||
+        vacationFinish === "" ||
+        vacationReason === null ||
+        subsitute === "" ||
+        employeeName === "" ||
+        propDate === ""
+      ) {
+        alert("모든 항목을 입력해주세요.");
+        return false; // 폼 제출을 막습니다.
+      }
 
+      
        if (endDate < startDate) {
             alert("휴가 종료일은 휴가 시작일보다 앞설 수 없습니다.");
             return false; // 휴가 신청이 제출되지 않도록 중단합니다.
