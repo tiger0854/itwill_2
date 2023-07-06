@@ -51,9 +51,9 @@
 								<td><label> <input type="text" id="wo_code"
 										name="wo_code" placeholder="작업지시번호" width="100%">
 								</label></td>
-								<td>라인명</td>
-								<td><label> <input type="text" id="line_name"
-										name="line_name" placeholder="라인명" width="100%">
+								<td>라인코드</td>
+								<td><label> <input type="text" id="line_code"
+										name="line_code" placeholder="라인코드" width="100%">
 								</label></td>
 								<td>품명</td>
 								<td><label> <input type="text" id="item_name"
@@ -78,7 +78,6 @@
 					<thead>
 						<tr>
 							<th>작업지시번호</th>
-							<th>라인명</th>
 							<th>라인코드</th>
 							<th>품명</th>
 							<th>품번</th>
@@ -93,7 +92,6 @@
 						<c:forEach var="vo" items="${qualityList }">
 							<tr>
 								<td>${vo.wo_code }</td>
-								<td>${vo.line_name }</td>
 								<td>${vo.line_code }</td>
 								<td>${vo.item_name }</td>
 								<td>${vo.item_code }</td>
@@ -114,17 +112,17 @@
 						style="margin-top: 20px;">
 						<c:if test="${pageVO.startPage > pageVO.pageBlock}">
 							<li class="page-item"><a class="page-link"
-								href="/qc/qualityList?wo_code=${Search.wo_code }&line_name=${Search.line_name }&item_name=${Search.item_name }&employee_id=${Search.employee_id }&pageNum=${pageVO.startPage - pageVO.pageBlock}"><sapn>
+								href="/qc/qualityList?wo_code=${Search.wo_code }&line_code=${Search.line_code }&item_name=${Search.item_name }&employee_id=${Search.employee_id }&pageNum=${pageVO.startPage - pageVO.pageBlock}"><sapn>
 									< </sapn></a></li>
 						</c:if>
 						<c:forEach var="i" begin="${pageVO.startPage}"
 							end="${pageVO.endPage}" step="1">
 							<li class="page-item"><a class="page-link"
-								href="/qc/qualityList?wo_code=${Search.wo_code }&line_name=${Search.line_name }&item_name=${Search.item_name }&employee_id=${Search.employee_id }&pageNum=${i}"><span>${i}</span></a></li>
+								href="/qc/qualityList?wo_code=${Search.wo_code }&line_code=${Search.line_code }&item_name=${Search.item_name }&employee_id=${Search.employee_id }&pageNum=${i}"><span>${i}</span></a></li>
 						</c:forEach>
 						<c:if test="${pageVO.endPage < pageVO.pageCount}">
 							<li class="page-item"><a class="page-link"
-								href="/qc/qualityList?wo_code=${Search.wo_code }&line_name=${Search.line_name }&item_name=${Search.item_name }&employee_id=${Search.employee_id }&pageNum=${pageVO.startPage + pageVO.pageBlock}"><span>
+								href="/qc/qualityList?wo_code=${Search.wo_code }&line_code=${Search.line_code }&item_name=${Search.item_name }&employee_id=${Search.employee_id }&pageNum=${pageVO.startPage + pageVO.pageBlock}"><span>
 										> </span></a></li>
 						</c:if>
 					</ul>

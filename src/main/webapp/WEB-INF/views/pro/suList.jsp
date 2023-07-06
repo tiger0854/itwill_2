@@ -60,12 +60,12 @@
         <th>작업지시자</th>
     </tr>
     <c:forEach var="vo" items="${receiveList }">
-        <tr onclick="selectItem('${vo.re_code}', '${vo.re_qty}','${vo.item_code}','${vo.item_name}','${vo.employee_id}','${vo.re_qty}')">
+        <tr onclick="selectItem('${vo.re_code}', '${vo.re_qty}','${vo.item_code}','${vo.item_name}','${vo.re_empCd}','${vo.re_qty}')">
             <td id="con">${vo.re_code}</td>
             <td id="con">${vo.re_qty}</td>
             <td id="con">${vo.item_code}</td>
             <td id="con">${vo.item_name}</td>
-            <td id="con">${vo.employee_id}</td>
+            <td id="con">${vo.re_empCd}</td>
         </tr>
     <script>
 	    function selectItem(a, b, c, d, e, f) {
@@ -74,7 +74,7 @@
 	        opener.document.getElementById("re_qty").value = b;
 	        opener.document.getElementById("item_code").value = c;
 	        opener.document.getElementById("item_name").value = d;
-	        opener.document.getElementById("employee_id").value = e;
+	        opener.document.getElementById("re_empCd").value = e;
 	        opener.document.getElementById("re_qty2").value = f;
 	        window.close();
 	    }

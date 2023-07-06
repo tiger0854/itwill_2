@@ -69,9 +69,9 @@
 		p.wo_code LIKE
 		CONCAT('%',
 		#{wo_code}, '%')
-		AND p.line_name LIKE
+		AND p.line_code LIKE
 		CONCAT('%',
-		#{line_name}, '%')
+		#{line_code}, '%')
 		AND
 		p.item_name LIKE CONCAT('%',
 		#{item_name}, '%')
@@ -86,10 +86,10 @@
 	<select id="itemCount" resultType="java.lang.Integer">
 		SELECT count(*) FROM prod
 		<if
-			test="line_name != null and item_name != null and employee_id != null and wo_code != null">
+			test="line_code != null and item_name != null and employee_id != null and wo_code != null">
 			where wo_code like concat('%', #{wo_code}, '%')
-			and line_name
-			like concat('%', #{line_name}, '%')
+			and line_code
+			like concat('%', #{line_code}, '%')
 			and employee_id like concat('%',
 			#{employee_id}, '%')
 			and item_name like concat('%', #{item_name}, '%')

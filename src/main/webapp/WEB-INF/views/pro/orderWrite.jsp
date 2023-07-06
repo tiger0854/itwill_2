@@ -116,7 +116,7 @@ function opensucode() {
     </tr>
     <tr>
       <td>작업지시자</td>
-      <td><input type="text" name="employee_id" id="employee_id" required readonly></td>
+      <td><input type="text" name="employee_id" id="re_empCd" required readonly></td>
     </tr>
     <tr>
       <td>납품예정일</td>

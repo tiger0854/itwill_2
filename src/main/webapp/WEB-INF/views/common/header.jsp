@@ -124,7 +124,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		  	
 				</div>
 					</div>
-                 <a href="#" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">구매관리</span> </a> </div>
+                  <a href="#" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">영업관리</span> </a>
+                 <div class="nav_link collapse" id="foundation">
+		  			<a href="/receive/receiveInsert" class="nav_link"> - 수주등록</a><br>
+		  			<a href="/receive/receiveList" class="nav_link"> - 수주현황</a><br>
+				</div>
                 <div class="nav_list">
                   <a href="#" class="nav_link" onclick="foundDropdown()"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">기반관리</span> </a> 
                 <div class="nav_link collapse" id="foundation">
@@ -139,8 +143,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 <div class="nav_list">
                   <a href="#" class="nav_link" onclick="proDropdown()"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">생산관리</span> </a> 
                 <div class="nav_link collapse" id="pro">
-		  			<a href="/pro/oderList" class="nav_link"> - 작업지시</a><br>
-		  		    <a href="/pro/oderList" class="nav_link"> - 실적등록</a><br>
+		  			<a href="/pro/orderList" class="nav_link"> - 작업지시</a><br>
+		  		    <a href="/pro/cookorderList" class="nav_link"> - 실적등록</a><br>
 		  		    <a href="/qc/qualityList" class="nav_link"> - 품질현황</a><br>
 				</div>
 				</div>
@@ -153,8 +157,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 						  <a href="/inbound/orderList" class="nav_link"> - 발주현황</a><br>
 						  <a href="/inbound/inboundWrite" class="nav_link"> - 입고등록</a><br>
 						  <a href="/inbound/inboundList" class="nav_link"> - 입고현황</a><br>
-						  <a href="/outbound/insert" class="nav_link"> - 출고등록</a><br>
-						  <a href="/outbound/list" class="nav_link"> - 출고현황</a><br>
+						  <a href="/outbound/outboundInsert" class="nav_link"> - 출고등록</a><br>
+						  <a href="/outbound/outboundList" class="nav_link"> - 출고현황</a><br>
 					  <!--입출고-->
 	
 				  </div>

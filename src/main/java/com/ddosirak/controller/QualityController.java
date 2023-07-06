@@ -35,13 +35,13 @@ public class QualityController {
 		logger.debug("qualityControlListGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 
 		String wo_code = request.getParameter("wo_code");
-		String line_name = request.getParameter("line_name");
+		String line_code = request.getParameter("line_code");
 		String item_name = request.getParameter("item_name");
 		String employee_id = request.getParameter("employee_id");
 
 		Map<String, Object> instrSearch = new HashMap<String, Object>();
 		instrSearch.put("wo_code", wo_code);
-		instrSearch.put("line_name", line_name);
+		instrSearch.put("line_code", line_code);
 		instrSearch.put("item_name", item_name);
 		instrSearch.put("employee_id", employee_id);
 
@@ -88,7 +88,7 @@ public class QualityController {
 		logger.debug("startRow @@@@@@@@@@2" + startRow);
 		logger.debug("pageSize @@@@@@@@@@2" + pageSize);
 		List<QualityControlVO> qualityList = null;
-		if (wo_code == null && line_name == null && item_name == null && employee_id == null) {
+		if (wo_code == null && line_code == null && item_name == null && employee_id == null) {
 			// 품질현황 전체 조회
 			logger.debug("qualityList 전체 호출 ![]~(￣▽￣)~*");
 			qualityList = service.qualityList(pageVO);

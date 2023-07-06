@@ -4,19 +4,18 @@ import java.sql.Date;
 
 public class QualityControlVO {
 	/** 품질현황 목록 출력 용 DTO **/
-	private String wo_code;
-	private String line_name; 
-	private String line_code;
-	private String item_name;
-	private String item_code;
-	private String employee_id;
+	private String wo_code; // 작업지시번호
+	private String line_name; // 라인명
+	private String line_code; // 라인코드
+	private String item_name; // 품명
+	private String item_code; // 품번코드
+	private String employee_id; // 검수자
 	private int sQTY; // 수주수량
 	private int pQTY; // 생산수량
 	private int total_error_QTY; // 불량수량
-	private int total_QTY;
-	private int error_rate;
-	private String error_status;
-	
+	private int total_QTY; // 총생산량
+	private int error_rate; // 불량률
+	private String error_status; // 처리상태
 	public String getWo_code() {
 		return wo_code;
 	}
@@ -96,6 +95,7 @@ public class QualityControlVO {
 				+ sQTY + ", pQTY=" + pQTY + ", total_error_QTY=" + total_error_QTY + ", total_QTY=" + total_QTY
 				+ ", error_rate=" + error_rate + ", error_status=" + error_status + "]";
 	}
+	
 	
 	
 	
