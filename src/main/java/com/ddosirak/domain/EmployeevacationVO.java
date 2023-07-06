@@ -19,16 +19,13 @@ public class EmployeevacationVO {
 	private Date approve_date;
 	private Date prop_date;
 	private Integer vacation_id;
+	private int total_vacation;
 	
-
-	public Integer getVacation_id() {
-		return vacation_id;
-	}
-	public void setVacation_id(Integer vacation_id) {
-		this.vacation_id = vacation_id;
-	}
 	public String getVacation_management() {
 		return vacation_management;
+	}
+	public void setVacation_management(String vacation_management) {
+		this.vacation_management = vacation_management;
 	}
 	public Date getVacation_start() {
 		return vacation_start;
@@ -114,10 +111,18 @@ public class EmployeevacationVO {
 	public void setProp_date(Date prop_date) {
 		this.prop_date = prop_date;
 	}
-	public void setVacation_management(String vacation_management) {
-		this.vacation_management = vacation_management;
+	public Integer getVacation_id() {
+		return vacation_id;
 	}
-	
+	public void setVacation_id(Integer vacation_id) {
+		this.vacation_id = vacation_id;
+	}
+	public int getTotal_vacation() {
+		return total_vacation;
+	}
+	public void setTotal_vacation(int total_vacation) {
+		this.total_vacation = total_vacation;
+	}
 	@Override
 	public String toString() {
 		return "EmployeevacationVO [vacation_management=" + vacation_management + ", vacation_start=" + vacation_start
@@ -125,8 +130,12 @@ public class EmployeevacationVO {
 				+ employee_name + ", position=" + position + ", department_name=" + department_name + ", phone_num="
 				+ phone_num + ", vacation_reason=" + vacation_reason + ", subsitute=" + subsitute + ", vacation_date="
 				+ vacation_date + ", approve=" + approve + ", approve_emp=" + approve_emp + ", approve_date="
-				+ approve_date + ", prop_date=" + prop_date + ", vacation_id=" + vacation_id + "]";
+				+ approve_date + ", prop_date=" + prop_date + ", vacation_id=" + vacation_id + ", total_vacation="
+				+ total_vacation + "]";
 	}
+	
+
+	
 
 	
 	

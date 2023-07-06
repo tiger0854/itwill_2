@@ -87,7 +87,7 @@
   
   	<!-- 휴가 목록 출력 -->
   	<select id="vacationList" resultType="com.ddosirak.domain.EmployeevacationVO">
-		SELECT * FROM emp_vacation  
+		SELECT * FROM emp_vacation ORDER BY prop_date limit #{startRow}, #{pageSize} 
   	</select>
   	<!-- 휴가 목록 출력 -->
   
@@ -101,9 +101,39 @@
   	
   	<!-- 나의 휴가 목록 출력 -->
   	<select id="myvacationList" resultType="com.ddosirak.domain.EmployeevacationVO">
-  		SELECT * FROM emp_vacation WHERE employee_id=#{employee_id}
+  		SELECT * FROM emp_vacation l WHERE employee_id=#{employee_id}
   	</select>	
   	<!-- 나의 휴가 목록 출력 -->
+  	
+  	<!-- 총 연차에서 사용한 연차일 값계산 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 수정하기 -->
+  	<update id="totalvacation">
+  		UPDATE your_table
+		SET your_column = 30
+		WHERE id = 1;
+  	</update>
+  	<!-- 총 연차에서 사용한 연차일 값계산 -->
+  	
+  	<!-- 휴가 승인 -->
+  	<update id="vacationapprove">
+ 	UPDATE emp_vacation
+  	SET approve= '승인',approve_date = CURRENT_DATE,approve_emp=#{approve_emp, jdbcType=VARCHAR}
+  	WHERE vacation_id=#{vacation_id}
+  	</update>
+  	<!-- 휴가 승인 -->
+  	
+  	<!-- 휴가 반려 -->
+  	<update id="vacationreturn">
+  	UPDATE emp_vacation 
+  	SET approve= '반려',approve_date = CURRENT_DATE,approve_emp=#{approve_emp, jdbcType=VARCHAR}
+  	WHERE vacation_id=#{vacation_id}
+  	</update>
+  	<!-- 휴가 반려 -->
+  	
+  	<!-- 사번 이름 찾기 -->
+  	<select id="vacationfind" resultType="String">
+  	SELECT employee_name FROM emp_main WHERE id=#{id}
+  	</select>
+  	<!-- 사번 이름 찾기 -->
   	
   	<!-- 휴가 수정 -->
   	<update id="vacationmodify">
@@ -228,5 +258,11 @@
    	</select>
    <!-- 이름 -->
    
-  <!-- 필터링 --> 
+  <!-- 필터링 -->
+  <!-- vacationlist 페이징 --> 
+<!--   vacationcount -->
+    	<select id="vacationcount" resultType="Integer">
+  			SELECT COUNT(*) FROM emp_vacation
+  		</select>
+  <!-- vacationlist 페이징 --> 
   </mapper>

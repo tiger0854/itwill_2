@@ -119,10 +119,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		  		    <a href="/emp/salary" class="nav_link"> - 급여관리</a><br>
 		  		    <a href="#" class="nav_link"> - 이력관리</a><br>
 		  		<!-- 0607 -->
-		  		<!-- 0615 -->
-		  			<a href="/emp/myvacationList" class="nav_link" > - 나의 휴가내역</a><br>
-		  			<a href="/emp/vacationregist" class="nav_link" > - 휴가신청</a><br>
-		  		<!-- 0615 -->
+		  	
 				</div>
 					</div>
                  <a href="#" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">구매관리</span> </a> </div>
