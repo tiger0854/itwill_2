@@ -212,6 +212,21 @@ height: 50px; vertical-align: middle; text-align: center;
     </div>
  
  <script type="text/javascript">
+ $(document).ready(function() {
+		
+		var data = "${result}";
+		if (data == "INSERTOK") {
+		
+			Swal.fire({
+	            title: "등록이 완료되었습니다.",
+	            text: "",
+	            icon: "success"
+	          }).then(function() {
+	            opener.location.reload();
+	            window.close();
+	          });
+		}
+	 });//거래처 등록 완료시 alert띄우고 창닫기
 
  
  function openChildWindow(button) {

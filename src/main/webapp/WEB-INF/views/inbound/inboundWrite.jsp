@@ -66,7 +66,7 @@ td{height: 80px !important; vertical-align: middle;}
 <body  id="body-pd">
 
 
-<div class="container" style=" width: 1000px; margin: auto; margin-top:100px; ">
+<div class="container" style=" width: 100%; margin: auto; margin-top:100px; ">
 <input type="button" class="btn btn-outline-primary" onclick="location.href='/inbound/inboundList'" value="입고리스트로 이동" style=" width: 200px;margin-bottom: 20px;float: right;">
 <h3>입고예정등록</h3>
 <span style="color: gray">receive register</span>

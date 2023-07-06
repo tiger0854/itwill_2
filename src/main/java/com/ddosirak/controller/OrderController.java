@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddosirak.domain.OrderVO;
 import com.ddosirak.domain.PageVO;
@@ -38,13 +39,14 @@ public class OrderController {
 	}//발주서 페이지로 이동
 	
 	@RequestMapping(value="/orderWrite",method=RequestMethod.POST)
-	public String orderWritePOST(OrderVO vo,RequestVO rvo) {
+	public String orderWritePOST(OrderVO vo,RequestVO rvo,RedirectAttributes rttr) {
 		logger.debug("orderWriteGET() 호출!");
 		logger.debug("발주서 정보 = "+vo);
 		
 		oService.insertOrder(vo);
 		oService.updateRequestStat(rvo);
 		logger.info("발주서 등록 완료.!!발주현황 페이지로 이동!!!");
+		rttr.addFlashAttribute("result","INSERTOK");
 		return "redirect:/inbound/orderList";
 	}//발주서 등록
 	

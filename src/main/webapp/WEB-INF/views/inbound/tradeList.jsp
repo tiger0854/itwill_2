@@ -48,7 +48,7 @@
 
   
   </table>
-  <div style="color: red; margin-bottom: 10px;">*거래처는 입고처만 표시됩니다.</div>
+  <div style="color: red; margin-bottom: 10px;">*거래처는 납입처만 표시됩니다.</div>
 <%-- 	 <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
 	<div class="container">
 	 	<ul class="pagination"style="justify-content: center;">			

@@ -18,7 +18,7 @@ $(document).ready(function() {
       $('#pay_date').attr("min", orderDateValue);
     });//납기일자 >= 발주일자 제어
     
-    $('#fr').submit(function(event) {
+    $('#submit').click(function() {
         var materialPrice = $('#material_price').val();
         var materialCode = $('#material_code').val();
         var payDate = $('#pay_date').val();
@@ -27,14 +27,17 @@ $(document).ready(function() {
         var orderTrade = $('#order_trade').val();
 
         if (materialPrice == "" || materialCode == "" || payDate == "" || orderDate == "" || orderResp == "" || orderTrade == "") {
-			 event.preventDefault(); // 폼 제출을 막음
+			
       		Swal.fire({
             title: "빈칸을 모두 입력해주세요.",
             icon: "warning"
           });
+			return false;
         }
+
       }); //빈칸 입력제어
-    
+
+      
   }); 
 
 
@@ -74,7 +77,7 @@ td{height: 80px !important; vertical-align: middle;}
 </head>
 <body  id="body-pd" style="font-family: 'TheJamsil5';">
 
-<div class="container" style=" width: 1000px; margin: auto; margin-top:100px; ">
+<div class="container" style=" width: 100%; margin: auto; margin-top:100px; ">
 <input type="button" class="btn btn-outline-primary" onclick="location.href='/inbound/orderList'" value="발주리스트로 이동" style=" width: 200px;margin-bottom: 20px;float: right;">
 
 <h3>발주등록</h3>

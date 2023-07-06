@@ -113,11 +113,9 @@
   	
   	<!-- 발주등록으로 가져올 수주요청과 레시피 join-->
   	<select id="countRequest" resultType="Integer">
-  	    select count(*)
-		from receive r JOIN item_recipe i
-		JOIN material_detail m
-		WHERE r.item_code = i.item_code and
-		m.material_code = i.material_code;
+  	    select count(*) from ret_request
+  	    WHERE state != 1
+		
   	</select>
   	
   	<!-- 발주등록으로 가져올 수주요청과 레시피 join-->
