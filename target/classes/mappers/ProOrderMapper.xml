@@ -191,5 +191,18 @@
   	</select>
 
   	
+<!--   	graphList -->
+ 
+  	 <!-- 그래프 목록 -->
+  	<select id="graphList" resultType="map">
+		select (pQTY/oQTY)*100 as result from prod
+		group by line_code;
+  	</select>
+  	
+  	
+  	
+  	
+  	
+  	
   	
   </mapper>

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.ui.Model;
 
 import com.ddosirak.domain.EmployeeVO;
+import com.ddosirak.domain.GraphVO;
 import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.ProOrderVO;
@@ -51,6 +52,9 @@ public interface ProOrderDAO {
 	
 	//작업지시 검색 갯수
 	public Integer ProOdercount(Map<String, Object> instrSearch);
+	
+	// graphList
+	public List<Map<String, Object>> graphList();
 	
 	
 }// public interface end

@@ -65,7 +65,7 @@
             <td id="con">${vo.re_qty}</td>
             <td id="con">${vo.item_code}</td>
             <td id="con">${vo.item_name}</td>
-            <td id="con">${vo.employee_id}</td>
+            <td id="con">${vo.re_empCd}</td>
         </tr>
     <script>
 	    function selectItem(a) {

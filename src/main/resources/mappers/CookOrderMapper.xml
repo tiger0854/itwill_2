@@ -38,6 +38,7 @@
 		resultType="com.ddosirak.domain.CookVO">
 		SELECT * FROM cook
 		WHERE line_code LIKE CONCAT('%', #{line_code}, '%')
+
 		<if test="co_date != null and co_date != ''">
 			AND co_date = #{co_date}
 		</if>
@@ -50,6 +51,13 @@
 		AND so_code LIKE CONCAT('%', #{so_code}, '%')
 		LIMIT #{startRow}, #{pageSize}
 	</select>
+
+<!-- 	.getcookOrder 조리지시 조회 -->
+  	<!-- 작업지시 정보 -->
+  	<select id="getcookOrder" resultType="com.ddosirak.domain.CookVO">
+		SELECT * FROM cook WHERE co_code=#{co_code}
+  	</select>
+
 
 
 	<!-- .cookcount 조리지시 갯수 -->
@@ -231,3 +239,38 @@
 
 
 </mapper>
+
+	<!-- 	getCrefcount -->
+  	<select id="getCrefcount" resultType="Integer">
+	  	select count(cook_id)
+	  	from cook_add
+	  	where co_code=#{co_code}
+  	</select> 
+  	
+  	
+<!-- checkR -->
+	<!-- checkR -->
+  	<select id="checkR"  resultType="boolean">
+		SELECT
+		  CASE
+		    WHEN (
+		      SELECT SUM(
+		        CASE
+		          WHEN cpQTY >= material_con THEN 1
+		          ELSE 0
+		        END
+		      )
+		      FROM cook
+		      WHERE so_code = #{so_code}
+		    ) = (
+		      SELECT COUNT(*)
+		      FROM cook
+		      WHERE so_code = #{so_code}
+		    ) THEN 1
+		    ELSE 0
+		  END AS result
+		FROM dual;
+	</select>  
+  	
+  </mapper>
+

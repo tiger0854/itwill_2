@@ -72,10 +72,6 @@
 		});
 
 		function onInsert() {
-			if ($('#item_code').val() == "") {
-				alert("상품 검색을 해주세요!");
-				return;
-			}
 
 			var frObj = $("#fr");
 			var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
@@ -84,7 +80,7 @@
 				type : "POST", // HTTP 요청 방식 (POST)
 				data : formData, // 전송할 데이터 (직렬화된 폼 데이터)
 				success : function(response) {
-					alert("작성 성공!");
+					Swal.fire("작성 성공!");
 					opener.location.reload();
 					window.close(); // 윈도우 창을 닫습니다.
 				},

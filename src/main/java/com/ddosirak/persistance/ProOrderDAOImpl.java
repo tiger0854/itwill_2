@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 
 import com.ddosirak.domain.EmployeeVO;
+import com.ddosirak.domain.GraphVO;
 import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.ProOrderVO;
@@ -138,6 +139,12 @@ public class ProOrderDAOImpl implements ProOrderDAO {
 	public Integer itemCount(Map<String, Object> instrSearch) {
 		logger.debug("itemCount");
 		return sqlSession.selectOne(NAMESPACE+".itemcount",instrSearch);
+	}
+
+	@Override
+	public List<Map<String, Object>> graphList() {
+		List<Map<String, Object>> graphList = sqlSession.selectList(NAMESPACE+".graphList");
+		return graphList;
 	}
 
 
