@@ -164,7 +164,7 @@ public class FactoryController {
 	public String factoryDeleteGET(String factory_code) throws Exception {
 		logger.debug("factoryDeleteGET 호출");
 		service.deleteF(factory_code);
-		return "redirect:/foundation/factory/factoryList?factory_name=&factory_code=";
+		return "redirect:/foundation/factory/factoryList";
 	}
 
 	// 상품목록(팝업)

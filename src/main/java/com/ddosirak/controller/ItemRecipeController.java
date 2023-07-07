@@ -200,7 +200,7 @@ public class ItemRecipeController {
 	public String deleteItemRecipeMaterialGET(ItemRecipeVO vo) throws Exception {
 		logger.debug("deleteItemRecipeMaterialGET 실행");
 		service.deleteItemRecipeMaterial(vo);
-		return "redirect:/foundation/itemrecipe/itemrecipeList?item_name=&item_code=";
+		return "redirect:/foundation/itemrecipe/itemrecipeList";
 	}
 
 	// 레시피 삭제
@@ -208,7 +208,7 @@ public class ItemRecipeController {
 	public String deleteItemRecipeGET(String item_code) throws Exception {
 		logger.debug("deleteItemRecipeGET 실행");
 		service.deleteItemRecipe(item_code);
-		return "redirect:/foundation/itemrecipe/itemrecipeList?item_name=&item_code=";
+		return "redirect:/foundation/itemrecipe/itemrecipeList";
 	}
 
 	// 상품목록(팝업)

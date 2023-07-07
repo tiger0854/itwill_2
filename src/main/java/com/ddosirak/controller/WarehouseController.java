@@ -156,7 +156,7 @@ public class WarehouseController {
 	public String deleteWhGET(String wh_code) throws Exception {
 		logger.debug("deleteWhGET 호출");
 		service.deletewh(wh_code);
-		return "redirect:/foundation/warehouse/warehouseList?wh_name=&wh_code=";
+		return "redirect:/foundation/warehouse/warehouseList";
 	}
 
 	// 상품목록(팝업)
