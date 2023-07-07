@@ -19,27 +19,57 @@ $(document).ready(function(){
 // 		hold()
 	};// if end
 	if(data == "LOGOUT" ){
-		alert('로그아웃 성공!');
+		Swal.fire({
+			title: "로그아웃 되었습니다.",
+			icon: "success",
+				  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+				  confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+			}) // swal end
 // 		hold()
 	}// if end
 	if(data == "LOGFAIL" ){
-		alert('로그인 실패!');
+		Swal.fire({
+			title: "로그인에 실패하였습니다!",
+			icon: "error",
+				  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+				  confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+			}) // swal end
 // 		hold()
 	}// if end
 	if(data == "OUTFAIL" ){
-		alert('퇴근확인 실패!');
+		Swal.fire({
+			title: "퇴근 확인에 실패하였습니다.",
+			icon: "error",
+				  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+				  confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+			}) // swal end
 // 		hold()
 	}// if end
 	if(data == "EMPOUT" ){
-		alert('퇴근 확인!');
+		Swal.fire({
+			title: "퇴근 확인 되었습니다.",
+			icon: "success",
+				  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+				  confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+			}) // swal end
 // 		hold()
 	}// if end
 	if(data == "INSUCC" ){
-		alert('출근 확인!');
+		Swal.fire({
+			title: "출근 확인 되었습니다.",
+			icon: "success",
+				  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+				  confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+			}) // swal end
 // 		hold()
 	}// if end
 	if(data == "INFAIL" ){
-		alert('출근 실패!');
+		Swal.fire({
+			title: "출근 확인에 실패하였습니다.",
+			icon: "error",
+				  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+				  confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+			}) // swal end
 // 		hold()
 	}// if end
 	
