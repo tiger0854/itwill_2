@@ -7,6 +7,14 @@ public class ItemRecipeListVO {
 	private int material_con;
 	private String item_name;
 	private String material_name;
+	private String material_unit;
+	
+	public String getMaterial_unit() {
+		return material_unit;
+	}
+	public void setMaterial_unit(String material_unit) {
+		this.material_unit = material_unit;
+	}
 	public String getItem_code() {
 		return item_code;
 	}

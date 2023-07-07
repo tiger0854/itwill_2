@@ -16,6 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 </head>
 <body>
 	<script>
@@ -59,7 +61,7 @@
 							"material_unit" : checkboxUnit
 						});
 					} else {
-						alert("자재 번호 : "+checkboxValue+"은 이미 선택된 자재입니다.");
+						Swal.fire("자재 번호 : "+checkboxValue+"은 이미 선택된 자재입니다.");
 						$(this).prop("checked", false);
 					}
 
@@ -105,22 +107,29 @@
 		
 
 		function deleteMaterial(material_code, material_name) {
-
-			if (confirm("자재 번호: " + material_code + ", 자재 명: " + material_name
-					+ "을(를) 레시피에서 제거하시겠습니까?")) {
-				var removeIdx = checkedValues.findIndex(function(item) {
-					return item.material_code === material_code;
-				});
-
-				if (removeIdx !== -1) {
-					checkedValues.splice(removeIdx, 1);
-				}//배열에서 제거
-				
-				$("#"+material_code).prop("checked", false); //체크박스 해제
-
-				updateTable();
-			}
-		}
+	  Swal.fire({
+		    title: "경고",
+		    text: "자재 번호: " + material_code + ", 자재 명: " + material_name + "을(를) 레시피에서 제거하시겠습니까?",
+		    icon: "warning",
+		    showCancelButton: true,
+		    confirmButtonText: "제거",
+		    cancelButtonText: "취소"
+		  }).then(result => {
+		    if (result.isConfirmed) {
+		      var removeIdx = checkedValues.findIndex(function(item) {
+		        return item.material_code === material_code;
+		      });
+		
+		      if (removeIdx !== -1) {
+		        checkedValues.splice(removeIdx, 1);
+		      }
+		
+		      $("#" + material_code).prop("checked", false);
+		
+		      updateTable();
+	   		}
+	  });
+}
 	</script>
 	<div class="black-bar">
 		<h4 style="text-align: center; color: white; padding-top: 8px">

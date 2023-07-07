@@ -17,18 +17,35 @@
 	}
 
 	function recipeDelete(item_code, item_name) {
-		if (confirm("품명 : " + item_name + " 레시피 전체를 정말로 삭제하시겠습니까?")) {
-			location.href = 'deleteItemRecipe?item_code=' + item_code;
+		  Swal.fire({
+		    title: "경고",
+		    text: "품명 : " + item_name + " 레시피 전체를 정말로 삭제하시겠습니까?",
+		    icon: "warning",
+		    showCancelButton: true,
+		    confirmButtonText: "삭제",
+		    cancelButtonText: "취소"
+		  }).then(result => {
+		    if (result.isConfirmed) {
+		      location.href = 'deleteItemRecipe?item_code=' + item_code;
+		    }
+		  });
 		}
-	}
-	function recipeDeleteMaterial(item_code, item_name, material_code,
-			material_name) {
-		if (confirm("품명 : " + item_name + " 레시피 요소인 " + material_name
-				+ "를/을 삭제하시겠습니까?")) {
-			location.href = 'deleteItemRecipeMaterial?item_code=' + item_code
-					+ "&material_code=" + material_code;
+
+	function recipeDeleteMaterial(item_code, item_name, material_code, material_name) {
+		  Swal.fire({
+		    title: "경고",
+		    text: "품명 : " + item_name + " 레시피 요소인 " + material_name + "를/을 삭제하시겠습니까?",
+		    icon: "warning",
+		    showCancelButton: true,
+		    confirmButtonText: "삭제",
+		    cancelButtonText: "취소"
+		  }).then(result => {
+		    if (result.isConfirmed) {
+		      location.href = 'deleteItemRecipeMaterial?item_code=' + item_code + "&material_code=" + material_code;
+		    }
+		  });
 		}
-	}
+
 
 	//레시피 검색 팝업창 ()
 	function openItem() {

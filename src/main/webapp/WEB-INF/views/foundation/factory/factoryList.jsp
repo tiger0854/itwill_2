@@ -25,12 +25,21 @@ function factoryUpdate(factory_code) {
 }
 
 function factoryDelete(factory_code, factory_name) {
-	if (confirm("품명 : " + factory_name + "를/을 정말로 삭제하시겠습니까?")) {
-		location.href = '/foundation/factory/factoryDelete?factory_code='
-				+ factory_code;
-		alert("삭제완료");
+	  Swal.fire({
+	    title: "경고",
+	    text: "창고 명 : " + factory_name + "를/을 정말로 삭제하시겠습니까?",
+	    icon: "error",
+	    showCancelButton:true,
+	    confirmButtonText: '확인',
+	    cancelButtonText: '취소'
+	  })
+	  .then(result => {
+	    if (result.isConfirmed) { // 만약 모달창에서 확인 버튼을 눌렀다면
+	      location.href = '/foundation/factory/factoryDelete?factory_code=' + factory_code;
+	    } 
+	  });
 	}
-}
+
 
 //공장명 검색 팝업창
 function openItem() {
@@ -49,7 +58,7 @@ function openItem() {
 	<form id="instr">
 
 				<h4 style="margin-top: 150px;">
-					<i class="bx bx-book"></i> 공장관리
+					<i class='bx bxs-factory'></i> 공장관리
 				</h4>
 				<div style="margin-top: 10px;">
 					<hr width="100%" style="border: 2px solid black">

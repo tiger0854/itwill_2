@@ -24,18 +24,25 @@
 		// 새 창 열기
 		window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 		}else{
-			alert("레시피용 상품은 수정할 수 없습니다");
+			Swal.fire("레시피용 상품은 수정할 수 없습니다");
 		}
 	}
 
 	function itemDelete(item_code, item_name) {
-		if (confirm("품명 : " + item_name + "를/을 정말로 삭제하시겠습니까?")) {
-			location.href = '/foundation/itemdetail/itemdetailDelete?item_code='
-					+ item_code;
-			alert("삭제완료");
+		  Swal.fire({
+		    title: "경고",
+		    text: "품명 : " + item_name + "를/을 정말로 삭제하시겠습니까?",
+		    icon: "warning",
+		    showCancelButton: true,
+		    confirmButtonText: "삭제",
+		    cancelButtonText: "취소"
+		  }).then(result => {
+		    if (result.isConfirmed) {
+		      location.href = '/foundation/itemdetail/itemdetailDelete?item_code=' + item_code;
+		    }
+		  });
 		}
 
-	}
 
 	//품명 검색 팝업창
 	function openItem() {
@@ -103,7 +110,7 @@
 							<td>${vo.item_code}</td>
 							<td>${vo.item_name}</td>
 							<td>${vo.unit }</td>
-							<td>${vo.item_price }</td>
+							<td>${vo.item_price }원</td>
 							<td><button type="button" class=btn-edit
 									onclick="itemUpdate('${vo.item_code}');">
 									<i class='bx bx-edit'></i>

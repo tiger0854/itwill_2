@@ -13,8 +13,9 @@
 	href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
 	rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
-<script
-	src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 </head>
 <body>
 	<script>
@@ -31,37 +32,46 @@
 
 		function onInsert() {
 			if ($('#item_code').val() == "") {
-				alert("상품 검색을 해주세요!");
+				Swal.fire("상품 검색을 해주세요!");
 				return;
 			}
 
 			var frObj = $("#fr");
 			var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
-			if (frObj[0].checkValidity()) {
-			$.ajax({
-				url : "/foundation/itemrecipe/itemrecipeUpload", // 요청을 보낼 서버의 URL
-				type : "POST", // HTTP 요청 방식 (POST)
-				data : formData, // 전송할 데이터 (직렬화된 폼 데이터)
-				success : function(response) {
-					alert("작성 성공!");
-					opener.location.reload();
-					window.close(); // 윈도우 창을 닫습니다.
-				},
-				error : function(xhr, status, error) {
-					alert("최소한 하나의 자재는 등록해야합니다");
-				}
-			});
-		} else {
-	      alert("입력란을 채워주세요!");
-	    }
-	}
-		
+			
+			
+				if (frObj[0].checkValidity()) {
+				    Swal.fire({
+				      title: "작성 성공!",
+				      text: "작성이 성공하였습니다.",
+				      icon: "success",
+				      showCancelButton: false,
+				      confirmButtonText: "확인"
+				    }).then(function() {
+				      $.ajax({
+				        url: "/foundation/itemrecipe/itemrecipeUpload",
+				        type: "POST",
+				        data: formData,
+				        success: function(response) {
+				          opener.location.reload();
+				          window.close();
+				        },
+				        error: function(xhr, status, error) {
+				          Swal.fire("최소한 하나의 자재는 등록해야합니다.", "error");
+				        }
+				      });
+				    });
+				  } else {
+				    Swal.fire("입력란을 채워주세요!");
+				  }
+				
+		}
 		
 		// 상품 검색 후 자재 가져오기
 		function getRelatedMaterials() {
 			var itemCode = document.getElementById("item_code").value;
 			if (!itemCode) {
-				alert("상품 검색을 해주세요!");
+				Swal.fire("상품 검색을 해주세요!");
 				return;
 			}
 			$.ajax({
@@ -76,11 +86,11 @@
 					if (materials.length > 0) {
 						receiveCheckboxValues(materials); // 자재 배열 업데이트
 					} else {
-						alert("해당 상품에 관련된 자재가 없습니다.");
+						Swal("해당 상품에 관련된 자재가 없습니다.","success");
 					}
 				},
 				error : function(xhr, status, error) {
-					alert("자재 가져오기 실패: " + error);
+					Swal("자재 가져오기 실패: " + error,"error");
 				}
 			});
 
@@ -102,7 +112,7 @@
 						"width=500, height=600,left=100, top=100");
 				popup.materialArray = materialArray;
 			} else {
-				alert("상품 코드부터 검색해주세요.");
+				Swal.fire("상품 코드부터 검색해주세요.");
 				return false;
 			}
 		}
@@ -204,7 +214,7 @@
 					<tr>
 						<td>상품 명</td>
 						<td>
-							<input type="button" value="상품 검색" onclick="itemSearch();">
+							<input type="button" class="btn btn-primary" value="상품 검색" onclick="itemSearch();">
 						</td>
 					</tr>
 					<tr>
@@ -216,7 +226,7 @@
 					</tr>
 					<tr>
 						<td>자재 명</td>
-						<td><input type="button" value="자재 검색" onclick="materialSearch()"></td>
+						<td><input type="button" class="btn btn-primary" value="자재 검색" onclick="materialSearch()"></td>
 					</tr>
 					<tr id="materialHeader">
 					</tr>

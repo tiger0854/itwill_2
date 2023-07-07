@@ -28,30 +28,41 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/product.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
 </head>
 <script type="text/javascript">
-	function onUpdate(item_code) {
-		var frObj = $("#fr");
-		var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
-		if (frObj[0].checkValidity()) {
-		$.ajax({
-			url : "/foundation/itemdetail/itemdetailUpdate?item_code="
-					+ item_code, // 요청을 보낼 서버의 URL
-			type : "POST", // HTTP 요청 방식 (POST)
-			data : formData, // 전송할 데이터 (직렬화된 폼 데이터)
-			success : function(response) {
-				alert("작성 성공!");
-				opener.location.reload();
-				window.close(); // 윈도우 창을 닫습니다.
-			},
-			error : function(xhr, status, error) {
-				alert("빈칸을 입력해주세요!");
-			}
-		});
-	}else {
-		alert("입력란을 채워주세요!");
+function onUpdate(item_code) {
+	  var frObj = $("#fr");
+	  var formData = frObj.serialize();
+
+	  if (frObj[0].checkValidity()) {
+	    Swal.fire({
+	      title: "작성 성공!",
+	      text: "작성이 성공하였습니다.",
+	      icon: "success",
+	      showCancelButton: false,
+	      confirmButtonText: "확인"
+	    }).then(function() {
+	      $.ajax({
+	        url: "/foundation/itemdetail/itemdetailUpdate?item_code=" + item_code,
+	        type: "POST",
+	        data: formData,
+	        success: function(response) {
+	          opener.location.reload();
+	          window.close();
+	        },
+	        error: function(xhr, status, error) {
+	          Swal.fire("빈칸을 입력해주세요!");
+	        }
+	      });
+	    });
+	  } else {
+	    Swal.fire("입력란을 채워주세요!");
+	  }
 	}
-	}
+
 </script>
 <body>
 	<!-- 상품 수정 폼 -->

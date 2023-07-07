@@ -46,7 +46,12 @@ public class ItemRecipeServiceImpl implements ItemRecipeService {
 	    List<ItemRecipeVO> itemRecipeUploadvo = uvo.getItemRecipeUploadvo(); // ItemRecipeUploadVO 객체에서 리스트를 가져옴
 	    List<ItemRecipeListVO> existingRecipe = dao.selectItemRecipe(vo.getItem_code());
 	    List<ItemRecipeVO> removeList = new ArrayList<>(); // 없는 값들을 담을 리스트
-
+	    
+	    //자재가 없으면 레시피 전체 삭제
+	    if(itemRecipeUploadvo.size()==0) {
+	    	dao.deleteItemRecipe(vo.getItem_code());
+	    }
+	    
 	    for (ItemRecipeListVO existingItem : existingRecipe) {
 	        boolean found = false;
 	        for (ItemRecipeVO item : itemRecipeUploadvo) {
