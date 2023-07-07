@@ -28,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ddosirak.domain.CookAddVO;
 import com.ddosirak.domain.CookListVO;
 import com.ddosirak.domain.CookVO;
+import com.ddosirak.domain.GraphVO;
 import com.ddosirak.domain.IntegrationCodeVO;
 import com.ddosirak.domain.ItemRecipeListVO;
 import com.ddosirak.domain.ItemdetailVO;
@@ -48,6 +49,8 @@ import com.ddosirak.service.PageService;
 import com.ddosirak.service.ProOrderService;
 import com.ddosirak.service.ProductionPerformanceService;
 import com.ddosirak.service.ReceiveService;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 // 컨트롤러 구현 전 정하면 좋은 것들.
@@ -656,7 +659,7 @@ public class ProductController {
 		pageVO.setEndRow(endRow);
 		int count = cService.cooketccount(co_code); 
 
-		logger.debug("글갯수 @@@@@@@@@@2"+count);
+		logger.debug("글갯수 @@@@@@@@@@"+count);
 		// 게시글 개수 가져오기
 		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
 		int startPage=(currentPage-1)/pageBlock*pageBlock+1;
@@ -678,6 +681,7 @@ public class ProductController {
 		logger.debug("/pro/cooketcstatusList.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
 		List<CookAddVO> cookEtcList = cService.cookEtcList(instrSearch,co_code,pageVO);
 		model.addAttribute("cookEtcList", cookEtcList);
+		
 	}// productEtclistGET()
 	
 	
@@ -786,9 +790,11 @@ public class ProductController {
 		List<ItemRecipeListVO> itemList = Rservice.selectItemRecipe(itemCode);
 		logger.debug(itemList.size() + "");
 		// ObjectMapper 객체 생성
-		ObjectMapper objectMapper = new ObjectMapper();
-		// List를 JSON 문자열로 변환
+//		ObjectMapper objectMapper = new ObjectMapper();
+		// ObjectMapper 객체 생성
+		ObjectMapper objectMapper = new ObjectMapper().configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
 		String jsonString = objectMapper.writeValueAsString(itemList);
+//		String jsonString = objectMapper.writeValueAsString(itemList);
 		return jsonString;
 	}
 	
@@ -964,6 +970,21 @@ public class ProductController {
 		model.addAttribute("receiveList", receiveList);
 		
 	}// p
+	
+	// http://localhost:8088/pro/graph
+	@RequestMapping(value = "/graph", method = RequestMethod.GET)
+//	@ResponseBody
+	public void graph(Model model) throws Exception {
+		List<Map<String, Object>> graphList = oService.graphList();
+		logger.debug("graphList : " + graphList);
+		ObjectMapper objectMapper = new ObjectMapper();
+		String graphListJson = objectMapper.writeValueAsString(graphList);
+		model.addAttribute("graphListJson", graphListJson);
+	}
+	
+	
+	
+	
 	
 	
 	

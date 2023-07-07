@@ -61,23 +61,23 @@ $(document).ready(function() {
     </tr>
     <tr>
       <td>수주번호</td>
-      <td><input type="text" value="${pvo.so_code}" name="so_code"></td>
+      <td><input type="text" value="${pvo.so_code}" name="so_code" readonly="readonly"></td>
     </tr>
     <tr>
       <td>작업지시자</td>
-      <td><input type="text" value="${pvo.employee_id}" name="employee_id"></td>
+      <td><input type="text" value="${pvo.employee_id}" name="employee_id" readonly="readonly"></td>
     </tr>
     <tr>
       <td>납품예정일</td>
-      <td><input type="date" value="${pvo.delivery_date}" name="delivery_date"></td>
+      <td><input type="date" value="${pvo.delivery_date}" name="delivery_date" readonly="readonly"></td>
     </tr>
     <tr>
       <td>라인코드</td>
-      <td><input type="text" value="${pvo.line_code}" name="line_code"></td>
+      <td><input type="text" value="${pvo.line_code}" name="line_code" ></td>
     </tr>
     <tr>
       <td>품목코드</td>
-      <td><input type="text" value="${pvo.item_code}" name="item_code"></td>
+      <td><input type="text" value="${pvo.item_code}" name="item_code" readonly="readonly"></td>
     </tr>
     <tr>
       <td>지시일자</td>
@@ -85,7 +85,7 @@ $(document).ready(function() {
     </tr>
     <tr>
       <td>지시수량</td>
-      <td><input type="number" value="${pvo.oQTY}" name="oQTY"></td>
+      <td><input type="number" value="${pvo.oQTY}" name="oQTY" ></td>
     </tr>
     <tr>
 	    <td>현재 지시 상태</td>
@@ -94,17 +94,10 @@ $(document).ready(function() {
     <tr>
     <tr>
    		<td>지시 상태 변경</td>
-	    <td>
-	      <select name="wo_status">
-		      <option value="${pvo.wo_status}" selected="selected">변경안함</option>
-		      <option value="지시">지시</option>
-		      <option value="시작">시작</option>
-		      <option value="마감">마감</option>
-	      </select>
-    	</td>
+   		<td><input type="text" value="${pvo.wo_status}" name="wo_status" ></td>
     <tr>
       <td>생산수량</td>
-      <td><input type="number" value="${pvo.pQTY}" name="pQTY"></td>
+      <td><input type="number" value="${pvo.pQTY}" name="pQTY" readonly="readonly"></td>
     </tr>
   </tbody>
 </table>

@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 
@@ -13,6 +14,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+
 function orderwrite() {
   // 새 창을 열기 위한 URL
   var popupUrl = '/pro/orderWrite';
@@ -68,7 +70,8 @@ function itemrecipeList(item_code,item_name){ // 해당 작업지시번호에 �
 } 
 
 function itemrecipeListPrint(array,item_name){ // 해당 생산실적 출력
-
+	var oQTY = $("#oQTY").val();
+// 	alert(oQTY);
 	var output ="";
 		output=output+"<table class=product-table  style='margin-top: 20px;margin-bottom:20px; width: 100%;'><tr id='th'><tr><th colspan='3'> 레시피</th></tr><th>자재코드</th><th>자재이름</th><th>투입량</th></tr>";
 	for (var i=0; i<array.length; i++) {
@@ -76,7 +79,7 @@ function itemrecipeListPrint(array,item_name){ // 해당 생산실적 출력
 		output=output+"<tr id='con'>";
 		output=output+"<td>"+array[i].material_code+"</td>";
 		output=output+"<td>"+array[i].material_name+"</td>";	
-		output=output+"<td>"+array[i].material_con+"</td>";	
+		output=output+"<td>"+array[i].material_con*oQTY+"</td>";	
 		output=output+"</tr>";	
 		}
 
@@ -91,6 +94,9 @@ function itemrecipeListPrint(array,item_name){ // 해당 생산실적 출력
 
 
 </script>
+
+
+
 
 </head>
 <body id="body-pd" style="font-family: 'TheJamsil5';">
@@ -203,7 +209,7 @@ function itemrecipeListPrint(array,item_name){ // 해당 생산실적 출력
         <td>${vo.line_code}</td>
         <td onclick="itemrecipeList('${vo.item_code}','${vo.item_name}');">${vo.item_code}</td>
         <td>${vo.item_name}</td>
-        <td>${vo.oQTY}</td>
+        <td><input type="hidden" id="oQTY" value="${vo.oQTY}" >${vo.oQTY}</td>
         <td>${vo.pQTY}</td>
 		<c:choose>
 		  <c:when test="${vo.wo_status eq '지시'}">
@@ -220,7 +226,7 @@ function itemrecipeListPrint(array,item_name){ // 해당 생산실적 출력
     </tbody>
   </table>
 
-  
+  <i class="bi bi-box-arrow-in-down-right"></i>
   <!-- 페이징처리 -->
 <%--   		${Search} --%>
 	<div class="container" style="margin-top: 30px; margin-bottom: 30px">

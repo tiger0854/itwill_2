@@ -103,7 +103,7 @@ function opensucode() {
 <!-- 작업지시상태 마감 :  실적현황 -> 실적등록 -->
 <%-- ${oderList} --%>
  <h4 style="margin-top: 100px;"><i class='bx bx-list-ol icon'></i> 조리지시 목록</h4>
-  <span style="color: red; font-size: 13px">* 조리 지시 번호 클릭시 해당작업 실적등록 가능 / 자재이름 클릭시 해당 레시피 확인가능</span>     
+  <span style="color: red; font-size: 13px">* 조리 지시 번호 클릭시 해당작업 실적등록 가능 </span>     
   <table class="product-table"style="margin-top: 20px;width: 100%;">
     <thead>
       <tr>
@@ -161,8 +161,13 @@ function opensucode() {
       </c:forEach>
     </tbody>
   </table>
-
-  
+<!-- 		instrSearch.put("line_code", line_code); -->
+<!-- 		instrSearch.put("co_date", co_date); -->
+<!-- 		instrSearch.put("so_code", so_code); -->
+<!-- 		instrSearch.put("co_status", co_status); -->
+<%-- ${Search.line_code} --%>
+  <!-- 페이징처리 -->
+<%--   		${Search} --%>
   <!-- 페이징처리 -->
 <%--   		${Search} --%>
 	<div class="container" style="margin-top: 30px; margin-bottom: 30px">
@@ -179,8 +184,6 @@ function opensucode() {
 	  </ul>
 	</div>
   		
-</div>
-</div>
 
 
 

@@ -58,7 +58,7 @@
 	    AND co_date = #{co_date}
 	  </if>
 	  <choose>
-	    <when test="wo_status == null or wo_status == ''"></when>
+	    <when test="co_status == null or co_status == ''"></when>
 	    <otherwise>
 	      AND co_status = #{co_status}
 	    </otherwise>
@@ -207,16 +207,33 @@
   	</select> 
   	
   	
+<!-- checkR -->
 	<!-- checkR -->
   	<select id="checkR"  resultType="boolean">
-		  SELECT COUNT(*) = EXISTS (
-		    SELECT COUNT(*)
-		    FROM cook
-		    WHERE so_code = #{re_code} OR cpQTY >= material_con
-		  ) AS availability
-		  FROM cook
-		  WHERE so_code = #{re_code}
+		SELECT
+		  CASE
+		    WHEN (
+		      SELECT SUM(
+		        CASE
+		          WHEN cpQTY >= material_con THEN 1
+		          ELSE 0
+		        END
+		      )
+		      FROM cook
+		      WHERE so_code = #{so_code}
+		    ) = (
+		      SELECT COUNT(*)
+		      FROM cook
+		      WHERE so_code = #{so_code}
+		    ) THEN 1
+		    ELSE 0
+		  END AS result
+		FROM dual;
 	</select>  
+  	
+  	
+  	
+  	
   	
   	
   </mapper>

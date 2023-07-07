@@ -60,12 +60,12 @@
         <th>작업지시자</th>
     </tr>
     <c:forEach var="vo" items="${receiveList }">
-        <tr onclick="selectItem('${vo.re_code}', '${vo.re_qty}','${vo.item_code}','${vo.item_name}','${vo.employee_id}')">
+        <tr onclick="selectItem('${vo.re_code}', '${vo.re_qty}','${vo.item_code}','${vo.item_name}','${vo.re_empCd}')">
             <td id="con">${vo.re_code}</td>
             <td id="con">${vo.re_qty}</td>
             <td id="con">${vo.item_code}</td>
             <td id="con">${vo.item_name}</td>
-            <td id="con">${vo.employee_id}</td>
+            <td id="con">${vo.re_empCd}</td>
         </tr>
     <script>
 	    function selectItem(a, b, c, d, e) {
