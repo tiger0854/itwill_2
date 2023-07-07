@@ -140,7 +140,7 @@ public class MaterialdetailController {
 		logger.debug("material_code : " + material_code);
 		service.deleteM(material_code);
 
-		return "redirect:/foundation/materialdetail/materialdetailList?material_name=&material_code=";
+		return "redirect:/foundation/materialdetail/materialdetailList";
 
 	}
 

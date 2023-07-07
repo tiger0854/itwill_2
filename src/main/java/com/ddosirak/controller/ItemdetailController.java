@@ -161,7 +161,7 @@ public class ItemdetailController {
 
 		logger.debug("idDeleteGET 호출");
 		service.deleteI(item_code);
-		return "redirect:/foundation/itemdetail/itemdetailList?item_name=&item_code=";
+		return "redirect:/foundation/itemdetail/itemdetailList";
 	}
 	
 }
