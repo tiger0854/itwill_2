@@ -20,6 +20,9 @@
 	<logger name="com.ddosirak.service">
 		<level value="debug" />
 	</logger>
+	<logger name="com.ddosirak.handler">
+		<level value="debug" />
+	</logger>
 	
 
 	

@@ -12,30 +12,17 @@
 	
 	
 	<!-- DataSource : 디비연결정보 객체 -->
-	<bean id="dataSource"
-	      class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-	    <property name="driverClassName" 
-	              value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
-	    <property name="url" 
-	              value="jdbc:log4jdbc:mysql://itwillbs-rds-class7-team3.cwyqfeylunq5.ap-northeast-2.rds.amazonaws.com:3306/ddosirak" />
-	    <property name="username" value="root" />
-	    <property name="password" value="class70118" />                    
-	</bean>
-	<!-- DataSource : 디비연결정보 객체 -->
-	
-	<!-- DataSource : 공유 디비연결정보 객체 -->
 <!-- 	<bean id="dataSource" -->
 <!-- 	      class="org.springframework.jdbc.datasource.DriverManagerDataSource"> -->
-<!-- 	    <property name="driverClassName" -->
+<!-- 	    <property name="driverClassName"  -->
 <!-- 	              value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/> -->
-<!-- 	    <property name="url" -->
+<!-- 	    <property name="url"  -->
 <!-- 	              value="jdbc:log4jdbc:mysql://itwillbs-rds-class7-team3.cwyqfeylunq5.ap-northeast-2.rds.amazonaws.com:3306/ddosirak" /> -->
 <!-- 	    <property name="username" value="root" /> -->
-<!-- 	    <property name="password" value="class70118" /> -->
+<!-- 	    <property name="password" value="class70118" />                     -->
 <!-- 	</bean> -->
-	<!-- DataSource : 공유 디비연결정보 객체 -->
-	
-	
+	<!-- DataSource : 디비연결정보 객체 -->
+
 	<!-- SqlSessionFactory : 디비연결,mybatis설정,SQL실행 -->
 	<bean id="sqlSessionFactory"
 	      class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -55,6 +42,29 @@
 		  <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 	<!-- SqlSessionTemplate : 디비연결, mybatis 설정, 매퍼 설정(SQL 실행), 디비 종료 -->
+	
+	<!-- HikariCP - 설정정보 -->
+	<bean id="hikariConfig"
+			class="com.zaxxer.hikari.HikariConfig">
+			<property name="driverClassName" 
+						value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
+			<property name="jdbcUrl"
+						value="jdbc:log4jdbc:mysql://itwillbs-rds-class7-team3.cwyqfeylunq5.ap-northeast-2.rds.amazonaws.com:3306/ddosirak" />
+			<property name="username"
+						value="root" />
+			<property name="password"
+						value="class70118" />
+	</bean>
+	<!-- HikariCP - 설정정보 -->
+	
+	<!-- HikariCP - DataSource : 커넥션풀 활용 디비연결정보 객체 -->
+	<bean id="dataSource"
+			class="com.zaxxer.hikari.HikariDataSource"
+			destroy-method="close">
+			<constructor-arg ref="hikariConfig" />
+	
+	</bean>
+	<!-- HikariCP - DataSource : 커넥션풀 활용 디비연결정보 객체 -->
 	
 	<!-- multipartResolver: 파일 업로드 기능 -->
 	<bean id="multipartResolver" 
