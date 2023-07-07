@@ -39,8 +39,12 @@
 		</table>
 		<!-- 권한제어 -->
 		<input type="button" value="사원 정보등록"
-			onclick="location.href='/emp/insert'"> <input type="button"
+			onclick="location.href='/emp/insert'"> 
+		<input type="button"
 			value="일용직 일괄등록" onclick="location.href='/emp/insert_al'">
+		<input type="button"
+			value="사원 정보 내려받기" id="excelDown" onclick="location.href='/emp/excelDown'">
+		
 		<!-- ---------------------필터링------------------- -->
 		<table class="table table-striped" style="margin-top: 10px;">
 			<tr>
@@ -238,6 +242,17 @@
 			}); // ajax end
 		}); // click end
 		// -------------------------필터링-----------------------------------------
+		
+// 		$('#excelDown').on('click',function(){
+// 			$.ajax({
+// 				url:"/emp_ajax/excelDown",
+// 				type: 'GET',
+// 				success:function(){
+// 					alert('hi');
+					
+// 				}// success end
+// 			});// ajax end
+// 		});// eClick end
 		
 		
 	}); // jQ end

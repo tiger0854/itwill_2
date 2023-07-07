@@ -1,13 +1,25 @@
 package com.ddosirak.controller;
 
 
+import java.io.IOException;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -16,6 +28,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -332,6 +345,112 @@ public class MemberController {
 		List<EmployeeCheckVO> outList = eService.getOutEmp(pageVO);
 		model.addAttribute("outList", outList);
 	}// Out_empList() method end
+	
+	// 엑셀동작 (0707, 안되면 엎을거임)
+	//엑셀다운받기 동작
+	@RequestMapping(value = "/excelDown", method = RequestMethod.GET)
+    public void excelDownload(HttpServletResponse response) throws IOException {
+//        Workbook wb = new HSSFWorkbook();
+		LocalDate now = LocalDate.now();
+        Workbook wb = new XSSFWorkbook();
+        Sheet sheet = wb.createSheet("또시락 사원 정보"+now);
+        Row row = null;
+        Cell cell = null;
+        int rowNum = 0;
+
+        sheet.setColumnWidth(5, 8000);
+        sheet.setColumnWidth(6, 4000);
+        sheet.setColumnWidth(7, 5000);
+        sheet.setColumnWidth(8, 4000);
+        
+        CellStyle hs = wb.createCellStyle();
+        hs.setBorderTop(BorderStyle.THIN);
+        hs.setBorderBottom(BorderStyle.THIN);
+        hs.setBorderLeft(BorderStyle.THIN);
+        hs.setBorderRight(BorderStyle.THIN);
+        hs.setFillForegroundColor(HSSFColorPredefined.YELLOW.getIndex());
+        hs.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        CellStyle bs = wb.createCellStyle();
+        bs.setBorderTop(BorderStyle.THIN);
+        bs.setBorderBottom(BorderStyle.THIN);
+        bs.setBorderLeft(BorderStyle.THIN);
+        bs.setBorderRight(BorderStyle.THIN);
+        
+        // Header
+        row = sheet.createRow(rowNum++);
+        cell = row.createCell(0);
+        cell.setCellStyle(hs);
+        cell.setCellValue("사번");
+        cell = row.createCell(1);
+        cell.setCellStyle(hs);
+        cell.setCellValue("성명");
+        cell = row.createCell(2);
+        cell.setCellStyle(hs);
+        cell.setCellValue("부서");
+        cell = row.createCell(3);
+        cell.setCellStyle(hs);
+        cell.setCellValue("직급");
+        cell = row.createCell(4);
+        cell.setCellStyle(hs);
+        cell.setCellValue("재직현황");
+        cell = row.createCell(5);
+        cell.setCellStyle(hs);
+        cell.setCellValue("주소");
+        cell = row.createCell(6);
+        cell.setCellStyle(hs);
+        cell.setCellValue("전화번호");
+        cell = row.createCell(7);
+        cell.setCellStyle(hs);
+        cell.setCellValue("이메일");
+        cell = row.createCell(8);
+        cell.setCellStyle(hs);
+        cell.setCellValue("입사일");
+        
+        
+        // Body
+        List<EmployeeVO> eList = eService.empList();
+        for (int i=0; i<eList.size(); i++) {
+            row = sheet.createRow(rowNum++);
+            cell = row.createCell(0);
+            cell.setCellStyle(bs);
+            cell.setCellValue(eList.get(i).getEmployee_id());
+            cell = row.createCell(1);
+            cell.setCellStyle(bs);
+            cell.setCellValue(eList.get(i).getEmployee_name());
+            cell = row.createCell(2);
+            cell.setCellStyle(bs);
+            cell.setCellValue(eList.get(i).getDepartment_name());
+            cell = row.createCell(3);
+            cell.setCellStyle(bs);
+            cell.setCellValue(eList.get(i).getPosition());
+            cell = row.createCell(4);
+            cell.setCellStyle(bs);
+            cell.setCellValue(eList.get(i).getEmployee_status());
+            cell = row.createCell(5);
+            cell.setCellStyle(bs);
+            cell.setCellValue(eList.get(i).getAddress());
+            cell = row.createCell(6);
+            cell.setCellStyle(bs);
+            cell.setCellValue(eList.get(i).getPhone_num());
+            cell = row.createCell(7);
+            cell.setCellStyle(bs);
+            cell.setCellValue(eList.get(i).getEmail());
+            cell = row.createCell(8);
+            cell.setCellStyle(bs);
+            cell.setCellValue(eList.get(i).getEmp_date().toString());
+        } // for end
+
+        // 컨텐츠 타입과 파일명 지정
+        response.setContentType("ms-vnd/excel");
+        response.setHeader("Content-Disposition", "attachment;filename=DDOSIRAK_employee_INFO_"+now+".xlsx");
+
+        // Excel File Output
+        wb.write(response.getOutputStream());
+        wb.close();
+        logger.debug("excel end");
+    }// excelDownload() method end
+	
+	
 	
 	
 ////////////////////////////////////////////////////사원 관리//////////////////////////////////////////////////////////////////////////////

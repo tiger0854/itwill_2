@@ -76,8 +76,8 @@
 		sendMessage();
 		$('#message').val('')
 	});
-
-	let sock = new SockJS("http://localhost:8088/echo");
+	var origin = $(location).attr('origin');
+	var sock = new SockJS(origin+"/echo");
 	sock.onopen = onOpen;
 	sock.onmessage = onMessage;
 	sock.onclose = onClose;
