@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				</div>
 					</div>
                   <a href="#" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">영업관리</span> </a>
-                 <div class="nav_link collapse" id="foundation">
+                 <div class="nav_link collapse" id="">
 		  			<a href="/receive/receiveInsert" class="nav_link"> - 수주등록</a><br>
 		  			<a href="/receive/receiveList" class="nav_link"> - 수주현황</a><br>
 				</div>
