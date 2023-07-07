@@ -248,10 +248,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	// 휴가 승인
 		@Override
 		public Integer vacationapprove(Integer vacation_id, int id) {
+			String vacationfind=sqlSession.selectOne(NAMESPACE+".vacationfind", id);
 			Map<String, Object> vacationmap=new HashMap<String, Object>();
 			vacationmap.put("vacation_id", vacation_id);
-			vacationmap.put("id", id);
-			vacationmap.put("approve_emp", "윤찬우");
+			vacationmap.put("approve_emp", vacationfind);
 			logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+vacationmap);
 			Integer result = sqlSession.update(NAMESPACE+".vacationapprove",vacationmap);
 			return result;
@@ -260,7 +260,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	// 휴가 반려
 		@Override
 		public Integer vacationreturn(Integer vacation_id, int id) {
-			String vacationfind=sqlSession.selectOne(NAMESPACE+"vacationfind", id);
+			String vacationfind=sqlSession.selectOne(NAMESPACE+".vacationfind", id);
 			Map<String, Object> vacationmap=new HashMap<String, Object>();
 			vacationmap.put("vacation_id", vacation_id);
 			vacationmap.put("approve_emp", vacationfind);

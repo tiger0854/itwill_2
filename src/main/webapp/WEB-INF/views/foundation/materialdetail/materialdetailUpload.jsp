@@ -26,6 +26,7 @@
 	function onInsert() {
 		var frObj = $("#fr");
 		var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
+		if (frObj[0].checkValidity()) {
 		$.ajax({
 			url : "/foundation/materialdetail/materialdetailUpload", // 요청을 보낼 서버의 URL
 			type : "POST", // HTTP 요청 방식 (POST)
@@ -39,7 +40,10 @@
 				alert("빈칸을 입력해주세요!");
 			}
 		});
-	}
+	}else {
+	      alert("입력란을 채워주세요!");
+    }
+}
 </script>
 <body>
 	<!-- 창고등록 폼 -->
