@@ -23,8 +23,8 @@
 	.chat_wrap .chat ul li > div { font-size: 13px;  }
 	.chat_wrap .chat ul li > div.sender {  font-weight: bold; }
 	.chat_wrap .chat ul li > div.message { display: inline-block; word-break:break-all; margin: 5px 3px; max-width: 75%; border: 1px solid #888; padding: 10px; border-radius: 5px; background-color: #FCFCFC; color: #555; text-align: left; }
- 	.chat_wrap .chat ul li > span.timeRight {margin-bottom: 0px; font-size: 1px; vertical-align: bottom;  margin-bottom: 25px;} 
-	.chat_wrap .chat ul li > span.timeLeft {margin-bottom: 0px; font-size: 1px; vertical-align: bottom; margin-right: 10px; margin-bottom: 25px;} 
+ 	.chat_wrap .chat ul li > span.timeRight {margin-bottom: 25px; font-size: 1px; vertical-align: bottom;  } 
+	.chat_wrap .chat ul li > span.timeLeft {margin-bottom: 25px; font-size: 1px; vertical-align: bottom; margin-right: 10px; } 
 	 	
 	 	
 	.chat_wrap .input-div { position: fixed; bottom: 0; width: 100%; background-color: #FFF; text-align: center; }
@@ -85,11 +85,13 @@
 	// 소켓연결동작
 	function onOpen(){
 		var openMsg = chat_sender+'&'+chat_receiver+'&'+'ENTER-CHAT'+'&'+chatRoom_code;
+		console.log(openMsg);
 		sock.send(openMsg);
 	} 
 	// 메시지 전송
 	function sendMessage() {
 		var msg = chat_sender+'&'+chat_receiver+'&'+$("#message").val()+'&'+chatRoom_code;
+		console.log(msg);
 		sock.send(msg);
 		scrollDown();
 	}
