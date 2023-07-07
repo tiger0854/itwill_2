@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -596,18 +597,19 @@ public class MemberController {
 //	 http://localhost:8088/emp/vacationcheck
 		// 휴가신청 승인/반려 페이지(관리자)
 		@RequestMapping(value = "/vacationcheck", method = RequestMethod.GET)
-		public String vacationcheck(@RequestParam("vacation_id")Integer vacation_id,
-				@RequestParam("approve")String approve, RedirectAttributes rttr, Date approve_date, String approve_emp, int id) {
+		public String vacationcheck(@RequestParam("vacation_id")Integer vacation_id, HttpSession session,
+				@RequestParam("approve")String approve, RedirectAttributes rttr, Date approve_date, String approve_emp) {
 			logger.debug("vacationcheck() 호출![]~(￣▽￣)~*");
 			logger.debug("페이지 이동!");
 			// 페이지 전달 데이터 저장
+			int id=Integer.valueOf((String) session.getAttribute("login_id"));
 			logger.debug("vacation_id :",vacation_id,id);
-
 			if (approve.equals("승인")) {
 			    eService.vacationapprove(vacation_id,id);
 			} else if (approve.equals("반려")) {
 			    eService.vacationreturn(vacation_id,id);
 			}
+		
 			
 			// 리시트로 정보를 전달 (rttr)
 			rttr.addFlashAttribute("result", "CREATEOK");
