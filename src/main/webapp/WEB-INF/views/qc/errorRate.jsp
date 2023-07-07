@@ -32,11 +32,10 @@
 
 				<!-- 품질현황목록 검색박스 -->
 				<form id="instr">
+					<input type="hidden" name="wo_code" value="${param.wo_code }">
 					<!-- 작업지시목록 검색, 등록버튼 -->
 					<div class="btn-container">
-						<button type="submit" class="btn-search">
-							<i class='bx bx-search-alt-2'></i> 조회
-						</button>
+						<input type="submit" class="btn btn-primary" value="조회">
 					</div>
 					<table class="product-box" style="margin-top: 20px; width: 100%;"
 						border="1">
@@ -79,32 +78,29 @@
 								<td>${vo.item_code }</td>
 								<td>${vo.total_QTY }</td>
 								<td>${vo.total_error_QTY }</td>
-								<c:choose>
-									<c:when
-										test="${(((vo.total_QTY - vo.total_error_QTY) / vo.total_QTY * 100) - 100) * (-1) < 0 }">
-										<td>0%</td>
-									</c:when>
-									<c:otherwise>
-										<td><fmt:formatNumber value="${errorRate}"
-												minFractionDigits="2" maxFractionDigits="2" />%</td>
-									</c:otherwise>
-								</c:choose>
+								<c:if test="${vo.total_QTY < 0 }">
+									<td><fmt:formatNumber value="${errorRate}"
+											minFractionDigits="0" maxFractionDigits="0" />%</td>
+								</c:if>
+								<c:if test="${vo.total_QTY > 0 }">
+									<td><fmt:formatNumber value="${errorRate}"
+											minFractionDigits="0" maxFractionDigits="0" />%</td>
+								</c:if>
 								<form action="/qc/errorStatus" method="post">
-									<c:choose>
-										<c:when test="${vo.error_status != null }">
-											<td>${vo.error_status }</td>
-										</c:when>
-										<c:otherwise>
-											<td><input type="hidden" name="item_code"
-												value="${vo.item_code }"> <select id="error_status"
-												name="error_status">
-													<option value=""></option>
-													<option value="재고초과">재고초과</option>
-													<option value="불량">불량</option>
-											</select>
-												<button type="submit" class="btn-search">등록</button></td>
-										</c:otherwise>
-									</c:choose>
+									<c:if test="${vo.error_status != null }">
+										<td>${vo.error_status }</td>
+									</c:if>
+									<c:if test="${vo.item_code != null && vo.error_status == null }">
+										<td><input type="hidden" name="wo_code"
+											value="${vo.wo_code }"> <input type="hidden"
+											name="item_code" value="${vo.item_code }"> <select
+											id="error_status" name="error_status">
+												<option value=""></option>
+												<option value="재고초과">재고초과</option>
+												<option value="불량">불량</option>
+										</select>
+											<button type="submit" class="btn-search">등록</button></td>
+									</c:if>
 								</form>
 							</tr>
 						</c:forEach>
@@ -119,17 +115,18 @@
 						style="margin-top: 20px;">
 						<c:if test="${pageVO.startPage > pageVO.pageBlock}">
 							<li class="page-item"><a class="page-link"
-								href="/qc/errorRate?item_code=${Search.item_code }&error_status=${Search.error_status }&pageNum=${pageVO.startPage - pageVO.pageBlock}"><sapn>
-									< </sapn></a></li>
+								href="/qc/errorRate?wo_code=${Search.wo_code }&item_code=${Search.item_code }&error_status=${Search.error_status }&pageNum=${pageVO.startPage - pageVO.pageBlock}">
+									< </sapn>
+							</a></li>
 						</c:if>
 						<c:forEach var="i" begin="${pageVO.startPage}"
 							end="${pageVO.endPage}" step="1">
 							<li class="page-item"><a class="page-link"
-								href="/qc/errorRate?item_code=${Search.item_code }&error_status=${Search.error_status }&pageNum=${i}"><span>${i}</span></a></li>
+								href="/qc/errorRate?wo_code=${Search.wo_code }&item_code=${Search.item_code }&error_status=${Search.error_status }&pageNum=${i}"><span>${i}</span></a></li>
 						</c:forEach>
 						<c:if test="${pageVO.endPage < pageVO.pageCount}">
 							<li class="page-item"><a class="page-link"
-								href="/qc/errorRate?item_code=${Search.item_code }&error_status=${Search.error_status }pageNum=${pageVO.startPage + pageVO.pageBlock}"><span>
+								href="/qc/errorRate?wo_code=${Search.wo_code }&item_code=${Search.item_code }&error_status=${Search.error_status }pageNum=${pageVO.startPage + pageVO.pageBlock}"><span>
 										> </span></a></li>
 						</c:if>
 					</ul>

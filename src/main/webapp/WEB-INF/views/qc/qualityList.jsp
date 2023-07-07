@@ -27,9 +27,6 @@
 
 			<h4 style="margin-top: 150px;">
 				<i class="bx bx-book"></i> 품질관리
-				<button style="margin-left: 20px" type="button"
-					class="btn btn-primary btn-sm"
-					onclick="location.href='/qc/errorRate'">폐기현황</button>
 			</h4>
 			<div style="margin-top: 10px;">
 				<hr width="100%" style="border: 2px solid black">
@@ -39,9 +36,7 @@
 				<form id="instr">
 					<!-- 작업지시목록 검색, 등록버튼 -->
 					<div class="btn-container">
-						<button type="submit" class="btn-search">
-							<i class='bx bx-search-alt-2'></i> 조회
-						</button>
+						<input type="submit" class="btn btn-primary" value="조회">
 					</div>
 					<table class="product-box" style="margin-top: 20px; width: 100%;"
 						border="1">
@@ -91,7 +86,7 @@
 
 						<c:forEach var="vo" items="${qualityList }">
 							<tr>
-								<td>${vo.wo_code }</td>
+								<td><a href="/qc/errorRate?wo_code=${vo.wo_code }">${vo.wo_code }</a></td>
 								<td>${vo.line_code }</td>
 								<td>${vo.item_name }</td>
 								<td>${vo.item_code }</td>
