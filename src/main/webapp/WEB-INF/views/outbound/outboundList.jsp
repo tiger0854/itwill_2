@@ -11,40 +11,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.min.css">
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.all.min.js"></script>
- <script type="text/javascript">
-
  
-	 $(document).ready(function(){
-			// 디비 - 서비스 - 컨트롤러 -> 뷰(jsp) -> JS -> AJAX
-				
-				var data = "${result}";
-				
-				if(data == "CREATEOK"){
-			
-					callModal("글 쓰기 완료");
-				}	
-				if(data == "MODOK"){
-					callModal("수주 수정 완료");
-				}
-				if(data == "DELOK"){
-					callModal("글 삭제 완료");
-				}
-				
-			function callModal(txt){
-				$(".modal-body").html(txt);
-				$("#myModal").modal("show");
-				}
-			});
-	
-</script>
-
 
 </head>
 <body id="body-pd" style="font-family: 'TheJamsil5';">
 <jsp:include page="../common/header.jsp"/>
 
-  <h3>outboundList.jsp</h3>
-  <h1>출고 리스트</h1>
+	<br>
+	<br>
+  <h4>출고현황</h4>
   
   <div>
   <form action="" method="get" id="searchFrm">
@@ -77,7 +52,7 @@
   <th>거래처명</th>
   <th>품목명</th>
   <th>수량</th>
-  <th>생산수량</th>
+  <th>상세</th>
   <th>납기일자</th>
   <th>진행상태</th>
   <th>출고일자</th> 
@@ -100,7 +75,7 @@
   
 <%--   <td>${vo.re_code }</td> --%>
   <td id="hidden" style="display:none;">${vo.re_code }</td>
-  <td onclick="location.href='/outbound/outProductList?out_num=${vo.out_num}'">${vo.out_num }</td>
+  <td>${vo.out_num }</td>
   <td>${vo.out_customerNm }</td>
   
   <c:choose>
@@ -115,23 +90,24 @@
 <%-- <td>${vo.item_name }</td> --%>
   <td>${vo.out_qty }</td>
   
-  <c:choose>
-  	<c:when test="${vo.out_state == 1 }">
-  		<c:if test="${vo.out_qty > vo.proOrderVO.pQTY }">
-  			<td onclick="location.href='/outbound/outboundStock?out_num=${vo.out_num}'">${vo.proOrderVO.pQTY }<br>생산중</td>
-  		</c:if>
-  		<c:if test="${vo.out_qty <= vo.proOrderVO.pQTY }">
-  			<td
-  			 onclick="location.href='/outbound/outboundStock?out_num=${vo.out_num}'"><font color="blue">${vo.proOrderVO.pQTY }<br>생산완료</font></td>
-  		</c:if>
-  	</c:when>
-  	<c:when test="${vo.out_state == 0 }">
-  		<td></td>
-  	</c:when>
-  	<c:otherwise>
-  		<td></td>
-    </c:otherwise>
-  </c:choose>
+  <td><a href='/outbound/outboundStock?out_num=${vo.out_num}'>돋보기</a></td> 
+<%--   <c:choose> --%>
+<%--   	<c:when test="${vo.out_state == 1 }"> --%>
+<%--   		<c:if test="${vo.out_qty > vo.proOrderVO.pQTY }"> --%>
+<%--   			<td onclick="location.href='/outbound/outboundStock?out_num=${vo.out_num}'">${vo.proOrderVO.pQTY }<br>생산중</td> --%>
+<%--   		</c:if> --%>
+<%--   		<c:if test="${vo.out_qty <= vo.proOrderVO.pQTY }"> --%>
+<!--   			<td -->
+<%--   			 onclick="location.href='/outbound/outboundStock?out_num=${vo.out_num}'"><font color="blue">${vo.proOrderVO.pQTY }<br>생산완료</font></td> --%>
+<%--   		</c:if> --%>
+<%--   	</c:when> --%>
+<%--   	<c:when test="${vo.out_state == 0 }"> --%>
+<!--   		<td></td> -->
+<%--   	</c:when> --%>
+<%--   	<c:otherwise> --%>
+<!--   		<td></td> -->
+<%--     </c:otherwise> --%>
+<%--   </c:choose> --%>
 
  
   <td>${vo.due_date }</td> 

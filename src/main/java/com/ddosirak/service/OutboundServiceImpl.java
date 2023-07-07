@@ -40,8 +40,14 @@ public class OutboundServiceImpl implements OutboundService{
 		
 		return odao.getOutProductList(out_num);
 	}
+	
+	// 재고 리스트
+	@Override
+	public List<OutboundVO> getStockList(String out_num) {
+		return odao.getStockList(out_num);
+	}
 
-	// 외 n건
+//	 외 n건
 	@Override
     public int getOutNumCount(String out_num) {
 		 int count = odao.getOutNumCount(out_num);
@@ -79,12 +85,7 @@ public class OutboundServiceImpl implements OutboundService{
 		
 	}
 
-	
-	// 재고 리스트
-	@Override
-	public List<OutboundVO> getStockList(String out_num) {
-		return odao.getStockList(out_num);
-	}
+
 	
 
 

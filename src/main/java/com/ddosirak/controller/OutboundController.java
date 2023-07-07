@@ -188,6 +188,7 @@ public class OutboundController {
 	@RequestMapping(value = "/outboundStock", method = RequestMethod.GET)
 	public String outboundStockGET(@RequestParam(name = "out_num", required = false) String out_num, Model model) throws Exception {
 		logger.debug("outboundStockGET() 호출");
+		logger.debug("out_num @@@@@@@@@@@@@@@@@@@@: " + out_num);
 		List<OutboundVO> outList = oService.getStockList(out_num);
 		logger.debug("outList : " + outList);
 

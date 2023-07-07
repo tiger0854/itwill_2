@@ -20,9 +20,10 @@ function sendInfo(row) {
     // 정보를 부모 창으로 전달
      var newRow = window.opener.$("tr[name=trProduct]:last"); 
      newRow.find("input[id=re_code]").val(data[0]);
-     window.opener.document.getElementById("out_customerNm").value = data[1];
-     newRow.find("input[id=item_code]").val(data[2]);
-     newRow.find("input[id=item_name]").val(data[3]);
+//      window.opener.document.getElementById("out_customerNm").value = data[1];
+     newRow.find("input[id=item_code]").val(data[1]);
+     newRow.find("input[id=item_name]").val(data[2]);
+     newRow.find("input[id=out_customerNm]").val(data[3]);
      newRow.find("input[id=out_qty]").val(data[4]);
    
     window.close();
@@ -54,9 +55,9 @@ function sendInfo(row) {
   <table border="1" class="table table-bordered">
 	  <tr>
 	 	 <th>수주번호</th> <!-- 클릭하면 팝업창 꺼지면서 폼에 입력 -->
-	 	 <th>수주업체</th>
 	 	 <th>상품코드</th>
 	 	 <th>상품명</th>
+	 	 <th>수주업체</th>
 	 	 <th>수주수량</th>
 	  </tr>
 	
@@ -64,9 +65,9 @@ function sendInfo(row) {
 	 		<c:if test="${vo.re_state == 1 }">
 	 		 <tr onclick="sendInfo(this);">
 				  <td>${vo.re_code }</td>
-				  <td>${vo.re_customerNm }</td>
 				  <td>${vo.item_code }</td>
 				  <td>${vo.item_name }</td>
+				  <td>${vo.re_customerNm }</td>
 				  <td>${vo.re_qty }</td>
 			 </tr>
 			 </c:if>

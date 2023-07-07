@@ -8,8 +8,25 @@
   
   <!-- 가져올 VO객체 정보 매핑 -->
 	<resultMap type="com.ddosirak.domain.ReceiveVO" id="receive">
+		<result property="rec_id" column="rec_id"/>
 		<result property="re_code" column="re_code"/>
+		<result property="item_code" column="item_code"/>
+		<result property="item_name" column="item_name"/>
+		<result property="re_customerNm" column="re_customerNm"/>
+		<result property="re_empCd" column="re_empCd"/>
+		<result property="re_empNm" column="re_empNm"/>
+		<result property="re_date" column="re_date"/>
+		<result property="re_qty" column="re_qty"/>
+		<result property="re_state" column="re_state"/>
+		<collection property="outboundVO" resultMap="outboundVO"/>
 	</resultMap>
+
+	<!-- 출고 테이블 -->
+	<resultMap type="com.ddosirak.domain.OutboundVO" id="outboundVO">
+  		<result property="re_code" column="re_code"/>
+  		<result property="out_state" column="out_state"/>
+  	</resultMap>
+  	<!-- 출고 테이블 -->
 
 	<!-- 수주 등록 -->
 	<insert id="receiveInsert" >
@@ -33,15 +50,36 @@
 	  		<if test="search != ''">
 	  		LIKE CONCAT('%', #{search}, '%')
 	  		</if>
-		order by re_code desc
+		order by rec_id desc
 		limit #{startRow}, #{pageSize}
 	</select>
 	<!-- 수주 목록 -->
 	
+<!-- 	<select id="receiveList" resultType="ReceiveVO" resultMap="receive"> -->
+<!-- 		select r.rec_id, r.re_code, r.item_code, r.item_name, r.re_customerNm, r.re_empCd, r.re_empNm, r.re_date, r.re_qty, r.re_state, o.out_state -->
+<!-- 		from receive r -->
+<!-- 		join outbound o -->
+<!-- 		where -->
+<!-- 			o.out_state is null -->
+<!-- 			<choose> -->
+<!-- 	  		<when test="kind == 'itemName'">AND item_name</when> -->
+<!-- 	  		<when test="kind == 'customerName'">AND re_customerNm</when>		 -->
+<!-- 	  		<when test="kind == 'reCd'">AND re_code</when>		 -->
+<!-- 	  		</choose>  -->
+<!-- 	  		<if test="search != ''"> -->
+<!-- 	  		LIKE CONCAT('%', #{search}, '%') -->
+<!-- 	  		</if> -->
+<!-- 		order by rec_id desc -->
+<!-- 		limit #{startRow}, #{pageSize} -->
+<!-- 	</select> -->
+	
+	
+	
+	
 	<!-- 수주 상세 -->
-	<select id="receiveDetail" resultType="ReceiveVO" resultMap="receive">
+	<select id="receiveDetail" resultType="ReceiveVO" >
 		select *
-		from receive
+		from receive 
 		where re_code = #{re_code}
 	</select>
 	<!-- 수주 상세 -->

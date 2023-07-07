@@ -42,13 +42,11 @@
 	<select id="getStockList" resultType="com.ddosirak.domain.OutboundVO" resultMap="outbound"> 
 		select o.out_state, o.due_date, o.out_empNm, o.out_num, o.item_name, o.out_customerNm, o.out_qty, o.re_code, p.so_code, p.pQTY
 		from outbound o join prod p
-		where out_num=#{out_num} 
+		where o.out_num=#{out_num} 
 	</select>
   	<!-- 재고 리스트 -->
   	
-  
-  	<!-- SQL 쿼리 적는 곳 -->
-  	
+
   	<!-- 출고 등록 -->
 	<insert id="outInsert">
 		insert into outbound (out_num,out_customerNm,out_empCd,out_empNm,item_code,item_name,out_notes,out_qty,price,stock_code,factory_code,due_date,create_date,re_code) 
@@ -59,24 +57,23 @@
 
 
   	<!-- 출고 리스트 -->
-  	<select id="outList" parameterType="map" resultType="com.ddosirak.domain.OutboundVO" resultMap="outbound">
+  	<select id="outList" resultType="com.ddosirak.domain.OutboundVO" parameterType="map">
   		select 
-  			o.*, p.pQTY, p.so_code
-		from outbound o
-		join prod p
+  			*
+		from outbound 
 		where
-			o.re_code = p.so_code
+			1=1
 		<if test="state != null">
-			and o.out_state = #{state}
+			and out_state = #{state}
 		</if>
 		<if test="pageVO.search != null">
-			and o.item_name like CONCAT('%',#{pageVO.search},'%')
+			and item_name like CONCAT('%',#{pageVO.search},'%')
 		</if>
-		order by o.out_id desc
+		order by out_id desc
 		limit #{pageVO.startRow}, #{pageVO.pageSize}
   	</select>
   	<!-- 출고 리스트 -->
-  
+  	
 
 	<!-- 출고 상태 업데이트 (진행중, 출고 완료) -->
 	<update id="updateOutState" parameterType="map">

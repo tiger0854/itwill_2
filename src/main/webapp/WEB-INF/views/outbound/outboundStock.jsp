@@ -24,6 +24,18 @@
   <table border="1" class="table table-bordered">
    <c:forEach var="vo" items="${outList }">
   <tr>
+  <th rowspan="2">수주번호</th>
+  <td rowspan="2">${vo.re_code }</td>
+  <th>생산진행현황</th>
+  <c:choose>
+     <c:when test="${vo.out_qty <= vo.proOrderVO.pQTY }">
+        <td> <font color="blue">생산완료</font> </td>
+     </c:when>
+     <c:otherwise>
+       <td> 진행중 </td>
+     </c:otherwise>
+  </c:choose>
+  
   <th>출고진행현황</th>
    <c:choose>
      <c:when test="${vo.out_state==1}">
@@ -33,7 +45,10 @@
          <td><font color="red">출고 완료</font></td>
      </c:otherwise>
   </c:choose>
-  <th>납기일</th>
+  </tr>
+  <tr>
+  
+  <th>납기일자</th>
   <td>${vo.due_date }</td>
   <th>출고 담당자</th>
   <td>${vo.out_empNm }</td>
@@ -49,6 +64,7 @@
   <th>거래처명</th>
   <th>출고예정수량</th>
   <th>생산수량</th>
+  <th>비고</th>
   </tr>
   <c:forEach var="vo" items="${outList }">
   <tr>
@@ -58,6 +74,7 @@
     <td>${vo.out_qty }</td>
 <%--     <td>${vo.out_qty -10}</td><!-- 창고에서 수량 끌고오기 --> --%>
     <td>${vo.proOrderVO.pQTY }</td>
+    <td>${vo.out_notes }</td>
   </tr>
    </c:forEach>
 

@@ -24,15 +24,15 @@
   <tr>
   <th>수주업체코드</th>
   <td><input type="text" id="re_customerCd" name="re_customerCd" placeholder="수주업체코드" 
-	  		onclick="openChildWindow1();" ></td>
+	  		onclick="openChildWindow1();" ><p id="cus_error" style="color: red; font-size: small;"></p></td>
   <th>수주업체명</th>
   <td><input type="text" id="re_customerNm" name="re_customerNm" placeholder="수주업체명" 
-	  		onclick="openChildWindow1();" > </td>
+	  		onclick="openChildWindow1();" ></td>
   </tr>
   <tr>
   <th>품목코드</th>
   <td><input type="text" id="item_code" name="item_code" placeholder="품목코드" 
-	  		onclick="openChildWindow3();" > </td>
+	  		onclick="openChildWindow3();" ><p id="item_error" style="color: red; font-size: small;"></p> </td>
   <th>품목명</th>
   <td><input type="text" id="item_name" name="item_name" placeholder="품목명" 
 	   		onclick="openChildWindow3();"> </td>
@@ -40,19 +40,20 @@
   <tr>
   <th>담당자코드</th>
   <td><input type="text" id="re_empCd" name="re_empCd" placeholder="담당자코드" 
-	  		onclick="openChildWindow2();"></td>
+	  		onclick="openChildWindow2();"><p id="emp_error" style="color: red; font-size: small;"></p></td>
   <th>담당자명</th>
   <td><input type="text" id="re_empNm" name="re_empNm" placeholder="담당자명" 
 	  		onclick="openChildWindow2();"></td>
   </tr>
   <tr>
   <th>수주수량</th>
-	  <td><input type="text" name="re_qty" placeholder="수주수량"></td>
+	  <td><input type="text" id="re_qty" name="re_qty" placeholder="수주수량"><p id="qty_error" style="color: red; font-size: small;"></p></td>
   <th>수주일자</th>
-  <td><input type="date" name="re_date" placeholder="년-월-일"></td>
+  <td><input type="date" id="re_date" name="re_date" placeholder="년-월-일"><p id="date_error" style="color: red; font-size: small;"></p></td>
   </tr>
   </table>
-    <button type="submit">수주등록</button>
+    
+    <button type="submit" id="submitBtn">수주등록</button>
   </form>
 
 </body>
@@ -76,9 +77,53 @@
 	function openChildWindow3() {		
 	    var childWindow = window.open("/foundation/itemdetail/itemdetailList?pop=rec", "productList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
 	    childWindow.opener = window;
-	  }
+	  } 
 	// 팝업창 오픈
+	
+	
+		// 유효성
+		var errorElement1 = document.getElementById('cus_error');
+		var errorElement2 = document.getElementById('item_error');
+		var errorElement3 = document.getElementById('emp_error');
+		var errorElement4 = document.getElementById('qty_error');
+		var errorElement5 = document.getElementById('date_error');
+	
+		$(document).ready(function() {
+	    $("#submitBtn").click(function() {
 
+	    	if ($('input#re_customerCd').val().trim() == ''){
+	    		$('input#re_customerCd').val('');
+	            $('input#re_customerCd').focus();
+	    		errorElement1.textContent = '수주업체를 입력해주세요.';
+	        	return false;
+	    	 } else if ($('input#item_code').val().trim() == ''){
+	    		$('input#item_code').val('');
+	            $('input#item_code').focus();
+	    		errorElement2.textContent = '품목을 입력해주세요.';
+	        	return false;
+	    	 } else if ($('input#re_empCd').val().trim() == ''){
+	    		$('input#re_empCd').val('');
+	            $('input#re_empCd').focus();
+	    		errorElement3.textContent = '담당자를 입력해주세요.';
+	        	return false;
+	    	 } else if ($('input#re_qty').val().trim() == '' ){
+	    		$('input#re_qty').val('');
+	            $('input#re_qty').focus();
+	    		errorElement4.textContent = '수량을 입력해주세요.';
+	        	return false;
+		    	} else if ($('input#re_date').val().trim() == ''){
+	    		$('input#re_date').val('');
+	            $('input#re_date').focus();
+	    		errorElement5.textContent = '납기일자를 입력해주세요.';
+	        	return false;
+		    	} else {
+		    		errorElement.textContent = ''; // 경고 메시지 초기화
+	     	    }
+	    	
+	      });
+		});
+	    	
+	
 
   </script>
 

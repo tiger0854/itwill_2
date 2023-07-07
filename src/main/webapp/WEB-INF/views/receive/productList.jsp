@@ -20,6 +20,8 @@
 	    // 정보를 부모 창으로 전달합니다.
 	    window.opener.document.getElementById("item_code").value = data[0];
 	    window.opener.document.getElementById("item_name").value = data[1];
+	    var errorElement2 = window.opener.document.getElementById('item_error');
+	    errorElement2.textContent = '';   // 부모창 경고 메시지 초기화
 	    window.close();
 	  }  
 

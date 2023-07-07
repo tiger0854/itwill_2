@@ -8,7 +8,7 @@ public class OutboundVO {
 	private int out_id; // 출고아이디
 	private String out_num; // 출고번호 
 	private String out_customerNm; // 거래처 
-	private int out_empCd; // 사원코드
+	private Integer out_empCd; // 사원코드
 	private String out_empNm; // 사원명
 	private String item_code; // 상품코드 
 	private String item_name; // 상품명

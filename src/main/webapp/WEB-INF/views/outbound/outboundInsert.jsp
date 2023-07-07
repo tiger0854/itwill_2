@@ -9,24 +9,27 @@
   <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
   <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
- 
+
 </head>
 	  
 	<body id="body-pd" style="font-family: 'TheJamsil5';">
 	<jsp:include page="../common/header.jsp"/>
    
-
-
-  <h1>출고 list</h1>
+	<br>
+	<br>
+  <h4>출고 예정 등록</h4>
  
   <form action="" method="post">
-<!--    수주번호: <input type="text" id="re_code" name= "outboundList[0].re_code" onclick="openChildWindow();" readonly><br> -->
-   거래처명: <input type="text" id="out_customerNm" name="outboundList[0].out_customerNm" onclick="openChildWindow();" readonly><br> 
+  <table border="1" class="table table-bordered">
+  <tr>
+  <th>담당자 코드</th>
+  <td><input type="text" id="out_empCd" name="outboundList[0].out_empCd" onclick="openChildWindow2();" readonly placeholder="담당자코드"><br></td>
+  <th>담당자명</th>
+  <td><input type="text" id="out_empNm" name="outboundList[0].out_empNm" onclick="openChildWindow2();" readonly placeholder="담당자명"></td>
+  </tr>
+  </table>
   <hr>
-   담당자코드: <input type="text" id="out_empCd" name="outboundList[0].out_empCd" onclick="openChildWindow2();" readonly><br> 
-   담당자명: <input type="text" id="out_empNm" name="outboundList[0].out_empNm" onclick="openChildWindow2();" readonly><br>    
-  <hr>
-  <font color="red" size="small">* 행 추가시, 동일 거래처 수주 번호만 등록 가능합니다.</font>
+  <div style="color: red; font-size: small">* 첫번째 행을 먼저 입력해주세요.</div>
   
   <table id="tbl" border="1" class="table table-bordered">
    <thead>
@@ -34,101 +37,65 @@
 	  <td>수주번호</td>
 	  <td>품목코드</td>
 	  <td>품목명</td>
+	  <td>거래처명</td>
 	  <td>수량</td>
-      <td>단가</td>
 	  <td>납기일자</td>  
-<!-- 	  <td>창고</td>   -->
-	  <td>적요</td>
+	  <td>비고</td>
     </tr>
    </thead>
    <tbody>
    <tr name="trProduct" id="trProduct">
 	  <td><input type="text" id="re_code" name="outboundList[0].re_code"  
-	  		onclick="openChildWindow();" readonly></td>
+	  		onclick="openChildWindow();" readonly placeholder="수주번호"></td>
 	  <td><input type="text" id="item_code" name="outboundList[0].item_code"  
-	  		onclick="openChildWindow();" readonly></td>
+	  		onclick="openChildWindow();" readonly placeholder="품목코드"></td>
 	  <td><input type="text" id="item_name" name="outboundList[0].item_name"  
-	  		onclick="openChildWindow();" readonly> </td>
-	  <td><input type="text" id="out_qty" class="out_qty" name="outboundList[0].out_qty" onclick="openChildWindow();"></td>
-	  <td><input type="text" class="price" name="outboundList[0].price" placeholder="단가" 
-	  		onclick="openChildWindow4();" readonly></td>
-	  <td><input type="date" name="outboundList[0].due_date" placeholder="년-월-일"></td>
-<!-- 	  <td><input type="text" id="factory_code" name ="outboundList[0].factory_code"  -->
-<!-- 	  		onclick="openChildWindow3();" ></td> -->
-	  <td><input type="text" name="outboundList[0].out_notes" placeholder="적요"></td>
+	  		onclick="openChildWindow();" readonly placeholder="품목명"> </td>
+	  <td><input type="text" id="out_customerNm" name="outboundList[0].out_customerNm"  
+	  		onclick="openChildWindow();" readonly placeholder="거래처명"></td>
+	  <td><input type="text" id="out_qty" class="out_qty" name="outboundList[0].out_qty" onclick="openChildWindow();" readonly placeholder="수량"></td>
+	  <td><input type="date" id="due_date" name="outboundList[0].due_date" placeholder="년-월-일"></td>
+	  <td><input type="text" name="outboundList[0].out_notes" placeholder="비고"></td>
 	  <td colspan="8"><input type="button" value="del" id="delProduct"></td>   	
     </tr>
    </tbody>
    
-    <tr>
-	  <td></td>
-	  <td></td>
-	  <td><input type="text" name="sum_out_qty" id="sum_out_qty" placeholder="총수량"></td>
-	  <td><input type="text" name="sum_price" id="sum_price" placeholder="합계"></td>
-	  <td></td>
-	  <td></td>
-	  <td></td>
-    </tr>  
+
   </table>
+  
   		<input type= "hidden" name="create_date">
 	    <input type="button" value="add" name="addProduct">
   <hr>
+   <p id="check_error" style="color: red; font-size: small;"></p>
   	<input type="submit" class="submitBtn" id="submitBtn" value="출고 등록">
   </form>
 </body>
  <script type="text/javascript">
 
-  $(document).ready(function() {
-	  // 합계 함수
-	  function calculateTotal() {
-	    var sumQty = 0;
-	    var sumPrice = 0;
-	    
-	    // 모든 행을 돌면서 각 행의 가격과 수량 값을 가져와 합계 계산
-	    $("tr[name=trProduct]").each(function() {
-	      var qty = parseInt($(this).find("input.out_qty").val()) || 0;
-	      var price = parseFloat($(this).find("input.price").val()) || 0;     
-	      sumQty += qty;
-	      sumPrice += qty * price;
-	    });    
-	    // 합계를 "총수량"과 "합계"에 입력
-	    $("input[name=sum_out_qty]").val(sumQty);
-	    $("input[name=sum_price]").val(sumPrice);
-	  }
-	  
-	  // 가격과 수량 입력 필드에 이벤트 리스너 등록
-	  $(document).on("input", "input.out_qty, input.price", calculateTotal);
 
  	  // 품목 행 추가 
  	  $(document).ready(function(){
  		  var idx=1;
 	  $(document).on("click","input[name=addProduct]", function(){
-		  var trade=document.getElementById("out_customerNm").value;
 		  var employeeCd=document.getElementById("out_empCd").value;
 		  var employeeNm=document.getElementById("out_empNm").value;
-// 		  var recCd=document.getElementById("re_code").value;
 		  var addProduct = ' <tr name="trProduct">'+
-		 	' <input type="hidden" id="out_customerNm" name ="outboundList['+(idx)+'].out_customerNm" value='+trade+'>'+
 		    ' <input type="hidden" id="out_empCd" name ="outboundList['+(idx)+'].out_empCd" value='+employeeCd+'>'+
 		    ' <input type="hidden" id="out_empNm" name ="outboundList['+(idx)+'].out_empNm" value='+employeeNm+'>'+
-// 		    ' <input type="hidden" id="out_empNm" name ="outboundList['+(idx)+'].out_empNm" value='+recCd+'>'+
-			'  <td><input type="text" id="re_code" name="outboundList['+(idx)+'].re_code" onclick="openChildWindow();" readonly></td>' +
-			'  <td><input type="text" id="item_code" name="outboundList['+(idx)+'].item_code" onclick="openChildWindow();" readonly></td>' +
-			'  <td><input type="text" id="item_name" name="outboundList['+(idx)+'].item_name" onclick="openChildWindow();" readonly> </td>' +
-			'  <td><input type="text" class="out_qty" id="out_qty" name="outboundList['+(idx)+'].out_qty" onclick="openChildWindow();" placeholder="수량"></td>' +
-			'  <td><input type="text" class="price" name="outboundList['+(idx)+'].price" placeholder="단가" onclick="openChildWindow4();" readonly></td>' +
-			'  <td><input type="date" name="outboundList['+(idx)+'].due_date" placeholder="년-월-일"></td>' +
-// 			'  <td><input type="text" id="factory_code" name ="outboundList['+(idx)+'].factory_code" onclick="openChildWindow3();" ></td>' +
-			'  <td><input type="text" name="outboundList['+(idx)+'].out_notes" placeholder="적요"></td>' +
+			'  <td><input type="text" id="re_code" name="outboundList['+(idx)+'].re_code" onclick="openChildWindow();" readonly placeholder="수주번호"></td>' +
+			'  <td><input type="text" id="item_code" name="outboundList['+(idx)+'].item_code" onclick="openChildWindow();" readonly placeholder="품목코드"></td>' +
+			'  <td><input type="text" id="item_name" name="outboundList['+(idx)+'].item_name" onclick="openChildWindow();" readonly placeholder="품목명"></td>' +
+			'  <td><input type="text" id="out_customerNm" name="outboundList['+(idx)+'].out_customerNm" onclick="openChildWindow();" readonly placeholder="거래처명"> </td>' +
+			'  <td><input type="text" class="out_qty" id="out_qty" name="outboundList['+(idx)+'].out_qty" onclick="openChildWindow();" readonly placeholder="수량"></td>' +
+			'  <td><input type="date" id="due_date" name="outboundList['+(idx)+'].due_date" placeholder="년-월-일"></td>' +
+			'  <td><input type="text" name="outboundList['+(idx)+'].out_notes" placeholder="비고"></td>' +
 			'  <td><input type="button" value="del" id="delProduct"></td>' +
 			' </tr>';
 		  var trHtml = $( "tr[name=trProduct]:last" );
 		  trHtml.after(addProduct);
 		  idx++
 		  
-		// 추가된 행의 가격과 수량 입력 
-		    trHtml.next().find("input.out_qty, input.price").on("input", calculateTotal);
-  			});
+		
   		}); // 품목 행 추가 
 
 		// 품목 행 삭제 버튼
@@ -155,24 +122,45 @@
 	  function openChildWindow() {	
 	    var childWindow = window.open("/receive/receiveList?pop=out", "recConnection", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);	   
 		  }
-	  
-// 	  function openChildWindow1() {	
-// 	    var childWindow = window.open("/customer/customerList?pop=out", "customerList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);	   
-// 		  }
+
  
 	  function openChildWindow2() {	
 		    var childWindow = window.open("/emp/list?pop=out", "empList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);		
-// 		    var childWindow = window.open("/emp/list?pop=ok", "empList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);		
 		  }
 	  
-// 	  function openChildWindow3() {			
-// 		    var childWindow = window.open("/outbound/factoryList", "factoryList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);		
-// 		  }	  
 	  
-	  function openChildWindow4() {		
-		    var childWindow = window.open("/foundation/itemdetail/itemdetailList?pop=out", "itemList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
-		  }
-		// 팝업창
+	  
+	  
+		// 유효성
+		var errorElement = document.getElementById('check_error');
+	
+		$(document).ready(function() {
+	    $("#submitBtn").click(function() {
+	    	var isValid = true; // 유효성 검사 결과 변수 초기화
+	    
+	    // 모든 행 검사
+	    $("tr[name='trProduct']").each(function() {
+	        var reCode = $(this).find("input[name^='outboundList']").eq(0).val();
+	        var dueDate = $(this).find("input[name^='outboundList']").eq(5).val();
+	      
+	        if (reCode === '' || $('input#out_empCd').val().trim() == '' || dueDate === ''){
+	       	 	  isValid = false;
+	       		  return false;
+	      }
+	    });
+	    
+	    	if (!isValid) {
+	    		  errorElement.textContent = '비고를 제외한 모든 칸을 입력해주세요.';
+	    		  return false; // submit 방지
+	    } else {
+	    	errorElement.text(""); // 경고 메시지 초기화
+	    }
+	  });
+	});
+		
+		
+
+		
 
 	  	  </script>
 

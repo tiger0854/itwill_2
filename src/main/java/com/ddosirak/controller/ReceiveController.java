@@ -134,7 +134,6 @@ public class ReceiveController {
 		}	
 			return "/receive/receiveList";
 		
-//		return "receive/receiveList";
 	}
 	
 

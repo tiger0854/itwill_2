@@ -21,6 +21,8 @@
 	    // 정보를 부모 창으로 전달합니다.
 	    window.opener.document.getElementById("re_empCd").value = data[0];
 	    window.opener.document.getElementById("re_empNm").value = data[1];
+	    var errorElement3 = window.opener.document.getElementById('emp_error');
+	    errorElement3.textContent = '';   // 부모창 경고 메시지 초기화
 	    window.close();
 	  }  
 </script>

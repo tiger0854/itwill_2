@@ -19,6 +19,8 @@ function sendInfo(row) {
     // 정보를 부모 창으로 전달합니다.
     window.opener.document.getElementById("re_customerCd").value = data[0];
     window.opener.document.getElementById("re_customerNm").value = data[1];
+    var errorElement1 = window.opener.document.getElementById('cus_error');
+    errorElement1.textContent = '';   // 부모창 경고 메시지 초기화
     window.close();
   }  
 
