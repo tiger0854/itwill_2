@@ -20,7 +20,6 @@
 	href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
 	rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
-<!-- <link rel="stylesheet" type="text/css" href="../css/css.css"> -->
 <link rel="stylesheet" type="text/css"
 	href="../../resources/css/product.css">
 <script
@@ -41,11 +40,6 @@
 			<i class='bx bx-edit'></i> 상품검색
 		</h4>
 	</div>
-	<!-- 작업지시등록 폼 -->
-	<div
-		style="display: flex; justify-content: center; margin-bottom: 27px">
-		<img src="../../resources/css/logo.png">
-	</div>
 	<div class="container mt-3">
 		<!--  		<hr width="100%" style="border: 2px solid black"> -->
 
@@ -54,13 +48,13 @@
 		<table class="table" style="width: 100%">
 			<form>
 				<tr>
-					<td>자재코드</td>
-					<td><input type="text" name="material_code"
-						style="width: 70%;"></td>
-					<td>자재명</td>
-					<td><input type="text" name="material_name"
-						style="width: 70%;"></td>
-					<td><button type="submit" class="btn-add">조회</button></td>
+					<td><div class="input-group">
+							<input type="text" style="width: 40%" placeholder="자재 코드"
+								class="form-control" name="material_code"> <input
+								type="text" style="width: 40%" placeholder="자재 이름"
+								class="form-control" name="material_name">
+							<button type="submit" class="btn btn-primary">검색</button>
+					</div></td>
 				</tr>
 			</form>
 		</table>

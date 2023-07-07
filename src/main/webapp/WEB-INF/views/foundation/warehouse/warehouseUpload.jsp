@@ -17,27 +17,42 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
 	rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
+<link rel="stylesheet" type="text/css"
+	href="../../resources/css/product.css">
 <!-- <link rel="stylesheet" type="text/css" href="../css/css.css"> -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/product.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+</head>
 </head>
 <script type="text/javascript">
 	function onInsert() {
 		var frObj = $("#fr");
 		var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
-		if (frObj[0].checkValidity()) {
-		$.ajax({
-			url : "/foundation/warehouse/warehouseUpload", // 요청을 보낼 서버의 URL
-			type : "POST", // HTTP 요청 방식 (POST)
-			data : formData, // 전송할 데이터 (직렬화된 폼 데이터)
-			success : function(response) {
-				alert("작성 성공!");
-				opener.location.reload();
-				window.close(); // 윈도우 창을 닫습니다.
-			},
-			error : function(xhr, status, error) {
-				alert("빈칸을 입력해주세요!");
+
+		Swal.fire({
+			type : "success",
+			showCancelButton : false,
+			confirmButtonColor : "green",
+			confirmButtonText : "작성성공!",
+			closeOnConfirm : false
+		}).then(function(result) {
+			if (result.value) {
+				$.ajax({
+					url : "/foundation/warehouse/warehouseUpload",
+					type : "POST",
+					data : formData,
+					success : function(response) {
+						opener.location.reload();
+						window.close();
+					},
+					error : function(xhr, status, error) {
+						alert("빈칸을 입력해주세요!");
+					}
+				});
 			}
 		});
 	}else {
@@ -98,15 +113,17 @@
 
 			<!-- 창고등록, 취소 버튼 -->
 			<div style="text-align: center; margin-top: 50px">
-				<button type="button" class="btn btn-outline-primary" onclick="onInsert();">
+				<button type="button" class="btn btn-outline-primary"
+					onclick="onInsert();">
 					<i class='bx bx-edit'></i> 등록
 				</button>
-				<button class="btn btn-danger" onclick="window.close()">X 취소</button>
+				<button class="btn btn-danger" onclick="window.close()">X
+					취소</button>
 			</div>
 
 		</form>
 
-		<br> 
+		<br>
 	</div>
 </body>
 </html>

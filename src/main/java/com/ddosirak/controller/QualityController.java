@@ -35,13 +35,13 @@ public class QualityController {
 		logger.debug("qualityControlListGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 
 		String wo_code = request.getParameter("wo_code");
-		String line_name = request.getParameter("line_name");
+		String line_code = request.getParameter("line_code");
 		String item_name = request.getParameter("item_name");
 		String employee_id = request.getParameter("employee_id");
 
 		Map<String, Object> instrSearch = new HashMap<String, Object>();
 		instrSearch.put("wo_code", wo_code);
-		instrSearch.put("line_name", line_name);
+		instrSearch.put("line_code", line_code);
 		instrSearch.put("item_name", item_name);
 		instrSearch.put("employee_id", employee_id);
 
@@ -88,7 +88,7 @@ public class QualityController {
 		logger.debug("startRow @@@@@@@@@@2" + startRow);
 		logger.debug("pageSize @@@@@@@@@@2" + pageSize);
 		List<QualityControlVO> qualityList = null;
-		if (wo_code == null && line_name == null && item_name == null && employee_id == null) {
+		if (wo_code == null && line_code == null && item_name == null && employee_id == null) {
 			// 품질현황 전체 조회
 			logger.debug("qualityList 전체 호출 ![]~(￣▽￣)~*");
 			qualityList = service.qualityList(pageVO);
@@ -194,15 +194,18 @@ public class QualityController {
 	// 불량률 페이지
 	// http://localhost:8088/qc/errorRate
 	@RequestMapping(value = "/errorRate", method = RequestMethod.GET)
-	public void errorRateListGET(Model model, HttpServletRequest request, PageVO pageVO, QualityControlVO vo)
-			throws Exception {
+	public void errorRateListGET(String wo_code, Model model, HttpServletRequest request, PageVO pageVO,
+			QualityControlVO vo) throws Exception {
 		logger.debug("errorRateListGET() 호출![]~(￣▽￣)~*");
 
+		logger.debug("@@@@wo_code : " + wo_code);
+		
 		String item_code = request.getParameter("item_code");
 		String error_status = request.getParameter("error_status");
 		Map<String, Object> instrSearch = new HashMap<String, Object>();
-		instrSearch.put("item_code", item_code);
+		instrSearch.put("wo_code", wo_code);
 		instrSearch.put("error_status", error_status);
+		instrSearch.put("item_code", item_code);
 
 		// ================================페이징 처리를 위한 값 받아오기
 		// 동작========================================
@@ -228,7 +231,7 @@ public class QualityController {
 		pageVO.setStartRow(startRow - 1); // limit startRow (0이 1열이기 때문 1을 뺌)
 		pageVO.setEndRow(endRow);
 		int count = service.errorCount(instrSearch);
-		logger.debug("글갯수 @@@@@@@@@@@" + count);
+		logger.debug("글갯수 @@@@@@@@@@2" + count);
 		// 게시글 개수 가져오기
 		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
 		int startPage = (currentPage - 1) / pageBlock * pageBlock + 1;
@@ -244,19 +247,9 @@ public class QualityController {
 		pageVO.setPageCount(pageCount);
 
 		model.addAttribute("pageVO", pageVO);
-		logger.debug("startRow @@@@@@@@@@@" + startRow);
-		logger.debug("pageSize @@@@@@@@@@@" + pageSize);
-		List<QualityControlVO> errorList = null;
-
-		if (item_code == null && error_status == null) {
-			// 품질현황 전체 조회
-			logger.debug("erorrRateList 전체 호출 ![]~(￣▽￣)~*");
-			errorList = service.errorList(pageVO);
-		} else {
-			// 품질현황 검색 조회
-			logger.debug("erorrRateList 검색 호출 ![]~(￣▽￣)~*");
-			errorList = service.errorList(pageVO, instrSearch, model);
-		}
+		logger.debug("startRow @@@@@@@@@@2" + startRow);
+		logger.debug("pageSize @@@@@@@@@@2" + pageSize);
+		List<QualityControlVO> errorList = service.errorList(wo_code, pageVO, instrSearch, model);
 
 		logger.debug("@@@@@@errorList : " + errorList);
 
@@ -268,12 +261,12 @@ public class QualityController {
 	@RequestMapping(value = "/errorStatus", method = RequestMethod.POST)
 	public String errorRateListPOST(Model model, QualityControlVO ivo) throws Exception {
 		logger.debug("errorStatus() 호출![]~(￣▽￣)~*");
-		logger.debug("@@@@item_code : " + ivo.getItem_code());
+		logger.debug("@@@@ivo : " + ivo);
 
 		service.insertStatus(ivo);
 		logger.debug("@@@@ivo" + ivo);
 
-		return "redirect:/qc/errorRate";
+		return "redirect:/qc/errorRate?wo_code="+ivo.getWo_code();
 	}
 
 }

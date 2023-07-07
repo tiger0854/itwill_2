@@ -24,7 +24,7 @@ import com.ddosirak.service.ProOrderService;
 @RequestMapping(value = "/foundation/materialdetail/*")
 public class MaterialdetailController {
 	private static final Logger logger = LoggerFactory.getLogger(MaterialdetailController.class);
-
+ 
 	@Inject
 	private MaterialdetailService service;
 

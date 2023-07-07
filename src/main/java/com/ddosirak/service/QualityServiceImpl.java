@@ -64,14 +64,9 @@ public class QualityServiceImpl implements QualityService {
 
 	// 불량리스트
 	@Override
-	public List<QualityControlVO> errorList(PageVO pageVO) throws Exception {
-		return qdao.errorList(pageVO);
-	}
-
-	@Override
-	public List<QualityControlVO> errorList(PageVO pageVO, Map<String, Object> instrSearch, Model model)
+	public List<QualityControlVO> errorList(String wo_code, PageVO pageVO, Map<String, Object> instrSearch, Model model)
 			throws Exception {
-		return qdao.errorList(pageVO, instrSearch, model);
+		return qdao.errorList(wo_code, pageVO, instrSearch, model);
 	}
 	
 	@Override

@@ -27,9 +27,6 @@
 
 			<h4 style="margin-top: 150px;">
 				<i class="bx bx-book"></i> 품질관리
-				<button style="margin-left: 20px" type="button"
-					class="btn btn-primary btn-sm"
-					onclick="location.href='/qc/errorRate'">폐기현황</button>
 			</h4>
 			<div style="margin-top: 10px;">
 				<hr width="100%" style="border: 2px solid black">
@@ -39,9 +36,7 @@
 				<form id="instr">
 					<!-- 작업지시목록 검색, 등록버튼 -->
 					<div class="btn-container">
-						<button type="submit" class="btn-search">
-							<i class='bx bx-search-alt-2'></i> 조회
-						</button>
+						<input type="submit" class="btn btn-primary" value="조회">
 					</div>
 					<table class="product-box" style="margin-top: 20px; width: 100%;"
 						border="1">
@@ -51,9 +46,9 @@
 								<td><label> <input type="text" id="wo_code"
 										name="wo_code" placeholder="작업지시번호" width="100%">
 								</label></td>
-								<td>라인명</td>
-								<td><label> <input type="text" id="line_name"
-										name="line_name" placeholder="라인명" width="100%">
+								<td>라인코드</td>
+								<td><label> <input type="text" id="line_code"
+										name="line_code" placeholder="라인코드" width="100%">
 								</label></td>
 								<td>품명</td>
 								<td><label> <input type="text" id="item_name"
@@ -78,7 +73,6 @@
 					<thead>
 						<tr>
 							<th>작업지시번호</th>
-							<th>라인명</th>
 							<th>라인코드</th>
 							<th>품명</th>
 							<th>품번</th>
@@ -92,8 +86,7 @@
 
 						<c:forEach var="vo" items="${qualityList }">
 							<tr>
-								<td>${vo.wo_code }</td>
-								<td>${vo.line_name }</td>
+								<td><a href="/qc/errorRate?wo_code=${vo.wo_code }">${vo.wo_code }</a></td>
 								<td>${vo.line_code }</td>
 								<td>${vo.item_name }</td>
 								<td>${vo.item_code }</td>
@@ -114,17 +107,17 @@
 						style="margin-top: 20px;">
 						<c:if test="${pageVO.startPage > pageVO.pageBlock}">
 							<li class="page-item"><a class="page-link"
-								href="/qc/qualityList?wo_code=${Search.wo_code }&line_name=${Search.line_name }&item_name=${Search.item_name }&employee_id=${Search.employee_id }&pageNum=${pageVO.startPage - pageVO.pageBlock}"><sapn>
+								href="/qc/qualityList?wo_code=${Search.wo_code }&line_code=${Search.line_code }&item_name=${Search.item_name }&employee_id=${Search.employee_id }&pageNum=${pageVO.startPage - pageVO.pageBlock}"><sapn>
 									< </sapn></a></li>
 						</c:if>
 						<c:forEach var="i" begin="${pageVO.startPage}"
 							end="${pageVO.endPage}" step="1">
 							<li class="page-item"><a class="page-link"
-								href="/qc/qualityList?wo_code=${Search.wo_code }&line_name=${Search.line_name }&item_name=${Search.item_name }&employee_id=${Search.employee_id }&pageNum=${i}"><span>${i}</span></a></li>
+								href="/qc/qualityList?wo_code=${Search.wo_code }&line_code=${Search.line_code }&item_name=${Search.item_name }&employee_id=${Search.employee_id }&pageNum=${i}"><span>${i}</span></a></li>
 						</c:forEach>
 						<c:if test="${pageVO.endPage < pageVO.pageCount}">
 							<li class="page-item"><a class="page-link"
-								href="/qc/qualityList?wo_code=${Search.wo_code }&line_name=${Search.line_name }&item_name=${Search.item_name }&employee_id=${Search.employee_id }&pageNum=${pageVO.startPage + pageVO.pageBlock}"><span>
+								href="/qc/qualityList?wo_code=${Search.wo_code }&line_code=${Search.line_code }&item_name=${Search.item_name }&employee_id=${Search.employee_id }&pageNum=${pageVO.startPage + pageVO.pageBlock}"><span>
 										> </span></a></li>
 						</c:if>
 					</ul>

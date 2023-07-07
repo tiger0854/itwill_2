@@ -38,9 +38,7 @@ public interface QualityDAO {
 	public Integer inspectionCount(Map<String, Object> instrSearch) throws Exception;
 
 	// 불량 리스트
-	public List<QualityControlVO> errorList(PageVO pageVO) throws Exception;
-
-	public List<QualityControlVO> errorList(PageVO pageVO, Map<String, Object> instrSearch, Model model)
+	public List<QualityControlVO> errorList(String wo_code, PageVO pageVO, Map<String, Object> instrSearch, Model model)
 			throws Exception;
 	
 	// 불량 리스트 상태 등록

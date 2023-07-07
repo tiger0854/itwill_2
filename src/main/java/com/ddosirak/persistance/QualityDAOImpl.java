@@ -95,17 +95,13 @@ public class QualityDAOImpl implements QualityDAO {
 
 	// 불량 리스트
 	@Override
-	public List<QualityControlVO> errorList(PageVO pageVO) throws Exception {
-		logger.debug("errorList(PageVO pageVO)!");
-		return sqlSession.selectList(NAMESPACE + ".errorList", pageVO);
-	}
-
-	@Override
-	public List<QualityControlVO> errorList(PageVO pageVO, Map<String, Object> instrSearch, Model model)
+	public List<QualityControlVO> errorList(String wo_code, PageVO pageVO, Map<String, Object> instrSearch, Model model)
 			throws Exception {
 		logger.debug("errorList(PageVO pageVO, Map<String, Object> instrSearch, Model model)!");
 		instrSearch.put("startRow", pageVO.getStartRow());
 		instrSearch.put("pageSize", pageVO.getPageSize());
+		instrSearch.put("wo_code", wo_code);
+		
 		return sqlSession.selectList(NAMESPACE + ".errorSearchList", instrSearch);
 	}
 	
@@ -117,6 +113,7 @@ public class QualityDAOImpl implements QualityDAO {
 
 	@Override
 	public Integer errorCount(Map<String, Object> instrSearch) throws Exception {
+		logger.debug("@@@@instrSearch : " + instrSearch);
 		return sqlSession.selectOne(NAMESPACE + ".errorCount", instrSearch);
 	}
 	
