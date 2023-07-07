@@ -87,7 +87,12 @@
 		// 값 선택 안하면 채팅못하고 돌아오도록 함.
 		var selectCheckValue = "${selectCheck}";
 		if(selectCheckValue == "NOSELECT" ){
-			alert('대화 상대를 선택해주세요!!');
+			Swal.fire({
+				title: "검색 내용을 입력해주세요!",
+				icon: "warning",
+					  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+					  confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+				}) // swal end
 		}// if end
 		
 		$.ajax({

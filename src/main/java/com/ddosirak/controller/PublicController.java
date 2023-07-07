@@ -207,12 +207,11 @@ public class PublicController {
 		logger.debug("inPOST() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 		
 		if(eService.getEmployee(vo.getEmployee_id()) == null) {
-			rttr.addAttribute("result", "INFAIL");
+			rttr.addFlashAttribute("result", "INFAIL");
 		}else {
 			bService.employeeIn(vo);
-			rttr.addAttribute("result", "INSUCC");
+			rttr.addFlashAttribute("result", "INSUCC");
 		}// i-e end
-		
 		return "redirect:/public/login";
 	}//inPOST() method end
 	

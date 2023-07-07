@@ -18,7 +18,12 @@
 								.on(
 										'click',
 										function() {
-											alert('수정 진행');
+											Swal.fire({
+												title: "수정 진행",
+												icon: "warning",
+													  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+													  confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+												}) // swal end
 											var button = '<input type="submit" value="저장" id="save">';
 											$('#save_button_place')
 													.html(button)
