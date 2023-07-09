@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.ddosirak.domain.ItemRecipeListVO;
 import com.ddosirak.domain.ItemRecipeUploadVO;
 import com.ddosirak.domain.ItemRecipeVO;
+import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.MaterialdetailVO;
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.persistance.ItemRecipeDAO;
@@ -48,9 +49,9 @@ public class ItemRecipeServiceImpl implements ItemRecipeService {
 	    List<ItemRecipeVO> removeList = new ArrayList<>(); // 없는 값들을 담을 리스트
 	    
 	    //자재가 없으면 레시피 전체 삭제
-	    if(itemRecipeUploadvo.size()==0) {
+	    if(itemRecipeUploadvo == null || itemRecipeUploadvo.isEmpty()) {
 	    	dao.deleteItemRecipe(vo.getItem_code());
-	    }
+	    }else {
 	    
 	    for (ItemRecipeListVO existingItem : existingRecipe) {
 	        boolean found = false;
@@ -75,6 +76,7 @@ public class ItemRecipeServiceImpl implements ItemRecipeService {
 
 	    for (ItemRecipeVO item : removeList) {
 	        dao.deleteItemRecipeMaterial(item);
+	    }
 	    }
 	}
 
@@ -135,5 +137,17 @@ public class ItemRecipeServiceImpl implements ItemRecipeService {
 		return dao.itemrecipeItemList(instrSearch,pageVO);
 
 	}
+
+	@Override
+	public List<ItemdetailVO> itemCodeDis() throws Exception {
+		
+		return dao.itemCodeDis(5);
+	}
+
+	@Override
+	public String getItemName(String item_code) throws Exception {
+		return dao.getItemName(item_code);
+	}
+
 	
 }

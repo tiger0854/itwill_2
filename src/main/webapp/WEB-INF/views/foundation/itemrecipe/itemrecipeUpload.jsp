@@ -19,16 +19,6 @@
 </head>
 <body>
 	<script>
-		$(document).ready(function() {
-			$('#material_item').hide();
-			$('#item_code').click(function() {
-				if ($('#item_code').val() != '') {
-					$('#material_item').show()
-
-				}
-			});
-
-		});
 
 		function onInsert() {
 			if ($('#item_code').val() == "") {
@@ -75,7 +65,7 @@
 				return;
 			}
 			$.ajax({
-				url : "/foundation/itemrecipe/getMaterials",
+				url : "/foundation/itemrecipe/materials/"+itemCode,
 				method : "GET",
 				data : {
 					item_code : itemCode

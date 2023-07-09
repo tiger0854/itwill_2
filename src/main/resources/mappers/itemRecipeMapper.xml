@@ -4,14 +4,25 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ddosirak.mapper.ItemRecipeMapper">
-	<!-- 아이템 레시피 -->
-	<select id="itemrecipe"
-		resultType="com.ddosirak.domain.ItemRecipeListVO">
-		SELECT material_code, material_con, material FROM item_recipe
-		where
-		item_code=#{item_code}
+	<!-- 아이템 레시피 대시보드-->
+	<select id="getitemName"
+		resultType="String">
+		SELECT item_name 
+		FROM item_detail
+		where item_code=#{item_code}
 	</select>
-	<!-- 아이템 레시피 -->
+	<select id="itemCodeDis" resultType="com.ddosirak.domain.ItemdetailVO">
+		select distinct i.item_code, id.item_name
+		from item_recipe i join item_detail id
+		on i.item_code= id.item_code
+		ORDER BY RAND()
+		limit #{pageSize}
+	</select>
+	<select id="itemCodeCountDis" resultType="int">
+		select count(distinct item_code)
+		from item_recipe
+	</select>
+	<!-- 아이템 레시피 대시보드-->
 
 	<!-- 레시피 목록 출력 -->
 	<select id="itemRecipeList"

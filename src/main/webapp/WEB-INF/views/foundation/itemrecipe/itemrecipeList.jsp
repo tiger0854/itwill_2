@@ -58,6 +58,7 @@
 		window.open("/foundation/itemrecipe/materialItemList", "popup",
 				"width=500, height=600,left=100, top=100");
 	}
+	
 </script>
 
 
@@ -86,6 +87,7 @@
 						border="1">
 						<!--  품번, 품명, 자재유형(완제품,부자재), 재고단위, 사용여부,단가 등록	 -->
 						<tr>
+							<td><input type="button" onclick="openItem();" value="상품 상세 검색" class="btn btn-primary"></td>
 							<th>품번</th>
 							<td><input type="text" name="item_code" id="item_code"
 								placeholder="품번"></td>
@@ -93,9 +95,9 @@
 							<td><input type="text" name="item_name" id="item_name"
 								placeholder="품명">
 							
-							<td><input type="button" onclick="openItem();" value="상품 상세 검색" class="btn btn-primary"></td>
 						</tr>
 						<tr>
+							<td><input type="button" onclick="openMaterialItem();" value="자재 상세 검색" class="btn btn-primary"></td>
 							<th>자재코드</th>
 							<td><input type="text" name="material_code" id="material_code"
 								placeholder="자재번호">
@@ -103,7 +105,6 @@
 							<th>자재명</th>
 							<td><input type="text" name="material_name" id="material_name"
 								placeholder="자재명"></td>
-							<td><input type="button" onclick="openMaterialItem();" value="자재 상세 검색" class="btn btn-primary"></td>
 						</tr>
 					</table>
 				</div>

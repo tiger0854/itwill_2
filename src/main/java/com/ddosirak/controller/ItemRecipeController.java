@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -181,19 +182,19 @@ public class ItemRecipeController {
 		model.addAttribute("resultList", materialList);
 	}
 
-	// 상품 검색 시 자재를 가져오는 ajax
-	@RequestMapping(value = "/getMaterials", method = RequestMethod.GET)
+	@RequestMapping(value = "/materials/{itemCode}", method = RequestMethod.GET)
 	@ResponseBody
-	public String getMaterialsGET(@RequestParam("item_code") String itemCode) throws Exception {
+	public String getMaterials(@PathVariable("itemCode") String itemCode) throws Exception {
 		List<ItemRecipeListVO> itemList = service.selectItemRecipe(itemCode);
 		logger.debug(itemList.size() + "");
-	
+
 		// ObjectMapper 객체 생성
 		ObjectMapper objectMapper = new ObjectMapper();
 		// List를 JSON 문자열로 변환
 		String jsonString = objectMapper.writeValueAsString(itemList);
 		return jsonString;
 	}
+
 
 	// 레시피 개별 삭제
 	@RequestMapping(value = "/deleteItemRecipeMaterial", method = RequestMethod.GET)
@@ -284,5 +285,12 @@ public class ItemRecipeController {
 		model.addAttribute("Search", instrSearch);
 		model.addAttribute("materialList", materialList);
 	}// /itemListGET() method end
+	
+	@RequestMapping(value="/itemrecipeDashboard",method = RequestMethod.GET)
+	public void itemRecipeDashboardGET(String item_code, Model model) throws Exception {
+		model.addAttribute("item_name", service.getItemName(item_code));
+		model.addAttribute("materialList",service.selectItemRecipe(item_code));
+	}
+	
 
 }

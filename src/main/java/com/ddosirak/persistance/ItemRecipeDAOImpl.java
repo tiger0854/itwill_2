@@ -119,6 +119,21 @@ public class ItemRecipeDAOImpl implements ItemRecipeDAO {
 		instrSearch.put("pageSize", pageVO.getPageSize());
 		return sqlsession.selectList(NAMESPACE + ".itemrecipeItemSearchList", instrSearch);
 	}
+
+	@Override
+	public List<ItemdetailVO> itemCodeDis(int pageSize) throws Exception {
+		
+		return sqlsession.selectList(NAMESPACE+".itemCodeDis",pageSize);
+	}
+
+	@Override
+	public String getItemName(String item_code) throws Exception {
+		return sqlsession.selectOne(NAMESPACE+".getitemName",item_code);
+	}
+
+
+
+	
 	
 	
 	

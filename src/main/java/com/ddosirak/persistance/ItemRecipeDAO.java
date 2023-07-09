@@ -47,4 +47,8 @@ public interface ItemRecipeDAO {
 
 	// 레시피 검색 갯수
 	public Integer itemrecipeCount(Map<String, Object> instrSearch);
+
+	//대시보드
+	public List<ItemdetailVO> itemCodeDis(int pageSize) throws Exception;
+	public String getItemName(String item_code) throws Exception;
 }

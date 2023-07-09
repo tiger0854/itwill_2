@@ -7,6 +7,7 @@ import java.util.Map;
 import com.ddosirak.domain.ItemRecipeListVO;
 import com.ddosirak.domain.ItemRecipeUploadVO;
 import com.ddosirak.domain.ItemRecipeVO;
+import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.MaterialdetailVO;
 import com.ddosirak.domain.PageVO;
 
@@ -42,4 +43,8 @@ public interface ItemRecipeService {
 
 	// 레시피 검색 갯수
 	public Integer itemrecipeCount(Map<String, Object> instrSearch) throws Exception;
+	
+	//대시보드
+	public List<ItemdetailVO> itemCodeDis() throws Exception;
+	public String getItemName(String item_code) throws Exception;
 }

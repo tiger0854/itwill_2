@@ -74,13 +74,13 @@ function openItem() {
 						border="1">
 
 						<tr>
+							<td><input type="button" value="상세 검색" onclick="openItem();" class="btn btn-primary"></td>
 							<th>공장 코드</th>
 							<td><input type="text" id="factory_code" name="factory_code"
 								placeholder="공장코드"></td>
 							<th>공장명</th>
 							<td><input type="text" id="factory_name" name="factory_name"
 								placeholder="공장명"></td>
-							<td><input type="button" value="상세 검색" onclick="openItem();" class="btn btn-primary"></td>
 						</tr>
 					</table>
 				</div>

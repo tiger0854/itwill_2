@@ -72,6 +72,7 @@
 						border="1">
 
 						<tr>
+							<td><input type="button" value="상세검색" onclick="openItem();" class="btn btn-primary"></td>
 							<th>자재코드</th>
 							<td><input type="text" id="material_code"
 								name="material_code" placeholder="자재코드"></td>
@@ -81,12 +82,10 @@
 							
 							<th>자재속성</th>
 							<td><select id="material_type" name="material_type">
-		
 									<option value=""></option>
 									<option value="원자재">원자재</option>
 									<option value="부자재">부자재</option>
 							</select>
-							<td><input type="button" value="상세검색" onclick="openItem();" class="btn btn-primary"></td>
 						</tr>
 					</table>
 				</div>
