@@ -55,6 +55,8 @@ public interface ProOrderDAO {
 	
 	// graphList
 	public List<Map<String, Object>> graphList();
+
+	public void orderStatusUpdate(String re_code);
 	
 	
 }// public interface end

@@ -199,8 +199,12 @@
   	</select>
   	
   	
-  	
-  	
+<!--   	.orderStatus -->
+  	<update id="orderStatus"> <!-- 지시상태 지시로 변경 -->
+	update prod
+	set wo_status = '출고완료'
+	where re_code = #{re_code}
+	</update>
   	
   	
   	
