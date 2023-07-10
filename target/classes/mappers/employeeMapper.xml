@@ -120,6 +120,8 @@
   	</update>
   	<!-- 총 연차에서 사용한 연차일 값계산 -->
   	
+  	
+  	
   	<!-- 휴가 승인 -->
   	<update id="vacationapprove">
  	UPDATE emp_vacation
@@ -138,7 +140,7 @@
   	
   	<!-- 사번 이름 찾기 -->
   	<select id="vacationfind" resultType="String">
-  	SELECT employee_name FROM emp_main WHERE id=#{id}
+  	SELECT employee_name FROM emp_main WHERE employee_id=#{id}
   	</select>
   	<!-- 사번 이름 찾기 -->
   	
@@ -162,6 +164,29 @@
   		DELETE FROM emp_vacation WHERE vacation_id=#{vacation_id}
   	</delete>
   	<!-- 휴가 삭제 -->
+  	
+  	<!-- 휴가 사원 개수 출력 -->
+	<select id="vacount" resultType="int">
+		SELECT COUNT(vacation_id) FROM emp_vacation
+		WHERE CURDATE() >= vacation_start AND vacation_finish >= CURDATE()
+  	</select>
+  	<!-- 휴가 사원 개수 출력 -->
+  	
+  	<!-- 휴가 예정자 사원 개수 출력 -->
+  	<select id="pvacount" resultType="int">
+  	SELECT COUNT(vacation_id) 
+	FROM emp_vacation
+	WHERE vacation_start > CURDATE()
+  	</select>
+  	<!-- 휴가 예정자 사원 개수 출력 -->
+  	
+  	<!-- 휴가 복귀자 사원 개수 출력 -->
+  	<select id="bvacount" resultType="int">
+  	SELECT COUNT(vacation_id) 
+	FROM emp_vacation
+	WHERE  CURDATE() > vacation_finish
+  	</select>
+  	<!-- 휴가 복귀자 사원 개수 출력 -->
   	
   	<!-- 급여 정보 등록 -->
   	<update id="salaryInsert">

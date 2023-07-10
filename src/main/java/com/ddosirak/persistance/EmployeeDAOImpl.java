@@ -248,10 +248,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	// 휴가 승인
 		@Override
 		public Integer vacationapprove(Integer vacation_id, int id) {
+			String vacationfind=sqlSession.selectOne(NAMESPACE+".vacationfind", id);
 			Map<String, Object> vacationmap=new HashMap<String, Object>();
 			vacationmap.put("vacation_id", vacation_id);
-			vacationmap.put("id", id);
-			vacationmap.put("approve_emp", "윤찬우");
+			vacationmap.put("approve_emp", vacationfind);
 			logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+vacationmap);
 			Integer result = sqlSession.update(NAMESPACE+".vacationapprove",vacationmap);
 			return result;
@@ -260,7 +260,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	// 휴가 반려
 		@Override
 		public Integer vacationreturn(Integer vacation_id, int id) {
-			String vacationfind=sqlSession.selectOne(NAMESPACE+"vacationfind", id);
+			String vacationfind=sqlSession.selectOne(NAMESPACE+".vacationfind", id);
 			Map<String, Object> vacationmap=new HashMap<String, Object>();
 			vacationmap.put("vacation_id", vacation_id);
 			vacationmap.put("approve_emp", vacationfind);
@@ -280,7 +280,28 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			logger.debug("countRetOrdList()!!");
 			return sqlSession.selectOne(NAMESPACE+".vacationcount",pageVO);
 		}
-	
+		
+	// 휴가 개수 출력
+		@Override
+		public Integer vacount() {
+			// TODO Auto-generated method stub
+			return sqlSession.selectOne(NAMESPACE+".vacount");
+		}
+		
+	// 휴가 예정자 사원 개수 출력 
+		@Override
+		public Integer pvacount() {
+			// TODO Auto-generated method stub
+			return sqlSession.selectOne(NAMESPACE+".pvacount");
+		}
+		
+	// 휴가 복귀자 사원 개수 출력
+		@Override
+		public Integer bvacount() {
+			// TODO Auto-generated method stub
+			return sqlSession.selectOne(NAMESPACE+".bvacount");
+		}
+		
 	
 /////////////////////////////////////////휴가동작////////////////////////////////////////////////////	
 
@@ -299,6 +320,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 
 	
+
+
+	
+
 
 
 	// 출근인원 조회

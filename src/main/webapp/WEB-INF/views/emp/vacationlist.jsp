@@ -10,8 +10,9 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="../css/css.css">
-<link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
+<link rel="stylesheet" type="text/css"href="../../resources/css/css.css">
+<!-- <link rel="stylesheet" type="text/css" href="../css/css.css"> -->
+<!-- <link rel="stylesheet" type="text/css" href="../../resources/css/product.css"> -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 	// 휴가 삭제하기
@@ -152,34 +153,154 @@
         
   }); // jquary end
 </script>
+	<style>
+	
+	body {
+/* 		display: table-row-group; */
+	}
+	
+	
+ tbody, td, tfoot, th, thead, tr { 
+     border-color: inherit; 
+     border-style: solid; 
+     border-width: 0; 
+ } 
+	
+	.table table-striped {
+    --bs-table-accent-bg: var(--bs-table-striped-bg);
+       
+    color: var(--bs-table-striped-color);
+}
 
+	
+	.table-striped tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+/*     .table { */
+/*         width: 100%; */
+/*         border-collapse: collapse; */
+/*     } */
+
+    .table th,
+    .table td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .table th {
+        background-color: #f5f5f5;
+    }
+
+    .table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .table a {
+        color: #337ab7;
+        text-decoration: none;
+    }
+
+    .table a:hover {
+        text-decoration: underline;
+    }
+
+    .btn-add {
+        padding: 5px 10px;
+        background-color: #4caf50;
+        border: none;
+        color: white;
+        cursor: pointer;
+    }
+    
+    .btn-addd {
+        padding: 5px 10px;
+       background-color: #007bff;
+        border: none;
+        color: white;
+        cursor: pointer;
+    }
+    
+    .btn-addd > a {
+    	color: white;
+    }
+    
+    .btn-adds {
+        padding: 5px 10px;
+        background-color: #dc3545;
+        border: none;
+        color: white;
+        cursor: pointer;
+    }
+	
+	.btn-adds > a {
+		color: white;
+	}
+	
+    .btn-modify {
+        background-color: #007bff;
+    }
+
+    #btn-delete {
+        background-color: #dc3545;
+    }
+
+    .approve-cell {
+        font-weight: bold;
+    }
+       .box {
+        border: 1px solid #000;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    
+    tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+    
+   
+}
+    
+</style>
+		
+	
 </head>
 <body id="body-pd" style="font-family: 'TheJamsil5';">
 <jsp:include page="../common/header.jsp"/>
 <h1>사원 휴가관리</h1>
 <%-- 	${vacationList } --%>
 <%-- ${vc.employee_id} --%>
-
+<table class="table-striped">
+<tr>
+<td class="box">휴가 예정자 : ${pvacationCount}</td>
+<td class="box">휴가자 : ${vacationCount}</td>
+<td class="box">휴가 복귀자 : ${bvacountCount}</td>
+</tr>
+</table>
 <!-- 휴가나간 인원일떄만 테이블에 값을 가져오도록 하는 코드 -->
-<table class="table table-striped" style="margin-top: 10px;">
-    <tr>
-        <td>사원 아이디</td>
-        <td>사원명</td>
-        <td>휴가 신청일자</td>
-        <td>휴가 승인일자</td>
-        <td>휴가 시작일</td>
-        <td>휴가 종료일</td>
-        <td>연차 일 수</td>
-        <td>휴가 사유</td>
-        <td>휴가 승인여부</td>
-        <td>휴가 승인자</td>
-        <td>대체인</td>
-        <td>휴가번호</td>
-        <td>승인</td>
-        <td>반려</td>
-        <td>수정</td>
-        <td>삭제</td>
-    </tr>
+<table class="table table-bordered" style="margin-top: 10px;">
+   <thead>
+	    <tr>
+	        <td>사원번호</td>
+	        <td>사원명</td>
+	        <td>신청일</td>
+	        <td>승인일</td>
+	        <td>시작일</td>
+	        <td>종료일</td>
+	        <td>연차 일 수</td>
+	        <td>사유</td>
+	        <td>승인여부</td>
+	        <td>승인자</td>
+	        <td>대체인</td>
+	<!--         <td>휴가번호</td> -->
+	        <td>승인</td>
+	        <td>반려</td>
+	        <td>수정</td>
+	        <td>삭제</td>
+	    </tr>
+   </thead>
+   <tbody>
 	   <c:forEach var="vc" items="${vacationList}">
 	   	
          <tr>
@@ -200,8 +321,8 @@
 
             <td>${vc.vacation_reason}</td>
              <td class="approve-cell"><c:choose>
-                    <c:when test="${vc.approve == '승인'}">승인</c:when>
-                    <c:when test="${vc.approve == '반려'}">반려</c:when>
+                    <c:when test="${vc.approve == '승인'}"><span style="color:blue;">승인</span></c:when>
+                    <c:when test="${vc.approve == '반려'}"><span style="color:red;">반려</span></c:when>
                     <c:otherwise>미처리</c:otherwise>
                     
              </c:choose></td>
@@ -216,19 +337,22 @@
              
             
             <td>${vc.subsitute}</td>
-            <td>${vc.vacation_id}</td>
-
+<%--             <td>${vc.vacation_id}</td> --%>
+<%-- ${approve_emp} --%>
+<%-- ${login_id} --%>
 
 <%-- 				 <td><a href="vacationcheck?vacation_id=${vc.vacation_id}&approve=승인">승인</a></td> --%>
 <%--             	 <td><a href="vacationcheck?vacation_id=${vc.vacation_id}&approve=반려">반려</a></td> --%>
-            	 <td><a href="vacationcheck?vacation_id=${vc.vacation_id}&approve=승인&id=${sessionscope.id}">승인</a></td>
-            	 <td><a href="vacationcheck?vacation_id=${vc.vacation_id}&approve=반려&id=${sessionscope.id}">반려</a></td>
+	
+            	 <td><button class="btn-addd"><a href="vacationcheck?vacation_id=${vc.vacation_id}&approve=승인">승인</a></button></td>
+            	 <td><button class="btn-adds"><a href="vacationcheck?vacation_id=${vc.vacation_id}&approve=반려">반려</a></button></td>
 
 
             <td><button class="btn-add btn-modify" data-vacation-id="${vc.vacation_id}">수정하기</button></td>
             <td><button id="btn-delete" class="btn-add" onclick="vacationdelete('${vc.vacation_id}','${vc.employee_id}')">삭제하기</button></td>
         </tr>
     </c:forEach>
+   </tbody>
 </table>
 
 <!-- -------------------------------------------------------------------------------페이징 구현부------------------------------------------------------------------------ -->

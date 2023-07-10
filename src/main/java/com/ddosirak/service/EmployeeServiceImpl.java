@@ -233,6 +233,27 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return result;
 	}
 	
+	// 휴가 개수 출력
+	@Override
+	public Integer vacount() {
+		// TODO Auto-generated method stub
+		return edao.vacount();
+	}
+	
+	// 휴가 예정자 사원 개수 출력 
+	@Override
+	public Integer pvacount() {
+		// TODO Auto-generated method stub
+		return edao.pvacount();
+	}
+	
+	// 휴가 복귀자 사원 개수 출력
+	@Override
+	public Integer bvacount() {
+		// TODO Auto-generated method stub
+		return edao.bvacount();
+	}
+	
 	
 /////////////////////////////////////////휴가 동작////////////////////////////////////////////////////	
 	
@@ -243,6 +264,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<EmployeeCheckVO> getCheckList(Timestamp date_time, int employee_id) {
 		return edao.getCheckList(date_time, employee_id);
 	}// getCheckList() method end
+	
 	
 	
 	// 출근자 수

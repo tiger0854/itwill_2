@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -550,7 +551,7 @@ public class MemberController {
 			//   		리스트를 반환하는 DAO - Service 메서드에 PageVO 추가, 쿼리에 LIMIT #{startRow}, #{pageSize} 추가.
 			// 페이징 처리
 			// 한 화면에 보여줄 글 개수 설정
-			int pageSize = 10; // sql문에 들어가는 항목
+			int pageSize = 5; // sql문에 들어가는 항목
 			
 			// 현페이지 번호 가져오기
 			String pageNum = request.getParameter("pageNum");
@@ -571,6 +572,18 @@ public class MemberController {
 			// 게시글 개수 가져오기
 			int count = eService.countRetOrdList(pageVO); // 요 동작만 각자 페이지에 맞게 수정하면 됨!!
 
+			 // 휴가자 수(count) 가져오기
+		    int vacationCount = eService.vacount();
+		    model.addAttribute("vacationCount", vacationCount);
+		    
+		    // 휴가 예정자 사원개수 출력
+		    int pvacationCount = eService.pvacount();
+		    model.addAttribute("pvacationCount", pvacationCount);
+		    
+		    // 휴가 복귀자 사원개수 출력
+		    int bvacountCount = eService.bvacount();
+		    model.addAttribute("bvacountCount", bvacountCount);
+		    
 			int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
 			int startPage=(currentPage-1)/pageBlock*pageBlock+1;
 			int endPage=startPage+pageBlock-1;
@@ -596,18 +609,19 @@ public class MemberController {
 //	 http://localhost:8088/emp/vacationcheck
 		// 휴가신청 승인/반려 페이지(관리자)
 		@RequestMapping(value = "/vacationcheck", method = RequestMethod.GET)
-		public String vacationcheck(@RequestParam("vacation_id")Integer vacation_id,
-				@RequestParam("approve")String approve, RedirectAttributes rttr, Date approve_date, String approve_emp, int id) {
+		public String vacationcheck(@RequestParam("vacation_id")Integer vacation_id, HttpSession session,
+				@RequestParam("approve")String approve, RedirectAttributes rttr, Date approve_date, String approve_emp) {
 			logger.debug("vacationcheck() 호출![]~(￣▽￣)~*");
 			logger.debug("페이지 이동!");
 			// 페이지 전달 데이터 저장
+			int id=Integer.valueOf((String) session.getAttribute("login_id"));
 			logger.debug("vacation_id :",vacation_id,id);
-
 			if (approve.equals("승인")) {
 			    eService.vacationapprove(vacation_id,id);
 			} else if (approve.equals("반려")) {
 			    eService.vacationreturn(vacation_id,id);
 			}
+		
 			
 			// 리시트로 정보를 전달 (rttr)
 			rttr.addFlashAttribute("result", "CREATEOK");

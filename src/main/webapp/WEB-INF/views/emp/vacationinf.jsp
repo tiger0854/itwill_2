@@ -153,15 +153,22 @@ $(document).ready(function(){
 					<td>휴대폰 번호</td>
 					<td><input type="text" size="50" value="${evo.phone_num }"
 						id="phone_num" name="phone_num" readonly></td>
-					<td>주소</td>
-					<td><input type="text" size="30" placeholder="주소" id="address"
-						name="address" value="${evo.address }" readonly> <input
-						type="text" size="18" placeholder="상세주소" id="extraAddress"
-						name="extraaddress" value="${evo.extraaddress }" readonly></td>
-					<td><input type="button" value="우편번호 찾기"
-						onclick="execDaumPostcode()" id="address_find" disabled></td>
-					<td><input type="text" size="10" placeholder="우편번호"
-						id="postcode" name="post_num" value="${evo.post_num }" readonly></td>
+<!-- 					<td>주소</td> -->
+<!-- 					<td><input type="text" size="30" placeholder="주소" id="address" -->
+<%-- 						name="address" value="${evo.address }" readonly> <input --%>
+<!-- 						type="text" size="18" placeholder="상세주소" id="extraAddress" -->
+<%-- 						name="extraaddress" value="${evo.extraaddress }" readonly></td> --%>
+<!-- 					<td><input type="button" value="우편번호 찾기" -->
+<!-- 						onclick="execDaumPostcode()" id="address_find" disabled></td> -->
+<!-- 					<td><input type="text" size="10" placeholder="우편번호" -->
+<%-- 						id="postcode" name="post_num" value="${evo.post_num }" readonly></td> --%>
+					<td>휴가상태</td>	
+					<td><select name="vacation_status" id="employee_status"
+						disabled>
+							<option value="휴가전">휴가전</option>
+							<option value="휴가중">휴가중</option>
+							<option value="휴가완료">휴가완료</option>
+					</select></td>
 				</tr>
 
 			</table>
@@ -169,19 +176,7 @@ $(document).ready(function(){
 
 	</div>
 
-	<div>
-		<table class="table table-striped" style="margin-top: 10px;">
-			<tr>
-				<td>일자</td>
-				<td>출근일시</td>
-				<td>퇴근일시</td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>2</td>
-			</tr>
-		</table>
-	</div>
+	
 
 	<div class="table table-striped">
 		<h1>나의휴가 내역</h1>
