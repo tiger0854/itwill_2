@@ -81,4 +81,16 @@ public class InboundDAOImpl implements InboundDAO {
 		
 	}
 
+	@Override
+	public Integer selectNowIndate() {
+
+		return sqlSession.selectOne(NAMESPACE+".selectNowIndate");
+	}
+
+	@Override
+	public Integer selectNowEdate() {
+		
+		return sqlSession.selectOne(NAMESPACE+".selectNowEdate");
+	}
+
 }

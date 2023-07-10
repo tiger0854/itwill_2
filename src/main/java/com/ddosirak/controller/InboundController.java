@@ -163,7 +163,7 @@ public class InboundController {
 	@RequestMapping(value = "/inbountModify",method = RequestMethod.POST)
 	public void InboundModifyGET(InboundVO vo) {
 		logger.info("@@@@@@@@@InboundModifyPOST()호출!");
-		
+
 		iService.updateInbound(vo);
 		
 		logger.info("입고서 수정완료!༼ つ ◕_◕ ༽つ");

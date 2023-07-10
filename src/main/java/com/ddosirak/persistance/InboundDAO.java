@@ -26,4 +26,8 @@ public interface InboundDAO {
 	public void updateInbount(InboundVO vo);// 입고수정
 	
 	public void updateMatrial(Map param); //입고시 자재수량 업뎃
+	
+	public Integer selectNowIndate(); //오늘의 입고예정 목록 수 가져오기
+	
+	public Integer selectNowEdate(); //오늘 입고완료 목록 수 가져오기
 }
