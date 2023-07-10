@@ -92,6 +92,8 @@ function checkFile(el){ //파일 용량 & 확장자 체크
 			            	<option value="생산과">생산과</option>
 			            	<option value="생산 1팀">생산 1팀</option>
 			            	<option value="생산 2팀">생산 2팀</option>
+			            	<option value="조리팀">조리팀</option>
+			            	<option value="품질팀">품질팀</option>
 			            </optgroup>
 			            <optgroup label="유통">
 			            	<option value="유통과">유통과</option>

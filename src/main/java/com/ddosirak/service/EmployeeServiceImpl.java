@@ -60,7 +60,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		// 현재 프로젝트 경로 가져오기
 		String absolutePath = request.getSession().getServletContext().getRealPath("/"); // 서버경로 ..
-		String picPath = absolutePath+"resources\\";
+		String picPath = absolutePath+"resources/";
 		
 		logger.debug("picURL: "+picURL);
 		logger.debug("picPath: "+picPath);
