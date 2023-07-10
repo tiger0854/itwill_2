@@ -26,6 +26,7 @@ import com.ddosirak.domain.LoginVO;
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.service.BoardService;
 import com.ddosirak.service.EmployeeService;
+import com.ddosirak.service.InboundService;
 import com.ddosirak.service.PageService;
 
 @Controller
@@ -42,6 +43,8 @@ public class PublicController {
 	private EmployeeService eService;
 	@Inject
 	private PageService pService;
+	@Inject
+	private InboundService iService;
 	
 /////////////////////////////////게시판///////////////////////////////////
 	// http://localhost:8088/public/write
@@ -266,6 +269,20 @@ public class PublicController {
 		model.addAttribute("alCount_am", eService.alCount_am());// 오전근무자
 		model.addAttribute("alCount_pm", eService.alCount_pm());// 오후근무자
 		model.addAttribute("empCount", eService.empCount());// 임직원
+		
+//		// 휴가자 수
+//	    model.addAttribute("vacationCount", eService.vacount()); // 현재 휴가 사원수
+//	    model.addAttribute("pvacationCount", eService.pvacount()); // 휴가예정 사원수
+//	    model.addAttribute("bvacountCount", eService.bvacount()); // 휴가복귀 사원 수
+//		
+//		// 입고 예정/완료
+//		model.addAttribute("selectNowIndate", iService.selectNowIndate()); //오늘 입고예정 수
+//		model.addAttribute("selectNowEdate", iService.selectNowEdate()); // 오늘 입고완료 수
+//		
+//		// 출고 예정/완료
+//		model.addAttribute("outScheduleToday", oService.outScheduleToday()); // 당일출고예정
+//		model.addAttribute("outCompleteToday", oService.outCompleteToday());  // 당일출고완료
+		
 		
 	}//dashBoardGET() method end
 /////////////////////////////////대시보드///////////////////////////////////

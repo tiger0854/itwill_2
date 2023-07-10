@@ -18,11 +18,11 @@
 <jsp:include page="../common/header.jsp"/>
 
 <h1 class="h1_div">퇴 근</h1>
-<form action="" method="post">
-	<input type="text" name="employee_id" placeholder="사원번호를 입력해주세요." class="employee_id"><br>
-	<input type="password" name="employee_pw" placeholder="비밀번호를 입력해주세요." class="employee_pw" style="font-family: 'GmarketSansMedium';" >
-	<input type="hidden" name="emp_out" value="퇴근">
-	<input type="submit" value="퇴근하기"  class="submit">
-</form>
+	<form action="" method="post">
+		<input type="text" name="employee_id" placeholder="사원번호를 입력해주세요." class="employee_id"><br>
+		<input type="password" name="employee_pw" placeholder="비밀번호를 입력해주세요." class="employee_pw" style="font-family: 'GmarketSansMedium';" >
+		<input type="hidden" name="emp_out" value="퇴근">
+		<input type="submit" value="퇴근하기"  class="submit">
+	</form>
 </body>
 </html>

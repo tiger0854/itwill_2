@@ -16,9 +16,6 @@
  td>a{margin-left: 10px;}
 .chatLink{font-size: 1.2em; font-weight:bold; color:black;  width:50px; height: 50px;}
 .chatMsg{margin-left: 10px;}
-/* thead{border-top: 1px solid; border-bottom: 1px dotted; border-right: 1px solid; border-left: 1px solid;} */
-/* tbody{border-right: 1px solid; border-left: 1px solid; border-bottom: 2px solid ;} */
-/* .divCss{background-color: silver;} */
 .chatHead{border-bottom: 1px dotted;}
 .chatBody{border-bottom: 3px solid;}
 </style>
@@ -51,7 +48,8 @@
 						if(data[i].employee_status == '재직중' && data[i].position != '일용' && data[i].employee_id != "${login_id}"){
 							if(data[i].department_name == '인사과'){
 								emp_arr.push('<option value='+data[i].employee_id+'>'+data[i].position+' '+data[i].employee_name+'</option>');
-							}else if(data[i].department_name == '생산과' || data[i].department_name == '생산 1팀' || data[i].department_name == '생산 2팀' ){
+							}else if(data[i].department_name == '생산과' || data[i].department_name == '생산 1팀' || data[i].department_name == '생산 2팀' 
+								|| data[i].department_name == '조리팀' || data[i].department_name == '품질팀'){
 								pro_arr.push('<option value='+data[i].employee_id+'>'+data[i].position+' '+data[i].employee_name+'</option>')
 							}else if(data[i].department_name == '유통과' || data[i].department_name == '출고팀' || data[i].department_name == '입고팀' ){
 								ret_arr.push('<option value='+data[i].employee_id+'>'+data[i].position+' '+data[i].employee_name+'</option>')
