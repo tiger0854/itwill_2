@@ -6,6 +6,7 @@
 <html lang="ko">
 <meta charset="UTF-8">
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <title>사원 정보</title>
 <link rel="stylesheet" type="text/css"
 	href="../../resources/css/css.css">
@@ -171,8 +172,8 @@
 			<table class="table table-striped" style="margin-top: 10px;">
 
 				<tr>
-					<td rowspan="4"><img src="/resources/${evo.employee_id}.png"
-						alt="profile_photo" width="150" height="150"></td>
+					<td rowspan="4"><img src="../../resources/${evo.employee_id}.png"
+						onerror="this.onerror=null; this.src='../../resources/default_profile_photo.png';" width="150" height="150"></td>
 					<td>성명</td>
 					<td><input type="text" size="20" value="${evo.employee_name }"
 						id="employee_name" name="employee_name" readonly> 사원번호: ${evo.employee_id }</td>

@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <meta charset="UTF-8">
 <title>사원 급여지급</title>
 <jsp:include page="../common/header.jsp"/>

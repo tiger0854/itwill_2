@@ -5,6 +5,7 @@
 <html lang="ko">
 <meta charset="UTF-8">
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <title>사원휴가 정보</title>
 <link rel="stylesheet" type="text/css"
 	href="../../resources/css/css.css">

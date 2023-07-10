@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <meta charset="UTF-8">
 <title>Messenger</title>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">

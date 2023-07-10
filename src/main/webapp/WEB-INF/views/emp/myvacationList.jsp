@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
   <title>나의휴가 내역</title>
  <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 </head>

@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <meta charset="UTF-8">
 <title>Dash Board</title>
 <jsp:include page="../common/header.jsp"/>
