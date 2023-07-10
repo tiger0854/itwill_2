@@ -280,7 +280,28 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			logger.debug("countRetOrdList()!!");
 			return sqlSession.selectOne(NAMESPACE+".vacationcount",pageVO);
 		}
-	
+		
+	// 휴가 개수 출력
+		@Override
+		public Integer vacount() {
+			// TODO Auto-generated method stub
+			return sqlSession.selectOne(NAMESPACE+".vacount");
+		}
+		
+	// 휴가 예정자 사원 개수 출력 
+		@Override
+		public Integer pvacount() {
+			// TODO Auto-generated method stub
+			return sqlSession.selectOne(NAMESPACE+".pvacount");
+		}
+		
+	// 휴가 복귀자 사원 개수 출력
+		@Override
+		public Integer bvacount() {
+			// TODO Auto-generated method stub
+			return sqlSession.selectOne(NAMESPACE+".bvacount");
+		}
+		
 	
 /////////////////////////////////////////휴가동작////////////////////////////////////////////////////	
 
@@ -299,6 +320,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 
 	
+
+
+	
+
 
 
 	// 출근인원 조회

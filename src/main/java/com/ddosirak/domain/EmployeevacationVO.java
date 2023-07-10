@@ -123,6 +123,7 @@ public class EmployeevacationVO {
 	public void setTotal_vacation(int total_vacation) {
 		this.total_vacation = total_vacation;
 	}
+	
 	@Override
 	public String toString() {
 		return "EmployeevacationVO [vacation_management=" + vacation_management + ", vacation_start=" + vacation_start
@@ -133,6 +134,10 @@ public class EmployeevacationVO {
 				+ approve_date + ", prop_date=" + prop_date + ", vacation_id=" + vacation_id + ", total_vacation="
 				+ total_vacation + "]";
 	}
+	
+	
+	
+	
 	
 
 	

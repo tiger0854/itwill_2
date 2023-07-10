@@ -46,15 +46,18 @@
 		<input type="button"
 			value="사원 정보 내려받기" id="excelDown" onclick="location.href='/emp/excelDown'">
 		
-		<!-- ---------------------필터링------------------- -->
-		<table class="table table-striped" style="margin-top: 10px;">
+<!-- ---------------------필터링------------------- -->
+ <div style="background-color: #E9E9E9;height: 80px;padding: 20px;border-radius:10px;margin-bottom: 30px;margin-top: 60px;">
+		<table>
 			<tr>
-				<td><select name="department_name" id="department_name_search">
+				<td><select name="department_name" id="department_name_search" class="form-select">
 							<option value="선택없음">선택없음</option>
 						<optgroup label="생산">
 							<option value="생산과">생산과</option>
 							<option value="생산 1팀">생산 1팀</option>
 							<option value="생산 2팀">생산 2팀</option>
+							<option value="조리팀">조리팀</option>
+			            	<option value="품질팀">품질팀</option>
 						</optgroup>
 						<optgroup label="유통">
 							<option value="유통과">유통과</option>
@@ -65,7 +68,7 @@
 							<option value="인사과">인사과</option>
 						</optgroup>
 				</select></td>
-				<td><select name="position" id="position_search">
+				<td><select name="position" id="position_search" class="form-select">
 						<option value="선택없음">선택없음</option>
 						<option value="이사">이사</option>
 						<option value="과장">과장</option>
@@ -75,17 +78,23 @@
 						<option value="일용">일용</option>
 						<option value="외주">외주</option>
 				</select></td>
-				<td><select name="employee_status" id="employee_status_search">
+				<td><select name="employee_status" id="employee_status_search" class="form-select">
 						<option value="선택없음">선택없음</option>
 						<option value="재직중">재직중</option>
 						<option value="퇴사">퇴사</option>
 						<option value="휴직중">휴직중</option>
 				</select></td>
-				<td><input type="text" size="15" placeholder="이름" id="employee_name_search">
-				<input type="button" value="검색" id="search_button"></td>
+				<td>
+				 <div class="input-group"style="width: 400px;justify-content: flex-start;align-items: center; justify-content: space-between;">
+				<input type="text" size="15" placeholder="이름" id="employee_name_search" class="form-select">
+				<input type="button" value="검색" id="search_button" class="btn btn-primary">
+				</div>
+				</td>
 			</tr>
 		</table>
+		</div>
 		<!-- ---------------------필터링------------------- -->
+									
 		
 		<table class="table table-bordered" style="margin-top: 10px;">
 			<thead>
