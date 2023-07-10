@@ -53,7 +53,7 @@ function sendInfo(row) {
 	  </tr>
 	
 	  <c:forEach var="vo" items="${customerList }">
-	 	 <c:if test="${vo.cus_stat == 1 }">
+	 	 <c:if test="${vo.cus_stat == '납품' }">
 	 		 <tr onclick="sendInfo(this);">
 				  <td>${vo.cus_code }</td>
 				  <td>${vo.cus_name }</td>
