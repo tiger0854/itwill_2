@@ -116,7 +116,7 @@
 // 					console.log(chatdate);
 					console.log(last_chat);
 					if(value[1].chatdate != null){
-						var timeTmp = new Date(value[1].chatdate);
+						var timeTmp = new Date(value[1].chatdate  - (60*60*1000)*9);
 						
 						var year = timeTmp.getFullYear();
 						var month = ('0' + (timeTmp.getMonth() + 1)).slice(-2);
