@@ -138,7 +138,7 @@
   	
   	<!-- 사번 이름 찾기 -->
   	<select id="vacationfind" resultType="String">
-  	SELECT employee_name FROM emp_main WHERE id=#{id}
+  	SELECT employee_name FROM emp_main WHERE employee_id=#{id}
   	</select>
   	<!-- 사번 이름 찾기 -->
   	
