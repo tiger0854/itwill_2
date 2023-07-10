@@ -6,6 +6,8 @@
 <head>
 <jsp:include page="../common/header.jsp" />
 <link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
@@ -22,6 +24,22 @@ function lineEdit(line_code) {
 	  // 새 창 열기
 	  window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 	}
+
+function LineDelete(line_code){
+	  Swal.fire({
+	    title: "경고",
+	    text: "라인 : " + line_code + "를/을 정말로 삭제하시겠습니까?",
+	    icon: "error",
+	    showCancelButton:true,
+	    confirmButtonText: '확인',
+	    cancelButtonText: '취소'
+	  })
+	  .then(result => {
+	    if (result.isConfirmed) { // 만약 모달창에서 확인 버튼을 눌렀다면
+	      location.href = '/line/lineDelete?line_code=' + line_code;
+	    } 
+	  });
+	}	
 </script>
 
 
@@ -81,17 +99,8 @@ function lineEdit(line_code) {
         <td>${vo.factory_code }</td>
         <td>${vo.remark }</td>
         <td><button class=btn-edit onclick="lineEdit('${vo.line_code}')"><i class='bx bx-edit'></i></button></td>
-        <td><button class=btn-delete onclick="LineDelete();"><i class='bx bxs-trash'></i></button></td>
+        <td><button class=btn-delete onclick="LineDelete('${vo.line_code}');"><i class='bx bxs-trash'></i></button></td>
       </tr>
-      
-    <script>
-      function LineDelete(){
-    		if(confirm("정말로 삭제하시겠습니까?")){
-    			location.href='/line/lineDelete?line_code=${vo.line_code}';
-    			alert("삭제완료");
-    		}
-    	}
-	</script>
       
       
      </c:forEach>

@@ -117,7 +117,7 @@ public class LineController {
 		@RequestMapping(value = "/lineAdd", method = RequestMethod.GET)
 		public void LineAddGET(LineVO vo) {
 			logger.debug("LineAddGET(LineVO vo) 호출![]~(￣▽￣)~*");
-			logger.debug(vo + " ");
+			logger.debug(vo + "*********************************88 호출![]~(￣▽￣)~* ");
 
 		}
 

@@ -42,7 +42,7 @@ public class LineServiceImpl implements LineService{
 	//라인등록
 	@Override
 	public void addLine(LineVO vo) {
-		ldao.addLine(vo);;
+		ldao.addLine(vo);
 	}
 
 	@Override

@@ -82,6 +82,7 @@ public class OutboundServiceImpl implements OutboundService{
 	// 수주 상태 변경(0)
 	@Override
 	public void recStateUpdate(String re_code) throws Exception {
+		
 		odao.recStateUpdate(re_code);
 		
 	}
