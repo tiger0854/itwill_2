@@ -26,8 +26,6 @@
  <body id="body-pd" style="font-family: 'TheJamsil5';">
  <jsp:include page="../common/header.jsp"/>
 
-  <h1>출고 처리</h1>
-  <br>
    <form role="form" id="fr">
    <input type="hidden" name="re_code" id="re_code"><br>
     출고 번호 <input type="text" name="out_num" id="out_num" readonly><br>
@@ -35,11 +33,13 @@
     출고 예정 수량 <input type="text" name="out_qty" id="out_qty" ><br>
     <br>
     출고 수량 <input type="text" name="out_Cqty" id="out_Cqty" ><br>
-    <p id="out_Cqty_error" style="color: red;"></p>
+    <p id="out_Cqty_error" style="color: red; font-size: small;"></p>
     <br>
     출고 일자 <input type="date" name="out_date" id="out_date" ><br>
+    <p id="date_error" style="color: red; font-size: small;"></p>
     <br>
   <hr>
+    <p id="qty_error" style="color: red; font-size: small;"></p>
   	<button type="button" id="outCompleted" class="btn-completed">출고 완료</button>
   </form>
 
@@ -77,10 +77,27 @@
 		});
 
 
-
-
-
+		
+		
+		
+		
 	    $("#outCompleted").click(function() {
+	    	
+			var enteredQty = parseInt(outCqtyInput.value);
+	   		var outQtyFromVO = parseInt(document.getElementById('out_qty').value);
+	   	  	var errorElement = document.getElementById('date_error');
+	    	
+	    	  // 입력된 값과 VO의 out_qty 값을 비교합니다.
+	    	  if (enteredQty > outQtyFromVO || enteredQty < outQtyFromVO || isNaN(enteredQty) || enteredQty === "") {
+		            $('input#out_Cqty').focus();
+		        	return false;
+	    	  }	else if ($('input#out_date').val().trim() == ''){
+		    		$('input#out_date').val('');
+		            $('input#out_date').focus();
+		    		errorElement.textContent = '출고 일자를 입력해주세요.';
+		        	return false;
+			     }
+	    	
 	      var frObj = $("#fr");
 // 	      var reCodeValue = $("#re_code").val(); // re_code 요소의 값을 가져옵니다.
 	      var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
@@ -110,6 +127,13 @@
 	    
 	  
 	  });
+	    
+	    
+	    var outDateInput = document.getElementById('out_date');
+	    outDateInput.addEventListener('input', function() {
+	    	var errorElement = document.getElementById('date_error');
+			errorElement.textContent = ''; // 출고일자 오류 메시지 초기화
+		});
 
 
 

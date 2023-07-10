@@ -87,7 +87,10 @@
 		var errorElement3 = document.getElementById('emp_error');
 		var errorElement4 = document.getElementById('qty_error');
 		var errorElement5 = document.getElementById('date_error');
-	
+		
+		var reQtyInput = document.getElementById('re_qty');
+		var reDateInput = document.getElementById('re_date');
+		
 		$(document).ready(function() {
 	    $("#submitBtn").click(function() {
 
@@ -107,23 +110,29 @@
 	    		errorElement3.textContent = '담당자를 입력해주세요.';
 	        	return false;
 	    	 } else if ($('input#re_qty').val().trim() == '' ){
-	    		$('input#re_qty').val('');
-	            $('input#re_qty').focus();
-	    		errorElement4.textContent = '수량을 입력해주세요.';
-	        	return false;
-		    	} else if ($('input#re_date').val().trim() == ''){
+    			$('input#re_qty').val('');
+            	$('input#re_qty').focus();
+    			errorElement4.textContent = '수량을 입력해주세요.';
+        		return false;
+	    	 } else if ($('input#re_date').val().trim() == ''){
 	    		$('input#re_date').val('');
 	            $('input#re_date').focus();
 	    		errorElement5.textContent = '납기일자를 입력해주세요.';
 	        	return false;
-		    	} else {
-		    		errorElement.textContent = ''; // 경고 메시지 초기화
-	     	    }
+		     }
 	    	
 	      });
 		});
-	    	
+			
+			reQtyInput.addEventListener('input', function() {
+	 			errorElement4.textContent = ''; // 수량 오류 메시지 초기화
+	 		});
 	
+			
+			reDateInput.addEventListener('input', function() {
+				errorElement5.textContent = ''; // 납기일자 오류 메시지 초기화
+			});
+		// 유효성 end
 
   </script>
 

@@ -13,11 +13,11 @@
 	window.addEventListener("message", function(event) {
     var rowData = event.data;
     
-    document.getElementById("out_num").value = rowData[1];
-    document.getElementById("item_name").value = rowData[3];
-    document.getElementById("out_empNm").value = rowData[9];
-    document.getElementById("out_qty").value = rowData[4];
-    document.getElementById("due_date").value = rowData[6];
+    document.getElementById("out_num").value = rowData[2];
+    document.getElementById("item_name").value = rowData[4];
+    document.getElementById("out_empNm").value = rowData[10];
+    document.getElementById("out_qty").value = rowData[5];
+    document.getElementById("due_date").value = rowData[7];
     document.getElementById("out_notes").value;
    });
       
