@@ -39,6 +39,9 @@ public interface ProductionPerformanceDAO {
 	public void pfQTYDel(ProductionPerformanceVO pvo);
 
 	public Integer orderStatuscount(String wo_code);
+	
+	// 수량감소
+	public void deltQTY(Map<String, Object> params);
 
 	
 

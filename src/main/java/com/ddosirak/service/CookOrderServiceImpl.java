@@ -57,11 +57,7 @@ public class CookOrderServiceImpl implements CookOrderService {
 		        cdao.cookOrder(item);
 //		            dao.insertOrUpdateItemRecipe(item); // 변경된 ItemRecipeVO 객체를 사용하여 레시피 등록
 		    }
-		
-		
-		
-		
-		
+			
 		
 	}
 
@@ -186,6 +182,21 @@ public class CookOrderServiceImpl implements CookOrderService {
 	@Override
 	public Boolean checkrechod(String re_code) {
 		return cdao.checkrecode(re_code);
+	}
+
+	
+	//수주번호 중복체크
+	@Override
+	public Boolean checksuList(String re_code) {
+		// TODO Auto-generated method stub
+		return cdao.checksuList(re_code);
+	}
+
+
+	@Override
+	public Boolean checksucookList(String re_code) {
+		// TODO Auto-generated method stub
+		return cdao.checksucookList(re_code);
 	}
 
 

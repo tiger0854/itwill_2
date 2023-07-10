@@ -27,6 +27,8 @@ import com.ddosirak.domain.PageVO;
 import com.ddosirak.service.BoardService;
 import com.ddosirak.service.EmployeeService;
 import com.ddosirak.service.PageService;
+import com.ddosirak.service.ProOrderService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 @RequestMapping(value = "/public/*")
@@ -42,7 +44,8 @@ public class PublicController {
 	private EmployeeService eService;
 	@Inject
 	private PageService pService;
-	
+	@Inject
+	private ProOrderService oService;
 /////////////////////////////////게시판///////////////////////////////////
 	// http://localhost:8088/public/write
 	// 게시판 업로드 페이지
@@ -259,7 +262,14 @@ public class PublicController {
 /////////////////////////////////대시보드///////////////////////////////////
 	// 대시보드 페이지
 	@RequestMapping(value = "/dashBoard", method = RequestMethod.GET)
-	public void dashBoardGET() throws Exception{
+	public void dashBoardGET(Model model) throws Exception{
+		
+		List<Map<String, Object>> graphList = oService.graphList();
+		logger.debug("graphList : " + graphList);
+		ObjectMapper objectMapper = new ObjectMapper();
+		String graphListJson = objectMapper.writeValueAsString(graphList);
+		model.addAttribute("graphListJson", graphListJson);
+		
 		logger.debug("dashBoardGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 	}//dashBoardGET() method end
 /////////////////////////////////대시보드///////////////////////////////////

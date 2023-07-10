@@ -79,7 +79,9 @@
 </table>
 <br>
   <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
-	 		<ul class="pagination" id="pagination">
+	 
+	 	<div class="container">
+	 		<ul class="pagination" id="pagination" style="justify-content: center;">
 		<c:choose>
 			<c:when test="${pageVO.startPage > pageVO.pageBlock}">
 				<li class="page-item"><a
@@ -111,7 +113,7 @@
 			</c:otherwise>
 		</c:choose>
 	</ul>
-
+</div>
 
 
 <br>

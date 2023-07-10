@@ -15,7 +15,14 @@
 		var co_status = "${cvo.co_status}";
 		
 		if(co_status === "마감") {
-			alert("마감된 지시입니다!");
+			
+			
+        	Swal.fire({
+                title: "마감된 지시입니다!",
+                text: "",
+                icon: "error"
+              })
+// 			alert("마감된 지시입니다!");
 		}else{
 		
 		
@@ -35,19 +42,46 @@
 	}
 	
 	function etcRemove(cook_id,co_code) {
-		if(confirm("정말로 삭제하시겠습니까?")){
-		location.href = '/pro/cooketcRemove?cook_id='+cook_id+'&co_code='+co_code;
-		alert("삭제완료!");
-		}
+		  Swal.fire({
+			    title: "경고",
+			    text: "정말로 삭제하시겠습니까?",
+			    icon: "warning",
+			    showCancelButton: true,
+			    confirmButtonText: "네",
+			    cancelButtonText: "취소"
+			  }).then(result => {
+			    if (result.isConfirmed) {
+			      location.href = '/pro/cooketcRemove?cook_id='+cook_id+'&co_code='+co_code;
+//			      Swal.fire("수동마감 완료!");
+			    }
+			  });
+		
 	}
 	
 // 	wostatus
 	function costatus(co_code) {
-		if(confirm("수동 마감하 시겠습니까?")){
-			location.href = '/pro/costatusEnd?co_code='+co_code;
-			alert("수동마감 완료!");
-		}
+	
+	
+		  Swal.fire({
+			    title: "경고",
+			    text: "수동마감 하시겠습니까?",
+			    icon: "warning",
+			    showCancelButton: true,
+			    confirmButtonText: "네",
+			    cancelButtonText: "취소"
+			  }).then(result => {
+			    if (result.isConfirmed) {
+			      location.href = '/pro/costatusEnd?co_code='+co_code;
+// 			      Swal.fire("수동마감 완료!");
+			    }
+			  });
+
 	}
+	
+	function closePopupWindow() {
+		  window.close();
+		}	
+	
 </script>
 
 </head>
@@ -64,6 +98,8 @@
 <button style="margin-left: 20px" type="button" class="btn btn-primary btn-sm" onclick="location.href='/pro/cookorderList'">조리 지시 목록</button>
 					
 				</h4>
+				
+				
   <table class="product-table"style="margin-top: 20px;width: 100%;">
     <thead>
       <tr>
@@ -104,13 +140,11 @@
     </tbody>
   </table>
 				<!-- 작업지시목록 검색, 등록버튼 -->
-				<div class=btn-container>
-					<button class=btn-search onclick="costatus('${param.co_code }')">수동마감</button>
-					<button class=btn-add onclick="etcwrite('${param.co_code }')">
-						<i class='bx bx-plus-medical'></i> 실적등록
-					</button>
-				</div>
-
+			
+		<div class="btn-container">
+		<input class="btn btn-primary" type="button" value="수동 마감" onclick="costatus('${param.co_code }')">
+		<input type="button" class="btn btn-outline-primary" onclick="etcwrite('${param.co_code }')" value="실적 등록">
+		</div>	
 				<!-- 품번, 품명, 단위 , 투입량 -->
 				<table class="product-table"
 					style="margin-top: 20px; width: 100%; text-align: center;">
