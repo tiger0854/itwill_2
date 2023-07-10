@@ -690,6 +690,18 @@ public class MemberController {
 			
 			// 게시글 개수 가져오기
 			int count = eService.countRetOrdList(pageVO); // 요 동작만 각자 페이지에 맞게 수정하면 됨!!
+			
+			// 휴가자 수(count) 가져오기
+		    int vacationCount = eService.vacount();
+		    model.addAttribute("vacationCount", vacationCount);
+		   
+		    // 휴가 예정자 사원개수 출력
+		    int pvacationCount = eService.pvacount();
+		    model.addAttribute("pvacationCount", pvacationCount);
+		   
+		    // 휴가 복귀자 사원개수 출력
+		    int bvacountCount = eService.bvacount();
+		    model.addAttribute("bvacountCount", bvacountCount);
 
 			int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
 			int startPage=(currentPage-1)/pageBlock*pageBlock+1;
@@ -761,13 +773,13 @@ public class MemberController {
 		
 		@RequestMapping(value = "/vacationinf", method = RequestMethod.POST)
 		public String vacationinf(EmployeeVO vo) { 
-			logger.debug("employeeUpdate() 호출![]~(￣▽￣)~*");
+			logger.debug("vacationinf() 호출![]~(￣▽￣)~*");
 			logger.debug("vo > "+vo);
 			
 			 eService.updateEmployee(vo);
 			 
 			return "redirect:/emp/vacationinf?employee_id="+vo.getEmployee_id();
-		}// employeeUpdate() method end
+		}// vacationinf() method end
 		
 		
 		// http://localhost:8088/emp/myvacationList
