@@ -29,18 +29,21 @@
 </head>
 </head>
 <script type="text/javascript">
+
 	function onInsert() {
 		var frObj = $("#fr");
 		var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
 
 		Swal.fire({
-			type : "success",
+			icon : "success",
+			title : "작성 성공!",
 			showCancelButton : false,
 			confirmButtonColor : "green",
-			confirmButtonText : "작성성공!",
-			closeOnConfirm : false
+			confirmButtonText : "확인",
+			allowOutsideClick : false,
+			allowEscapeKey : false
 		}).then(function(result) {
-			if (result.value) {
+			if (result.isConfirmed) {
 				$.ajax({
 					url : "/foundation/warehouse/warehouseUpload",
 					type : "POST",
@@ -55,10 +58,7 @@
 				});
 			}
 		});
-	}else {
-	      alert("입력란을 채워주세요!");
-    }
-}
+	}
 </script>
 <body>
 	<!-- 창고등록 폼 -->

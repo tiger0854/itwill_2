@@ -90,4 +90,11 @@
 		</if>
 	</select>
 	<!-- 자재 검색 갯수 -->
+	
+	<!-- 자재 수량 띄우기 -->
+	<select id="selectTQTY" resultType="com.ddosirak.domain.MaterialdetailVO">
+		select * from material_detail
+		where material_code=#{materail_code}
+	</select>
+	<!-- 자재 전체량 띄우기 -->
 </mapper>

@@ -28,36 +28,38 @@
 	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 </head>
 <script type="text/javascript">
+
 	function onInsert() {
 		var frObj = $("#fr");
-		var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
+		var formData = frObj.serialize();
 
-		Swal.fire({
-			type : "success",
-			showCancelButton : false,
-			confirmButtonColor : "green",
-			confirmButtonText : "작성성공!",
-			closeOnConfirm : false
-		}).then(function(result) {
-			if (result.value) {
-				$.ajax({
-					url : "/foundation/materialdetail/materialdetailUpload",
-					type : "POST",
-					data : formData,
-					success : function(response) {
-						opener.location.reload();
-						window.close();
-					},
-					error : function(xhr, status, error) {
-						alert("빈칸을 입력해주세요!");
-					}
-				});
-			}
-		});
-	}else {
-	      alert("입력란을 채워주세요!");
-    }
-}
+		if (frObj[0].checkValidity()) {
+			Swal.fire({
+				title : "작성 성공!",
+				text : "작성이 성공하였습니다.",
+				icon : "success",
+				showCancelButton : false,
+				confirmButtonText : "확인"
+			}).then(function(result) {
+				if (result.isConfirmed) {
+					$.ajax({
+						url : "/foundation/materialdetail/materialdetailUpload",
+						type : "POST",
+						data : formData,
+						success : function(response) {
+							opener.location.reload();
+							window.close();
+						},
+						error : function(xhr, status, error) {
+							Swal.fire("빈칸을 입력해주세요!");
+						}
+					});
+				}
+			});
+		} else {
+			Swal.fire("입력란을 채워주세요!");
+		}
+	}
 </script>
 <body>
 	<!-- 창고등록 폼 -->

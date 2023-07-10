@@ -9,14 +9,20 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
+var deptName = "${sessionScope.dept_name}";
+
 	function itemUpload() {
+		if(deptName.includes('생산')){   
 		// 새 창을 열기 위한 URL
 		var popupUrl = '/foundation/itemdetail/itemdetailUpload';
 		// 새 창 열기
 		window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
+	}else{
+		swal.fire("권한이 없습니다!");
 	}
-
+	}
 	function itemUpdate(item_code) {
+		if(deptName.includes('생산')){    	
 		// 새 창을 열기 위한 URL
 		if(!item_code.includes("M")){
 		var popupUrl = '/foundation/itemdetail/itemdetailUpdate?item_code='
@@ -26,9 +32,12 @@
 		}else{
 			Swal.fire("레시피용 상품은 수정할 수 없습니다");
 		}
+	}else{
+		swal.fire("권한이 없습니다!");
 	}
-
+	}
 	function itemDelete(item_code, item_name) {
+		if(deptName.includes('생산')){  
 		  Swal.fire({
 		    title: "경고",
 		    text: "품명 : " + item_name + "를/을 정말로 삭제하시겠습니까?",
@@ -41,8 +50,10 @@
 		      location.href = '/foundation/itemdetail/itemdetailDelete?item_code=' + item_code;
 		    }
 		  });
+		}else{
+		swal.fire("권한이 없습니다!");
 		}
-
+	}
 
 	//품명 검색 팝업창
 	function openItem() {

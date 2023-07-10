@@ -5,7 +5,16 @@ public class MaterialdetailVO {
     private String material_name;
     private String material_type;
     private String material_unit;
+    private int tQTY;
     
+    
+    
+	public int gettQTY() {
+		return tQTY;
+	}
+	public void settQTY(int tQTY) {
+		this.tQTY = tQTY;
+	}
 	public String getMaterial_unit() {
 		return material_unit;
 	}

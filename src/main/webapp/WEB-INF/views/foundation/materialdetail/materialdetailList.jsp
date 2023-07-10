@@ -10,32 +10,50 @@
 <title>Insert title here</title>
 
 <script>
+var deptName = "${sessionScope.dept_name}";
+
 	function materialUpload() {
+		if(deptName.includes('생산')){
 		// 새 창을 열기 위한 URL
 		var popupUrl = '/foundation/materialdetail/materialdetailUpload';
 		// 새 창 열기
 		window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
+		}else{
+			swal.fire("권한이 없습니다!");
+		}
 	}
 
 	function materialUpdate(material_code) {
+		if(deptName.includes('생산')){  
 		// 새 창을 열기 위한 URL
 		var popupUrl = '/foundation/materialdetail/materialdetailUpdate?material_code='
 				+ material_code;
 		// 새 창 열기
 		window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
-	}
-
-	function materialDelete(material_code, material_name) {
-		if (confirm("품명 : " + material_name + "를/을 정말로 삭제하시겠습니까?")) {
-			location.href = '/foundation/materialdetail/materialdetailDelete?material_code='
-					+ material_code;
-			alert("삭제완료");
+		}else{
+			swal.fire("권한이 없습니다!");
 		}
 	}
 
+	function materialDelete(material_code, material_name) {
+		if(deptName.includes('생산')){  
+			if (confirm("품명 : " + material_name + "를/을 정말로 삭제하시겠습니까?")) {
+				location.href = '/foundation/materialdetail/materialdetailDelete?material_code='
+						+ material_code;
+				alert("삭제완료");
+			}
+		}else{
+			swal.fire("권한이 없습니다!");
+		}
+	}
 	//자재명 검색 팝업창
 	function openItem() {
 		window.open("/foundation/materialdetail/materialItemList", "popup",
+				"width=500, height=600,left=100, top=100");
+	}
+	//자재명 검색 팝업창
+	function openMaterialQTY(materialCode) {
+		window.open("/foundation/materialdetail/materialQTY?material_code="+materialCode, "popup",
 				"width=500, height=600,left=100, top=100");
 	}
 </script>
@@ -109,7 +127,7 @@
 				<tbody>
 					<c:forEach var="vo" items="${resultlist }">
 						<tr>
-							<td>${vo.material_code }</td>
+							<td><a href="javascript:void(0);" onclick="openMaterialQTY('${vo.material_code }')"> ${vo.material_code }</a></td>
 							<td>${vo.material_name }</td>
 							<td>${vo.material_unit }</td>
 							<td>${vo.material_type }</td>

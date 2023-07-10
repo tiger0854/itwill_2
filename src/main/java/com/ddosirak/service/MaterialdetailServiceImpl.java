@@ -22,7 +22,7 @@ public class MaterialdetailServiceImpl implements MaterialdetailService {
 	public static final Logger logger = LoggerFactory.getLogger(MaterialdetailServiceImpl.class);
 	
 	@Override
-	public List<MaterialdetailVO> mdList(PageVO pageVO) {
+	public List<MaterialdetailVO> mdList(PageVO pageVO) throws Exception {
 		logger.debug("service : 자재 목록 호출");
 		List<MaterialdetailVO> resultlist=dao.mdList(pageVO);
 		logger.debug("service : 자재 목록 완료");
@@ -30,7 +30,7 @@ public class MaterialdetailServiceImpl implements MaterialdetailService {
 	}
 	
 	@Override
-	public List<MaterialdetailVO> mdList(PageVO pageVO, Map<String, Object> instrSearch) {
+	public List<MaterialdetailVO> mdList(PageVO pageVO, Map<String, Object> instrSearch) throws Exception {
 		logger.debug("service : 자재 목록 호출");
 		List<MaterialdetailVO> resultlist=dao.mdList(pageVO, instrSearch);
 		logger.debug("service : 자재 목록 완료");
@@ -38,7 +38,7 @@ public class MaterialdetailServiceImpl implements MaterialdetailService {
 	}
 
 	@Override
-	public Integer insertMD(MaterialdetailVO vo) {
+	public Integer insertMD(MaterialdetailVO vo) throws Exception {
 		logger.debug("service : 자재 등록 호출");
 		if(dao.getMaxCode()!=null && dao.getMaxCode().contains("M")) {
 			int codeNum=Integer.parseInt(dao.getMaxCode().substring(1));
@@ -55,14 +55,14 @@ public class MaterialdetailServiceImpl implements MaterialdetailService {
 	}
 
 	@Override
-	public Integer updateMD(MaterialdetailVO vo) {
+	public Integer updateMD(MaterialdetailVO vo) throws Exception {
 		logger.debug("service : 자재 수정 호출 (update)");
 		int result=dao.updateMD(vo);
 		return result;
 	}
 
 	@Override
-	public MaterialdetailVO selectMD(String material_code) {
+	public MaterialdetailVO selectMD(String material_code) throws Exception {
 		logger.debug("service : 자재 수정 호출 (edit)");
 		logger.debug("service : 파라미터 확인 "+ material_code);
 		MaterialdetailVO resultvo=dao.selectMD(material_code);
@@ -70,28 +70,34 @@ public class MaterialdetailServiceImpl implements MaterialdetailService {
 	}
 
 	@Override
-	public void deleteM(String material_code) {
+	public void deleteM(String material_code) throws Exception {
 		logger.debug("service : 자재 삭제 호출");
 		dao.deleteM(material_code);
 	}
 
 	@Override
-	public List<MaterialdetailVO> materialItemList(PageVO pageVO) {
+	public List<MaterialdetailVO> materialItemList(PageVO pageVO) throws Exception {
 		logger.debug("service : 자재 목록 전체 호출");
 		return dao.materialItemList(pageVO);
 	}
 
 	@Override
-	public List<MaterialdetailVO> materialItemList(Map<String, Object> instrSearch,PageVO pageVO) {
+	public List<MaterialdetailVO> materialItemList(Map<String, Object> instrSearch,PageVO pageVO) throws Exception {
 		logger.debug("service : 자재 목록 검색 호출");
 		return dao.materialItemList(instrSearch,pageVO);
 
 	}
 
 	@Override
-	public Integer materialCount(Map<String, Object> instrSearch) {
+	public Integer materialCount(Map<String, Object> instrSearch) throws Exception {
 		logger.debug("service : 자재 검색 갯수 호출");
 		return dao.materialCount(instrSearch);
+	}
+
+	@Override
+	public MaterialdetailVO selectTQTY(String material_code) throws Exception {
+		
+		return dao.selectTQTY(material_code);
 	}
 	
 	

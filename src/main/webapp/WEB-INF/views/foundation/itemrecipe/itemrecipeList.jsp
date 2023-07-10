@@ -9,15 +9,22 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
+var deptName = "${sessionScope.dept_name}";
+
 	function itemrecipeUpload() {
+		if(deptName.includes('생산')){  
 		// 새 창을 열기 위한 URL
 		var popupUrl = '/foundation/itemrecipe/itemrecipeUpload';
 		// 새 창 열기
 		window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
+		}else{
+		swal.fire("권한이 없습니다!");	
+		}
 	}
 
 	function recipeDelete(item_code, item_name) {
-		  Swal.fire({
+		if(deptName.includes('생산')){  
+		Swal.fire({
 		    title: "경고",
 		    text: "품명 : " + item_name + " 레시피 전체를 정말로 삭제하시겠습니까?",
 		    icon: "warning",
@@ -29,10 +36,13 @@
 		      location.href = 'deleteItemRecipe?item_code=' + item_code;
 		    }
 		  });
+		}else{
+			 swal.fire("권한이 없습니다!");
 		}
-
+	}
 	function recipeDeleteMaterial(item_code, item_name, material_code, material_name) {
-		  Swal.fire({
+		if(deptName.includes('생산')){   
+		Swal.fire({
 		    title: "경고",
 		    text: "품명 : " + item_name + " 레시피 요소인 " + material_name + "를/을 삭제하시겠습니까?",
 		    icon: "warning",
@@ -44,8 +54,10 @@
 		      location.href = 'deleteItemRecipeMaterial?item_code=' + item_code + "&material_code=" + material_code;
 		    }
 		  });
+		}else{
+			swal.fire("권한이 없습니다!");
 		}
-
+	}
 
 	//레시피 검색 팝업창 ()
 	function openItem() {

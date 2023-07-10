@@ -711,7 +711,7 @@ public class ProductController {
 	
 	// 	// http://localhost:8088/pro/materialList
 	@RequestMapping(value = "/materialList", method = RequestMethod.GET)
-	public void materialList(HttpServletRequest request, Model model,PageVO pageVO) {
+	public void materialList(HttpServletRequest request, Model model,PageVO pageVO) throws Exception {
 
 		String material_code = request.getParameter("material_code");
 		String material_name = request.getParameter("material_name");

@@ -218,5 +218,9 @@ public class MaterialdetailController {
 		model.addAttribute("Search", instrSearch);
 		model.addAttribute("materialList", materialList);
 	}// /itemListGET() method end
-
+	
+	@RequestMapping(value = "/materialQTY", method = RequestMethod.GET)
+	public void selectTQTY(Model model, String material_code) throws Exception{
+		model.addAttribute("vo",service.selectTQTY(material_code));
+	}
 }
