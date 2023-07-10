@@ -133,7 +133,7 @@
 				return;
 			}
 			$.ajax({
-				url : "/foundation/itemrecipe/getMaterials",
+				url : "/foundation/itemrecipe/materials/"+itemCode,
 				method : "GET",
 				data : {
 					item_code : itemCode
@@ -256,21 +256,21 @@
 			<table class="box" style="margin-top: 30px; width: 100%">
 				<tbody>
 					<%-- ${lineList} --%>
-					<td><input type="hidden" name="pQTY" value=0></td>
+					<td><input type="hidden" name="pQTY" value=0 required></td>
 			    <tr>
 			      <td>수주번호</td>
 			     <td><div class="input-group">
-				    <input style="width: 40%" type="text" name="so_code" onclick="recodecheck()" id="re_code" placeholder="수주번호" class="form-control">
+				    <input style="width: 40%" type="text" name="so_code" onclick="recodecheck()" id="re_code" placeholder="수주번호" class="form-control" required>
 				    <input type="button" class="btn btn-primary" onclick="opensucode()" value="검색">
 				</div></td>
 			    </tr>
 					<tr>
 						<td>조리지시자</td>
-						<td><input type="text" name="employee_id" id="employee_id"></td>
+						<td><input type="text" name="employee_id" id="employee_id" required></td>
 					</tr>
 					<tr>
 						<td>라인명</td>
-						<td><select name="line_code" class="line_code">
+						<td><select name="line_code" class="line_code" required>
 								<c:forEach var="line" items="${lineList}">
 									<option value="${line.line_code}">${line.line_name}</option>
 								</c:forEach>
@@ -280,8 +280,8 @@
 				   <td>상품코드</td>
 				  <td>
 				  	<div class="input-group"> 
-					    <input type="text" style="width: 40%" placeholder="상품 코드" class="form-control" name="item_code" id="item_code" onclick="getRelatedMaterials();">
-					    <input type="text" style="width: 40%" placeholder="상품 이름" class="form-control" name="item_name" id="item_name" readonly>
+					    <input type="text" style="width: 40%" placeholder="상품 코드" class="form-control" name="item_code" id="item_code" onclick="getRelatedMaterials();" required>
+					    <input type="text" style="width: 40%" placeholder="상품 이름" class="form-control" name="item_name" id="item_name" readonly required>
 					</div>
 					</td>
 				    </tr>

@@ -68,11 +68,6 @@
 
     	    window.open(popupUrl, "_blank", "width=500,height=600,left=100,top=100");
     	    
-    	 	// vacationlist로 이동 후 새로 고침
-    	    window.onunload = function() {
-//     	        window.opener.location.reload(); // 부모 창 새로 고침
-    	    };
-    	    window.close(); // 팝업 창 닫기
     	});
      
 
