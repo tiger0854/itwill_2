@@ -33,7 +33,7 @@
 </script>
 
 
-</head>
+</head> 
 <body>
 	<div class="black-bar">
 		<h4 style="text-align: center; color: white; padding-top: 8px">
