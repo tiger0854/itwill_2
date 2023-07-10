@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		  		    <a href="/foundation/materialdetail/materialdetailList" class="nav_link"> - 자재관리</a><br>
 		  		    <a href="/foundation/itemdetail/itemdetailList" class="nav_link"> - 상품관리</a><br>
 		  		    <a href="/pro/oderList" class="nav_link"> - 재고관리</a><br>
-		  		    <a href="/line/lineList" class="nav_link"> - 라인관리</a><br>
+		  		    <a href="/line/lineList" class="nav_link" > - 라인관리</a><br>
 				</div>
 				</div>
           
