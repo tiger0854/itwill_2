@@ -57,7 +57,7 @@
 				          window.close();
 				        },
 				        error: function(xhr, status, error) {
-				          Swal.fire("최소한 하나의 자재는 등록해야합니다.", "error");
+				          Swal.fire("오류 발생!", "error");
 				        }
 				      });
 				    });
