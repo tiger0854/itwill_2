@@ -92,7 +92,7 @@
 			var frObj = $("#fr");
 			var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
 			
-			
+			   
 				if (frObj[0].checkValidity()) {
 				    Swal.fire({
 				      title: "작성 성공!",
