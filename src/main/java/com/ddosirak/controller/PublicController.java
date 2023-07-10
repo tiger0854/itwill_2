@@ -130,6 +130,8 @@ public class PublicController {
 		logger.debug("contentGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 		logger.debug("/public/content?emp_bno="+emp_bno+"로 이동!");
 		
+		 bService.addReadCount(emp_bno); // 조회수 1 증가
+		
 		model.addAttribute("boardContent", bService.getContent(emp_bno));
 	}// contentGET() method end
 	// 게시판 글 수정 > POST

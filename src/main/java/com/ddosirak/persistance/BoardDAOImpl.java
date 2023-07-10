@@ -96,6 +96,14 @@ public class BoardDAOImpl implements BoardDAO {
 		logger.debug("deleteContent() 메서드 호출!");
 		sqlSession.delete(NAMESPACE+".deleteContent", emp_bno);
 	}// deleteContent() method end
+	
+	// 게시판 조회수 증가
+	@Override
+	public void addReadCount(int emp_bno) throws Exception {
+		logger.debug("deleteContent() 메서드 호출!");
+		sqlSession.delete(NAMESPACE+".addReadCount", emp_bno);
+	}//addReadCount() method end
+	
 	//=================================게시판====================================================
 
 
@@ -106,6 +114,7 @@ public class BoardDAOImpl implements BoardDAO {
 		logger.debug("chatSend() 메서드 호출!");
 		sqlSession.insert(NAMESPACE+".chatSend",chatVO);
 	}// chatSend() method end
+
 
 	// 채팅 리스트 출력
 	@Override
@@ -148,45 +157,9 @@ public class BoardDAOImpl implements BoardDAO {
 		return sqlSession.selectList(NAMESPACE+".getChatListAll",chatRoom_code);
 	}// getChatList() method end
 	
-	
-	
-	
-	
-	
+
 	//=================================사내메신저====================================================
 
 	
 }// public class end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

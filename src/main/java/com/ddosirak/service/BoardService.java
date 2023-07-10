@@ -31,6 +31,8 @@ public interface BoardService {
 	public void contentUpdate(BoardVO vo) throws Exception;
 	//게시판 글 삭제
 	public void deleteContent(int emp_bno) throws Exception;
+	// 게시판 조회수 증가
+	public void addReadCount(int emp_bno) throws Exception;
 
 	
 	// 채팅

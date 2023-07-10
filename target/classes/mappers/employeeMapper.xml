@@ -50,14 +50,13 @@
   	<!-- 사원 목록 출력-->
   	<select id="empListAll" resultType="com.ddosirak.domain.EmployeeVO">
 		SELECT * FROM emp_main
-		ORDER BY FIELD (position, '이사', '과장', '팀장', '주임', '사원')
+		ORDER BY FIELD (position, '이사', '과장', '팀장', '주임', '사원', '외주', '일용')
   	</select>
   	<!-- 사원 목록 출력 -->
   	
   	<!-- 사원 목록 출력-->
   	<select id="empList" resultType="com.ddosirak.domain.EmployeeVO">
 		SELECT * FROM emp_main
-		ORDER BY FIELD (position, '이사', '과장', '팀장', '주임', '사원')
 		LIMIT #{startRow}, #{pageSize}
   	</select>
   	<!-- 사원 목록 출력 -->
@@ -69,7 +68,6 @@
   		WHERE employee_id=#{employee_id}
   	</update>
   	<!-- 회원정보 수정 -->
-  	
   	
   	<!-- 일용직 직원 수 -->
   		<select id="alCount_all" resultType="Integer">

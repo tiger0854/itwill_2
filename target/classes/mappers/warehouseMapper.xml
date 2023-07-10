@@ -25,7 +25,8 @@
 	<!-- 창고 등록 -->
 	<insert id="insertWarehouse">
 		insert into warehouse
-		values(#{wh_code},#{wh_name},#{retail_code},#{wh_type})
+		(wh_code, wh_name, retail_code, wh_type, wh_size)
+		values(#{wh_code},#{wh_name},#{retail_code},#{wh_type},#{wh_size})
 	</insert>
 	<!-- 창고 등록 -->
 	<!-- 특정 창고 조회 -->

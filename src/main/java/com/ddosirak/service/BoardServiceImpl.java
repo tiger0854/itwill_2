@@ -79,6 +79,12 @@ public class BoardServiceImpl implements BoardService {
 		bdao.deleteContent(emp_bno);
 	}// deleteContent() method end
 	
+	// 게시판 조회수 증가
+	@Override
+	public void addReadCount(int emp_bno) throws Exception {
+		bdao.addReadCount(emp_bno);
+	}// addReadCount() method end
+	
 	// 채팅
 	// 채팅 전송
 	@Override

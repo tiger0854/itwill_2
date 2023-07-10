@@ -77,6 +77,13 @@
 	</delete>
 	<!-- 글 삭제 -->
 	
+	<!-- 조회수 증가 -->
+	<update id="addReadCount">
+		UPDATE emp_board SET read_count = read_count+1 
+		WHERE emp_bno=#{emp_bno}
+	</update>
+	<!-- 조회수 증가 -->
+	
 <!-- 사내메신저-->
 <!-- 채팅 보내기 -->
 	<insert id="chatSend">
