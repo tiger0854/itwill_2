@@ -5,6 +5,7 @@
 <html lang="ko">
 <meta charset="UTF-8"> 
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <title>출고 리스트</title>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
@@ -21,13 +22,12 @@
 	<br>
   <h4>출고현황</h4>
   
-  <div>
   <form action="" method="get" id="searchFrm">
 <!-- 	  출고번호 <input type="text" style="width:50px;" > -->
 <!-- 	  출고일자 <input type="date" placeholder="날짜 선택"> ~ <input type="date" placeholder="날짜 선택"> -->
 <!-- 	  담당자 <input type="text"  style="width:50px;"> -->
-	  출고번호 <input type="text" id="out_num" name="search" value="${search}"> 
-	  <input type="hidden" name="state" value="${state}">
+	  출고번호 <input type="text" id="out_num" name="search" value="${pageVO.search}"> 
+<%-- 	  <input type="hidden" name="state" value="${state}"> --%>
   	<button type="submit">Search</button>
 <!-- 	<select name="kind" id="kind"> -->
 <!--   		<option value="itemNm">품목명</option> -->
@@ -36,13 +36,16 @@
 <!--   	</select> -->
 <%--   <input type="text" placeholder="검색어를 입력하세요" name="search" value="${pageVO.search }">  --%>
 <!--   <button type="submit" class="btn btn-outline-info">Search</button> -->
-  </form>
-  </div>
+  
   <hr>
   
-  <button id="allButton" onclick="getOutBoundList(2);">전체</button>
-  <button id="ongoingButton" onclick="getOutBoundList(1);">진행중</button>
-  <button id="completedButton" onclick="getOutBoundList(0);">출고완료</button>
+<!--   onclick="getOutBoundList(2);" -->
+  
+  <button id="allButton" name="state"  value="all">전체</button>
+  <button id="ongoingButton" name="state"  value="ongoing">진행중</button>
+  <button id="completedButton" name="state"  value="completed">출고완료</button>
+
+  	    </form>
   
   <hr>
   <table id="table" border="1" class="table table-bordered">
@@ -143,7 +146,6 @@
 		 <td></td>
     </c:otherwise>
  </c:choose>
-  
 <!--   <td onclick="location.href='outboundPrint.jsp'">인쇄</td>  -->  
   </tr>
   </c:forEach>
@@ -151,37 +153,74 @@
   <hr>
   
    <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
-	 	 		<ul class="pagination" id="pagination">
-	 		<c:set var="state" value="${state eq '0' ? '&state=0' : state eq '1' ? '&state=1' : ''}" />
-	 		<c:set var="search" value="${search ne '' ? '&search='+=search : ''}" />
-		<c:choose>
-			<c:when test="${pageVO.startPage > pageVO.pageBlock}">
-				<li class="page-item"><a
-					href="/outbound/outboundList?pageNum=${pageVO.startPage - pageVO.pageBlock}${search}${state}"
-					class="page-link">이전</a></li>
-			</c:when>
-			<c:otherwise>
-			</c:otherwise>
-		</c:choose>
+<!-- 	 	 		<ul class="pagination" id="pagination"> -->
+<%-- <%-- 	 		<c:set var="state" value="${state eq '0' ? '&state=0' : state eq '1' ? '&state=1' : ''}" /> --%> 
+<%-- 	 		<c:set var="search" value="${search ne '' ? '&search='+=search : ''}" /> --%>
+<%-- 		<c:choose> --%>
+<%-- 			<c:when test="${pageVO.startPage > pageVO.pageBlock}"> --%>
+<!-- 				<li class="page-item"><a -->
+<%-- 					href="/outbound/outboundList?pageNum=${pageVO.startPage - pageVO.pageBlock}&search=${pageVO.search}&state=${state}" --%>
+<!-- 					class="page-link">이전</a></li> -->
+<%-- 			</c:when> --%>
+<%-- 			<c:otherwise> --%>
+<%-- 			</c:otherwise> --%>
+<%-- 		</c:choose> --%>
 
-		<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">  
-			<li
- 				class="page-item<c:if test="${pageVO.pageNum eq i}"> active</c:if>">  
- 				<a href="/outbound/outboundList?pageNum=${i}${search}${state}" class="page-link">${i}</a> 
-			</li> 
-	    </c:forEach> 
+<%-- 		<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">   --%>
+<!-- 			<li -->
+<%--  				class="page-item<c:if test="${pageVO.pageNum eq i}"> active</c:if>">   --%>
+<%--  				<a href="/outbound/outboundList?pageNum=${i}&search=${pageVO.search}&state=${state}" class="page-link">${i}</a>  --%>
+<!-- 			</li>  -->
+<%-- 	    </c:forEach>  --%>
 
- 		<c:choose> 
- 			<c:when test="${pageVO.endPage < pageVO.pageCount}"> 
- 				<li class="page-item"><a 
- 					href="/outbound/outboundList?pageNum=${pageVO.startPage + pageVO.pageBlock}${search}${state}" 
-					class="page-link">다음</a></li> 
- 			</c:when> 
- 			<c:otherwise> 
- 			</c:otherwise>
-		</c:choose>
- 	</ul>
+<%--  		<c:choose>  --%>
+<%--  			<c:when test="${pageVO.endPage < pageVO.pageCount}">  --%>
+<!--  				<li class="page-item"><a  -->
+<%--  					href="/outbound/outboundList?pageNum=${pageVO.startPage + pageVO.pageBlock}&search=${pageVO.search}&state=${state}"  --%>
+<!-- 					class="page-link">다음</a></li>  -->
+<%--  			</c:when>  --%>
+<%--  			<c:otherwise>  --%>
+<%--  			</c:otherwise> --%>
+<%-- 		</c:choose> --%>
+<!--  	</ul> -->
 <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
+  
+  <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
+	<div class="container">
+	 	<ul class="pagination"style="justify-content: center;">			
+			<c:choose>
+				<c:when test="${pageVO.startPage > pageVO.pageBlock}">
+					<li class="page-item"><a class="page-link" href="/outbound/outboundList?pageNum=${pageVO.startPage - pageVO.pageBlock}" style="margin: 0.5em;">이전</a></li>
+				</c:when>
+				<c:otherwise>
+				</c:otherwise>
+			</c:choose>
+			
+			<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
+				<c:choose>
+					<c:when test="${pageVO.search != null }">
+					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/outbound/outboundList?pageNum=${i}&search=${pageVO.search}&state=${state}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
+					</c:when>
+					<c:otherwise>
+					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/outbound/outboundList?pageNum=${i}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
+					</c:otherwise>
+				</c:choose>
+				
+			</c:forEach>
+			
+			<c:choose>
+				<c:when test="${pageVO.endPage < pageVO.pageCount}">
+					<li class="page-item"><a class="page-link" href="/outbound/outboundList?pageNum=${pageVO.startPage + pageVO.pageBlock}" style="margin: 0.5em;">다음</a></li>
+				</c:when>
+				<c:otherwise>
+				</c:otherwise>
+			</c:choose>
+		</ul>
+		</div>
+<!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
+ </div>
+  
+  
   
   
   

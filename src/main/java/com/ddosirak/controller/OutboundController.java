@@ -101,10 +101,10 @@ public class OutboundController {
 	}
 		
 	// 창고 리스트(pop)
-	@RequestMapping(value = "/factoryList", method = RequestMethod.GET)
-	public void factoryListGET() {
-		logger.debug("factoryListGET() 호출");
-	} 
+//	@RequestMapping(value = "/factoryList", method = RequestMethod.GET)
+//	public void factoryListGET() {
+//		logger.debug("factoryListGET() 호출");
+//	} 
 
 	// 상품 목록 리스트(pop)
 	@RequestMapping(value = "/itemList", method = RequestMethod.GET)
@@ -151,6 +151,7 @@ public class OutboundController {
 		
 		param.put("pageVO", pageVO); //hyo
 		param.put("state", state); //hyo
+//		param.put("search", search); 
 		
 		// 게시글 개수 가져오기
 		int count = pService.countOutList(param); // 요 동작만 각자 페이지에 맞게 수정하면 됨!!
@@ -303,30 +304,30 @@ public class OutboundController {
 //	}
 	
 	// 출고현황 그래프 데이터를 반환하는 메서드
-	@RequestMapping(value = "/outGrp", method = RequestMethod.GET)
-	@ResponseBody
-	public Map<String, Object> outGrpChartData(OutboundVO vo) throws Exception {
-	    logger.debug("outGrpChartData() 호출");
-	    
-	    List<Map<String, Object>> outGrp = oService.outGrp(vo);
-	    
-	    // 그래프에 필요한 데이터를 가공하여 Map에 담음
-	    Map<String, Object> chartData = new HashMap<>();
-	    List<String> labels = new ArrayList<>();
-	    List<Integer> data = new ArrayList<>();
-	    
-	    for (Map<String, Object> item : outGrp) {
-	        String itemName = (String) item.get("item_name");
-	        Integer count = (Integer) item.get("count");
-	        
-	        labels.add(itemName);
-	        data.add(count);
-	    }
-	    
-	    chartData.put("labels", labels);
-	    chartData.put("data", data);
-	    
-	    return chartData;
-	}
+//	@RequestMapping(value = "/outGrp", method = RequestMethod.GET)
+//	@ResponseBody
+//	public Map<String, Object> outGrpChartData(OutboundVO vo) throws Exception {
+//	    logger.debug("outGrpChartData() 호출");
+//	    
+//	    List<Map<String, Object>> outGrp = oService.outGrp(vo);
+//	    
+//	    // 그래프에 필요한 데이터를 가공하여 Map에 담음
+//	    Map<String, Object> chartData = new HashMap<>();
+//	    List<String> labels = new ArrayList<>();
+//	    List<Integer> data = new ArrayList<>();
+//	    
+//	    for (Map<String, Object> item : outGrp) {
+//	        String itemName = (String) item.get("item_name");
+//	        Integer count = (Integer) item.get("count");
+//	        
+//	        labels.add(itemName);
+//	        data.add(count);
+//	    }
+//	    
+//	    chartData.put("labels", labels);
+//	    chartData.put("data", data);
+//	    
+//	    return chartData;
+//	}
 	
 }

@@ -112,13 +112,14 @@ public class OutboundDAOImpl implements OutboundDAO {
 		return sqlSession.selectList(NAMESPACE + ".getStockList", out_num);
 	  }
 
-	  // 당일 출고 현황
-	  @Override
-	  public List<Map<String, Object>> outGrp(OutboundVO vo) throws Exception {
-	  	return sqlSession.selectList(NAMESPACE + ".outGrp", vo);
+		
+	  public Integer outCompleteToday() {
+		  return sqlSession.selectOne(NAMESPACE + ".outCompleteToday");
 	  }
-		
-		
+	  
+	  public Integer outScheduleToday() {
+		  return sqlSession.selectOne(NAMESPACE + ".outScheduleToday");
+	  }
 
 	
 	

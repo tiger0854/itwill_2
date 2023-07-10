@@ -44,7 +44,10 @@ public interface OutboundService {
 	// 수주 상태 2로 변경
 	public void recStateUpdate2(String re_code) throws Exception;
 	
-	// 당일 출고 현황
-	public List<Map<String, Object>> outGrp(OutboundVO vo) throws Exception;
+	// 당일 출고 완료
+	public Integer outCompleteToday() throws Exception;
+
+	// 당일 출고 예정 
+	public Integer outScheduleToday() throws Exception;
 	
 }

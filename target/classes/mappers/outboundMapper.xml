@@ -14,8 +14,6 @@
 		<result property="out_notes" column="out_notes"/>
 		<result property="out_Cqty" column="out_Cqty"/>
 		<result property="price" column="price"/>
-		<result property="stock_code" column="stock_code"/>
-		<result property="factory_code" column="factory_code"/>
 		<result property="out_date" column="out_date"/>
 		<result property="create_date" column="create_date"/>
 		
@@ -40,7 +38,7 @@
   	
   	<!-- 재고 리스트 -->
 	<select id="getStockList" resultType="com.ddosirak.domain.OutboundVO" resultMap="outbound"> 
-		select o.out_state, o.due_date, o.out_empNm, o.out_num, o.item_name, o.out_customerNm, o.out_qty, o.re_code, p.so_code, p.pQTY
+		select o.out_state, o.due_date, o.out_empNm, o.out_num, o.item_name, o.out_customerNm, o.out_qty, o.re_code, p.so_code, p.pQTY, o.out_notes
 		from outbound o join prod p
 		where o.out_num=#{out_num} 
 	</select>
@@ -49,8 +47,8 @@
 
   	<!-- 출고 등록 -->
 	<insert id="outInsert">
-		insert into outbound (out_num,out_customerNm,out_empCd,out_empNm,item_code,item_name,out_notes,out_qty,price,stock_code,factory_code,due_date,create_date,re_code) 
-		SELECT CONCAT('OUT', REPLACE(current_date(), '-', ''), ifnull(MAX(out_id)+1, 1)),#{out_customerNm},#{out_empCd},#{out_empNm},#{item_code},#{item_name},#{out_notes},#{out_qty},#{price},#{stock_code},#{factory_code},#{due_date},now(),#{re_code}
+		insert into outbound (out_num,out_customerNm,out_empCd,out_empNm,item_code,item_name,out_notes,out_qty,price,due_date,create_date,re_code) 
+		SELECT CONCAT('OUT', REPLACE(current_date(), '-', ''), ifnull(MAX(out_id)+1, 1)),#{out_customerNm},#{out_empCd},#{out_empNm},#{item_code},#{item_name},#{out_notes},#{out_qty},#{price},#{due_date},now(),#{re_code}
 		from outbound
 	</insert>
   	<!-- 출고 등록 -->
@@ -77,17 +75,12 @@
   			*
 		from outbound 
 		WHERE 1=1
-		<if test="state != null">
-		  <choose>
-		    <when test="state == 0 or state == 1">
-		      AND out_state = #{state}
-		    </when>
-		    <otherwise>
-		      AND out_state >= 0
-		    </otherwise>
-		  </choose>
-		</if>
-		<if test="pageVO.search != null">
+		<choose>
+  				<when test="state == 'all'">AND out_state>= 0</when>
+  				<when test="state == 'ongoing'">AND out_state = 1</when>
+  				<when test="state == 'completed'">AND out_state = 0</when>
+  		</choose> 
+		<if test="search != ''">
 			and out_num like CONCAT('%',#{pageVO.search},'%')
 		</if>
 		order by out_id desc
@@ -175,5 +168,21 @@
 		group by item_name
   	</select>
   	<!-- 출고 현황 그래프 -->
+  	
+  	<!-- 당일 출고 완료 그래프 -->
+  	<select id="outCompleteToday" resultType="com.ddosirak.domain.OutboundVO">
+  		SELECT COUNT(*) AS out_count
+		FROM outbound
+		WHERE DATE(out_date) = CURDATE();
+  	</select>
+  	<!-- 당일 출고 완료 그래프 -->
+  	
+  	<!-- 당일 출고 예정 그래프 -->
+  	<select id="outScheduleToday" resultType="com.ddosirak.domain.OutboundVO">
+  		SELECT COUNT(*) AS outSche_count
+		FROM outbound
+		WHERE DATE(due_date) = CURDATE();
+  	</select>
+  	<!-- 당일 출고 예정 그래프 -->
   
   </mapper>

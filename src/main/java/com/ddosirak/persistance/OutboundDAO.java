@@ -45,6 +45,8 @@ public interface OutboundDAO {
 	// 재고 리스트
 	public List<OutboundVO> getStockList(String out_num);
 	
-	// 당일  출고 현황
-	public List<Map<String, Object>> outGrp(OutboundVO vo) throws Exception;
+	public Integer outCompleteToday() throws Exception;
+	
+	public Integer outScheduleToday() throws Exception;
+	
 }

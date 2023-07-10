@@ -5,6 +5,7 @@
 <html lang="ko">
 <meta charset="UTF-8"> 
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <title>재고</title>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>

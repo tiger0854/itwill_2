@@ -5,6 +5,7 @@
 <html lang="ko">
 <meta charset="UTF-8"> 
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <title>수주 리스트</title>
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

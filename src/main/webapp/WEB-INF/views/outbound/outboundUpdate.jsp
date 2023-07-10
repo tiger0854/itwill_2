@@ -4,6 +4,7 @@
 <html lang="ko">
 <meta charset="UTF-8"> 
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <title>출고 수정</title>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
@@ -38,7 +39,7 @@
 	  <th>담당자</th>
 	  <th>수량</th>
 	  <th>납기일자</th>  
- 	  <th>적요</th>
+ 	  <th>비고</th>
     </tr>
     <tr>
 	  <td><input type="text" name="item_name" id="item_name" readonly></td>
@@ -48,6 +49,7 @@
 	  <td><input type="text" name="out_notes" id="out_notes"></td>
     </tr>
   </table>
+   <div style="color: red; font-size: small">수량, 납기일자, 비고만 수정 가능합니다.</div>
   <hr>
   	<button type="button" id="update" class="btn-update">수정</button>
   </form>
