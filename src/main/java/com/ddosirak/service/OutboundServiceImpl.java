@@ -93,10 +93,15 @@ public class OutboundServiceImpl implements OutboundService{
 		
 	}
 
-	// 당일 출고 현황
+
 	@Override
-	public List<Map<String, Object>> outGrp(OutboundVO vo) throws Exception {
-		return odao.outGrp(vo);
+	public Integer outCompleteToday() throws Exception {
+		return odao.outCompleteToday();
+	}
+
+	@Override
+	public Integer outScheduleToday() throws Exception {
+		return odao.outScheduleToday();
 	}
 
  

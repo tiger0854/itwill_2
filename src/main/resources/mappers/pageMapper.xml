@@ -87,13 +87,26 @@
 		SELECT COUNT(*) FROM outbound
 		where 
 			1=1
-		<if test="state != null">
-			and out_state = #{state}
-		</if>
-		<if test="pageVO.search != null">
-			and item_name like CONCAT('%',#{pageVO.search},'%')
+		<choose>
+  				<when test="state == 'all'">AND out_state>= 0</when>
+  				<when test="state == 'ongoing'">AND out_state = 1</when>
+  				<when test="state == 'completed'">AND out_state = 0</when>
+  		</choose> 
+		<if test="search != ''">
+			and out_num like CONCAT('%',#{pageVO.search},'%')
 		</if>
 	</select>
+<!-- 	<select id="countOutList" resultType="Integer" parameterType="map"> -->
+<!-- 		SELECT COUNT(*) FROM outbound -->
+<!-- 		where  -->
+<!-- 			1=1 -->
+<!-- 		<if test="state != null"> -->
+<!-- 			and out_state = #{state} -->
+<!-- 		</if> -->
+<!-- 		<if test="pageVO.search != null"> -->
+<!-- 			and item_name like CONCAT('%',#{pageVO.search},'%') -->
+<!-- 		</if> -->
+<!-- 	</select> -->
 	<!-- 출고목록 페이징 -->
 
 	<!-- 출근사원수 -->

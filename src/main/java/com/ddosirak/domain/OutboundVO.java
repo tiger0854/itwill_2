@@ -16,8 +16,6 @@ public class OutboundVO {
 	private int out_Cqty; // 출고 완료 수량
 	private int out_qty; // 출고 예정 수량
 	private int price; // 가격
-	private String stock_code; // 재고코드
-	private String factory_code; // 공장코드
 	private int out_state; // 출고상태 default 1 (진행중)
 	private String due_date; // 납기일자
 	private Date out_date; // 출고일자
@@ -59,12 +57,6 @@ public class OutboundVO {
 	}
 	public int getPrice() {
 		return price;
-	}
-	public String getStock_code() {
-		return stock_code;
-	}
-	public String getFactory_code() {
-		return factory_code;
 	}
 	public int getOut_state() {
 		return out_state;
@@ -120,12 +112,6 @@ public class OutboundVO {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public void setStock_code(String stock_code) {
-		this.stock_code = stock_code;
-	}
-	public void setFactory_code(String factory_code) {
-		this.factory_code = factory_code;
-	}
 	public void setOut_state(int out_state) {
 		this.out_state = out_state;
 	}
@@ -154,7 +140,7 @@ public class OutboundVO {
 		return "OutboundVO [out_id=" + out_id + ", out_num=" + out_num + ", out_customerNm=" + out_customerNm
 				+ ", out_empCd=" + out_empCd + ", out_empNm=" + out_empNm + ", item_code=" + item_code + ", item_name="
 				+ item_name + ", out_notes=" + out_notes + ", out_Cqty=" + out_Cqty + ", out_qty=" + out_qty
-				+ ", price=" + price + ", stock_code=" + stock_code + ", factory_code=" + factory_code + ", out_state="
+				+ ", price=" + price + ", out_state="
 				+ out_state + ", due_date=" + due_date + ", out_date=" + out_date + ", create_date=" + create_date
 				+ ", outNumCount=" + outNumCount + ", re_code=" + re_code + ", proOrderVO=" + proOrderVO + "]";
 	}

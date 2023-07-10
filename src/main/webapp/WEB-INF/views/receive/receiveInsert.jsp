@@ -5,7 +5,9 @@
 <html lang="ko">
 <meta charset="UTF-8"> 
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <title>수주 등록</title>
+<jsp:include page="../common/header.jsp"/>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -14,13 +16,13 @@
 
 </head>
 <body id="body-pd" style="font-family: 'TheJamsil5';">
-<jsp:include page="../common/header.jsp"/>
-
-<h1>receiveInsert.jsp</h1>
-  <h1>수주등록</h1>
+	<br>
+	<br>
+  <h3>수주등록</h3>
+  <span style="color: gray">receive register</span>
   
   <form action="" method="post">
-  <table border="1" class="table table-bordered">
+  <table border="1" class="table table-borderless" style="margin-top: 30px;">
   <tr>
   <th>수주업체코드</th>
   <td><input type="text" id="re_customerCd" name="re_customerCd" placeholder="수주업체코드" 
@@ -53,7 +55,7 @@
   </tr>
   </table>
     
-    <button type="submit" id="submitBtn">수주등록</button>
+    <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 200px;margin-bottom: 20px;float: right;">수주등록</button>
   </form>
 
 </body>
