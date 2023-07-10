@@ -41,7 +41,8 @@
 <!--   		</select> -->
 		
   		
-	품목코드  	<input type="text" name="item_code" id="item_code"><br>
+	  	<input type="hidden" name="item_code" id="item_code" >
+	품목명  	<input type="text" name="item_name" id="item_name" >
 <!--   	품목명	<input type="text" name="item_name" id="item_name"> -->
 <%--   		<input type="text" name="search" value="${pageVO.search }"> --%>
   		<button type="submit">Search</button>
@@ -62,33 +63,55 @@
   </c:forEach>
   </table>
   <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
-	 		<ul class="pagination" id="pagination">
-		<c:choose>
-			<c:when test="${pageVO.startPage > pageVO.pageBlock}">
-				<li class="page-item"><a
-					href="/foundation/itemdetail/itemdetailList?pop=rec&pageNum=${pageVO.startPage - pageVO.pageBlock}"
-					class="page-link">이전</a></li>
-			</c:when>
-			<c:otherwise>
-			</c:otherwise>
-		</c:choose>
+<!-- 	 		<ul class="pagination" id="pagination"> -->
+<%-- 		<c:choose> --%>
+<%-- 			<c:when test="${pageVO.startPage > pageVO.pageBlock}"> --%>
+<!-- 				<li class="page-item"><a -->
+<%-- 					href="/foundation/itemdetail/itemdetailList?pop=rec&pageNum=${pageVO.startPage - pageVO.pageBlock}" --%>
+<!-- 					class="page-link">이전</a></li> -->
+<%-- 			</c:when> --%>
+<%-- 			<c:otherwise> --%>
+<%-- 			</c:otherwise> --%>
+<%-- 		</c:choose> --%>
 
-			<c:if test="${pageVO.startPage > pageVO.pageBlock}">
-				<li class="page-item"><a class="page-link"
-					href="/foundation/itemdetail/itemdetailList?pop=rec&item_code=${Search.item_code}&pageNum=${pageVO.startPage - pageVO.pageBlock}">
-						</a></li>
-			</c:if>
-			<c:forEach var="i" begin="${pageVO.startPage}"
-				end="${pageVO.endPage}" step="1">
-				<li class="page-item"><a class="page-link"
-					href="/foundation/itemdetail/itemdetailList?pop=rec&item_code=${Search.item_code}&pageNum=${i}">${i}</a></li>
-			</c:forEach>
-			<c:if test="${pageVO.endPage < pageVO.pageCount}">
-				<li class="page-item"><a class="page-link"
-					href="/foundation/itemdetail/itemdetailList?pop=rec&item_code=${Search.item_code}&pageNum=${pageVO.startPage + pageVO.pageBlock}">
-							다음</a></li>
-			</c:if>
-		</ul>
+<%-- 			<c:if test="${pageVO.startPage > pageVO.pageBlock}"> --%>
+<!-- 				<li class="page-item"><a class="page-link" -->
+<%-- 					href="/foundation/itemdetail/itemdetailList?pop=rec&item_code=${Search.item_code}&pageNum=${pageVO.startPage - pageVO.pageBlock}"> --%>
+<!-- 						</a></li> -->
+<%-- 			</c:if> --%>
+<%-- 			<c:forEach var="i" begin="${pageVO.startPage}" --%>
+<%-- 				end="${pageVO.endPage}" step="1"> --%>
+<!-- 				<li class="page-item"><a class="page-link" -->
+<%-- 					href="/foundation/itemdetail/itemdetailList?pop=rec&item_code=${Search.item_code}&pageNum=${i}">${i}</a></li> --%>
+<%-- 			</c:forEach> --%>
+<%-- 			<c:if test="${pageVO.endPage < pageVO.pageCount}"> --%>
+<!-- 				<li class="page-item"><a class="page-link" -->
+<%-- 					href="/foundation/itemdetail/itemdetailList?pop=rec&item_code=${Search.item_code}&pageNum=${pageVO.startPage + pageVO.pageBlock}"> --%>
+<!-- 							다음</a></li> -->
+<%-- 			</c:if> --%>
+<!-- 		</ul> -->
  <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
+<%--   		${Search} --%>
+			<div class="container" style="margin-top: 30px; margin-bottom: 30px">
+				<ul class="pagination justify-content-center" id="pagination"
+					style="margin-top: 20px;">
+					<c:if test="${pageVO.startPage > pageVO.pageBlock}">
+						<li class="page-item"><a class="page-link"
+							href="/foundation/itemdetail/itemdetailList?pop=rec&item_code=${Search.item_code}&item_name=${Search.item_name}&pageNum=${pageVO.startPage - pageVO.pageBlock}">
+								</a></li>
+					</c:if>
+					<c:forEach var="i" begin="${pageVO.startPage}"
+						end="${pageVO.endPage}" step="1">
+						<li class="page-item"><a class="page-link"
+							href="/foundation/itemdetail/itemdetailList?pop=rec&item_code=${Search.item_code}&item_name=${Search.item_name}&pageNum=${i}"><span>${i}</span></a></li>
+					</c:forEach>
+					<c:if test="${pageVO.endPage < pageVO.pageCount}">
+						<li class="page-item"><a class="page-link"
+							href="/foundation/itemdetail/itemdetailList?pop=rec&item_code=${Search.item_code}&item_name=${Search.item_name}&pageNum=${pageVO.startPage + pageVO.pageBlock}">
+								</a></li>
+					</c:if>
+				</ul>
+			</div>
+
 </body>
 </html>

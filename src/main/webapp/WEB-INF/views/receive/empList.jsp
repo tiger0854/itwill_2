@@ -32,18 +32,18 @@
 <body id="body-pd" style="font-family: 'TheJamsil5';">
 <jsp:include page="../common/header.jsp"/>
 
-  <h1>user.jsp</h1>
-  담당자 검색
-  	 <form action="" >		
-  		<select id="kind" name="kind" >
-  			<option value="code">담당자코드</option>
-  			<option value="name">담당자명</option>
-  		</select>
+<!--   <h1>user.jsp</h1> -->
+<!--   담당자 검색 -->
+<!--   	 <form action="" >		 -->
+<!--   		<select id="kind" name="kind" > -->
+<!--   			<option value="code">담당자코드</option> -->
+<!--   			<option value="name">담당자명</option> -->
+<!--   		</select> -->
   		
-  		<input type="text" name="search" value="${pageVO.search }">
-  		<button type="submit">Search</button>
-  		<input type="hidden" name="pop" value="rec">
-  	</form>
+<%--   		<input type="text" name="search" value="${pageVO.search }"> --%>
+<!--   		<button type="submit">Search</button> -->
+<!--   		<input type="hidden" name="pop" value="rec"> -->
+<!--   	</form> -->
   
   <table border="1" class="table table-bordered">
   <tr>
@@ -59,38 +59,38 @@
   </c:forEach>
   </table>
  <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
-	 		<ul class="pagination" id="pagination">
-		<c:choose>
-			<c:when test="${pageVO.startPage > pageVO.pageBlock}">
-				<li class="page-item"><a
-					href="/emp/list?pop=rec&pageNum=${pageVO.startPage - pageVO.pageBlock}"
-					class="page-link">이전</a></li>
-			</c:when>
-			<c:otherwise>
-			</c:otherwise>
-		</c:choose>
+<!-- 	 		<ul class="pagination" id="pagination"> -->
+<%-- 		<c:choose> --%>
+<%-- 			<c:when test="${pageVO.startPage > pageVO.pageBlock}"> --%>
+<!-- 				<li class="page-item"><a -->
+<%-- 					href="/emp/list?pop=rec&pageNum=${pageVO.startPage - pageVO.pageBlock}" --%>
+<!-- 					class="page-link">이전</a></li> -->
+<%-- 			</c:when> --%>
+<%-- 			<c:otherwise> --%>
+<%-- 			</c:otherwise> --%>
+<%-- 		</c:choose> --%>
 
-	<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
-				<c:choose>
-					<c:when test="${pageVO.kind != null }">
-					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/emp/list?pop=rec&pageNum=${i}&kind=${pageVO.kind}&search=${pageVO.search}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
-					</c:when>
-					<c:otherwise>
-					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/emp/list?pop=rec&pageNum=${i}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
-					</c:otherwise>
-				</c:choose>
-		</c:forEach>
+<%-- 	<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1"> --%>
+<%-- 				<c:choose> --%>
+<%-- 					<c:when test="${pageVO.kind != null }"> --%>
+<%-- 					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/emp/list?pop=rec&pageNum=${i}&kind=${pageVO.kind}&search=${pageVO.search}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li> --%>
+<%-- 					</c:when> --%>
+<%-- 					<c:otherwise> --%>
+<%-- 					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/emp/list?pop=rec&pageNum=${i}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li> --%>
+<%-- 					</c:otherwise> --%>
+<%-- 				</c:choose> --%>
+<%-- 		</c:forEach> --%>
 
-		<c:choose>
-			<c:when test="${pageVO.endPage < pageVO.pageCount}">
-				<li class="page-item"><a
-					href="/emp/list?pageNum=${pageVO.startPage + pageVO.pageBlock}"
-					class="page-link">다음</a></li>
-			</c:when>
-			<c:otherwise>
-			</c:otherwise>
-		</c:choose>
-	</ul>
+<%-- 		<c:choose> --%>
+<%-- 			<c:when test="${pageVO.endPage < pageVO.pageCount}"> --%>
+<!-- 				<li class="page-item"><a -->
+<%-- 					href="/emp/list?pageNum=${pageVO.startPage + pageVO.pageBlock}" --%>
+<!-- 					class="page-link">다음</a></li> -->
+<%-- 			</c:when> --%>
+<%-- 			<c:otherwise> --%>
+<%-- 			</c:otherwise> --%>
+<%-- 		</c:choose> --%>
+<!-- 	</ul> -->
 <!---------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->	
 
 </body>

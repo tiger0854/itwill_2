@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ddosirak.domain.OutboundVO;
+import com.ddosirak.domain.PageVO;
 
 public interface OutboundService {
 	
@@ -37,8 +38,13 @@ public interface OutboundService {
 	// re_code
 	public String recCd(String out_num);
 	
-	// 수주 상태 변경
+	// 수주 상태 0으로 변경
 	public void recStateUpdate(String re_code) throws Exception;
 	
-
+	// 수주 상태 2로 변경
+	public void recStateUpdate2(String re_code) throws Exception;
+	
+	// 당일 출고 현황
+	public List<Map<String, Object>> outGrp(OutboundVO vo) throws Exception;
+	
 }

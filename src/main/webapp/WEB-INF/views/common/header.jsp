@@ -38,6 +38,12 @@ function foundDropdown() {
 	  collapseSale.classList.toggle('show');
 	}
 
+function recDropdown(){
+	const collapseSale = document.getElementById('rec');
+	  collapseSale.classList.toggle('show');
+}
+
+
 document.addEventListener("DOMContentLoaded", function(event) {
 
 	const showNavbar = (toggleId, navId, bodyId, headerId) =>{
@@ -121,11 +127,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		  	
 				</div>
 					</div>
-                  <a href="#" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">영업관리</span> </a>
-                 <div class="nav_link collapse" id="">
+					
+					<!-- 7/8 추가 -->
+                  <div class="nav_list">
+                 <a href="#" class="nav_link" onclick="recDropdown()"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">구매관리</span> </a> 
+                 <div class="nav_link collapse" id="rec">
 		  			<a href="/receive/receiveInsert" class="nav_link"> - 수주등록</a><br>
 		  			<a href="/receive/receiveList" class="nav_link"> - 수주현황</a><br>
 				</div>
+                 </div>
+					<!-- 7/8 추가 -->
                 <div class="nav_list">
                   <a href="#" class="nav_link" onclick="foundDropdown()"> <i class='bx bxs-package nav_name'></i> <span class="nav_name">기반관리</span> </a> 
                 <div class="nav_link collapse" id="foundation">

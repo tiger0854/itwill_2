@@ -19,7 +19,7 @@
 	<br>
   <h4>출고 예정 등록</h4>
  
-  <form action="" method="post">
+  <form role="form" action="" method="post" id="fr">
   <table border="1" class="table table-bordered">
   <tr>
   <th>담당자 코드</th>
@@ -133,6 +133,7 @@
 	  
 		// 유효성
 		var errorElement = document.getElementById('check_error');
+		var dueDateInput = document.getElementById('due_date');
 	
 		$(document).ready(function() {
 	    $("#submitBtn").click(function() {
@@ -153,15 +154,52 @@
 	    		  errorElement.textContent = '비고를 제외한 모든 칸을 입력해주세요.';
 	    		  return false; // submit 방지
 	    } else {
-	    	errorElement.text(""); // 경고 메시지 초기화
+
+	    	errorElement.textContent = ''; // 경고 메시지 초기화
 	    }
 	  });
 	});
 		
+		dueDateInput.addEventListener('input', function() {
+ 			errorElement.textContent = ''; // 수량 오류 메시지 초기화
+ 		});
 		
-
 		
+	
+		
+// 		var re_code_values = [];
+		
+// 		 $("tr[name='trProduct']").each(function() {
 
-	  	  </script>
+// 		  var re_code = $(this).find("input[name^='outboundList']").eq(0).val();
+// 		  re_code_values.push(re_code);
+// 		 });
+		
+// 		  var json = {};
+// 		  json['re_code'] = re_code_values;
+// 		  alert(JSON.stringify(json));
+
+// 		$.ajax({
+// 		  url: "/outbound/outboundInsert", 
+// 		  type: "POST",
+// 		  data: JSON.stringify(json),
+// 		  contentType: "application/json",
+// 		  success: function(response) {
+// 			  Swal.fire({
+// 	                title: "출고 등록이 완료되었습니다.",
+// 	                text: "",
+// 	                icon: "success"
+// 	              }).then(function() {
+// 	                opener.location.reload();
+// 	                window.close();
+// 	              });
+// 		  },
+// 		  error: function(xhr, status, error) {
+// 		    console.error("Ajax 요청 실패:", error);
+// 		  }
+// 		});
+			
+		
+</script>
 
 </html>

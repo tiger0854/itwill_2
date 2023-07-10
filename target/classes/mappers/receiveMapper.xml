@@ -55,27 +55,6 @@
 	</select>
 	<!-- 수주 목록 -->
 	
-<!-- 	<select id="receiveList" resultType="ReceiveVO" resultMap="receive"> -->
-<!-- 		select r.rec_id, r.re_code, r.item_code, r.item_name, r.re_customerNm, r.re_empCd, r.re_empNm, r.re_date, r.re_qty, r.re_state, o.out_state -->
-<!-- 		from receive r -->
-<!-- 		join outbound o -->
-<!-- 		where -->
-<!-- 			o.out_state is null -->
-<!-- 			<choose> -->
-<!-- 	  		<when test="kind == 'itemName'">AND item_name</when> -->
-<!-- 	  		<when test="kind == 'customerName'">AND re_customerNm</when>		 -->
-<!-- 	  		<when test="kind == 'reCd'">AND re_code</when>		 -->
-<!-- 	  		</choose>  -->
-<!-- 	  		<if test="search != ''"> -->
-<!-- 	  		LIKE CONCAT('%', #{search}, '%') -->
-<!-- 	  		</if> -->
-<!-- 		order by rec_id desc -->
-<!-- 		limit #{startRow}, #{pageSize} -->
-<!-- 	</select> -->
-	
-	
-	
-	
 	<!-- 수주 상세 -->
 	<select id="receiveDetail" resultType="ReceiveVO" >
 		select *

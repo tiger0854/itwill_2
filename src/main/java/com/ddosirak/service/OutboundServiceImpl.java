@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.ddosirak.domain.OutboundVO;
+import com.ddosirak.domain.PageVO;
 import com.ddosirak.persistance.OutboundDAO;
 
 @Service
@@ -47,7 +48,7 @@ public class OutboundServiceImpl implements OutboundService{
 		return odao.getStockList(out_num);
 	}
 
-//	 외 n건
+	// 외 n건
 	@Override
     public int getOutNumCount(String out_num) {
 		 int count = odao.getOutNumCount(out_num);
@@ -78,13 +79,27 @@ public class OutboundServiceImpl implements OutboundService{
 		return odao.recCd(out_num);
 	}
 
-	// 수주 상태 변경
+	// 수주 상태 변경(0)
 	@Override
 	public void recStateUpdate(String re_code) throws Exception {
 		odao.recStateUpdate(re_code);
 		
 	}
+	
+	//수주 상태 변경(2)
+	@Override
+	public void recStateUpdate2(String re_code) throws Exception {
+		odao.recStateUpdate2(re_code);
+		
+	}
 
+	// 당일 출고 현황
+	@Override
+	public List<Map<String, Object>> outGrp(OutboundVO vo) throws Exception {
+		return odao.outGrp(vo);
+	}
+
+ 
 
 	
 

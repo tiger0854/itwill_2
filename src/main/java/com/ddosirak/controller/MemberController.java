@@ -239,6 +239,8 @@ public class MemberController {
 			return "/outbound/empList";
 		} else if(pop != null && pop.equals("ok")) {
 			return "/inbound/empList";
+		} else if(pop != null && pop.equals("rec2")) {
+			return "/receive/empList2";
 		}
 			return "/emp/list";
 	}//listGET() method end

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ddosirak.domain.OutboundVO;
+import com.ddosirak.domain.PageVO;
 
 public interface OutboundDAO {
 	
@@ -34,11 +35,16 @@ public interface OutboundDAO {
 	// rec_code
 	public String recCd(String out_num);
 
-	// 수주 상태 수정
+	// 수주 상태 수정(0)
 	public void recStateUpdate(String re_code) throws Exception;
+
+	// 수주 상태 수정(2)
+	public void recStateUpdate2(String re_code) throws Exception;
 	
 
 	// 재고 리스트
 	public List<OutboundVO> getStockList(String out_num);
-
+	
+	// 당일  출고 현황
+	public List<Map<String, Object>> outGrp(OutboundVO vo) throws Exception;
 }
