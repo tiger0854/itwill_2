@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
@@ -37,6 +38,12 @@ function foundDropdown() {
 	  const collapseSale = document.getElementById('foundation');
 	  collapseSale.classList.toggle('show');
 	}
+
+function recDropdown(){
+	const collapseSale = document.getElementById('rec');
+	  collapseSale.classList.toggle('show');
+}
+
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
@@ -121,11 +128,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		  	
 				</div>
 					</div>
-                  <a href="#" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">영업관리</span> </a>
-                 <div class="nav_link collapse" id="">
-		  			<a href="/receive/receiveInsert" class="nav_link"> - 수주등록</a><br>
-		  			<a href="/receive/receiveList" class="nav_link"> - 수주현황</a><br>
-				</div>
+					
+					<!-- 7/8 추가 -->
                 <div class="nav_list">
                   <a href="#" class="nav_link" onclick="foundDropdown()"> <i class='bx bxs-package nav_name'></i> <span class="nav_name">기반관리</span> </a> 
                 <div class="nav_link collapse" id="foundation">
@@ -147,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				</div>
 				</div>
 
-                 <a href="#" class="nav_link"> <i class='bx bx-cart-add nav_icon'></i> <span class="nav_name">구매관리</span> </a> </div>
+                
 				<div class="nav_list">
 					<a href="#" class="nav_link" onclick="toggleDropdown2()"> <i class="bx bxs-cart-alt nav_icon"></i> <span class="nav_name">입/출고관리</span> </a> 
 					<div class="nav_link collapse" id="collapseSale2">
@@ -162,12 +166,21 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	
 				  </div>
 				</div>
+					<!-- 7/8 추가 -->
+                  <div class="nav_list">
+                 <a href="#" class="nav_link" onclick="recDropdown()"> <i class='bx bx-cart-add nav_icon'></i> <span class="nav_name">구매관리</span> </a> 
+                 <div class="nav_link collapse" id="rec">
+		  			<a href="/receive/receiveInsert" class="nav_link"> - 수주등록</a><br>
+		  			<a href="/receive/receiveList" class="nav_link"> - 수주현황</a><br>
+				</div>
+                 </div>
 				<div>
 				 <!-- 0622 -->
                  <a href=" /customer/customerList " class="nav_link"> <i class='bx bxs-briefcase-alt-2 nav_icon'></i> <span class="nav_name">거래처 관리</span></a> 
                  <!-- 0622 -->
 				</div>
-            </div> 
+            </div>
+            </div>  
             <div>
                 <a href="/public/boardList" class="nav_link"> <i class='bx bx-clipboard nav_icon' ></i><span class="nav_name">게시판</span></a> 
             	<a href="/public/chatList" class="nav_link"> <i class='bx bx-message-dots nav_icon' ></i> <span class="nav_name">메신저</span> </a>

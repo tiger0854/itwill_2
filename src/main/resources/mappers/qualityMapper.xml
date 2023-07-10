@@ -116,9 +116,9 @@
 		items_error_rate ie
 		ON pp.wo_code =
 		ie.wo_code
-		WHERE p.wo_code =
+		WHERE pp.wo_code =
 		#{wo_code}
-		<if test="item_code != null">
+		<if test="item_code != null and item_code != ''">
 			and pp.item_code LIKE CONCAT('%', #{item_code}, '%')
 		</if>
 		<if test="error_status != null and error_status != ''">
@@ -151,7 +151,7 @@
 
 	<!-- 불량 현황 검색 갯수 -->
 	<select id="errorCount" resultType="java.lang.Integer">
-		select count(*)
+		select count(DISTINCT pp.item_code)
 		from prod p
 		LEFT OUTER JOIN prod_perf_add pp
 		ON p.wo_code
@@ -160,13 +160,7 @@
 		LEFT OUTER JOIN items_error_rate ie
 		ON pp.wo_code =
 		ie.wo_code
-		where p.wo_code LIKE CONCAT('%', #{wo_code}, '%')
-		<if test="item_code != null and item_code != ''">
-			and pp.item_code LIKE CONCAT('%', #{item_code}, '%')
-		</if>
-		<if test="error_status != null and error_status != ''">
-			and ie.error_status LIKE CONCAT('%', #{error_status}, '%')
-		</if>
+		where pp.wo_code LIKE CONCAT('%', #{wo_code}, '%')
 	</select>
 
 	<!-- 품질검사 등록 -->

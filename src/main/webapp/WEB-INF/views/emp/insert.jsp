@@ -4,6 +4,7 @@
 <html lang="ko">
 <meta charset="UTF-8">
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <title>사원 정보</title>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
@@ -91,6 +92,8 @@ function checkFile(el){ //파일 용량 & 확장자 체크
 			            	<option value="생산과">생산과</option>
 			            	<option value="생산 1팀">생산 1팀</option>
 			            	<option value="생산 2팀">생산 2팀</option>
+			            	<option value="조리팀">조리팀</option>
+			            	<option value="품질팀">품질팀</option>
 			            </optgroup>
 			            <optgroup label="유통">
 			            	<option value="유통과">유통과</option>

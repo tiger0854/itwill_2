@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
@@ -53,7 +54,8 @@ $(document).ready(function(){
 		    <table class="table table-striped" style="margin-top: 10px;" >
 		
 		        <tr>
-		            <td rowspan="4"><img src="/img/employee_photo/${evo.employee_id}.png" alt="profile_photo" width="150" height="150" ></td>
+		            <td rowspan="4"><img src="../../resources/${evo.employee_id}.png"
+						onerror="this.onerror=null; this.src='../../resources/default_profile_photo.png';" width="150" height="150"></td>
 		            <td>성명</td>
 		            <td><input type="text" size="50" value="${evo.employee_name }" id="employee_name" name="employee_name" readonly></td>
 		            <td>주민등록번호</td>
@@ -66,6 +68,8 @@ $(document).ready(function(){
 			            	<option value="생산과">생산과</option>
 			            	<option value="생산 1팀">생산 1팀</option>
 			            	<option value="생산 2팀">생산 2팀</option>
+			            	<option value="조리팀">조리팀</option>
+			            	<option value="품질팀">품질팀</option>
 			            </optgroup>
 			            <optgroup label="유통">
 			            	<option value="유통과">유통과</option>

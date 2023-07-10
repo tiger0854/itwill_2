@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <meta charset="UTF-8">
 <title>Messenger</title>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
@@ -116,7 +117,7 @@
 // 					console.log(chatdate);
 					console.log(last_chat);
 					if(value[1].chatdate != null){
-						var timeTmp = new Date(value[1].chatdate);
+						var timeTmp = new Date(value[1].chatdate  - (60*60*1000)*9);
 						
 						var year = timeTmp.getFullYear();
 						var month = ('0' + (timeTmp.getMonth() + 1)).slice(-2);

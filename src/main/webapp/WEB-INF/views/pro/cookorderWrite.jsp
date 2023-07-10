@@ -26,75 +26,110 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 <script>
-// 	$(document).ready(function() {
-// 		$(".btn-add").click(function() {
-// 			var frObj = $("#fr");
-// 			var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
-// 			$.ajax({
-// 				url : "/pro/cookorderWrite", // 요청을 보낼 서버의 URL
-// 				type : "POST", // HTTP 요청 방식 (POST)
-// 				data : formData, // 전송할 데이터 (직렬화된 폼 데이터)
-// 				success : function(response) {
-// 					alert("작성 성공!");
-// 					opener.location.reload();
-// 					window.close(); // 윈도우 창을 닫습니다.
-// 				},
-// 				error : function(xhr, status, error) {
-// 					alert("작성 실패!");
-// 					console.error("에러 발생:", error);
-// 				}
-// 			});
-// 		});
-// 	});
+
 
 	//품명 검색 팝업창
 	function openItem() {
 		window.open("/pro/itemList", "popup",
 				"width=500, height=600,left=100, top=100");
 	}
-	//품명 검색 팝업창
-	  function opensucode(){
-		  var childWindow = window.open("/pro/cosuList","popup", "width=500, height=600,left=100, top=100");
-	      childWindow.onbeforeunload =getRelatedMaterials;
-	}	
+	function opensucode() {
+		  var childWindow = window.open("/pro/cosuList", "popup", "width=500, height=600,left=100, top=100");
+		  childWindow.addEventListener("beforeunload", function() {
+		    getRelatedMaterials();
+		    recodecheck();
+		  });
+		}	
+	
+	  function recodecheck() {
+		  var re_code = $("#re_code").val(); // re_code 값 가져오기
+		  console.log(re_code);
+		  $.ajax({
+		    url: "/pro/checkcooksuList", // 첫 번째 요청을 보낼 서버의 URL
+		    type: "GET", // HTTP 요청 방식 (GET)
+		    data: { re_code: re_code }, // 전송할 데이터
+		    success: function(response) {
+		      if (response === true) {
+			     // 존재하지 않는 경우
+			     $("#add").prop("disabled", false);
+			     $('#ipmsg').show();
+			     $('#ipmsg').css('color', 'green');
+			     $('#ipmsg').text("*수주 등록이 가능합니다");  
+
+		      } else {
+			        // 이미 존재하는 경우
+			        $("#add").prop("disabled", true);
+			        $('#ipmsg').show();
+			        $('#ipmsg').css('color', 'red');
+			        $('#ipmsg').text("*중복된 수주는 등록 불가능합니다 ");  
+		      }
+		    },
+		    error: function(xhr, status, error) {
+		      console.error("첫 번째 요청 에러 발생:", error);
+		    }
+		  });
+		}
+	
 	
 		$(document).ready(function() {
 			$('#material_item').hide();
 			$('#item_code').click(function() {
 				if ($('#item_code').val() != '') {
 					$('#material_item').show()
-
 				}
 			});
-
 		});
 
+
+		
 		function onInsert() {
+
 
 			var frObj = $("#fr");
 			var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
-			$.ajax({
-				url : "/pro/cookorderWrite", // 요청을 보낼 서버의 URL
-				type : "POST", // HTTP 요청 방식 (POST)
-				data : formData, // 전송할 데이터 (직렬화된 폼 데이터)
-				success : function(response) {
-					Swal.fire("작성 성공!");
-					opener.location.reload();
-					window.close(); // 윈도우 창을 닫습니다.
-				},
-				error : function(xhr, status, error) {
-					console.error("에러 발생:", error);
-				}
-			});
+			
+			
+				if (frObj[0].checkValidity()) {
+				    Swal.fire({
+				      title: "작성 성공!",
+				      text: "작성이 성공하였습니다.",
+				      icon: "success",
+				      showCancelButton: false,
+				      confirmButtonText: "확인"
+				    }).then(function() {
+				      $.ajax({
+				        url: "/pro/cookorderWrite",
+				        type: "POST",
+				        data: formData,
+				        success: function(response) {
+				          opener.location.reload();
+				          window.close();
+				        },
+				        error: function(xhr, status, error) {
+				          Swal.fire("작성실패!");
+				        }
+				      });
+				    });
+				  } else {
+				    Swal.fire("입력란을 채워주세요!");
+				  }
+				
 		}
+		
+		
+		
+		
+		
 
 		// 상품 검색 후 자재 가져오기
 		function getRelatedMaterials() {
 			var itemCode = document.getElementById("item_code").value;
 			if (!itemCode) {
-				alert("상품 검색을 해주세요!");
+// 				alert("상품 검색을 해주세요!");
 				return;
 			}
 			$.ajax({
@@ -109,7 +144,7 @@
 					if (materials.length > 0) {
 						receiveCheckboxValues(materials); // 자재 배열 업데이트
 					} else {
-						alert("해당 상품에 관련된 자재가 없습니다.");
+// 						alert("해당 상품에 관련된 자재가 없습니다.");
 					}
 				},
 				error : function(xhr, status, error) {
@@ -134,7 +169,7 @@
 						"width=500, height=600,left=100, top=100");
 				popup.materialArray = materialArray;
 			} else {
-				alert("상품 코드부터 검색해주세요.");
+// 				alert("상품 코드부터 검색해주세요.");
 				return false;
 			}
 		}
@@ -205,10 +240,12 @@
 			<i class='bx bx-edit'></i> 조리지시 등록
 		</h4>
 	</div>
+	
+	<span id="ipmsg" ></span>
 	<!-- 작업지시등록 폼 -->
 	<div
 		style="display: flex; justify-content: center; margin-bottom: 15px">
-		<img src="../../resources/css/logo.png">
+<!-- 		<img src="../../resources/css/logo.png"> -->
 	</div>
 	<div class="container mt-3">
 		<!--  		<hr width="100%" style="border: 2px solid black"> -->
@@ -223,7 +260,7 @@
 			    <tr>
 			      <td>수주번호</td>
 			     <td><div class="input-group">
-				    <input style="width: 40%" type="text" name="so_code" id="re_code" placeholder="수주번호" class="form-control" readonly>
+				    <input style="width: 40%" type="text" name="so_code" onclick="recodecheck()" id="re_code" placeholder="수주번호" class="form-control">
 				    <input type="button" class="btn btn-primary" onclick="opensucode()" value="검색">
 				</div></td>
 			    </tr>
@@ -287,7 +324,7 @@
 
 			<!-- 작업지시등록, 취소 버튼 -->
 			<div style="text-align: center; margin-top: 50px">
-				<button type="button" class=btn-add onclick="onInsert()">
+				<button type="button" class=btn-add id="add" onclick="onInsert();">
 					<i class='bx bx-edit'></i> 등록
 				</button>
 				<button class=btn-search onclick="window.close()">X 취소</button>

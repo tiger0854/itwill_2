@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.ddosirak.domain.OutboundVO;
+import com.ddosirak.domain.PageVO;
 
 @Repository
 public class OutboundDAOImpl implements OutboundDAO {
@@ -35,6 +36,7 @@ public class OutboundDAOImpl implements OutboundDAO {
 	// 출고 리스트
 	@Override
 	public List<OutboundVO> getOutList(Map<String, Object> param) {
+		logger.debug("param DAO IMPL#########################33 : " + param);
 		return sqlSession.selectList(NAMESPACE + ".outList", param);
 	}
 	
@@ -89,18 +91,31 @@ public class OutboundDAOImpl implements OutboundDAO {
 	  }
 
 	  
-	  // 수주 상태 수정
+	  // 수주 상태 수정(0)
 	  @Override
 	  public void recStateUpdate(String re_code) throws Exception {
 	  	 logger.debug("수주 상태 수정 완룡 DAO지롱");
 		 sqlSession.update(NAMESPACE + ".recStateUpdate", re_code);
       }
 
+	  // 수주 상태 수정(2)
+	  @Override
+	  public void recStateUpdate2(String re_code) throws Exception {
+		  logger.debug("수주 상태 수정 완룡 DAO지롱");
+		  sqlSession.update(NAMESPACE + ".recStateUpdate2", re_code);
+	  }
+
 
 	  // 재고 리스트
 	  @Override
 	  public List<OutboundVO> getStockList(String out_num) {
 		return sqlSession.selectList(NAMESPACE + ".getStockList", out_num);
+	  }
+
+	  // 당일 출고 현황
+	  @Override
+	  public List<Map<String, Object>> outGrp(OutboundVO vo) throws Exception {
+	  	return sqlSession.selectList(NAMESPACE + ".outGrp", vo);
 	  }
 		
 		

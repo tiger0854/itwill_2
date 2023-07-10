@@ -78,11 +78,10 @@
 								<td>${vo.item_code }</td>
 								<td>${vo.total_QTY }</td>
 								<td>${vo.total_error_QTY }</td>
-								<c:if test="${vo.total_QTY < 0 }">
-									<td><fmt:formatNumber value="${errorRate}"
-											minFractionDigits="0" maxFractionDigits="0" />%</td>
+								<c:if test="${(((vo.total_QTY - vo.total_error_QTY) / vo.total_QTY * 100) - 100) * (-1) <= 0 }">
+									<td>0%</td>
 								</c:if>
-								<c:if test="${vo.total_QTY > 0 }">
+								<c:if test="${(((vo.total_QTY - vo.total_error_QTY) / vo.total_QTY * 100) - 100) * (-1) > 0 }">
 									<td><fmt:formatNumber value="${errorRate}"
 											minFractionDigits="0" maxFractionDigits="0" />%</td>
 								</c:if>
@@ -107,7 +106,7 @@
 					</tbody>
 				</table>
 
-
+ 
 				<!-- 페이징처리 -->
 				<%--   		${Search} --%>
 				<div class="container" style="margin-top: 30px; margin-bottom: 30px">

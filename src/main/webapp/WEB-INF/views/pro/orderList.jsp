@@ -35,17 +35,29 @@ function openItem(){
 
 
 function ProOrderDelete(wo_code){
-		if(confirm("정말로 삭제하시겠습니까?")){
-			location.href='/pro/proOrderDelete?wo_code='+wo_code;
-			alert("삭제완료!");
-		}
+
+		  Swal.fire({
+			    title: "경고",
+			    text: "정말로 삭제하시겠습니까?",
+			    icon: "warning",
+			    showCancelButton: true,
+			    confirmButtonText: "네",
+			    cancelButtonText: "취소"
+			  }).then(result => {
+			    if (result.isConfirmed) {
+			      location.href = '/pro/proOrderDelete?wo_code='+wo_code;
+//			      Swal.fire("수동마감 완료!");
+			    }
+			  });		
+		
+		
 	}
 
 
 function itemrecipeList(item_code,item_name){ // 해당 작업지시번호에 맞는 생산실적 ajax로 불러오기
-	var item_code = item_code;
-	item_name = item_name;
-	console.log(item_name);
+// 	var item_code = item_code;
+// 	item_name = item_name;
+// 	console.log(item_name);
 // 	alert(instrId);
 
 	$.ajax({
@@ -60,36 +72,34 @@ function itemrecipeList(item_code,item_name){ // 해당 작업지시번호에 �
 		/* asyns는 기본 값이 true, false이면 응답이 끝나면 다음 작업을 수행하라는 의미 */
 		success : function(array,item_name){
 // 			alert("성공");
-			console.log(array,item_name);
+// 			console.log(array,item_name);
 // 			alert("array.length"+ array.length);
-			itemrecipeListPrint(array,item_name);
+			itemrecipeListPrint(array);
 
 		} //function(array) 
 		
 	}); // ajax
 } 
 
-function itemrecipeListPrint(array,item_name){ // 해당 생산실적 출력
-	var oQTY = $("#oQTY").val();
-// 	alert(oQTY);
-	var output ="";
-		output=output+"<table class=product-table  style='margin-top: 20px;margin-bottom:20px; width: 100%;'><tr id='th'><tr><th colspan='3'> 레시피</th></tr><th>자재코드</th><th>자재이름</th><th>투입량</th></tr>";
-	for (var i=0; i<array.length; i++) {
-	
-		output=output+"<tr id='con'>";
-		output=output+"<td>"+array[i].material_code+"</td>";
-		output=output+"<td>"+array[i].material_name+"</td>";	
-		output=output+"<td>"+array[i].material_con*oQTY+"</td>";	
-		output=output+"</tr>";	
-		}
+function itemrecipeListPrint(array) {
+	  var oQTY = $("#oQTY").val();
+	  var item_name = $("#item_name").val();
+	  console.log(item_name);
+	  var output = "";
+	  output += "<table class='product-table' style='margin-top: 20px; margin-bottom: 20px; width: 100%;'>";
+	  output += "<tr id='th'><tr><th colspan='3'>" + item_name + "해당 레시피</th></tr><th>자재코드</th><th>자재이름</th><th>투입량</th></tr>";
+	  
+	  for (var i = 0; i < array.length; i++) {
+	    output += "<tr id='con'>";
+	    output += "<td>" + array[i].material_code + "</td>";
+	    output += "<td>" + array[i].material_name + "</td>";
+	    output += "<td>" + array[i].material_con * oQTY + "</td>";
+	    output += "</tr>";
+	  }
 
-	output=output+"</table>";
-	
-	$("#Require_ajax").html(output); // innerHtml과 같은 역할
-
-		
-} //PerformListPrint(array)
-
+	  output += "</table>";
+	  $("#Require_ajax").html(output);
+	}
 
 
 
@@ -116,10 +126,9 @@ function itemrecipeListPrint(array,item_name){ // 해당 생산실적 출력
 <form id="instr">
 <!-- 작업지시목록 검색, 등록버튼 -->
 <div class=btn-container>
-<button type="submit" class=btn-search><i class='bx bx-search-alt-2'></i> 조회</button>
-<input type="button" class=btn-add onclick="orderwrite()" value="추가">
+<input class="btn btn-primary" type="submit" value="조회">
+<input type="button" class="btn btn-outline-primary" onclick="orderwrite()" value="추가">
 </div>
-
 <table class=product-box style="margin-top: 20px; width: 100%; " border="1">
 			<tr>
 				<td>라인</td>
@@ -207,8 +216,8 @@ function itemrecipeListPrint(array,item_name){ // 해당 생산실적 출력
 	</c:choose>
         <td>${vo.delivery_date}</td>
         <td>${vo.line_code}</td>
-        <td onclick="itemrecipeList('${vo.item_code}','${vo.item_name}');">${vo.item_code}</td>
-        <td>${vo.item_name}</td>
+        <td onclick="itemrecipeList('${vo.item_code}','${vo.item_name}');"> ${vo.item_code}</td>
+        <td><input type="hidden" id="item_name" value="${vo.item_name}" >${vo.item_name}</td>
         <td><input type="hidden" id="oQTY" value="${vo.oQTY}" >${vo.oQTY}</td>
         <td>${vo.pQTY}</td>
 		<c:choose>

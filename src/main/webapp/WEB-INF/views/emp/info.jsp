@@ -6,6 +6,7 @@
 <html lang="ko">
 <meta charset="UTF-8">
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <title>사원 정보</title>
 <link rel="stylesheet" type="text/css"
 	href="../../resources/css/css.css">
@@ -97,7 +98,7 @@
 															if (voList.length !== 0) {
 																for (var i = 0; i < voList.length; i++) {
 																	var timeMS = new Date(
-																			voList[i].date_time)
+																			voList[i].date_time  - (60*60*1000)*9) // 9시간 빼기
 																	const year = timeMS
 																			.getFullYear(); //0000년 가져오기
 																	const month = timeMS
@@ -171,8 +172,8 @@
 			<table class="table table-striped" style="margin-top: 10px;">
 
 				<tr>
-					<td rowspan="4"><img src="/img/${evo.employee_id}.png"
-						alt="profile_photo" width="150" height="150"></td>
+					<td rowspan="4"><img src="../../resources/${evo.employee_id}.png"
+						onerror="this.onerror=null; this.src='../../resources/default_profile_photo.png';" width="150" height="150"></td>
 					<td>성명</td>
 					<td><input type="text" size="20" value="${evo.employee_name }"
 						id="employee_name" name="employee_name" readonly> 사원번호: ${evo.employee_id }</td>
@@ -193,6 +194,8 @@
 								<option value="생산과">생산과</option>
 								<option value="생산 1팀">생산 1팀</option>
 								<option value="생산 2팀">생산 2팀</option>
+								<option value="조리팀">조리팀</option>
+			            		<option value="품질팀">품질팀</option>
 							</optgroup>
 							<optgroup label="유통">
 								<option value="유통과">유통과</option>

@@ -1,5 +1,6 @@
 package com.ddosirak.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,16 +16,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ddosirak.domain.InboundVO;
 import com.ddosirak.domain.OutboundListVO;
 import com.ddosirak.domain.OutboundVO;
 import com.ddosirak.domain.PageVO;
-import com.ddosirak.domain.ReceiveVO;
 import com.ddosirak.service.OutboundService;
 import com.ddosirak.service.PageService;
-import com.ddosirak.service.ReceiveService;
-
 
 @Controller
 @RequestMapping(value = "/outbound/*")
@@ -61,8 +59,35 @@ public class OutboundController {
 		
 		return "redirect:/outbound/outboundList";
 	}
+	
+//	@ResponseBody
+//	@RequestMapping(value = "/outboundInsert", method = RequestMethod.POST)
+//	public String outInsertPOST(@ModelAttribute(value="OutboundListVO") OutboundListVO olVo
+//								,@RequestParam(value="re_code", required=false) String[] re_code) throws Exception {
+//		logger.debug("outInsertPOST() 호출");
+//		logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@22"+olVo + "");
+//		
+//		for(int i=0;i<olVo.getOutboundList().size();i++) {
+//			OutboundVO vo = olVo.getOutboundList().get(i);
+//			oService.outInsert(vo);
+//		}
+//		logger.debug(olVo + "");
+//		
+//		
+//		for(int i = 0; i < re_code.length; i++) {
+//	        oService.recStateUpdate2(re_code[i]); // receive re_state 상태변경
+//	    	logger.debug("수주 상태 수정 완료");
+//	    }
+//
+//		
+//		return "redirect:/outbound/outboundList";
+//	}
+//	
+	
 
 	
+	
+
 	// 거래처 리스트(pop)
 	@RequestMapping(value = "/customerList", method = RequestMethod.GET)
 	public void customerListGET() {
@@ -104,7 +129,7 @@ public class OutboundController {
 		//================================페이징 처리를 위한 값 받아오기 동작========================================
 		// 페이징 처리
 		// 한 화면에 보여줄 글 개수 설정
-		int pageSize = 5; // sql문에 들어가는 항목
+		int pageSize = 10; // sql문에 들어가는 항목
 		Map<String, Object> param = new HashMap<String, Object>(); // hyo
 		
 		// 현페이지 번호 가져오기
@@ -156,11 +181,14 @@ public class OutboundController {
 	    // 출고 리스트 가져오기
 	    List<OutboundVO> outList;
 	    outList = oService.getOutList(param);
+	    
+	    logger.debug("param @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2; " + param);
 
 		model.addAttribute("outList", outList);
 		model.addAttribute("state", state);
 		model.addAttribute("search", search);
-
+		
+		logger.debug("state @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2" + state);
 		 
 		return "/outbound/outboundList";   
 
@@ -221,13 +249,13 @@ public class OutboundController {
 	
 	@RequestMapping(value="/outProcess",method=RequestMethod.POST)
 	public void outProcessPOST(OutboundVO vo, @RequestParam(name = "out_num", required = false) String out_num) throws Exception {
-		logger.debug("outProcessGET() 호출!");
+		logger.debug("outProcessPOST() 호출!");
 		
 		oService.outProcessModify(vo);
 		
-		String re_code = oService.recCd(out_num);
+		String re_code = oService.recCd(out_num); // receive re_code 가져오기
 		logger.debug("re_code !~~~~~~~~~~~~~~~~~~~~~~~~~#@#!@#$@$: " + re_code);
-		oService.recStateUpdate(re_code);
+		oService.recStateUpdate(re_code); // receive re_state 상태변경
 	
 		logger.debug("수주 상태 수정 완료");
 		
@@ -264,6 +292,41 @@ public class OutboundController {
 	}
 	
 	
+	// http://localhost:8088/outbound/outGrp
+	// 출고현황 그래프
+//	@RequestMapping(value = "/outGrp", method = RequestMethod.GET)
+//	@ResponseBody
+//	public List<Map<String, Object>> outGrpGET(OutboundVO vo) throws Exception {
+//	    logger.debug("outGrpGET() 호출");
+//	    List<Map<String, Object>> outGrp = oService.outGrp(vo);
+//	    return outGrp;
+//	}
 	
+	// 출고현황 그래프 데이터를 반환하는 메서드
+	@RequestMapping(value = "/outGrp", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> outGrpChartData(OutboundVO vo) throws Exception {
+	    logger.debug("outGrpChartData() 호출");
+	    
+	    List<Map<String, Object>> outGrp = oService.outGrp(vo);
+	    
+	    // 그래프에 필요한 데이터를 가공하여 Map에 담음
+	    Map<String, Object> chartData = new HashMap<>();
+	    List<String> labels = new ArrayList<>();
+	    List<Integer> data = new ArrayList<>();
+	    
+	    for (Map<String, Object> item : outGrp) {
+	        String itemName = (String) item.get("item_name");
+	        Integer count = (Integer) item.get("count");
+	        
+	        labels.add(itemName);
+	        data.add(count);
+	    }
+	    
+	    chartData.put("labels", labels);
+	    chartData.put("data", data);
+	    
+	    return chartData;
+	}
 	
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ddosirak.domain.OrderVO;
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.ReceiveVO;
 import com.ddosirak.service.PageService;
@@ -86,7 +87,7 @@ public class ReceiveController {
 		//================================페이징 처리를 위한 값 받아오기 동작========================================
 		// 페이징 처리
 		// 한 화면에 보여줄 글 개수 설정
-		int pageSize = 5; // sql문에 들어가는 항목
+		int pageSize = 10; // sql문에 들어가는 항목
 		
 		// 현페이지 번호 가져오기
 		String pageNum = request.getParameter("pageNum");
@@ -154,6 +155,14 @@ public class ReceiveController {
 	public void receiveUpdateGET(Model model, @RequestParam("re_code") String re_code) throws Exception {
 		logger.debug("receiveUpdateGET() 호출");
 		model.addAttribute("vo", rService.receiveDetail(re_code));	
+	}
+	
+	@RequestMapping(value = "/receiveUpdate",method=RequestMethod.POST )
+	public String receiveUpdatePOST(ReceiveVO uvo) throws Exception {
+		logger.debug(" receiveUpdatePOST() 호출");
+		rService.receiveUpdate(uvo);
+		
+		return "redirect:/receive/receiveList";
 	}
 	
 	

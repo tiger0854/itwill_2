@@ -73,13 +73,13 @@
   	
   	<!-- 일용직 직원 수 -->
   		<select id="alCount_all" resultType="Integer">
-  			SELECT COUNT(employee_id) FROM emp_main WHERE position='일용' AND working_hours='전일반' AND emp_date=curdate(); 
+  			SELECT COUNT(employee_id) FROM emp_main WHERE position='일용' AND working_hours='전일반' AND employee_status = '재직중'; 
   		</select>
   		<select id="alCount_am" resultType="Integer">
-  			SELECT COUNT(employee_id) FROM emp_main WHERE position='일용' AND working_hours='오전반' AND emp_date=curdate();
+  			SELECT COUNT(employee_id) FROM emp_main WHERE position='일용' AND working_hours='오전반' AND employee_status = '재직중';
   		</select>
   		<select id="alCount_pm" resultType="Integer">
-  			SELECT COUNT(employee_id) FROM emp_main WHERE position='일용' AND working_hours='오후반' AND emp_date=curdate();
+  			SELECT COUNT(employee_id) FROM emp_main WHERE position='일용' AND working_hours='오후반' AND employee_status = '재직중';
   		</select>
   	<!-- 일용직 직원 수 -->
   	<!-- 임직원 수 -->
@@ -138,7 +138,7 @@
   	
   	<!-- 사번 이름 찾기 -->
   	<select id="vacationfind" resultType="String">
-  	SELECT employee_name FROM emp_main WHERE id=#{id}
+  	SELECT employee_name FROM emp_main WHERE employee_id=#{id}
   	</select>
   	<!-- 사번 이름 찾기 -->
   	
@@ -285,4 +285,7 @@
   			SELECT COUNT(*) FROM emp_vacation
   		</select>
   <!-- vacationlist 페이징 --> 
+
+  
+  
   </mapper>

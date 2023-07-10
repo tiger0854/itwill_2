@@ -60,6 +60,11 @@ public interface CookOrderService {
 
 	// 수주번호 체크
 	public Boolean checkrechod(String re_code);
+	
+	// 수주번호 중복체크
+	public Boolean checksuList(String re_code);
+	
+	public Boolean checksucookList(String re_code);
 
 	
 

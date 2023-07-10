@@ -77,9 +77,18 @@
   
   </table>
   
-	  <button class="btn-update">수정</button>
+  
+  <c:choose>
+	  <c:when test="${vo.re_state == 1}">
+	     <button class="btn-update">수정</button>
+	  </c:when>
+	  <c:otherwise>
+	     <font style="color: red; font-size: small;">*출고 완료된 수주는 수정이 불가합니다.</font><br>
+	  </c:otherwise>
+  </c:choose>
+  	  
 <!-- 	  <button class="btn-del">삭제</button> -->
-	  <button class="btn-list">목록</button>
+		  <button class="btn-list">목록</button>
 
 
 </body>

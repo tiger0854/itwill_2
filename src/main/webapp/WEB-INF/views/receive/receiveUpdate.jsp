@@ -20,10 +20,12 @@
 	var popupY = Math.ceil(( window.screen.height - popupHeight )/2);
 	
 	function openChildWindow1() {	
-	    var childWindow = window.open("/receive/empList", "empList", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);		
+	    var childWindow = window.open("/emp/list?pop=rec2", "empList2", 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);		
 	  }
 	
 	// 팝업창 오픈
+
+	
 	
 	// 정보 전달
 	$(document).ready(function(){

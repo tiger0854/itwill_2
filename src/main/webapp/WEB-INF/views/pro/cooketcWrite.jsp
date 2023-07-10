@@ -26,6 +26,8 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 <script type="text/javascript">
 	function handlegobdchange() {
@@ -68,20 +70,19 @@
 		    }
 		  });
 		});
+	
 
-	$(document).ready(function() {
-		  $(".btn-add").click(function() {
-		    var frObj = $("#fr");
-		    var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
-		    
-		    // 필수 필드 유효성 검사
+	function onInsert() {
+		  var frObj = $("#fr");
+		  var formData = frObj.serialize();
+		    Swal.fire("작성완료!");
 		    if (frObj[0].checkValidity()) {
+		    
 		      $.ajax({
 		        url: "/pro/cooketcWrite", // 요청을 보낼 서버의 URL
 		        type: "POST", // HTTP 요청 방식 (POST)
 		        data: formData, // 전송할 데이터 (직렬화된 폼 데이터)
 		        success: function(response) {
-		          alert("작성 성공!");
 		          opener.location.reload();
 		          window.close(); // 윈도우 창을 닫습니다.
 		        },
@@ -92,13 +93,9 @@
 		      });
 		    } else {
 		      // 필수 필드가 비어있을 경우 처리할 내용
-		      alert("모든 칸을 입력해 주세요!");
+		      Swal.fire("모든 칸을 입력해 주세요!");
 		    }
-		  });
-		});
-	
-	
-	
+		}
 </script>
 </head>
 <body>
@@ -117,7 +114,7 @@
 		<!--  		<hr width="100%" style="border: 2px solid black"> -->
 		<!--         <hr width="100%" style="border: 2px solid black"> -->
 		<!-- 품번, 품명, 실적일, 실적수량, 불량여부, 불량사유 , 비고 -->
-		<form id="fr" role="form" method="post" action="">
+		<form role="form" id="fr" method="post">
 		<input type="hidden" name="cpQTY" id="cpQTY" value="${cvo.cpQTY }"
 							readonly required></td>
 			<span id="ipmsg"></span>				
@@ -146,11 +143,11 @@
 					<tr>
 						<td>지시수량</td>
 						<td><input type="number" name="coQTY" id="coQTY" value="${cvo.material_con }"
-							readonly required></td>
+							readonly  required="required"></td>
 					</tr>
 					<tr>
 						<td>실적수량</td>
-						<td><input type="number" name="cfQTY" id="cfQTY" min="0" required></td>
+						<td><input type="number" name="cfQTY" id="cfQTY" min="0"  required="required"></td>
 					</tr>
 					<tr>
 						<td>실적일</td>
@@ -166,7 +163,7 @@
 					</tr>
 					<tr>
 						<td>불량사유</td>
-						<td><input class="gobd-reason" type="text" name="err_reason"></td>
+						<td><input class="gobd-reason" type="text" name="err_reason" ></td>
 					</tr>
 					<tr>
 						<td>조리시간</td>
@@ -184,7 +181,7 @@
 			
 			<!-- 작업지시등록, 취소 버튼 -->
 			<div style="text-align: center; margin-top: 50px">
-				<button class="btn-add">
+				<button  class="btn btn-primary" id="add" onclick="onInsert();">
 					<i class='bx bx-edit'></i> 등록
 				</button>
 				<button class=btn-search onclick="window.close()">X 취소</button>

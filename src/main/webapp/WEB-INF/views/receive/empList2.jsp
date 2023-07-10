@@ -11,20 +11,19 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
 
-function sendInfo(row) {
-    var data = [];
-    var cells = row.getElementsByTagName("td");
-    for (var i = 0; i < cells.length; i++) {
-      data.push(cells[i].innerText);
-    }
-    // 정보를 부모 창으로 전달합니다.
-    window.opener.document.getElementById("out_empCd").value = data[0];
-    window.opener.document.getElementById("out_empNm").value = data[1];
-    var errorElement1 = window.opener.document.getElementById('check_error');
-    errorElement1.textContent = '';   // 부모창 경고 메시지 초기화
-    window.close();
-  }  
-  </script>
+
+	function sendInfo(row) {
+	    var data = [];
+	    var cells = row.getElementsByTagName("td");
+	    for (var i = 0; i < cells.length; i++) {
+	      data.push(cells[i].innerText);
+	    }
+	    // 정보를 부모 창으로 전달합니다.
+	    window.opener.document.getElementById("re_empCd").value = data[0];
+	    window.opener.document.getElementById("re_empNm").value = data[1];
+	    window.close();
+	  }  
+</script>
 
 </head>
 
@@ -33,7 +32,7 @@ function sendInfo(row) {
 
 <!--   <h1>user.jsp</h1> -->
 <!--   담당자 검색 -->
-<!--    	 <form action="" >		 -->
+<!--   	 <form action="" >		 -->
 <!--   		<select id="kind" name="kind" > -->
 <!--   			<option value="code">담당자코드</option> -->
 <!--   			<option value="name">담당자명</option> -->
@@ -41,9 +40,9 @@ function sendInfo(row) {
   		
 <%--   		<input type="text" name="search" value="${pageVO.search }"> --%>
 <!--   		<button type="submit">Search</button> -->
-<!--   		<input type="hidden" name="pop" value="out"> -->
+<!--   		<input type="hidden" name="pop" value="rec"> -->
 <!--   	</form> -->
-  	
+  
   <table border="1" class="table table-bordered">
   <tr>
   <td>담당자코드</td> <!-- 클릭하면 팝업창 꺼지면서 폼에 입력 -->
@@ -51,13 +50,10 @@ function sendInfo(row) {
   </tr>
   
  <c:forEach var="vo" items="${empList }">
- <c:if test="${vo.department_name == '유통과' || vo.department_name == '출고팀'}">
   <tr onclick="sendInfo(this);">
   <td>${vo.employee_id }</td>
   <td>${vo.employee_name }</td>
   </tr>
- </c:if>
-  
   </c:forEach>
   </table>
  <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
@@ -65,7 +61,7 @@ function sendInfo(row) {
 <%-- 		<c:choose> --%>
 <%-- 			<c:when test="${pageVO.startPage > pageVO.pageBlock}"> --%>
 <!-- 				<li class="page-item"><a -->
-<%-- 					href="/emp/list?pop=out&pageNum=${pageVO.startPage - pageVO.pageBlock}" --%>
+<%-- 					href="/emp/list?pop=rec&pageNum=${pageVO.startPage - pageVO.pageBlock}" --%>
 <!-- 					class="page-link">이전</a></li> -->
 <%-- 			</c:when> --%>
 <%-- 			<c:otherwise> --%>
@@ -75,10 +71,10 @@ function sendInfo(row) {
 <%-- 	<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1"> --%>
 <%-- 				<c:choose> --%>
 <%-- 					<c:when test="${pageVO.kind != null }"> --%>
-<%-- 					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/emp/list?pop=out&pageNum=${i}&kind=${pageVO.kind}&search=${pageVO.search}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li> --%>
+<%-- 					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/emp/list?pop=rec&pageNum=${i}&kind=${pageVO.kind}&search=${pageVO.search}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li> --%>
 <%-- 					</c:when> --%>
 <%-- 					<c:otherwise> --%>
-<%-- 					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/emp/list?pop=out&pageNum=${i}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li> --%>
+<%-- 					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/emp/list?pop=rec&pageNum=${i}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li> --%>
 <%-- 					</c:otherwise> --%>
 <%-- 				</c:choose> --%>
 <%-- 		</c:forEach> --%>

@@ -6,8 +6,8 @@
 <mapper namespace="com.ddosirak.mapper.ItemRecipeMapper">
 	<!-- 아이템 레시피 -->
 	<select id="itemrecipe"
-		resultType="com.ddosirak.domain.ItemdetailVO">
-		SELECT material_code, material_con FROM item_recipe
+		resultType="com.ddosirak.domain.ItemRecipeListVO">
+		SELECT material_code, material_con, material FROM item_recipe
 		where
 		item_code=#{item_code}
 	</select>
@@ -16,7 +16,7 @@
 	<!-- 레시피 목록 출력 -->
 	<select id="itemRecipeList"
 		resultType="com.ddosirak.domain.ItemRecipeListVO">
-		select i.item_code, i.material_code, i.material_con, id.item_name, md.material_name
+		select i.item_code, i.material_code, i.material_con, id.item_name, md.material_name, md.material_unit
 		from item_recipe i
 		join item_detail id
 		on i.item_code= id.item_code
@@ -53,7 +53,7 @@
 
 	<!-- 레시피 수정 -->
 	<select id="selectItemRecipe" resultType="com.ddosirak.domain.ItemRecipeListVO">
-		select ir.material_code, ir.material_con, m.material_name
+		select ir.material_code, ir.material_con, m.material_name, m.material_unit
 		from item_recipe ir join material_detail m
 		on ir.material_code = m.material_code
 		where item_code=#{item_code}

@@ -26,7 +26,9 @@ function sendInfo(row) {
      newRow.find("input[id=out_customerNm]").val(data[3]);
      newRow.find("input[id=out_qty]").val(data[4]);
    
-    window.close();
+     var errorElement = window.opener.document.getElementById('check_error');
+     errorElement.textContent = '';   // 부모창 경고 메시지 초기화
+     window.close();
   }  
 
 

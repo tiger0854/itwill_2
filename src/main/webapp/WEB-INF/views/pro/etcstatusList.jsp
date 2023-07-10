@@ -16,9 +16,12 @@
 		var wo_status = "${pvo.wo_status}";
 		
 		if(wo_status === "마감") {
-			alert("마감된 지시입니다!");
+        	Swal.fire({
+                title: "마감된 지시입니다!",
+                text: "",
+                icon: "error"
+              })
 		}else{
-		
 		
 		console.log(woCode);
 		// 새 창을 열기 위한 URL
@@ -36,19 +39,39 @@
 	}
 	
 	function etcRemove(perfId,wo_code) {
-		if(confirm("정말로 삭제하시겠습니까?")){
-		location.href = '/pro/etcRemove?perf_id='+perfId+'&wo_code='+wo_code;
-		alert("삭제완료!");
-		}
+		
+		  Swal.fire({
+			    title: "경고",
+			    text: "정말로 삭제하시겠습니까?",
+			    icon: "warning",
+			    showCancelButton: true,
+			    confirmButtonText: "네",
+			    cancelButtonText: "취소"
+			  }).then(result => {
+			    if (result.isConfirmed) {
+			    location.href = '/pro/etcRemove?perf_id='+perfId+'&wo_code='+wo_code;
+//			      Swal.fire("수동마감 완료!");
+			    }
+			  });
 	}
 	
-// 	wostatus
-	function wostatus(wo_code) {
-		if(confirm("수동 마감하 시겠습니까?")){
-			location.href = '/pro/wostatusEnd?wo_code='+wo_code;
-			alert("수동마감 완료!");
+		// 	wostatus
+		function wostatus(wo_code) {
+		  Swal.fire({
+		    title: "경고",
+		    text: "수동마감 하시겠습니까?",
+		    icon: "warning",
+		    showCancelButton: true,
+		    confirmButtonText: "네",
+		    cancelButtonText: "취소"
+		  }).then(result => {
+		    if (result.isConfirmed) {
+		      window.location.href = '/pro/wostatusEnd?wo_code=' + wo_code;
+		      // Swal.fire("수동마감 완료!");
+		    }
+		  });
 		}
-	}
+	
 </script>
 
 </head>
@@ -113,13 +136,11 @@
 		    </tbody>
 		  </table>
 				<!-- 작업지시목록 검색, 등록버튼 -->
-				<div class=btn-container>
-					<button class=btn-search onclick="wostatus('${param.wo_code }')">수동마감</button>
-					<button class=btn-add onclick="etcwrite('${param.wo_code }')">
-						<i class='bx bx-plus-medical'></i> 실적등록
-					</button>
-				</div>				
-				
+			
+		<div class=btn-container>
+		<input class="btn btn-primary" type="button" value="수동 마감" onclick="wostatus('${param.wo_code }')">
+		<input type="button" class="btn btn-outline-primary" onclick="etcwrite('${param.wo_code }')" value="실적 등록">
+		</div>	
 				<table class="product-table"
 					style="margin-top: 20px; width: 100%; text-align: center;">
 

@@ -32,10 +32,20 @@ function openmaterial(){
 
 
 function cookOrderDelete(co_code){
-		if(confirm("정말로 삭제하시겠습니까?")){
-			location.href='/pro/cookOrderDelete?co_code='+co_code;
-			alert("삭제완료!");
-		}
+	  Swal.fire({
+		    title: "경고",
+		    text: "정말로 삭제하시겠습니까?",
+		    icon: "warning",
+		    showCancelButton: true,
+		    confirmButtonText: "네",
+		    cancelButtonText: "취소"
+		  }).then(result => {
+		    if (result.isConfirmed) {
+		      location.href = '/pro/cookOrderDelete?co_code='+co_code;
+//		      Swal.fire("수동마감 완료!");
+		    }
+		  });
+	
 	}
 
 //품명 검색 팝업창
@@ -63,8 +73,8 @@ function opensucode() {
 <form id="instr">
 <!-- 작업지시목록 검색, 등록버튼 -->
 <div class=btn-container>
-<button type="submit" class=btn-search><i class='bx bx-search-alt-2'></i> 조회</button>
-<button class=btn-add onclick="orderwrite()"><i class='bx bx-plus-medical'></i> 추가</button>
+<input class="btn btn-primary" type="submit" value="조회">
+<input type="button" class="btn btn-outline-primary" onclick="orderwrite()" value="추가">
 </div>
 <table class="product-box"style="margin-top: 20px; width: 100%; " border="1">
 			<tr>

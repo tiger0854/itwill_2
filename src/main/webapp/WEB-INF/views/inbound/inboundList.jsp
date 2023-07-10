@@ -158,7 +158,7 @@ height: 50px; vertical-align: middle; text-align: center;
   
     <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
 	<div class="container">
-	 	<ul class="pagination"style="justify-content: center;">			
+	 	<ul class="pagination" style="justify-content: center;">			
 			<c:choose>
 				<c:when test="${pageVO.startPage > pageVO.pageBlock}">
 					<li class="page-item"><a class="page-link" href="/inbound/inboundList?pageNum=${pageVO.startPage - pageVO.pageBlock}" style="margin: 0.5em;">◀</a></li>
