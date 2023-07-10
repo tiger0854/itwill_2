@@ -60,16 +60,16 @@
     
 </script>
 <style type="text/css">
-td{height: 80px !important; vertical-align: middle;}
+td{height: 80px !important; vertical-align: middle;font-weight: bold;}
 </style>
 </head>
 <body  id="body-pd">
 
 
 <div class="container" style=" width: 1000px; margin: auto; margin-top:100px; ">
+<h4 style="font-weight: bold;"><i class="bx bx-book"></i>입고 예정등록</h4>
+<hr style="border: 2px solid black;">
 <input type="button" class="btn btn-outline-primary" onclick="location.href='/inbound/inboundList'" value="입고리스트로 이동" style=" width: 200px;margin-bottom: 20px;float: right;">
-<h3>입고예정등록</h3>
-<span style="color: gray">receive register</span>
 
 <input type="hidden" id="order_piece"><!-- 발주수량 -->
 

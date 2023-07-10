@@ -72,4 +72,14 @@ public class InboundServiceImpl implements InboundService {
 		
 	}
 
+	@Override
+	public Integer selectNowIndate() {
+		return idao.selectNowIndate();
+	}
+
+	@Override
+	public Integer selectNowEdate() {
+		return idao.selectNowEdate();
+	}
+
 }

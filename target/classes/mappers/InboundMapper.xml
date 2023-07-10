@@ -106,5 +106,16 @@
   	WHERE material_code Like #{material_code}
   	</update>
   	
+  	<!-- 오늘의 입고예정 목록 수 -->
+	<select id="selectNowIndate" resultType="Integer">
+	SELECT count(in_date) from ret_in where in_date = current_date();
+	</select>
+  	<!-- 오늘의 입고예정 목록 수 -->
+  	
+  	<!-- 오늘의 입고완료 목록 수  -->
+  	<select id="selectNowEdate" resultType="Integer">
+  	select count(in_Edate) from ret_in where in_Edate = current_date();
+  	</select>	
+  	<!-- 오늘의 입고완료 목록 수  -->
   
   </mapper>

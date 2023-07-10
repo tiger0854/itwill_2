@@ -27,6 +27,12 @@
   	</select>	
    	<!-- 거래처목록  -->
    	
+   	<!-- 거래처목록(엑셀용)  -->
+   	<select id="selectALL" resultType="CustomerVO">
+   	SELECT * FROM ret_customer
+   	</select>
+   	<!-- 거래처목록(엑셀용)   -->
+   	
    	<!-- 거래처 상세목록  -->
   	<select id="selectCustomerDetail" resultType="CustomerVO">
   		SELECT * FROM ret_customer

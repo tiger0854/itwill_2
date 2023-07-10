@@ -59,6 +59,12 @@ public class CustomerDAOImpl implements CustomerDAO {
 		return sqlSession.selectOne(NAMESPACE+".selectCusNumber",cus_number);
 	}
 
+	@Override
+	public List<CustomerVO> customerALL() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(NAMESPACE+".selectALL");
+	}
+
 
 	
 }

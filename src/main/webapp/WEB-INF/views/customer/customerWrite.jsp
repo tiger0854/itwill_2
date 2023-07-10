@@ -107,8 +107,8 @@ th{height: 60px;}
     <th>거래처분류</th>
     <td>	<select name="cus_stat" class="form-control">
 		<option>거래처 분류를 선택해주세요.</option>
-		<option value="1">납입처</option>
-		<option value="2">납품처</option>
+		<option value="납입">납입처</option>
+		<option value="납품">납품처</option>
 		</select></td>
   </tr>
   <tr>

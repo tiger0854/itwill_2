@@ -67,19 +67,19 @@ input[type="number"]::-webkit-inner-spin-button {
 } 
        
 th{background-color:  #F3F2F2 !important;}
-td{height: 80px !important; vertical-align: middle;}
+td{height: 80px !important; vertical-align: middle;font-weight: bold;}
 
 
 </style>
 </head>
 <body  id="body-pd" style="font-family: 'TheJamsil5';">
 
-<div class="container" style=" width: 1000px; margin: auto; margin-top:100px; ">
+<div class="container" style=" width: 80%; margin: auto; margin-top:100px; ">
+
+
+<h4 style="font-weight: bold;"><i class="bx bx-book"></i>발주등록</h4>
+<hr style="border: 2px solid black;">
 <input type="button" class="btn btn-outline-primary" onclick="location.href='/inbound/orderList'" value="발주리스트로 이동" style=" width: 200px;margin-bottom: 20px;float: right;">
-
-<h3>발주등록</h3>
-<span style="color: gray">order register</span>
-
 <form action="" method="POST" id="fr">
 <table class="table table-borderless" style="margin-top: 30px;">
   <tr>

@@ -50,12 +50,12 @@ height: 50px; vertical-align: middle; text-align: center;
     
 <!-- Nav tabs -->
 
-<div class="container" style="margin-top: 100px;max-width: 100% !important;">
+<div class="container" style="margin-top: 120px;max-width: 90% !important;">
 
-<h3 style="font-style: italic;" onclick="location.href='/customer/customerList'">거래처LIST</h3>
-
+<h4 style="font-weight: bold;" onclick="location.href='/customer/customerList'"><i class="bx bx-book"></i>거래처 관리</h4>
+<hr style="border: 2px solid black;">
 <!-- Tab panes -->
-<div class="tab-content" style="margin-top: 30px; " >
+<div class="tab-content" style="margin-top: 20px; " >
 
 <!-- 전체 -->
   <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -107,7 +107,7 @@ height: 50px; vertical-align: middle; text-align: center;
 	    <td onclick="openChildWindow2(${vo.cus_id});"class="detail-Link">${vo.cus_code}</td>
 	    <td>${vo.cus_name}</td>
 		<c:choose>
-       		<c:when test="${vo.cus_stat == 1}">
+       		<c:when test="${vo.cus_stat == '납입'}">
        		  <td>납입처</td>
        		</c:when>
        		<c:otherwise>
@@ -131,6 +131,7 @@ height: 50px; vertical-align: middle; text-align: center;
 
       <div style="color: red; margin-bottom: 10px;">*거래처 코드를 클릭하면 상세보기 및 수정페이지가 열립니다.</div>
   <button type="button" class="btn btn-danger"style="margin-bottom: 10px;" onclick="deleteInbound();">선택삭제</button>
+  <button type="button" class="btn btn-secondary"style="margin-bottom: 10px;" onclick="location.href='/customer/excelDown'">엑셀로 내려받기</button>
 
  </div>
    <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->

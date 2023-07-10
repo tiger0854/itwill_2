@@ -43,10 +43,11 @@ height: 50px; vertical-align: middle; text-align: center;
     
 <!-- Nav tabs -->
 
-<div class="container" style="margin-top: 100px;max-width: 100% !important;">
-<h3 style="font-style: italic;">입고현황</h3>
+<div class="container" style="margin-top: 120px;max-width: 100% !important;">
+<h4 style="font-weight: bold;" onclick="location.href='/customer/customerList'"><i class="bx bx-book"></i>입고현황</h4>
+<hr style="border: 2px solid black;">
 
-<div class="tab-content" style="margin-top: 30px; " >
+<div class="tab-content" style="margin-top: 20px; " >
 
 <!-- 전체 -->
   <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">

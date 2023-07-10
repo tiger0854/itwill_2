@@ -5,7 +5,7 @@ public class CustomerVO {
 	    private int cus_id;
 	    private String cus_code;
 	    private String cus_name;
-	    private int cus_stat;
+	    private String cus_stat;
 	    private String cus_number;
 	    private String cus_rep;
 	    private String cus_resp;
@@ -34,10 +34,10 @@ public class CustomerVO {
 		public void setCus_name(String cus_name) {
 			this.cus_name = cus_name;
 		}
-		public int getCus_stat() {
+		public String getCus_stat() {
 			return cus_stat;
 		}
-		public void setCus_stat(int cus_stat) {
+		public void setCus_stat(String cus_stat) {
 			this.cus_stat = cus_stat;
 		}
 		public String getCus_number() {

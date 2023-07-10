@@ -52,5 +52,11 @@ public class CustomerServiceImpl implements CustomerService {
 		return cdao.selectCusNumber(cus_number);
 	}
 
+	@Override
+	public List<CustomerVO> customerALL() {
+		// TODO Auto-generated method stub
+		return cdao.customerALL();
+	}
+
 
 }
