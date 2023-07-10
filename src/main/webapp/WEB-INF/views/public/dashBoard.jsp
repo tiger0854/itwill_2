@@ -12,9 +12,55 @@
 <style type="text/css">
 
 </style>
+</head>
+<body id="body-pd">
+<h1>대시보드</h1>
 
-<script type="text/javascript">
- // ----------------------   라인별 생산률 -----------------------------
+<div class="emp_count">
+  <canvas id="emp_count"  width ="300" height="300"></canvas>
+</div>
+
+<!-- 라인별 생산률 그래프 -->
+<h2>라인별 생산률</h2>
+<canvas id="canvas"></canvas>
+<!-- 라인별 생산률 그래프 -->
+
+<p>vacationCount:${vacationCount }</p>
+<p>pvacationCount:${pvacationCount }</p>
+<p>bvacountCount:${bvacountCount }</p>
+<p>selectNowIndate:${selectNowIndate }</p>
+<p>selectNowEdate:${selectNowEdate }</p>
+<p>outScheduleToday:${outScheduleToday }</p>
+<p>outCompleteToday:${outCompleteToday }</p>
+
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+const emp_count = document.getElementById('emp_count');
+
+new Chart(emp_count, {
+  type: 'pie',
+  data: {
+    labels: ['임직원', '전일 일용근로자', '오전 일용근로자', '오후 일용근로자'],
+    datasets: [{
+      label: '직원 현황',
+      data: [${empCount}, ${alCount_all}, ${alCount_am}, ${alCount_pm}],
+      borderWidth: 2
+    }]
+  },
+  options: {
+	responsive: false,
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+}); // chart end
+
+// ----------------------   라인별 생산률 -----------------------------
 $(document).ready(function(){
 	
 	var result = JSON.parse('${graphListJson}');
@@ -81,45 +127,6 @@ $(document).ready(function(){
 	});
 });
 // ----------------------   라인별 생산률 ------------------------------
-</script>
 
-</head>
-<body id="body-pd">
-<h1>대시보드</h1>
-
-<div class="emp_count">
-  <canvas id="emp_count"  width ="300" height="300"></canvas>
-</div>
-
-<!-- 라인별 생산률 그래프 -->
-<h2>라인별 생산률</h2>
-<canvas id="canvas"></canvas>
-<!-- 라인별 생산률 그래프 -->
-
-</body>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-
-const emp_count = document.getElementById('emp_count');
-
-new Chart(emp_count, {
-  type: 'pie',
-  data: {
-    labels: ['임직원', '전일 일용근로자', '오전 일용근로자', '오후 일용근로자'],
-    datasets: [{
-      label: '직원 현황',
-      data: [${empCount}, ${alCount_all}, ${alCount_am}, ${alCount_pm}],
-      borderWidth: 2
-    }]
-  },
-  options: {
-	responsive: false,
-    scales: {
-      y: {
-        beginAtZero: true
-      }
-    }
-  }
-}); // chart end
 </script>
 </html>
