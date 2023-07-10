@@ -33,7 +33,7 @@
   	
   	<!-- 작업지시 목록 출력-->
   	<select id="proOrderList" resultType="com.ddosirak.domain.ProOrderVO">
-		SELECT * FROM prod LIMIT #{startRow}, #{pageSize}
+		SELECT * FROM prod order by wo_code desc LIMIT #{startRow}, #{pageSize} 
   	</select>
   	
   	<!-- 작업지시 검색목록 -->
@@ -58,6 +58,7 @@
 	    </otherwise>
 	  </choose>
 	  AND item_code LIKE CONCAT('%', #{item_code}, '%')
+	  order by wo_code desc
 	  LIMIT #{startRow}, #{pageSize}
 	</sql>
 <!-- 	  LIMIT #{startRow}, #{pageSize} -->
@@ -74,9 +75,7 @@
 	      delivery_date=#{delivery_date},
 	      line_code=#{line_code},
 	      item_code=#{item_code},
-	      oQTY=#{oQTY},
-	      pQTY=#{pQTY},
-	      wo_status=#{wo_status}
+	      oQTY=#{oQTY}
 	  WHERE wo_code=#{wo_code}
 	</update>
   	<!-- 작업지시  수정 -->

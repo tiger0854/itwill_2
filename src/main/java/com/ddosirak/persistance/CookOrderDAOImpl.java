@@ -200,6 +200,19 @@ public class CookOrderDAOImpl implements CookOrderDAO {
 	public boolean checkrecode(String re_code) {
 		return sqlSession.selectOne(NAMESPACE+".checkR", re_code);
 	}
+	
+	//수주번호 중복체크
+	@Override
+	public Boolean checksuList(String re_code) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NAMESPACE+".checkS", re_code);
+	}
+
+	@Override
+	public Boolean checksucookList(String re_code) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NAMESPACE+".checkCS", re_code);
+	}
 
 
 

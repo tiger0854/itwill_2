@@ -15,28 +15,35 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <script>
+function onUpdate() {
+	  var frObj = $("#fr");
+	  var formData = frObj.serialize();
+	    Swal.fire("수정완료!");
+	    if (frObj[0].checkValidity()) {
+	    
+	      $.ajax({
+	        url: "/pro/orderEdit", // 요청을 보낼 서버의 URL
+	        type: "POST", // HTTP 요청 방식 (POST)
+	        data: formData, // 전송할 데이터 (직렬화된 폼 데이터)
+	        success: function(response) {
+	          opener.location.reload();
+	          window.close(); // 윈도우 창을 닫습니다.
+	        },
+	        error: function(xhr, status, error) {
+//	          alert("모든 칸을 입력해 주세요!");
+	          console.error("에러 발생:", error);
+	        }
+	      });
+	    } else {
+	      // 필수 필드가 비어있을 경우 처리할 내용
+	      Swal.fire("모든 칸을 입력해 주세요!");
+	    }
+	}
 
-$(document).ready(function() {
-  $(".btn-add").click(function() {
-    var frObj = $("#fr");
-    var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
-    $.ajax({
-      url: "/pro/orderEdit", // 요청을 보낼 서버의 URL
-      type: "POST", // HTTP 요청 방식 (POST)
-      data: formData, // 전송할 데이터 (직렬화된 폼 데이터)
-      success: function(response) {
-		 alert("수정 성공!");
-		 opener.location.reload();
-       window.close(); // 윈도우 창을 닫습니다.
-      },
-      error: function(xhr, status, error) {
-        console.error("에러 발생:", error);
-      }
-    });
-  });
-});
+
 </script>
 
 </head>
@@ -52,7 +59,7 @@ $(document).ready(function() {
 <div class="container mt-3">
 <!--         <hr width="100%" style="border: 2px solid black"> -->
 <%-- ${pvo} --%>
-<form role="form" id="fr" method="post" action="">
+<form role="form" id="fr" method="post">
 <table class="box" style="margin-top: 30px; width: 100%">
   <tbody>
     <tr>
@@ -69,11 +76,15 @@ $(document).ready(function() {
     </tr>
     <tr>
       <td>납품예정일</td>
-      <td><input type="date" value="${pvo.delivery_date}" name="delivery_date" readonly="readonly"></td>
+      <td><input type="date" value="${pvo.delivery_date}" name="delivery_date" ></td>
     </tr>
     <tr>
-      <td>라인코드</td>
-      <td><input type="text" value="${pvo.line_code}" name="line_code" ></td>
+      <td>라인명</td>
+      <td><select name="line_code" class="line_code" required>
+		<c:forEach var="line" items="${lineList}">
+			<option value="${line.line_code}">${line.line_name}</option>
+		</c:forEach>
+		</select></td>
     </tr>
     <tr>
       <td>품목코드</td>
@@ -87,18 +98,10 @@ $(document).ready(function() {
       <td>지시수량</td>
       <td><input type="number" value="${pvo.oQTY}" name="oQTY" ></td>
     </tr>
-    <tr>
-	    <td>현재 지시 상태</td>
-		    <td>${pvo.wo_status}</td>
-	    </tr>
-    <tr>
-    <tr>
-   		<td>지시 상태 변경</td>
-   		<td><input type="text" value="${pvo.wo_status}" name="wo_status" ></td>
-    <tr>
-      <td>생산수량</td>
-      <td><input type="number" value="${pvo.pQTY}" name="pQTY" readonly="readonly"></td>
-    </tr>
+	<tr>
+		<td>지시상태</td>
+		<td><input type="text" value="${pvo.wo_status}" name="wo_status" readonly></td>
+	</tr>	
   </tbody>
 </table>
 <!--     <hr width="100%" style="border: 2px solid black"> -->
@@ -106,7 +109,7 @@ $(document).ready(function() {
 
 <!-- 작업지시등록, 취소 버튼 -->
 <div style="text-align: center; margin-top: 50px">
-<button class=btn-add> <i class='bx bx-edit'></i> 수정</button>
+<button class=btn-add onclick="onUpdate();"> <i class='bx bx-edit'></i> 수정</button>
 <button class=btn-search onclick="window.close()">X 닫기</button>
 </div>
 

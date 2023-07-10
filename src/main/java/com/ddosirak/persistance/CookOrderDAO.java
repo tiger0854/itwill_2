@@ -89,6 +89,12 @@ public interface CookOrderDAO {
 
 	// 수주번호 체크
 	public boolean checkrecode(String re_code);
+	
+	// 수주번호 중복체크
+	public Boolean checksuList(String re_code);
+	
+	// 수주번호 중복체크2
+	public Boolean checksucookList(String re_code);
 
 	
 

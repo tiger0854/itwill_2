@@ -127,6 +127,14 @@ public class ProductionPerformanceDAOImpl implements ProductionPerformanceDAO {
 		return sqlSession.selectOne(NAMESPACE+".etccount", wo_code);
 	}
 
+	@Override
+	public void deltQTY(Map<String, Object> params) {
+		sqlSession.update(NAMESPACE + ".qtydel", params);
+		logger.debug("자재 감소 완료 @@@@@@@@@ "+params);
+	}
+
+
+
 
 
 

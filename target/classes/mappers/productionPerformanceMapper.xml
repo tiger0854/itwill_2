@@ -9,9 +9,9 @@
   	<!-- 실적 등록 -->
   	<insert id="insertProdPerf">
   		insert into prod_perf_add
-  		(perf_id, item_code, item_name, perf_gobd, err_reason, remark, pfQTY, perf_date, wo_code)
+  		(item_code, item_name, perf_gobd, err_reason, remark, pfQTY, perf_date, wo_code)
   		values
-  		(#{perf_id}, #{item_code}, #{item_name}, #{perf_gobd}, #{err_reason}, #{remark}, #{pfQTY}, #{perf_date}, #{wo_code})
+  		(#{item_code}, #{item_name}, #{perf_gobd}, #{err_reason}, #{remark}, #{pfQTY}, #{perf_date}, #{wo_code})
   	</insert>
   	<!-- 실적 등록 -->
   	
@@ -21,6 +21,7 @@
 		FROM prod_perf_add a
 		LEFT OUTER JOIN prod p ON a.wo_code = p.wo_code
 		WHERE a.wo_code = #{wo_code}
+		order by perf_id desc
 		LIMIT #{startRow}, #{pageSize}
   	</select>
   	<!-- 실적 현황 -->
@@ -114,6 +115,12 @@
 	where wo_code = #{wo_code}
 	</update>
   	
+<!--   	.qtydel 자재감소 -->
+  	<update id="qtydel"> <!-- 지시상태 지시로 변경 -->
+	update material_detail
+	set tQTY = tQTY- #{material_con}
+	where material_code = #{material_code}
+	</update>
   	
   </mapper>
   

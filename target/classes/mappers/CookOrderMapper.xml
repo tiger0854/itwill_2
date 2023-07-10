@@ -23,11 +23,11 @@
 		  )
 	</insert> 
 
-
+ 
   	
   	<!-- 조리지시 목록 출력-->
   	<select id="cookOrderList" resultType="com.ddosirak.domain.CookVO">
-		SELECT * FROM cook LIMIT #{startRow}, #{pageSize}
+		SELECT * FROM cook order by co_code desc LIMIT #{startRow}, #{pageSize}
   	</select>
   	
 	<!-- cookSearchList 조리지시 검색목록 -->
@@ -44,6 +44,7 @@
 	    </otherwise>
 	  </choose>
 	  AND so_code LIKE CONCAT('%', #{so_code}, '%')
+	  order by co_code desc
 	  LIMIT #{startRow}, #{pageSize}
   	</select>
 
@@ -120,6 +121,7 @@
 	<select id="cooketcList" resultType="com.ddosirak.domain.CookAddVO">
 		SELECT * FROM cook_add
 		where co_code=#{co_code}
+		order by cook_id desc
 		LIMIT #{startRow}, #{pageSize}
   	</select>
   	
@@ -231,9 +233,27 @@
 		FROM dual;
 	</select>  
   	
+<!--   	.checkS -->
+		<select id="checkS" resultType="boolean">
+		  SELECT CASE WHEN EXISTS (
+		    SELECT so_code
+		    FROM prod
+		    WHERE so_code = #{re_code}
+		  ) THEN false ELSE true END
+		</select>
   	
-  	
-  	
-  	
+<!--   	checkCS -->
+
+		<select id="checkCS" resultType="boolean">
+		  SELECT CASE WHEN EXISTS (
+		    SELECT so_code
+		    FROM cook
+		    WHERE so_code = #{re_code}
+		  ) THEN false ELSE true END
+		</select>
+
+
+
+
   	
   </mapper>

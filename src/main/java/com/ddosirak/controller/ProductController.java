@@ -209,8 +209,9 @@ public class ProductController {
 
 //	 http://localhost:8088/pro/orderEdit
 	@RequestMapping(value = "/orderEdit", method = RequestMethod.GET)
-	public void productEditGET(String wo_code, Model model) {
-
+	public void productEditGET(String wo_code, Model model) throws Exception {
+		List<LineVO> lineList = lService.LineList();
+		model.addAttribute("lineList", lineList);
 		ProOrderVO pvo = oService.getProOder(wo_code);
 		model.addAttribute("pvo", pvo);
 		logger.debug("productWriteGET() 호출![]~(￣▽￣)~*");
@@ -220,12 +221,12 @@ public class ProductController {
 //	 생산관리 - 작업지시글수정
 
 	@RequestMapping(value = "/orderEdit", method = RequestMethod.POST) // 0609, 모르겠음. 일단 GET > POST로 시도 // 해결
-	public void eproductEditPOST(ProOrderVO vo ,RedirectAttributes rttr) { // (listPOST)
+	public void eproductEditPOST(ProOrderVO vo) throws Exception { // (listPOST)
 		logger.debug("productEditPOST() 호출![]~(￣▽￣)~*");
 		logger.debug("vo > "+vo);
 		oService.EditProOrder(vo);
 		// 리스트로 정보를 전달 (rttr)
-		rttr.addFlashAttribute("result", "CREATEOK");
+//		rttr.addFlashAttribute("result", "CREATEOK");
 //		return "redirect:/pro/orderEdit?wo_code="+vo.getWo_code();
 	}// employeeUpdate() method end
 	
@@ -395,7 +396,7 @@ public class ProductController {
 		// 생산관리 - 실적등록
 
 	@RequestMapping(value = "/etcWrite", method = RequestMethod.POST)
-	public void productEtcWritePOST(ProductionPerformanceVO ivo,String wo_code,Model model ) {
+	public void productEtcWritePOST(ProductionPerformanceVO ivo,String wo_code,Model model ) throws Exception {
 		logger.debug("etcWritePOST() 호출![]~(￣▽￣)~*");
 		logger.debug(ivo + "");
 		logger.debug(ivo.getPerf_id() + "@@@@");
@@ -912,6 +913,26 @@ public class ProductController {
 	public Boolean checkrecode(@RequestParam("re_code") String re_code) throws Exception {
 		logger.debug("@@@@@@@@@@@@@@@@@@@@ re_code : " + re_code);
 		Boolean result = cService.checkrechod(re_code);
+		logger.debug("@@@@@@@@@@@@@@@@@@@@ result : " + result);
+		return result;
+	}
+	
+//	/pro/checksuList
+	@RequestMapping(value = "/checksuList", method = RequestMethod.GET)
+	@ResponseBody
+	public Boolean checksuList(@RequestParam("re_code") String re_code) throws Exception {
+		logger.debug("@@@@@@@@@@@@@@@@@@@@ re_code : " + re_code);
+		Boolean result = cService.checksuList(re_code);
+		logger.debug("@@@@@@@@@@@@@@@@@@@@ result : " + result);
+		return result;
+	}
+	
+//	/pro/checkcooksuList
+	@RequestMapping(value = "/checkcooksuList", method = RequestMethod.GET)
+	@ResponseBody
+	public Boolean checkcooksuList(@RequestParam("re_code") String re_code) throws Exception {
+		logger.debug("@@@@@@@@@@@@@@@@@@@@ re_code : " + re_code);
+		Boolean result = cService.checksucookList(re_code);
 		logger.debug("@@@@@@@@@@@@@@@@@@@@ result : " + result);
 		return result;
 	}

@@ -15,49 +15,74 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 <script>
-$(document).ready(function() {
-	  $("#add").click(function() {
-	    var frObj = $("#fr");
-	    var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
 
-	    // 필수 필드 유효성 검사
-	    if (frObj[0].checkValidity()) {
-	      $.ajax({
-	        url: "/pro/orderWrite", // 요청을 보낼 서버의 URL
-	        type: "POST", // HTTP 요청 방식 (POST)
-	        data: formData, // 전송할 데이터 (직렬화된 폼 데이터)
-	        success: function(response) {
-	          alert("작성 성공!");
-	          opener.location.reload();
-	          window.close(); // 윈도우 창을 닫습니다.
-	        },
-	        error: function(xhr, status, error) {
-	          console.error("에러 발생:", error);
-	        }
-	      });
-	    } else {
-	      // 필수 필드가 비어있을 경우 처리할 내용
-	      alert("입력란을 채워주세요!");
-	    }
-	  });
-	});
+function onInsert() {
+	  var frObj = $("#fr");
+	  var formData = frObj.serialize();
 
-	
+	  if (frObj[0].checkValidity()) {
+	    Swal.fire({
+	      title: "작성 성공!",
+	      text: "작성이 성공하였습니다.",
+	      icon: "success",
+	      showCancelButton: false,
+	      confirmButtonText: "확인"
+	    }).then(function(result) {
+	      if (result.isConfirmed) {
+	        $.ajax({
+	          url: "/pro/orderWrite",
+	          type: "POST",
+	          data: formData,
+	          success: function(response) {
+	            opener.location.reload();
+	            window.close();
+	          },
+	          error: function(xhr, status, error) {
+	            Swal.fire("작성 실패!");
+	          }
+	        });
+	      }
+	    });
+	  } else {
+	    Swal.fire("입력란을 채워주세요!");
+	  }
+	}
 function recodecheck() {
 	  var re_code = $("#re_code").val(); // re_code 값 가져오기
 	  console.log(re_code);
 	  $.ajax({
-	    url: "/pro/checkrecode", // 요청을 보낼 서버의 URL
+	    url: "/pro/checkrecode", // 첫 번째 요청을 보낼 서버의 URL
 	    type: "GET", // HTTP 요청 방식 (GET)
 	    data: { re_code: re_code }, // 전송할 데이터
 	    success: function(response) {
 	      if (response === true) {
-	        $("#add").prop("disabled", false);
-	        $('#ipmsg').show();
-	        $('#ipmsg').css('color', 'green');
-	        $('#ipmsg').text("*수주번호에 해당하는 조리가 완료되었습니다");
+	        // 두 번째 ajax 호출
+	        $.ajax({
+	          url: "/pro/checksuList", // 두 번째 요청을 보낼 서버의 URL
+	          type: "GET", // HTTP 요청 방식 (GET)
+	          data: { re_code: re_code }, // 전송할 데이터
+	          success: function(response) {
+	        	if(response === true){
+	        	 // 두 번째 요청이 성공한 경우 처리할 내용
+			        $("#add").prop("disabled", false);
+			        $('#ipmsg').show();
+			        $('#ipmsg').css('color', 'green');
+			        $('#ipmsg').text("*수주번호에 해당하는 조리가 완료되었습니다");
+		        }else{
+			        $("#add").prop("disabled", true);
+			        $('#ipmsg').show();
+			        $('#ipmsg').css('color', 'red');
+			        $('#ipmsg').text("*중복된 수주 등록은 불가능합니다");   	
+		        }   	 
+	          },
+	          error: function(xhr, status, error) {
+	            console.error("두 번째 요청 에러 발생:", error);
+	          }
+	        });
 	      } else {
 	        $("#add").prop("disabled", true);
 	        $('#ipmsg').show();
@@ -66,10 +91,11 @@ function recodecheck() {
 	      }
 	    },
 	    error: function(xhr, status, error) {
-	      console.error("에러 발생:", error);
+	      console.error("첫 번째 요청 에러 발생:", error);
 	    }
 	  });
 	}
+
 
 //품명 검색 팝업창
 function opensucode() {
@@ -154,7 +180,7 @@ function opensucode() {
 
 <!-- 작업지시등록, 취소 버튼 -->
 <div style="text-align: center; margin-top: 50px">
-<button type="button" class="btn btn-primary" id="add"> <i class='bx bx-edit'></i> 등록</button>
+<button type="button" class="btn btn-primary" id="add" onclick="onInsert();"> <i class='bx bx-edit'></i> 등록</button>
 <button class=btn-search onclick="window.close()">X 취소</button>
 </div>
 
