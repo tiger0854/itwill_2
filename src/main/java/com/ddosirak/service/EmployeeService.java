@@ -89,6 +89,14 @@ public interface EmployeeService {
 	// 사원 휴가관리 페이지 페이징
 	public Integer countRetOrdList(PageVO pageVO);
 	
+	// 휴가 개수 출력
+	public Integer vacount();
+	
+	// 휴가 예정자 사원 개수 출력 
+	public Integer pvacount();
+	
+	// 휴가 복귀자 사원 개수 출력
+	public Integer bvacount();
 /////////////////////////////////////////휴가동작////////////////////////////////////////////////////
 		
 	// 로그인
