@@ -26,7 +26,7 @@ public class QualityController {
 
 	// service
 	@Inject
-	private QualityService service;
+	private QualityService qService;
 
 	// http://localhost:8088/qc/qualityList
 	// 품질현황 목록
@@ -68,7 +68,7 @@ public class QualityController {
 
 		pageVO.setStartRow(startRow - 1); // limit startRow (0이 1열이기 때문 1을 뺌)
 		pageVO.setEndRow(endRow);
-		int count = service.itemCount(instrSearch);
+		int count = qService.itemCount(instrSearch);
 		logger.debug("글갯수 @@@@@@@@@@2" + count);
 		// 게시글 개수 가져오기
 		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
@@ -91,11 +91,11 @@ public class QualityController {
 		if (wo_code == null && line_code == null && item_name == null && employee_id == null) {
 			// 품질현황 전체 조회
 			logger.debug("qualityList 전체 호출 ![]~(￣▽￣)~*");
-			qualityList = service.qualityList(pageVO);
+			qualityList = qService.qualityList(pageVO);
 		} else {
 			// 품질현황 검색 조회
 			logger.debug("qualityList 검색 호출 ![]~(￣▽￣)~*");
-			qualityList = service.qualityList(pageVO, instrSearch, model);
+			qualityList = qService.qualityList(pageVO, instrSearch, model);
 		}
 
 		model.addAttribute("qualityList", qualityList);
@@ -140,7 +140,7 @@ public class QualityController {
 
 		pageVO.setStartRow(startRow - 1); // limit startRow (0이 1열이기 때문 1을 뺌)
 		pageVO.setEndRow(endRow);
-		int count = service.inspectionCount(instrSearch);
+		int count = qService.inspectionCount(instrSearch);
 		logger.debug("글갯수 @@@@@@@@@@2" + count);
 		// 게시글 개수 가져오기
 		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
@@ -163,11 +163,11 @@ public class QualityController {
 		if (item_name == null && inspection_date == null) {
 			// 품질현황 전체 조회
 			logger.debug("qualityInspection 전체 호출 ![]~(￣▽￣)~*");
-			qualityInspection = service.qualityInspection(pageVO);
+			qualityInspection = qService.qualityInspection(pageVO);
 		} else {
 			// 품질현황 검색 조회
 			logger.debug("qualityInspection 검색 호출 ![]~(￣▽￣)~*");
-			qualityInspection = service.qualityInspection(pageVO, instrSearch, model);
+			qualityInspection = qService.qualityInspection(pageVO, instrSearch, model);
 		}
 
 		model.addAttribute("qualityInspection", qualityInspection);
@@ -188,7 +188,7 @@ public class QualityController {
 	public void qualityInspectionWritePOST(QualityControlVO vo) throws Exception {
 		logger.debug("qualityInspectionWritePOST() 호출![]~(￣▽￣)~*");
 		logger.debug(vo + " ");
-		service.insertQualityInspection(vo);
+		qService.insertQualityInspection(vo);
 	}
 
 	// 불량률 페이지
@@ -230,7 +230,12 @@ public class QualityController {
 
 		pageVO.setStartRow(startRow - 1); // limit startRow (0이 1열이기 때문 1을 뺌)
 		pageVO.setEndRow(endRow);
-		int count = service.errorCount(instrSearch);
+		int count = 0;
+		if(instrSearch.size() == 0) {
+			count = qService.errorCount();		
+		} else {
+			count = qService.errorCount(instrSearch);			
+		}
 		logger.debug("글갯수 @@@@@@@@@@2" + count);
 		// 게시글 개수 가져오기
 		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
@@ -249,10 +254,21 @@ public class QualityController {
 		model.addAttribute("pageVO", pageVO);
 		logger.debug("startRow @@@@@@@@@@2" + startRow);
 		logger.debug("pageSize @@@@@@@@@@2" + pageSize);
-		List<QualityControlVO> errorList = service.errorList(wo_code, pageVO, instrSearch, model);
-
+		List<QualityControlVO> errorList = null;
+		
+		if(wo_code != null) {
+			logger.debug("@@@@@@@@검색조회");
+			errorList = qService.errorList(wo_code, pageVO, instrSearch, model);
+		} else {
+			logger.debug("@@@@@@@@전체조회");
+			errorList = qService.errorList();			
+		}
+		
 		logger.debug("@@@@@@errorList : " + errorList);
-
+		logger.debug("@@@@@@errQTY@@@@@@ : " + qService.errorList(wo_code, pageVO, instrSearch, model).get(0).getTotal_error_QTY());
+		logger.debug("@@@@@@totalQTY@@@@@@ : " + qService.errorList(wo_code, pageVO, instrSearch, model).get(0).getTotal_QTY());
+		model.addAttribute("errQTY", qService.errorList().get(0).getTotal_error_QTY()); // 불량개수
+		model.addAttribute("totalQTY", qService.errorList().get(0).getTotal_QTY()); // 총 생산량
 		model.addAttribute("errorList", errorList);
 		model.addAttribute("Search", instrSearch);
 
@@ -263,7 +279,7 @@ public class QualityController {
 		logger.debug("errorStatus() 호출![]~(￣▽￣)~*");
 		logger.debug("@@@@ivo : " + ivo);
 
-		service.insertStatus(ivo);
+		qService.insertStatus(ivo);
 		logger.debug("@@@@ivo" + ivo);
 
 		return "redirect:/qc/errorRate?wo_code="+ivo.getWo_code();

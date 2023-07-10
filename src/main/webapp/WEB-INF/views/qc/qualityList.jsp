@@ -78,7 +78,7 @@
 							<th>품번</th>
 							<th>검수자</th>
 							<th>수주량</th>
-							<th>생산량</th>
+							<th>실생산량</th>
 							<th>불량</th>
 						</tr>
 					</thead>

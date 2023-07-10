@@ -97,6 +97,27 @@
 	</select>
 
 	<!-- 불량리스트 -->
+	<select id="errorList"
+		resultType="com.ddosirak.domain.QualityControlVO">
+		select
+		p.wo_code,
+		pp.item_code,
+		SUM(pp.pfQTY) AS total_QTY,
+		SUM(CASE WHEN
+		pp.perf_gobd = 'Y' THEN pp.pfQTY ELSE 0 END) AS
+		total_error_QTY,
+		ie.error_status
+		from prod p
+		LEFT OUTER JOIN
+		prod_perf_add pp
+		ON p.wo_code
+		= pp.wo_code
+		LEFT OUTER JOIN
+		items_error_rate ie
+		ON pp.wo_code =
+		ie.wo_code
+	</select>
+	
 	<select id="errorSearchList"
 		resultType="com.ddosirak.domain.QualityControlVO">
 		select
@@ -161,6 +182,15 @@
 		ON pp.wo_code =
 		ie.wo_code
 		where pp.wo_code LIKE CONCAT('%', #{wo_code}, '%')
+	</select>
+	
+	<select id="errorTotalCount">
+		select count(DISTINCT pp.item_code)
+		from prod p
+		LEFT OUTER JOIN prod_perf_add pp
+		ON p.wo_code = pp.wo_code
+		LEFT OUTER JOIN items_error_rate ie
+		ON pp.wo_code = ie.wo_code;
 	</select>
 
 	<!-- 품질검사 등록 -->
