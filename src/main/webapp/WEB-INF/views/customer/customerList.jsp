@@ -107,7 +107,7 @@ height: 50px; vertical-align: middle; text-align: center;
 	    <td onclick="openChildWindow2(${vo.cus_id});"class="detail-Link">${vo.cus_code}</td>
 	    <td>${vo.cus_name}</td>
 		<c:choose>
-       		<c:when test="${vo.cus_stat == 1}">
+       		<c:when test="${vo.cus_stat == '납입'}">
        		  <td>납입처</td>
        		</c:when>
        		<c:otherwise>
@@ -131,6 +131,7 @@ height: 50px; vertical-align: middle; text-align: center;
 
       <div style="color: red; margin-bottom: 10px;">*거래처 코드를 클릭하면 상세보기 및 수정페이지가 열립니다.</div>
   <button type="button" class="btn btn-danger"style="margin-bottom: 10px;" onclick="deleteInbound();">선택삭제</button>
+  <button type="button" class="btn btn-secondary"style="margin-bottom: 10px;" onclick="location.href='/customer/excelDown'">엑셀로 내려받기</button>
 
  </div>
    <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->

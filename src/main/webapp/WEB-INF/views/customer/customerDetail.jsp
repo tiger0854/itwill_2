@@ -64,7 +64,7 @@ tr{border-bottom: 1px solid;}
 		   <th>거래처분류</th>
 	
 			<c:choose>
-       		<c:when test="${cus.cus_stat == '1'}">
+       		<c:when test="${cus.cus_stat == '납입'}">
        		  <td>납입처</td>
        		</c:when>
        		<c:otherwise>
