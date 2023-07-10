@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+x<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,27 +14,36 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <script>
 
-$(document).ready(function() {
-    $(".btn-add").click(function() {
-      var frObj = $("#fr");
-      var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
-      $.ajax({
-        url: "/line/lineEdit", // 요청을 보낼 서버의 URL
-        type: "POST", // HTTP 요청 방식 (POST)
-        data: formData, // 전송할 데이터 (직렬화된 폼 데이터)
-        success: function(response) {
-		 alert("수정 성공!");
-		 opener.location.reload();
-         window.close(); // 윈도우 창을 닫습니다.
-        },
-        error: function(xhr, status, error) {
-          console.error("에러 발생:", error);
-        }
-      });
-    });
-  });
+function update() {
+	  var frObj = $("#fr");
+	  var formData = frObj.serialize();
+	    Swal.fire("수정 완료!");
+	    if (frObj[0].checkValidity()) {
+	      $.ajax({
+	        url: "/line/lineEdit", // 요청을 보낼 서버의 URL
+	        type: "POST", // HTTP 요청 방식 (POST)
+	        data: formData, // 전송할 데이터 (직렬화된 폼 데이터)
+	        success: function(response) {
+	          opener.location.reload();
+	          window.close(); // 윈도우 창을 닫습니다.
+	        },
+	        error: function(xhr, status, error) {
+//	          alert("모든 칸을 입력해 주세요!");
+	          console.error("에러 발생:", error);
+	        }
+	      });
+	    } else {
+	      // 필수 필드가 비어있을 경우 처리할 내용
+	      Swal.fire("모든 칸을 입력해 주세요!");
+	  }
+}
+
+
+
 
 </script>
 
@@ -76,7 +85,7 @@ $(document).ready(function() {
 
 <!-- 작업지시등록, 취소 버튼 -->
 <div style="text-align: center; margin-top: 50px">
-<button class=btn-add> <i class='bx bx-edit'></i> 등록</button>
+<button type="button" class=btn-add onclick="update();"> <i class='bx bx-edit'></i> 등록</button>
 <button class=btn-search onclick="window.close()">X 취소</button>
 </div>
 

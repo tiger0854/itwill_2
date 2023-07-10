@@ -17,7 +17,6 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 우편api -->
 
 <script type="text/javascript">
-	
 	function addr() {
 	new daum.Postcode({
 		    oncomplete : function(data) {

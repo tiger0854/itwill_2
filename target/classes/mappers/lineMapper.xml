@@ -4,12 +4,12 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-  
+ 
   <mapper namespace="com.ddosirak.mapper.LineMapper">
-  	
+
 		<insert id="lineAdd">
 		  <selectKey keyProperty="line_code" resultType="String" order="BEFORE">
-		    SELECT CONCAT('LINE', LPAD((SELECT COUNT(line_code) + 1 FROM pro_line), 3, '0')) AS line_code
+		   SELECT CONCAT('LINE', LPAD((SELECT COUNT(line_code) + 1 FROM pro_line), 3, '0')) AS line_code limit 1
 		  </selectKey>
 		  INSERT INTO pro_line
 		  (line_code, line_name, factory_code, remark)
