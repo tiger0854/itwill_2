@@ -347,7 +347,6 @@ public class MemberController {
 		model.addAttribute("outList", outList);
 	}// Out_empList() method end
 	
-	// 엑셀동작 (0707, 안되면 엎을거임)
 	//엑셀다운받기 동작
 	@RequestMapping(value = "/excelDown", method = RequestMethod.GET)
     public void excelDownload(HttpServletResponse response) throws IOException {
@@ -410,6 +409,7 @@ public class MemberController {
         
         // Body
         List<EmployeeVO> eList = eService.empList();
+        logger.debug("eList: "+eList);
         for (int i=0; i<eList.size(); i++) {
             row = sheet.createRow(rowNum++);
             cell = row.createCell(0);

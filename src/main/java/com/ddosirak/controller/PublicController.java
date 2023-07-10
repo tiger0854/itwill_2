@@ -258,8 +258,15 @@ public class PublicController {
 /////////////////////////////////대시보드///////////////////////////////////
 	// 대시보드 페이지
 	@RequestMapping(value = "/dashBoard", method = RequestMethod.GET)
-	public void dashBoardGET() throws Exception{
+	public void dashBoardGET(Model model) throws Exception{
 		logger.debug("dashBoardGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
+		
+		// 임직원 수 리턴
+		model.addAttribute("alCount_all", eService.alCount_all());// 전일반 근무자
+		model.addAttribute("alCount_am", eService.alCount_am());// 오전근무자
+		model.addAttribute("alCount_pm", eService.alCount_pm());// 오후근무자
+		model.addAttribute("empCount", eService.empCount());// 임직원
+		
 	}//dashBoardGET() method end
 /////////////////////////////////대시보드///////////////////////////////////
 	

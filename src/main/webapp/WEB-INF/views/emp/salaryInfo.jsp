@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <meta charset="UTF-8">
 <title>사원 급여지급</title>
 <jsp:include page="../common/header.jsp"/>
@@ -80,7 +81,7 @@ $(document).ready(function(){
 				var table= '';
 				for(var i=0;i<vo.length;i++){
 					// ms단위 시간 표기 변환
-					var tmp = new Date(vo[i].sal_date);
+					var tmp = new Date(vo[i].sal_date - (60*60*1000)*9); // 9시간 빼기.
 					var sal_date =  tmp.getFullYear() +
 					'-' + ( (tmp.getMonth()+1) < 9 ? "0" + (tmp.getMonth()+1) : (tmp.getMonth()+1) )+
 					'-' + ( (tmp.getDate()) < 9 ? "0" + (tmp.getDate()) : (tmp.getDate()) );

@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <meta charset="UTF-8">
 <title>chat</title>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
@@ -140,7 +141,7 @@
 			var myid = "${login_id}";
 			var content = "";
 			for(var i=0;i<data.length;i++){
-				var timeTmp = new Date(data[i].time);
+				var timeTmp = new Date(data[i].time  - (60*60*1000)*9);
 				
 				var year = timeTmp.getFullYear();
 				var month = ('0' + (timeTmp.getMonth() + 1)).slice(-2);
