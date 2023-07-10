@@ -148,7 +148,7 @@
 					}
 				},
 				error : function(xhr, status, error) {
-					alert("자재 가져오기 실패: " + error);
+// 					alert("자재 가져오기 실패: " + error);
 				}
 			});
 

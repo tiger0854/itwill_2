@@ -47,4 +47,6 @@ public interface OutboundDAO {
 	
 	// 당일  출고 현황
 	public List<Map<String, Object>> outGrp(OutboundVO vo) throws Exception;
+	
+
 }

@@ -10,12 +10,16 @@ import org.springframework.stereotype.Service;
 import com.ddosirak.domain.OutboundVO;
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.persistance.OutboundDAO;
+import com.ddosirak.persistance.ProOrderDAO;
 
 @Service
 public class OutboundServiceImpl implements OutboundService{
 
 	@Inject
 	private OutboundDAO odao;
+	
+	@Inject
+	private ProOrderDAO pdao;
 	
 	// 출고등록
 	@Override
@@ -84,6 +88,7 @@ public class OutboundServiceImpl implements OutboundService{
 	public void recStateUpdate(String re_code) throws Exception {
 		
 		odao.recStateUpdate(re_code);
+		pdao.orderStatusUpdate(re_code);
 		
 	}
 	
