@@ -27,7 +27,7 @@ function factoryUpdate(factory_code) {
 function factoryDelete(factory_code, factory_name) {
 	  Swal.fire({
 	    title: "경고",
-	    text: "창고 명 : " + factory_name + "를/을 정말로 삭제하시겠습니까?",
+	    text: "공장 명 : " + factory_name + "를/을 정말로 삭제하시겠습니까?",
 	    icon: "error",
 	    showCancelButton:true,
 	    confirmButtonText: '확인',

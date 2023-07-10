@@ -36,15 +36,23 @@ var deptName = "${sessionScope.dept_name}";
 	}
 
 	function materialDelete(material_code, material_name) {
-		if(deptName.includes('생산')){  
-			if (confirm("품명 : " + material_name + "를/을 정말로 삭제하시겠습니까?")) {
-				location.href = '/foundation/materialdetail/materialdetailDelete?material_code='
-						+ material_code;
-				alert("삭제완료");
-			}
-		}else{
+		if (deptName.includes('생산')) {
+			swal.fire({
+			title: "경고",
+			text: "자재명: " + material_name + "를/을 정말로 삭제하시겠습니까?",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonText: "삭제",
+			cancelButtonText: "취소"
+			}).then(result => {
+				if (result.isConfirmed) {
+				location.href = '/foundation/materialdetail/materialdetailDelete?material_code=' + material_code;
+				
+				}
+			});
+		} else {
 			swal.fire("권한이 없습니다!");
-		}
+			}
 	}
 	//자재명 검색 팝업창
 	function openItem() {
@@ -78,10 +86,7 @@ var deptName = "${sessionScope.dept_name}";
 							<i class='bx bx-search-alt-2'></i> 조회
 						</button>
 						<!-- <button class=btn-add onclick="orderwrite()"><i class='bx bx-plus-medical'></i> 추가</button> -->
-						<button class="btn btn-outline-primary" onclick="materialUpload();" >
-
-							<i class='bx bx-plus-medical'></i> 추가
-						</button>
+						<input type="button" class="btn btn-outline-primary" value="추가" onclick="materialUpload();" />
 					</div>
 
 

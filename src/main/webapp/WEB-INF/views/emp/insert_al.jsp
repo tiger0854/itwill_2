@@ -49,7 +49,12 @@ $(document).ready(function(){
 		$('#alTable > tbody:last').append(table);
 		count++;
 		}else if(count > 20){
-			alert('20명 이상 일괄등록할 수 없습니다!');
+			Swal.fire({
+				title: "20명 이상 일괄등록할 수 없습니다!",
+				icon: "error",
+					  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+					  confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+				}) // swal end
 		}
 	}) // add end
 	
@@ -58,7 +63,12 @@ $(document).ready(function(){
 			    $('#alTable > tbody > tr:last').remove();
 			   	count--;
 		   	}else{
-				alert('등록란을 추가해주세요!');
+				Swal.fire({
+					title: "등록란을 추가해주세요!",
+					icon: "error",
+						  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+						  confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+					}) // swal end
 				count = 2;
 		   	}// i-e end
 	 }); // delete end	
