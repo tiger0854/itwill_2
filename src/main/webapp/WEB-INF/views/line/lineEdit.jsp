@@ -88,7 +88,6 @@ function update() {
 <button type="button" class=btn-add onclick="update();"> <i class='bx bx-edit'></i> 등록</button>
 <button class=btn-search onclick="window.close()">X 취소</button>
 </div>
-
 </form>
 
 <br>

@@ -74,6 +74,14 @@ body{
   padding: 5px;
 }
 
+.product-box select {
+	width: 60%;
+}
+.product-box input[type="text"]:last-child {
+  margin-right: 0; /* 마지막 입력란의 오른쪽 여백 제거 */
+}
+
+
 /* Search box */
 .product-box select,
 .product-box input[type="date"],
@@ -85,12 +93,8 @@ body{
   border-radius: 5px;
 }
 
-.product-box select {
-	width: 60%;
-}
-.product-box input[type="text"]:last-child {
-  margin-right: 0; /* 마지막 입력란의 오른쪽 여백 제거 */
-}
+
+
 
 
 
