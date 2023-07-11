@@ -6,8 +6,8 @@
 <mapper namespace="com.ddosirak.mapper.factoryMapper">
 	<!-- 공장 등록 -->
 	<insert id="insertFactory">
-		INSERT INTO factory (factory_code, factory_name)
-		VALUES (#{factory_code}, #{factory_name})
+		INSERT INTO factory (factory_code, factory_name,employee_name)
+		VALUES (#{factory_code}, #{factory_name},#{employee_name})
 	</insert>
 	<!-- 공장 등록 -->
 
@@ -39,7 +39,7 @@
 	<!-- 공장 수정 -->
 	<update id="updateFactory">
 		UPDATE factory
-		SET factory_name = #{factory_name}
+		SET factory_name = #{factory_name}, employee_name = #{employee_name}
 		WHERE factory_code = #{factory_code}
 	</update>
 	<!-- 공장 수정 -->

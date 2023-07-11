@@ -143,6 +143,12 @@ public class QualityDAOImpl implements QualityDAO {
 	}
 	
 	@Override
+	public List<QualityControlVO> errorList() throws Exception {
+		logger.debug("errorList()!");
+		return sqlSession.selectList(NAMESPACE + ".errorList");
+	}
+
+	@Override
 	public Integer insertStatus(QualityControlVO ivo) {
 		logger.debug("insertStatus(QualityControlVO vo)!");
 		return sqlSession.selectOne(NAMESPACE + ".updateStatus", ivo);
@@ -153,11 +159,12 @@ public class QualityDAOImpl implements QualityDAO {
 		logger.debug("@@@@instrSearch : " + instrSearch);
 		return sqlSession.selectOne(NAMESPACE + ".errorCount", instrSearch);
 	}
-	
-	
-	
-	
-	
+
+	@Override
+	public Integer errorCount() throws Exception {
+		logger.debug("errorCount()");
+		return sqlSession.selectOne(NAMESPACE + ".errorTotalCount");
+	}
 	
 	
 	
