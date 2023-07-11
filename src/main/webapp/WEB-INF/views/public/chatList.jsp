@@ -163,7 +163,7 @@
 	
 	setTimeout(function(){
 	    $.LoadingOverlay("hide");
-	}, 2000);
+	}, 1000);
 </script>
 </html>
 

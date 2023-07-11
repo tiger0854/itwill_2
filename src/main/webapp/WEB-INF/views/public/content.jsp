@@ -21,12 +21,20 @@
 			$('#contentDelete').attr('disabled', true);
 			$('#submitButtonHere').html('<input type="submit" value="저장하기">');
 		})//contentUpdate click end
-		$('#contentDelete').click(function(){
-			if(confirm('정말 삭제 하시겠습니까?')){
-				location.href="/public/contentDelete?emp_bno=${boardContent.emp_bno }";
-			}else{
-				alert('취소하셨습니다.');
-			}//i-e end
+		$('#contentDelete').click(function(){		
+			  Swal.fire({
+				    title: "경고",
+				    text: "정말 삭제 하시겠습니까?",
+				    icon: "error",
+				    showCancelButton:true,
+				    confirmButtonText: '네',
+				    cancelButtonText: '아니오'
+				  })
+				  .then(result => {
+				    if (result.isConfirmed) { // 만약 모달창에서 확인 버튼을 눌렀다면
+				    	location.href="/public/contentDelete?emp_bno=${boardContent.emp_bno }";
+				    } 
+				  });
 		})// contentDelete click end
 		
 		// 권한제어에 따른 수정 불가 처리

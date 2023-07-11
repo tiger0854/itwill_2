@@ -101,6 +101,7 @@
 	<select id="getChatRoom" resultType="String">
 		SELECT chatRoom_code FROM emp_chatroom 
         WHERE SUBSTRING(chatRoom_code,1,4) = #{login_id} OR SUBSTRING(chatRoom_code,5,8) = #{login_id}
+        ORDER BY chatdate DESC
 	</select>
 	<!-- 	채팅방 리스트 -->
 	
@@ -129,7 +130,7 @@
 	<select id="getChatListAll" resultType="com.ddosirak.domain.ChatVO">
 		SELECT * FROM emp_chat
 		WHERE chatRoom_code = #{chatRoom_code}
-		ORDER BY time ASC
+		ORDER BY time
 	</select>
 	<!-- 채팅방의 채팅내역 출력 -->
 </mapper>
