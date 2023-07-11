@@ -75,7 +75,7 @@ var positionName = "${sessionScope.position_name}";
 			<form id="instr">
 
 				<h4 style="margin-top: 150px;">
-					<i class="bx bx-book"></i> 품목정보 관리
+					<i class="bx bx-book"></i> 품목관리
 				</h4>
 				<div style="margin-top: 10px;">
 					<hr width="100%" style="border: 2px solid black">
