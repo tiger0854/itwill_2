@@ -61,9 +61,11 @@ public class CookOrderServiceImpl implements CookOrderService {
 		        item.setLine_code(cvo.getLine_code());
 		        item.setLine_name(cvo.getLine_name());
 		        item.setEmployee_name(cvo.getEmployee_name());
+		        item.setEmployee_id(cvo.getEmployee_id());
 		        item.setSo_code(cvo.getSo_code());
+//		        item.setMaterial_code(cvo.getMaterial_code());
+//		        item.setMaterial_name(cvo.getMaterial_name());
 		        cdao.cookOrder(item);
-	        
 //		            dao.insertOrUpdateItemRecipe(item); // 변경된 ItemRecipeVO 객체를 사용하여 레시피 등록
 		    }
 		

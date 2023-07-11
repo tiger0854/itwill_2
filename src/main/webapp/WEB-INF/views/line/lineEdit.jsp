@@ -1,4 +1,4 @@
-x<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -62,7 +62,7 @@ function openempList() {
 <!-- 상품 수정 폼 -->
 <div class="black-bar"> <h4 style="text-align: center; color: white; padding-top: 8px">  <i class='bx bx-edit'></i>라인 등록 하기</h4></div>
 		<div style="display: flex; justify-content: center; margin-bottom: 15px" >
-		  <img src="../../resources/css/logo.png">
+<!-- 		  <img src="../../resources/css/logo.png"> -->
 		</div>
 <div class="container mt-3">
 
@@ -84,8 +84,8 @@ function openempList() {
     <td>라인등록자</td>
       <td>
     <div class="input-group">
-	    <input type="text" style="width: 40%" placeholder="지시자 ID" class="form-control" name="employee_id" id="employee_id" readonly>
-	    <input type="text" style="width: 40%" placeholder="지시자 이름" class="form-control" name="employee_name" id="employee_name" readonly>
+	    <input type="text" value="${lvo.employee_id }" style="width: 40%" placeholder="지시자 ID" class="form-control" name="employee_id" id="employee_id" readonly>
+	    <input type="text" value="${lvo.employee_name }" style="width: 40%" placeholder="지시자 이름" class="form-control" name="employee_name" id="employee_name" readonly>
 	    <input type="button" class="btn btn-primary" onclick="openempList();" value="검색">
 	</div>
       </td>

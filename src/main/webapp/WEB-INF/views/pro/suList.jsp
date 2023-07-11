@@ -58,7 +58,6 @@
         <th>수주수량</th>
         <th>상품코드</th>
         <th>상품이름</th>
-        <th>작업지시자</th>
     </tr>
     <c:forEach var="vo" items="${receiveList }">
         <tr onclick="selectItem('${vo.re_code}', '${vo.re_qty}','${vo.item_code}','${vo.item_name}','${vo.re_qty}')">

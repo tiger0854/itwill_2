@@ -14,26 +14,37 @@
 	      (SELECT count(co_code) + 1 FROM cook)) AS wo_code
 	  </selectKey>
 		  INSERT INTO cook
-		  (co_code, employee_name, line_code, item_code, co_date,
-		  coQTY, cpQTY,item_name,material_code,material_name,line_name,so_code,material_con)
+		  (co_code, employee_id, line_code, item_code, co_date,
+		  coQTY, cpQTY,material_code,so_code,material_con)
 		  VALUES (
-		  #{co_code}, #{employee_name}, #{line_code}, #{item_code},
-		  CURDATE(), #{coQTY}, #{cpQTY},#{item_name},
-		  #{material_code},#{material_name},#{line_name},#{so_code},#{material_con}
+		  #{co_code}, #{employee_id}, #{line_code}, #{item_code},
+		  CURDATE(), #{coQTY}, #{cpQTY},
+		  #{material_code},#{so_code},#{material_con}
 		  )
 	</insert> 
 
- 
-  	
+
   	<!-- 조리지시 목록 출력-->
   	<select id="cookOrderList" resultType="com.ddosirak.domain.CookVO">
-		SELECT * FROM cook order by co_code desc LIMIT #{startRow}, #{pageSize}
-  	</select>
-  	
+	  	SELECT c.co_status,m.material_name,c.material_con,c.co_code, c.so_code, c.cpQTY, c.employee_id,e.employee_name,c.line_code,c.item_code, l.line_name, i.item_name, c.co_date, c.coQTY, c.cpQTY
+		FROM cook c
+		JOIN item_detail i ON c.item_code = i.item_code
+		JOIN material_detail m ON m.material_code = c.material_code
+		JOIN pro_line l ON c.line_code = l.line_code
+		JOIN emp_main e ON c.employee_id = e.employee_id
+		order by co_code desc
+		LIMIT #{startRow}, #{pageSize} 
 	<!-- cookSearchList 조리지시 검색목록 -->
+  	</select>
+
   	<select id="cookSearchList" resultType="com.ddosirak.domain.CookVO">
-	SELECT * FROM cook
-	  WHERE line_code LIKE CONCAT('%', #{line_code}, '%')
+		SELECT c.material_code,c.co_status,m.material_name,c.material_con,c.co_code, c.so_code, c.cpQTY, c.employee_id,e.employee_name,c.line_code,c.item_code, l.line_name, i.item_name, c.co_date, c.coQTY, c.cpQTY
+		FROM cook c
+		JOIN item_detail i ON c.item_code = i.item_code
+		JOIN material_detail m ON m.material_code = c.material_code
+		JOIN pro_line l ON c.line_code = l.line_code
+		JOIN emp_main e ON c.employee_id = e.employee_id
+	  WHERE c.line_code LIKE CONCAT('%', #{line_code}, '%')
 	  <if test="co_date != null and co_date != ''">
 	    AND co_date = #{co_date}
 	  </if>
@@ -71,7 +82,13 @@
 <!-- 	.getcookOrder 조리지시 조회 -->
   	<!-- 작업지시 정보 -->
   	<select id="getcookOrder" resultType="com.ddosirak.domain.CookVO">
-		SELECT * FROM cook WHERE co_code=#{co_code}
+		SELECT c.co_status,m.material_name,c.material_code,c.material_con,c.co_code, c.so_code, c.cpQTY, c.employee_id,e.employee_name,c.line_code,c.item_code, l.line_name, i.item_name, c.co_date, c.coQTY, c.cpQTY
+		FROM cook c
+		JOIN item_detail i ON c.item_code = i.item_code
+		JOIN material_detail m ON m.material_code = c.material_code
+		JOIN pro_line l ON c.line_code = l.line_code
+		JOIN emp_main e ON c.employee_id = e.employee_id
+		WHERE co_code=#{co_code}
   	</select>
 
 <!-- co_code, employee_id, line_code, item_code, co_date, co_time,  -->
@@ -79,13 +96,10 @@
   	<!-- editcookOrder 조리지시  수정 -->
 	<update id="editcookOrder">
 	  UPDATE cook
-	  SET employee_name=#{employee_name},
+	  SET employee_id=#{employee_id},
 	      line_code=#{line_code},
-	      line_name=#{line_name},
 	      item_code=#{item_code},
-	      item_name=#{item_name},
 	      material_code=#{material_code},
-	      material_name=#{material_name},
 	      coQTY=#{coQTY},
 	      cpQTY=#{cpQTY},
 	      co_status=#{co_status}
@@ -103,12 +117,12 @@
 <!--   	.insertcookPerf 조리지시 실적등록 -->
   	<insert id="insertcookPerf">
   		insert into cook_add
-  		(item_code, item_name, cerf_gobd, err_reason,
-  		cfQTY, co_code, cerf_date, unit,material_code,material_name,co_time )
+  		(item_code, cerf_gobd, err_reason,
+  		cfQTY, co_code, cerf_date, unit,material_code,co_time )
   		values
-  		(#{item_code}, #{item_name}, #{cerf_gobd}, #{err_reason},
+  		(#{item_code}, #{cerf_gobd}, #{err_reason},
   		#{cfQTY}, #{co_code}, #{cerf_date}, #{unit},
-  		#{material_code},#{material_name},#{co_time})
+  		#{material_code},#{co_time})
   	</insert>
   	
 <!--   	cooketccount -->
@@ -116,11 +130,15 @@
 		SELECT count(*) FROM cook_add
 		where co_code=#{co_code}
 	</select>
-	
+
 <!-- 	cooketcList -->
 	<select id="cooketcList" resultType="com.ddosirak.domain.CookAddVO">
-		SELECT * FROM cook_add
-		where co_code=#{co_code}
+		SELECT ca.cook_id,ca.item_code, ca.cerf_gobd, ca.err_reason, i.item_name, m.material_name,
+  		ca.cfQTY, ca.co_code, ca.cerf_date, ca.unit, ca.material_code,ca.co_time
+		FROM cook_add ca
+		JOIN item_detail i ON ca.item_code = i.item_code
+		JOIN  material_detail m ON m.material_code = ca.material_code
+		where ca.co_code=#{co_code}
 		order by cook_id desc
 		LIMIT #{startRow}, #{pageSize}
   	</select>
