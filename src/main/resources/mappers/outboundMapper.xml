@@ -170,7 +170,7 @@
   	<!-- 출고 현황 그래프 -->
   	
   	<!-- 당일 출고 완료 그래프 -->
-  	<select id="outCompleteToday" resultType="com.ddosirak.domain.OutboundVO">
+  	<select id="outCompleteToday" resultType="Integer">
   		SELECT COUNT(*) AS out_count
 		FROM outbound
 		WHERE DATE(out_date) = CURDATE();
@@ -178,7 +178,7 @@
   	<!-- 당일 출고 완료 그래프 -->
   	
   	<!-- 당일 출고 예정 그래프 -->
-  	<select id="outScheduleToday" resultType="com.ddosirak.domain.OutboundVO">
+  	<select id="outScheduleToday" resultType="Integer">
   		SELECT COUNT(*) AS outSche_count
 		FROM outbound
 		WHERE DATE(due_date) = CURDATE();

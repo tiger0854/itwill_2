@@ -92,7 +92,7 @@ public class InboundController {
 				// 현페이지 번호 가져오기
 				String pageNum = request.getParameter("pageNum");
 				if(pageNum==null) {
-					pageNum="1";
+					pageNum="1"; 
 				}
 				// 페이지번호를 정수형으로 변경
 				int currentPage=Integer.parseInt(pageNum);
