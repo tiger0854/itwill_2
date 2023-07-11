@@ -61,7 +61,6 @@ public class ItemRecipeServiceImpl implements ItemRecipeService {
 			dao.deleteItemRecipe(vo.getItem_code());
 		} else {
 
-			// 등록자 이름이 존재하지 않거나 소모량 변경이 있을경우 등록자를 바꿈
 			if (existingRecipe == null || existingRecipe.isEmpty()) {
 				int id = Integer.valueOf((String) session.getAttribute("login_id"));
 				for (ItemRecipeVO item : itemRecipeUploadvo) {
