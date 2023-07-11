@@ -11,9 +11,10 @@
 <link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <script>
 var deptName = "${sessionScope.dept_name}";
+var positionName = "${sessionScope.position_name}";
 
 	function itemrecipeUpload() {
-		if(deptName.includes('생산')){  
+		if(deptName.includes('생산')||positionName==='이사'){  
 		// 새 창을 열기 위한 URL
 		var popupUrl = '/foundation/itemrecipe/itemrecipeUpload';
 		// 새 창 열기
@@ -24,7 +25,7 @@ var deptName = "${sessionScope.dept_name}";
 	}
 
 	function recipeDelete(item_code, item_name) {
-		if(deptName.includes('생산')){  
+		if(deptName.includes('생산')||positionName==='이사'){  
 		Swal.fire({
 		    title: "경고",
 		    text: "품명 : " + item_name + " 레시피 전체를 정말로 삭제하시겠습니까?",
@@ -42,7 +43,7 @@ var deptName = "${sessionScope.dept_name}";
 		}
 	}
 	function recipeDeleteMaterial(item_code, item_name, material_code, material_name) {
-		if(deptName.includes('생산')){   
+		if(deptName.includes('생산')||positionName==='이사'){   
 		Swal.fire({
 		    title: "경고",
 		    text: "품명 : " + item_name + " 레시피 요소인 " + material_name + "를/을 삭제하시겠습니까?",

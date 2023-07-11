@@ -11,9 +11,10 @@
 <link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <script>
 var deptName = "${sessionScope.dept_name}";
+var positionName = "${sessionScope.position_name}";
 
 	function itemUpload() {
-		if(deptName.includes('생산')){   
+		if(deptName.includes('생산')||positionName==='이사'){   
 		// 새 창을 열기 위한 URL
 		var popupUrl = '/foundation/itemdetail/itemdetailUpload';
 		// 새 창 열기
@@ -23,7 +24,7 @@ var deptName = "${sessionScope.dept_name}";
 		}
 	}
 	function itemUpdate(item_code) {
-		if(deptName.includes('생산')){    	
+		if(deptName.includes('생산')||positionName==='이사'){    	
 		// 새 창을 열기 위한 URL
 		if(!item_code.includes("M")){
 		var popupUrl = '/foundation/itemdetail/itemdetailUpdate?item_code='
@@ -39,7 +40,7 @@ var deptName = "${sessionScope.dept_name}";
 	}
 	
 	function itemDelete(item_code, item_name) {
-		if(deptName.includes('생산')){  
+		if(deptName.includes('생산')||positionName==='이사'){  
 		  Swal.fire({
 		    title: "경고",
 		    text: "품명 : " + item_name + "를/을 정말로 삭제하시겠습니까?",

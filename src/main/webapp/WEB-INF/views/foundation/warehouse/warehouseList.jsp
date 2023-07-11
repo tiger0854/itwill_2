@@ -11,8 +11,10 @@
 <link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <script>
 var deptName = "${sessionScope.dept_name}";
+var positionName = "${sessionScope.position_name}";
+
 function warehouseUpload() {
-	if(deptName.includes('생산')||positionName==='이사'){
+	if(deptName.includes('생산')||positionName==='이사'||deptName.includes('인사')){
 	  // 새 창을 열기 위한 URL
 	  var popupUrl = '/foundation/warehouse/warehouseUpload';
 	  // 새 창 열기
@@ -23,7 +25,7 @@ function warehouseUpload() {
 }
 
 function warehouseUpdate(wh_code) {
-	if(deptName.includes('생산')||positionName==='이사'){
+	if(deptName.includes('생산')||positionName==='이사'||deptName.includes('인사')){
 	  // 새 창을 열기 위한 URL
 	  var popupUrl = '/foundation/warehouse/warehouseUpdate?wh_code=' + wh_code;
 	  // 새 창 열기
@@ -33,7 +35,7 @@ function warehouseUpdate(wh_code) {
 	}	
 }
 function warehouseDelete(warehouse_code, warehouse_name) {
-	if(deptName.includes('생산')||positionName==='이사'){
+	if(deptName.includes('생산')||positionName==='이사'||deptName.includes('인사')){
 		Swal.fire({
 			    title: "경고",
 			    text: "창고 명 : " + warehouse_name + "를/을 정말로 삭제하시겠습니까?",

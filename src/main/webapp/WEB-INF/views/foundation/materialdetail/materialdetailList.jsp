@@ -11,9 +11,10 @@
 <link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <script>
 var deptName = "${sessionScope.dept_name}";
+var positionName = "${sessionScope.position_name}";
 
 	function materialUpload() {
-		if(deptName.includes('생산')){
+		if(deptName.includes('생산')||positionName==='이사'||deptName.includes('유통')){
 		// 새 창을 열기 위한 URL
 		var popupUrl = '/foundation/materialdetail/materialdetailUpload';
 		// 새 창 열기
@@ -24,7 +25,7 @@ var deptName = "${sessionScope.dept_name}";
 	}
 
 	function materialUpdate(material_code) {
-		if(deptName.includes('생산')){  
+		if(deptName.includes('생산')||positionName==='이사'||deptName.includes('유통')){  
 		// 새 창을 열기 위한 URL
 		var popupUrl = '/foundation/materialdetail/materialdetailUpdate?material_code='
 				+ material_code;
@@ -36,7 +37,7 @@ var deptName = "${sessionScope.dept_name}";
 	}
 
 	function materialDelete(material_code, material_name) {
-		if (deptName.includes('생산')) {
+		if (deptName.includes('생산')||positionName==='이사'||deptName.includes('유통')) {
 			swal.fire({
 			title: "경고",
 			text: "자재명: " + material_name + "를/을 정말로 삭제하시겠습니까?",
