@@ -26,15 +26,16 @@
 <div class="container" style="margin-top: 120px;max-width: 100% !important;">
 <h4 style="font-weight: bold;" ><i class="bx bx-book"></i>출고 상세</h4>
 <hr style="border: 2px solid black;">
+<input type="button" class="btn btn-outline-primary" onclick="location.href='/outbound/outboundList'" value="목록" style=" width: 200px;margin-bottom: 20px;float: right;">
 
 <div class="tab-content" style="margin-top: 20px; " >
   
   <table border="1" class="table table-bordered" style="width: 100%;">
    <c:forEach var="vo" items="${outList }">
   <tr>
-  <th rowspan="2" style="border-top:3px; border-bottom:3px solid #E9E9E9; background-color: #F9F9F9;text-align: center;">수주번호</th>
-  <td rowspan="2" style="border-bottom:3px; border-top:3px solid #E9E9E9; ">${vo.re_code }</td>
-  <th style="border-top:3px solid #E9E9E9; background-color: #F9F9F9;text-align: center;">생산진행현황</th>
+  <td rowspan="2" style="border-top:3px solid #E9E9E9; border-bottom:3px solid #E9E9E9; background-color: #F9F9F9; text-align: center; vertical-align: middle;">수주번호</td>
+  <td rowspan="2" style="border-bottom:3px solid #E9E9E9; border-top:3px solid #E9E9E9; vertical-align: middle;">${vo.re_code }</td>
+  <td style="border-top:3px solid #E9E9E9; background-color: #F9F9F9;text-align: center;">생산진행현황</td>
   <c:choose>
      <c:when test="${vo.out_qty <= vo.proOrderVO.pQTY }">
         <td style="border-top:3px solid #E9E9E9; "> <font color="blue">생산완료</font> </td>
@@ -44,7 +45,7 @@
      </c:otherwise>
   </c:choose>
   
-  <th style="border-top:3px solid #E9E9E9; background-color: #F9F9F9;text-align: center;">출고진행현황</th>
+  <td style="border-top:3px solid #E9E9E9; background-color: #F9F9F9;text-align: center;">출고진행현황</td>
    <c:choose>
      <c:when test="${vo.out_state==1}">
   <td style="border-top:3px solid #E9E9E9; ">진행중</td>
@@ -56,9 +57,9 @@
   </tr>
   <tr>
   
-  <th style="border-bottom:3px solid #E9E9E9; background-color: #F9F9F9;text-align: center;">납기일자</th>
+  <td style="border-bottom:3px solid #E9E9E9; background-color: #F9F9F9;text-align: center;">납기일자</td>
   <td style="border-bottom:3px solid #E9E9E9; ">${vo.due_date }</td>
-  <th style="border-bottom:3px solid #E9E9E9; background-color: #F9F9F9;text-align: center;">출고 담당자</th>
+  <td style="border-bottom:3px solid #E9E9E9; background-color: #F9F9F9;text-align: center;">출고 담당자</td>
   <td style="border-bottom:3px solid #E9E9E9; ">${vo.out_empNm }</td>
   </tr>
   </c:forEach>
@@ -68,12 +69,12 @@
   <table border="1" class="table table-bordered" style="width: 100%;">
  <thead style="border-top:3px solid #E9E9E9; background-color: #F9F9F9;text-align: center;">
   <tr>
-  <th>출고번호</th>
-  <th>상품명</th> 
-  <th>거래처명</th>
-  <th>출고예정수량</th>
-  <th>생산수량</th>
-  <th>비고</th>
+  <td>출고번호</td>
+  <td>상품명</td> 
+  <td>거래처명</td>
+  <td>출고예정수량</td>
+  <td>생산수량</td>
+  <td>비고</td>
   </tr>
   </thead>
   <tbody style="border-bottom:3px solid #E9E9E9; ">

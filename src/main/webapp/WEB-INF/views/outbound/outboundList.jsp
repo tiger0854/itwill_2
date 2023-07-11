@@ -17,7 +17,7 @@
 <body id="body-pd">
 <jsp:include page="../common/header.jsp"/>
 <div class="container" style="margin-top: 120px;max-width: 100% !important;">
-<h4 style="font-weight: bold;" onclick="location.href='/customer/customerList'"><i class="bx bx-book"></i>출고현황</h4>
+<h4 style="font-weight: bold;" ><i class="bx bx-book"></i>출고현황</h4>
 <hr style="border: 2px solid black;">
 
  <div class="tab-content" style="margin-top: 20px;" >
@@ -27,9 +27,9 @@
   <button id="allButton" class="btn btn-primary" name="state"  value="all">전체</button>
   <button id="ongoingButton" class="btn btn-primary" name="state"  value="ongoing">진행중</button>
   <button id="completedButton" class="btn btn-primary" name="state"  value="completed">출고완료</button>
-  <div style="background-color: #E9E9E9;height: 80px;padding: 20px;border-radius:10px;margin-bottom: 30px;margin-top: 60px;">
+  <div style="background-color: #E9E9E9;height: 80px;padding: 20px;border-radius:10px;margin-bottom: 30px;margin-top: 35px;">
 	<div class="input-group mb-3" style="width: 600px;justify-content: flex-start;align-items: center; justify-content: space-between;">
-	  출고번호 <input type="text" class="form-control" id="out_num" name="search" value="${pageVO.search}"> 
+	  출고번호 &nbsp;  <input type="text" class="form-control" id="out_num" name="search" value="${pageVO.search}"> 
   	<button type="submit" class="btn btn-primary" >검색</button>
 
   
@@ -83,7 +83,7 @@
 <%-- <td>${vo.item_name }</td> --%>
   <td>${vo.out_qty }</td>
   
-  <td><a href='/outbound/outboundStock?out_num=${vo.out_num}'>돋보기</a></td> 
+  <td><a href='/outbound/outboundStock?out_num=${vo.out_num}'><i class='bx bx-search-alt-2'></i></a></td> 
 <%--   <c:choose> --%>
 <%--   	<c:when test="${vo.out_state == 1 }"> --%>
 <%--   		<c:if test="${vo.out_qty > vo.proOrderVO.pQTY }"> --%>
