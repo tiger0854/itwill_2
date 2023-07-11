@@ -35,7 +35,7 @@
 	function onInsert() {
 		var frObj = $("#fr");
 		var formData = frObj.serialize();
-
+ 
 		if (frObj[0].checkValidity()) {
 			Swal.fire({
 				title : "작성 성공!",
