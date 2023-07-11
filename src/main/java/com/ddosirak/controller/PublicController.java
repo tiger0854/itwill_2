@@ -27,6 +27,7 @@ import com.ddosirak.domain.PageVO;
 import com.ddosirak.service.BoardService;
 import com.ddosirak.service.EmployeeService;
 import com.ddosirak.service.InboundService;
+import com.ddosirak.service.OutboundService;
 import com.ddosirak.service.PageService;
 import com.ddosirak.service.ProOrderService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -49,6 +50,8 @@ public class PublicController {
 	private ProOrderService oService;
 	@Inject
 	private InboundService iService;
+	@Inject
+	private OutboundService obService;
 	
 /////////////////////////////////게시판///////////////////////////////////
 	// http://localhost:8088/public/write
@@ -75,8 +78,12 @@ public class PublicController {
 	// http://localhost:8088/public/boardList
 	// 게시판 리스트 페이지 R 
 	@RequestMapping(value = "/boardList", method = RequestMethod.GET)
-	public void boardListGET(Model model, PageVO pageVO, HttpServletRequest request) throws Exception{
+	public String boardListGET(Model model, PageVO pageVO, HttpServletRequest request, HttpSession session) throws Exception{
 		logger.debug("boardListGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
+		
+		if(session.getAttribute("login_id") == null) {
+			return "redirect:/public/login";
+		} // session control
 		logger.debug("/public/boardList.jsp로 이동!");
 		
 		//================================페이징 처리를 위한 값 받아오기 동작========================================
@@ -122,6 +129,7 @@ public class PublicController {
 		//================================페이징 처리를 위한 값 받아오기 동작========================================
 		
 		model.addAttribute("boardList", bService.getBoardList(pageVO)); // 리스트반환 동작에 pageVO 넣기.
+		return null;
 	}//boardListGET() method end
 	
 	// 게시판 글 조회
@@ -180,10 +188,13 @@ public class PublicController {
 		session.setAttribute("login_id", lvo.getEmployee_id()); // 세션에 사원 id 저장
 		EmployeeVO evo = eService.getEmployee(Integer.parseInt(session.getAttribute("login_id").toString()));
 		session.setAttribute("dept_name", evo.getDepartment_name()); // 세션에 사원 부서 저장 >> 인사관리 권한 제어
+		session.setAttribute("position_name", evo.getPosition()); // 세션에 사원 직급 저장
+		
 		
 		logger.debug(session.getAttribute("dept_name")+"의 "+
 				session.getAttribute("login_id")+"번 사원, 로그인 성공!!!");
-		return "redirect:/emp/list";
+		
+		return "redirect:/public/dashBoard";
 	}//loginGET() method end
 	// 로그아웃 동작
 	@RequestMapping(value = "/logout")
@@ -267,8 +278,13 @@ public class PublicController {
 /////////////////////////////////대시보드///////////////////////////////////
 	// 대시보드 페이지
 	@RequestMapping(value = "/dashBoard", method = RequestMethod.GET)
-	public void dashBoardGET(Model model) throws Exception{
+	public String dashBoardGET(Model model, HttpSession session) throws Exception{
+		logger.debug("dashBoardGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 
+		if(session.getAttribute("login_id") == null) {
+			return "redirect:/public/login";
+		} // session control
+		
 		// -------------- 라인별 생산률 (예원)  0_< ----------------------
 		List<Map<String, Object>> graphList = oService.graphList();
 		logger.debug("graphList : " + graphList);
@@ -277,7 +293,6 @@ public class PublicController {
 		model.addAttribute("graphListJson", graphListJson);
 		// -------------- 라인별 생산률 (예원)  0_< ----------------------
 
-		logger.debug("dashBoardGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 		
 		// 임직원 수 리턴
 		model.addAttribute("alCount_all", eService.alCount_all());// 전일반 근무자
@@ -285,41 +300,42 @@ public class PublicController {
 		model.addAttribute("alCount_pm", eService.alCount_pm());// 오후근무자
 		model.addAttribute("empCount", eService.empCount());// 임직원
 		
-//		// 휴가자 수
-//	    model.addAttribute("vacationCount", eService.vacount()); // 현재 휴가 사원수
-//	    model.addAttribute("pvacationCount", eService.pvacount()); // 휴가예정 사원수
-//	    model.addAttribute("bvacountCount", eService.bvacount()); // 휴가복귀 사원 수
-//		
-//		// 입고 예정/완료
-//		model.addAttribute("selectNowIndate", iService.selectNowIndate()); //오늘 입고예정 수
-//		model.addAttribute("selectNowEdate", iService.selectNowEdate()); // 오늘 입고완료 수
-//		
-//		// 출고 예정/완료
-//		model.addAttribute("outScheduleToday", oService.outScheduleToday()); // 당일출고예정
-//		model.addAttribute("outCompleteToday", oService.outCompleteToday());  // 당일출고완료
+		// 휴가자 수
+	    model.addAttribute("vacationCount", eService.vacount()); // 현재 휴가 사원수
+	    model.addAttribute("pvacationCount", eService.pvacount()); // 휴가예정 사원수
+	    model.addAttribute("bvacountCount", eService.bvacount()); // 휴가복귀 사원 수
 		
+		// 입고 예정/완료
+		model.addAttribute("selectNowIndate", iService.selectNowIndate()); //오늘 입고예정 수
+		model.addAttribute("selectNowEdate", iService.selectNowEdate()); // 오늘 입고완료 수
 		
+		// 출고 예정/완료
+		model.addAttribute("outScheduleToday", obService.outScheduleToday()); // 금일출고예정
+		model.addAttribute("outCompleteToday", obService.outCompleteToday());  // 금일출고완료
+		
+		return null;
 	}//dashBoardGET() method end
 /////////////////////////////////대시보드///////////////////////////////////
 	
 /////////////////////////////////메신저///////////////////////////////////
 	// http://localhost:8088/public/chatList
 	@RequestMapping(value = "/chatList", method = RequestMethod.GET)
-	public void chatListGET (Model model,HttpSession session) throws Exception{
+	public String chatListGET (Model model,HttpSession session) throws Exception{
 		logger.debug("chatListGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
+		
+		if(session.getAttribute("login_id") == null) {
+			return "redirect:/public/login";
+		} // session control
 
 		// 채팅 시작을 위한 리스트
 		List<EmployeeVO> empList = eService.empList();
 		model.addAttribute("empList", empList);
 		
-		// 채팅 내역리스트
-//		List<ChatVO> chatList = bService.chatList((String)session.getAttribute("login_id"));
-//		model.addAttribute("chatList", chatList);
-		
 		// 채팅방 리스트
 		List<String> chatRoomList = bService.chatRoom((String)session.getAttribute("login_id"));
 		model.addAttribute("chatRoomList", chatRoomList);
 		
+		return null;
 	}// chatListGET() method end
 	
 	// http://localhost:8088/public/chat

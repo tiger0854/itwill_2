@@ -147,6 +147,11 @@ public class ProOrderDAOImpl implements ProOrderDAO {
 		return graphList;
 	}
 
+	@Override
+	public void orderStatusUpdate(String re_code) {
+		sqlSession.selectOne(NAMESPACE+".orderStatus",re_code);
+	}
+
 
 
 

@@ -153,7 +153,7 @@ public class WarehouseController {
 
 	// 창고 삭제
 	@RequestMapping(value = "/warehouseDelete", method = RequestMethod.GET)
-	public String deleteWhGET(String wh_code) throws Exception {
+	public String deleteWhGET(@RequestParam("warehouse_code") String wh_code) throws Exception {
 		logger.debug("deleteWhGET 호출");
 		service.deletewh(wh_code);
 		return "redirect:/foundation/warehouse/warehouseList";

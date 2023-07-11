@@ -7,14 +7,82 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <meta charset="UTF-8">
-<title>Dash Board</title>
+<title>대시보드</title>
 <jsp:include page="../common/header.jsp"/>
-<style type="text/css">
-
-</style>
-
 <script type="text/javascript">
- // ----------------------   라인별 생산률 -----------------------------
+
+</script>
+<style type="text/css">
+.emp_dash{display: flex;}
+.emp_vac{border: 1px solid; margin-left: 100px;}
+.emp_vac tr{border: 1px solid; margin: 100px;}
+.emp_vac tr td{border: 1px solid; margin: 100px;}
+</style>
+</head>
+<body id="body-pd">
+
+<!-- 라인별 생산률 그래프 -->
+<h3>라인별 생산률</h3>
+<canvas id="canvas"></canvas>
+<!-- 라인별 생산률 그래프 -->
+
+<table>
+	<tr>
+		<td>금일 입고예정 : </td>
+		<td>${selectNowIndate } 건</td>
+	</tr>
+	<tr>
+		<td>금일 입고완료 : </td>
+		<td>${selectNowEdate } 건</td>
+	</tr>
+</table>
+
+<p>outScheduleToday:${outScheduleToday }</p>
+<p>outCompleteToday:${outCompleteToday }</p>
+
+
+<!-- 인사 관련 내용 -->
+<h3>임직원 현황</h3>
+<div class="emp_dash">
+  <canvas id="emp_count"  width ="300" height="300"></canvas>
+	<table class="emp_vac">
+		<tr>
+			<td>현재 휴가자</td>
+			<td>${vacationCount } 명</td>
+		</tr>
+		<tr>
+			<td>휴가 신청자</td>
+			<td>${pvacationCount } 명</td>
+		</tr>
+	</table>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+const emp_count = document.getElementById('emp_count');
+
+new Chart(emp_count, {
+  type: 'pie',
+  data: {
+    labels: ['임직원', '전일 일용근로자', '오전 일용근로자', '오후 일용근로자'],
+    datasets: [{
+      label: '직원 현황',
+      data: [${empCount}, ${alCount_all}, ${alCount_am}, ${alCount_pm}],
+      borderWidth: 2
+    }]
+  },
+  options: {
+	responsive: false,
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+}); // chart end
+
+// ----------------------   라인별 생산률 -----------------------------
 $(document).ready(function(){
 	
 	var result = JSON.parse('${graphListJson}');
@@ -81,45 +149,6 @@ $(document).ready(function(){
 	});
 });
 // ----------------------   라인별 생산률 ------------------------------
-</script>
 
-</head>
-<body id="body-pd">
-<h1>대시보드</h1>
-
-<div class="emp_count">
-  <canvas id="emp_count"  width ="300" height="300"></canvas>
-</div>
-
-<!-- 라인별 생산률 그래프 -->
-<h2>라인별 생산률</h2>
-<canvas id="canvas"></canvas>
-<!-- 라인별 생산률 그래프 -->
-
-</body>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-
-const emp_count = document.getElementById('emp_count');
-
-new Chart(emp_count, {
-  type: 'pie',
-  data: {
-    labels: ['임직원', '전일 일용근로자', '오전 일용근로자', '오후 일용근로자'],
-    datasets: [{
-      label: '직원 현황',
-      data: [${empCount}, ${alCount_all}, ${alCount_am}, ${alCount_pm}],
-      borderWidth: 2
-    }]
-  },
-  options: {
-	responsive: false,
-    scales: {
-      y: {
-        beginAtZero: true
-      }
-    }
-  }
-}); // chart end
 </script>
 </html>

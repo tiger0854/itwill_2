@@ -48,6 +48,7 @@
 				        },
 				        error: function(xhr, status, error) {
 				          Swal.fire("오류 발생!", "error");
+
 				        }
 				      });
 				    });

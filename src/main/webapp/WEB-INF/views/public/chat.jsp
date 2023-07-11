@@ -7,13 +7,12 @@
 <head>
 <link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <meta charset="UTF-8">
-<title>chat</title>
+<title>사내 메신저</title>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <jsp:include page="../common/header.jsp"/>
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
 <style>
-/* 	.chat_wrap .header { font-size: 14px; padding: 15px 0; background: #F18C7E; color: white; text-align: center;  } */
  
 	.chat_wrap .chat { padding-top: 4px; padding-bottom:50px; width: 600px; margin:auto; background-color: silver; overflow-y: scroll; height: 60em;}
 	.chat_wrap .chat ul { width: 100%; list-style: none; padding-left: 0!important; }

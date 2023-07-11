@@ -142,7 +142,7 @@ public class MemberController {
 		return "redirect:/emp/list"; // 주소를 변경하면서 페이지 이동
 	}// alInsertPOST() method end
 
-	
+	// 사원 정보
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
 	public void employeeInfoGET(int employee_id, Model model) throws Exception{
 		logger.debug("employeeInfoGET() 호출![]~(￣▽￣)~*");
@@ -152,13 +152,6 @@ public class MemberController {
 		model.addAttribute("chkVO",chkVO);
 		model.addAttribute("evo",evo);
 		employee_id = evo.getEmployee_id();
-		
-		// 주석처리
-		// 서비스 - DB에 저장된 글 정보를 가져오기
-//		List<EmployeevacationVO> myvacationList = eService.myvacationList(employee_id);
-//		logger.debug("myvacationList", myvacationList);
-		// 연결된 뷰페이지로 전달(뷰-출력)
-//		model.addAttribute("myvacationList", myvacationList);
 		
 	}//employeeInfoGET() method end
 	
@@ -174,8 +167,12 @@ public class MemberController {
 	
 	// http://localhost:8088/emp/list
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String listGET(Model model,PageVO pageVO, HttpServletRequest request,@RequestParam(value ="pop",required = false) String pop) throws Exception{
+	public String listGET(Model model,PageVO pageVO, HttpServletRequest request,@RequestParam(value ="pop",required = false) String pop, HttpSession session) throws Exception{
 		logger.debug("listGET() 호출![]~(￣▽￣)~*");
+		
+		if(session.getAttribute("login_id") == null) {
+			return "redirect:/public/login";
+		} // session control
 		
 		//================================페이징 처리를 위한 값 받아오기 동작========================================
 		// 준비물 : Inject > PageVO , 파라미터값 PageVO pageVO, HttpServletRequest request
@@ -464,8 +461,13 @@ public class MemberController {
 	// http://localhost:8088/emp/salary
 	// 급여관리 메인페이지
 	@RequestMapping(value = "/salary", method = RequestMethod.GET)
-	public void salaryGET(Model model, PageVO pageVO, HttpServletRequest request) {
+	public String salaryGET(Model model, PageVO pageVO, HttpServletRequest request, HttpSession session) {
 		logger.debug("salaryGET() 호출![]~(￣▽￣)~*");
+		
+		if(session.getAttribute("login_id") == null) {
+			return "redirect:/public/login";
+		} // session control
+		
 		logger.debug("페이지 이동!");
 		
 		//================================페이징 처리를 위한 값 받아오기 동작========================================
@@ -514,6 +516,7 @@ public class MemberController {
 		List<EmployeeVO> empList = eService.empList(pageVO);
 		model.addAttribute("empList",empList);
 		
+		return null;
 	}// salaryGET() method end
 	
 	// 사원 급여조회 페이지 GET
@@ -666,8 +669,13 @@ public class MemberController {
 //	 http://localhost:8088/emp/vacationlist
 		// 휴가관리 리스트페이지(관리자)
 		@RequestMapping(value = "/vacationlist", method = RequestMethod.GET)
-		public void vacationGET(Model model, PageVO pageVO, HttpServletRequest request) {
+		public String vacationGET(Model model, PageVO pageVO, HttpServletRequest request, HttpSession session) {
 			logger.debug("vacationGET() 호출![]~(￣▽￣)~*");
+			
+			if(session.getAttribute("login_id") == null) {
+				return "redirect:/public/login";
+			} // session control
+			
 			logger.debug("페이지 이동!");
 			//================================페이징 처리를 위한 값 받아오기 동작========================================
 			// 준비물 : Inject > PageVO , 파라미터값 PageVO pageVO, HttpServletRequest request
@@ -726,7 +734,7 @@ public class MemberController {
 			List<EmployeevacationVO> vacationList = eService.vacationList(pageVO);
 			model.addAttribute("vacationList",vacationList);
 			
-			
+			return null;
 		}// vacationGET() method end
 		
 //	 http://localhost:8088/emp/vacationcheck
@@ -759,8 +767,13 @@ public class MemberController {
 		
 		// 사원휴가 정보
 		@RequestMapping(value = "/vacationinf", method = RequestMethod.GET)
-		public void vacationinf(int employee_id, Model model, Integer vacation_id) {
+		public String vacationinf(int employee_id, Model model, Integer vacation_id, HttpSession session) {
 			logger.debug("employeeInfoGET() 호출![]~(￣▽￣)~*");
+			
+			if(session.getAttribute("login_id") == null) {
+				return "redirect:/public/login";
+			} // session control
+			
 			// 0609, 페이지 이동간에 정보전달 방법 찾아본 후 마저 코드 짜기. // 해결
 			EmployeeVO evo = eService.getEmployee(employee_id);
 			model.addAttribute("evo",evo);
@@ -773,6 +786,7 @@ public class MemberController {
 			// 연결된 뷰페이지로 전달(뷰-출력)
 			model.addAttribute("myvacationList", myvacationList);
 			
+			return null;
 		}//employeeInfoGET() method end
 		
 		@RequestMapping(value = "/vacationinf", method = RequestMethod.POST)
@@ -802,9 +816,7 @@ public class MemberController {
 			
 		return "/emp/vacationList";
 		}
-		
-		
-		
+
 		// 나의 휴가내역 리스트 페이지
 	
 //	http://localhost:8088/emp/vacationregist
