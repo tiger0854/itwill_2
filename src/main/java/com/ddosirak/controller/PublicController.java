@@ -314,7 +314,7 @@ public class PublicController {
 		
 		// 출고 예정/완료
 		model.addAttribute("outScheduleToday", obService.outScheduleToday()); // 금일출고예정
-		model.addAttribute("outCompleteToday", obService.outCompleteToday());  // 금일출고완료
+		model.addAttribute("outCompleteToday", obService.outCompleteToday());
 		
 		// 전체 라인 불량률
 		model.addAttribute("errQTY", qService.errorList().get(0).getTotal_error_QTY()); // 불량개수

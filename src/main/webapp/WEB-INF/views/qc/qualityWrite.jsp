@@ -33,8 +33,26 @@
 
 <script>
 	function onInsert() {
+		var empName = $("#employee_name").val();
+		var woCode = $("#wo_code").val();
+		var itemName = $("#item_name").val();
 		var frObj = $("#fr");
 		var formData = frObj.serialize();
+		
+		if(!(empName && woCode && itemName)) {
+			
+			Swal.fire({
+				title : "빈값을 입력해주세요!",
+				showCancelButton : false,
+				confirmButtonText : "확인"
+			}).then(function(result) {
+				if (result.isConfirmed) {
+					
+				}
+			});
+			
+			return;
+		} 
  
 		if (frObj[0].checkValidity()) {
 			Swal.fire({
