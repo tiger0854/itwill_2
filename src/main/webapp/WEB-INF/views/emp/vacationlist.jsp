@@ -11,6 +11,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <link rel="stylesheet" type="text/css"href="../../resources/css/css.css">
 <!-- <link rel="stylesheet" type="text/css" href="../css/css.css"> -->
 <!-- <link rel="stylesheet" type="text/css" href="../../resources/css/product.css"> -->
@@ -18,27 +19,19 @@
 <script>
 	// 휴가 삭제하기
 		function vacationdelete(vacation_id, employee_id) {
-		    if (confirm("정말 휴가를 취소하시겠습니까?")) {
-		        // 삭제 작업 수행
-		        $.ajax({
-		            url: '/emp/vacationdelete',
-		            type: 'GET',
-		            data: {
-		                vacation_id: vacation_id,
-		                employee_id: employee_id
-		            },
-		            success: function(response) {
-		                // 삭제 작업이 성공한 경우
-		                alert('휴가가 삭제되었습니다.');
-		                // vacationlist 페이지로 이동
-		                location.href = '/emp/vacationlist';
-		            },
-		            error: function() {
-		                // 삭제 작업이 실패한 경우
-		                alert('휴가 삭제에 실패하였습니다.');
-		            }
-		        });
-		    }
+			Swal.fire({
+			    title: "경고",
+			    text: "사원번호 : " + employee_id + "의 휴가 리스트를 정말 삭제하시겠습니까?",
+			    icon: "error",
+			    showCancelButton:true,
+			    confirmButtonText: '확인',
+			    cancelButtonText: '취소'
+			  })
+			  .then(result => {
+			    if (result.isConfirmed) { // 만약 모달창에서 확인 버튼을 눌렀다면
+			      location.href = '/emp/vacationlist';
+			    }
+			  });
 		}
 </script>
 <script>
@@ -68,11 +61,6 @@
 
     	    window.open(popupUrl, "_blank", "width=500,height=600,left=100,top=100");
     	    
-    	 	// vacationlist로 이동 후 새로 고침
-    	    window.onunload = function() {
-//     	        window.opener.location.reload(); // 부모 창 새로 고침
-    	    };
-    	    window.close(); // 팝업 창 닫기
     	});
      
 
