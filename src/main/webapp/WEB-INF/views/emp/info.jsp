@@ -163,11 +163,13 @@
 		<form action="" method="post">
 			<input type="hidden" name="employee_id" value="${evo.employee_id }">
 			<!-- 권한제어 -->
-			<%-- 	    <c:if test="${sessionScope.department_name eq '인사팀' }"> --%>
-			<input type="button" value="수정" id="update"> <span
-				id="save_button_place"></span>
-			<%-- 	    </c:if> --%>
-			<input type="button" value="뒤로가기" onclick="location.href='/emp/list'">
+			<c:if test="${evo.employee_id eq sessionScope.login_id || sessionScope.dept_name eq '인사과' }">
+				<input type="button" value="수정" id="update"> <span id="save_button_place"></span>
+			</c:if>
+
+			<c:if test="${sessionScope.dept_name eq '인사과'}">
+              	  <input type="button" value="뒤로가기" onclick="location.href='/emp/list'">
+            </c:if>
 
 			<table class="table table-striped" style="margin-top: 10px;">
 
@@ -178,8 +180,14 @@
 					<td><input type="text" size="20" value="${evo.employee_name }"
 						id="employee_name" name="employee_name" readonly> 사원번호: ${evo.employee_id }</td>
 					<td>주민등록번호</td>
-					<td><input type="text" size="50" value="${evo.jumin}"
-						id="jumin" name="jumin" readonly></td>
+					<td>
+					<c:if test="${evo.employee_id eq sessionScope.login_id || sessionScope.dept_name eq '인사과' }">
+						<input type="text" size="50" value="${evo.jumin}" id="jumin" name="jumin" readonly>
+					</c:if>
+					<c:if test="${evo.employee_id ne sessionScope.login_id && sessionScope.dept_name ne '인사과' }">
+						<input type="text" size="50" value=" - " id="jumin" name="jumin" readonly>
+					</c:if>
+					</td>
 					<td>성별</td>
 					<td><select id="gender" name="gender" disabled>
 							<option value="남">남</option>
@@ -256,17 +264,18 @@
 		</form>
 
 	</div>
-
-	<div>
-		<p>출퇴근 확인</p>
-		<input type="date" id="checkDate">
-		<table class="table table-striped" style="margin-top: 10px;">
-			<thead id="theadHere">
-			</thead>
-			<tbody id="checkResultHere">
-			</tbody>
-		</table>
-	</div>
+	<c:if test="${evo.employee_id eq sessionScope.login_id || sessionScope.dept_name eq '인사과' }">
+		<div>
+			<p>출퇴근 확인</p>
+			<input type="date" id="checkDate">
+			<table class="table table-striped" style="margin-top: 10px;">
+				<thead id="theadHere">
+				</thead>
+				<tbody id="checkResultHere">
+				</tbody>
+			</table>
+		</div>
+	</c:if>
 
 
 </body>

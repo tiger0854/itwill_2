@@ -117,13 +117,15 @@ $(document).ready(function(){
 	    <form action="" method="post">
 	    <input type="hidden" name="employee_id" value="${evo.employee_id }">
 	    <!-- 권한제어 -->
-<%-- 	    <c:if test="${sessionScope.department_name eq '인사팀' }"> --%>
-<!-- 		    <input type="button" value="수정" id="update"> -->
-		    <input type="button" value="등록" onclick="location.href='/emp/salaryInsert?employee_id=${evo.employee_id }'">
-		    <span id="save_button_place"></span>
-<%-- 	    </c:if> --%>
-	    <input type="button" value="뒤로가기" onclick="location.href='/emp/salary'">
-	    
+	    	<c:if test="${sessionScope.dept_name eq '인사과'}">
+			    <input type="button" value="등록" onclick="location.href='/emp/salaryInsert?employee_id=${evo.employee_id }'">
+			    <span id="save_button_place"></span>
+              	<input type="button" value="뒤로가기" onclick="location.href='/emp/salary'">
+            </c:if>
+            <c:if test="${sessionScope.dept_name ne '인사과'}">
+			    <input type="button" value="조회" onclick="location.href='/emp/salaryInsert?employee_id=${evo.employee_id }'">
+			    <span id="save_button_place"></span>
+            </c:if>
 		    <table class="table table-striped" style="margin-top: 10px;" >
 		
 		        <tr>
