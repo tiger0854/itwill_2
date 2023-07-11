@@ -22,6 +22,13 @@
 <script>
 
 function onInsert() {
+	
+	  var employee_name = $("#employee_name").val();
+	  
+	  if(employee_name === null){
+		 Swal.fire("입력란을 채워주세요!");
+	  } 
+	  
 	  var frObj = $("#fr");
 	  var formData = frObj.serialize();
 
@@ -150,8 +157,8 @@ function openempList() {
       <td>작업지시자</td>
       <td>
     <div class="input-group">
-	    <input type="text" style="width: 40%" placeholder="지시자 ID" class="form-control" name="employee_id" id="employee_id" readonly>
-	    <input type="text" style="width: 40%" placeholder="지시자 이름" class="form-control" name="employee_name" id="employee_name" readonly>
+	    <input type="text" style="width: 40%" placeholder="지시자 ID" class="form-control" name="employee_id" id="employee_id" readonly required> 
+	    <input type="text" style="width: 40%" placeholder="지시자 이름" class="form-control" name="employee_name" id="employee_name" readonly required>
 	    <input type="button" class="btn btn-primary" onclick="openempList();" value="검색">
 	</div>
       </td>

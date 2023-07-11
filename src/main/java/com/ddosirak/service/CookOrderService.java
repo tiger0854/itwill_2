@@ -17,7 +17,7 @@ import com.ddosirak.domain.ProductionPerformanceVO;
 public interface CookOrderService {
 	
 	// 조리지시 등록
-	public void cookorderInsert(CookVO cvo,CookListVO lcvo);
+	public void cookorderInsert (CookVO cvo,CookListVO lcvo) throws Exception;
 	
 	// 조리지시 목록 출력
 	public List<CookVO> cookOrderList(PageVO pageVO);
@@ -47,7 +47,7 @@ public interface CookOrderService {
 //	public Integer statusProOrder(ProductionPerformanceVO ivo);
 	
 	// 조리지시 실적등록
-	public void insertcookPerf(CookAddVO cavo);
+	public void insertcookPerf(CookAddVO cavo) throws Exception;
 		
 	//조리지시 실적삭제
 	public void cooketcDelete(String cook_id);

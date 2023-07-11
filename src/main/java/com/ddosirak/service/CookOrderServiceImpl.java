@@ -1,5 +1,6 @@
 package com.ddosirak.service;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import com.ddosirak.domain.CookAddVO;
 import com.ddosirak.domain.CookListVO;
 import com.ddosirak.domain.CookVO;
 import com.ddosirak.domain.EmployeeVO;
+import com.ddosirak.domain.ItemRecipeListVO;
 import com.ddosirak.domain.ItemRecipeVO;
 import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.PageVO;
@@ -22,7 +24,9 @@ import com.ddosirak.domain.ProOrderVO;
 import com.ddosirak.domain.ProductionPerformanceVO;
 import com.ddosirak.persistance.CookOrderDAO;
 import com.ddosirak.persistance.EmployeeDAO;
+import com.ddosirak.persistance.ItemRecipeDAO;
 import com.ddosirak.persistance.ProOrderDAO;
+import com.ddosirak.persistance.ProductionPerformanceDAO;
 
 
 //@Service : 스프링(root-context.xml)에서, 해당 객체를 서비스객체로 인식하게 설정한 것!!
@@ -37,9 +41,13 @@ public class CookOrderServiceImpl implements CookOrderService {
 	private ProOrderDAO odao; // 의존성 주입
 	@Inject
 	private CookOrderDAO cdao;
-
+	@Inject
+	private ItemRecipeDAO rdao;
+	@Inject
+	private ProductionPerformanceDAO ppdao; // 의존성 주입
+	
 	@Override
-	public void cookorderInsert(CookVO cvo,CookListVO lcvo) {
+	public void cookorderInsert(CookVO cvo,CookListVO lcvo) throws Exception {
 		
 		 List<CookVO> cookListvo = lcvo.getCookListvo(); // ItemRecipeUploadVO 객체에서 리스트를 가져옴
 		 Iterator<CookVO> iterator = cookListvo.iterator(); // Iterator 객체 생성
@@ -55,9 +63,14 @@ public class CookOrderServiceImpl implements CookOrderService {
 		        item.setEmployee_name(cvo.getEmployee_name());
 		        item.setSo_code(cvo.getSo_code());
 		        cdao.cookOrder(item);
+	        
 //		            dao.insertOrUpdateItemRecipe(item); // 변경된 ItemRecipeVO 객체를 사용하여 레시피 등록
 		    }
 			
+
+		    
+		    
+		    
 		
 	}
 
@@ -107,7 +120,27 @@ public class CookOrderServiceImpl implements CookOrderService {
 	
 	//조리지시 실적등록
 	@Override
-	public void insertcookPerf(CookAddVO cavo) {
+	public void insertcookPerf(CookAddVO cavo) throws Exception {
+
+//        
+//		List<ItemRecipeListVO> itemList = rdao.selectItemRecipe(cavo.getItem_code());
+//		for (ItemRecipeListVO material : itemList) {
+//		    // 수량을 빼는 로직을 구현합니다.
+//			String material_code = material.getMaterial_code();
+//			logger.debug("@@@@@@@@@@@@ meterial_code : "+material_code);
+//			String meterial_name = material.getMaterial_name();
+//		    int material_con = material.getMaterial_con()*cavo.getCpQTY();
+//		    // 수량을 빼는 처리를 수행합니다.
+//		    // 예: 해당 수량을 어떤 변수에서 차감하거나 다른 로직에 적용합니다.
+//		    Map<String, Object> params = new HashMap<>();
+//		    params.put("material_con", material_con);
+//		    params.put("material_code", material_code);
+//		    params.put("cavo", cavo);
+//		    ppdao.deltQTY(params);
+//		    
+//		} 
+//        
+		
 		cdao.insertcookPerf(cavo);
 		cdao.addcpQTY(cavo);
 		String co_status = cdao.getcookstatus(cavo.getCo_code());

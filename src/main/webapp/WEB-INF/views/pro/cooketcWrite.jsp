@@ -130,7 +130,7 @@
 							readonly required></td>
 			<span id="ipmsg"></span>				
 			<table class="box" style="margin-top: 30px; width: 100%">
-			<input type="hidden" name="wo_code" value="${param.co_code }" readonly>
+			<input type="hidden" name="co_code" value="${param.co_code }" readonly>
 				<tbody>
 					<tr>
 						<td>품번</td>

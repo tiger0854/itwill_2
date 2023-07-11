@@ -494,12 +494,10 @@ public class ProductController {
 	//조리지시 글작성
 	// http://localhost:8088/pro/cookorderWrite
 	@RequestMapping(value = "/cookorderWrite", method = RequestMethod.POST)
-	public void proCookOrderWritePost(CookVO cvo,CookListVO lcvo) {
+	public void proCookOrderWritePost(CookVO cvo,CookListVO lcvo) throws Exception {
 		logger.debug("proCookOrderWritePOST 호출![]~(￣▽￣)~*");
 		logger.debug(cvo+" "+lcvo);
-		
-		
-		
+
 		cService.cookorderInsert(cvo,lcvo);
 	}// productWriteGET() method end
 		// 생산관리 - 조리지시글작성
@@ -639,7 +637,7 @@ public class ProductController {
 		// 생산관리 - 실적등록
 
 	@RequestMapping(value = "/cooketcWrite", method = RequestMethod.POST)
-	public void cooketcWritePOST(CookAddVO cavo,Model model ) {
+	public void cooketcWritePOST(CookAddVO cavo,Model model ) throws Exception {
 		logger.debug("etcWritePOST() 호출![]~(￣▽￣)~*");
 		logger.debug(cavo + "");
 //		ProOrderVO pvo = oService.getProOder(wo_code);
