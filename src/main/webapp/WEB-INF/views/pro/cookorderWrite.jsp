@@ -93,13 +93,13 @@ function openempList() {
 		function onInsert() {
 
 			  var employee_name = $("#employee_name").val();
-
 			  var frObj = $("#fr");
 			  var formData = frObj.serialize();
 			  
-			  if(employee_name === null){
-					 Swal.fire("입력란을 채워주세요!");
-				  } 
+			  if (employee_name === '') {
+				    Swal.fire("입력란을 채워주세요!");
+				    return; // 입력란이 비어있을 경우 함수 실행 종료
+				  }
 			  
 			  if (frObj[0].checkValidity()) {
 			    Swal.fire({

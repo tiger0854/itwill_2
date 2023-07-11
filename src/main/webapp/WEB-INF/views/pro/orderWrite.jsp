@@ -25,9 +25,9 @@ function onInsert() {
 	
 	  var employee_name = $("#employee_name").val();
 	  
-	  if(employee_name === null){
-		 Swal.fire("입력란을 채워주세요!");
-	  } 
+	  if(employee_name === ''){
+		    Swal.fire("입력란을 채워주세요!");
+		}
 	  
 	  var frObj = $("#fr");
 	  var formData = frObj.serialize();

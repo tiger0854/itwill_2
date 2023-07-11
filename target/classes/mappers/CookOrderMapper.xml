@@ -242,7 +242,7 @@
 		  ) THEN false ELSE true END
 		</select>
   	
-<!--   	checkCS -->
+	<!--   	checkCS -->
 
 		<select id="checkCS" resultType="boolean">
 		  SELECT CASE WHEN EXISTS (
@@ -252,8 +252,11 @@
 		  ) THEN false ELSE true END
 		</select>
 
-
-
+	<!-- .updateM -->
+		<select id="updateM">
+	  	UPDATE material_detail SET tQTY = tQTY + #{cfQTY}
+	  	WHERE material_code Like #{material_code}
+		</select>	
 
   	
   </mapper>

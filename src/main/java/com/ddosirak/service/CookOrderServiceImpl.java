@@ -66,11 +66,6 @@ public class CookOrderServiceImpl implements CookOrderService {
 	        
 //		            dao.insertOrUpdateItemRecipe(item); // 변경된 ItemRecipeVO 객체를 사용하여 레시피 등록
 		    }
-			
-
-		    
-		    
-		    
 		
 	}
 
@@ -123,23 +118,31 @@ public class CookOrderServiceImpl implements CookOrderService {
 	public void insertcookPerf(CookAddVO cavo) throws Exception {
 
 //        
-//		List<ItemRecipeListVO> itemList = rdao.selectItemRecipe(cavo.getItem_code());
-//		for (ItemRecipeListVO material : itemList) {
-//		    // 수량을 빼는 로직을 구현합니다.
-//			String material_code = material.getMaterial_code();
-//			logger.debug("@@@@@@@@@@@@ meterial_code : "+material_code);
-//			String meterial_name = material.getMaterial_name();
-//		    int material_con = material.getMaterial_con()*cavo.getCpQTY();
-//		    // 수량을 빼는 처리를 수행합니다.
-//		    // 예: 해당 수량을 어떤 변수에서 차감하거나 다른 로직에 적용합니다.
-//		    Map<String, Object> params = new HashMap<>();
-//		    params.put("material_con", material_con);
-//		    params.put("material_code", material_code);
-//		    params.put("cavo", cavo);
-//		    ppdao.deltQTY(params);
-//		    
-//		} 
-//        
+		List<ItemRecipeListVO> itemList = rdao.selectItemRecipe(cavo.getMaterial_code());
+		for (ItemRecipeListVO material : itemList) {
+		    // 수량을 빼는 로직을 구현합니다.
+			String material_code = material.getMaterial_code();
+			logger.debug("@@@@@@@@@@@@ meterial_code : "+material_code);
+			String meterial_name = material.getMaterial_name();
+		    int material_con = material.getMaterial_con()*cavo.getCfQTY();
+		    // 수량을 빼는 처리를 수행합니다.
+		    // 예: 해당 수량을 어떤 변수에서 차감하거나 다른 로직에 적용합니다.
+		    Map<String, Object> params = new HashMap<>();
+		    params.put("material_con", material_con);
+		    params.put("material_code", material_code);
+		    params.put("cavo", cavo);
+		    ppdao.deltQTY(params);
+		    
+		} 
+//     
+		String cerf_gobd = cavo.getCerf_gobd();
+//		 불량이 아닐때만 해당 자재 증가
+		if(cerf_gobd.equals("n")) {
+			cdao.updatemetarial(cavo);
+			logger.debug("@@@@@@@@@@@@@@@@@@@@@@ cerf_gobd : "+cerf_gobd);
+		}
+		
+		
 		
 		cdao.insertcookPerf(cavo);
 		cdao.addcpQTY(cavo);

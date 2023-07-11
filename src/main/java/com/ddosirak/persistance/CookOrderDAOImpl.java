@@ -214,6 +214,12 @@ public class CookOrderDAOImpl implements CookOrderDAO {
 		return sqlSession.selectOne(NAMESPACE+".checkCS", re_code);
 	}
 
+	@Override
+	public void updatemetarial(CookAddVO cavo) {
+		// TODO Auto-generated method stub
+		sqlSession.selectOne(NAMESPACE+".updateM", cavo);
+	}
+
 
 
 
