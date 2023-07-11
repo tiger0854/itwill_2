@@ -6,7 +6,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>거래처리스트</title>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 

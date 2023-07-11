@@ -15,7 +15,7 @@
 		    
 		    document.getElementById("in_number").value = rowData[1];
 		    document.getElementById("material_code").value = rowData[3];
-		    document.getElementById("in_piece").value = rowData[4];
+		    document.getElementById("in_piece").value = rowData[5];
 		
 		  });
 		

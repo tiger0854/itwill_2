@@ -51,7 +51,7 @@ function sendInfo(row) {
   <td>담당자명</td> <!-- 클릭하면 팝업창 꺼지면서 폼에 입력 -->
   </tr>
   
- <c:forEach var="vo" items="${empList }">
+ <c:forEach var="vo" items="${empListAll }">
  <c:if test="${vo.department_name == '유통과' || vo.department_name == '출고팀'}">
   <tr onclick="sendInfo(this);">
   <td>${vo.employee_id }</td>

@@ -102,7 +102,7 @@
   	
 	<!-- 입고처리시 재고쌓이게 -->
   	<update id="updateMatrial" parameterType="java.util.HashMap">
-  	UPDATE material SET tQTY = tQTY + #{in_Epiece}
+  	UPDATE material_detail SET tQTY = tQTY + #{in_Epiece}
   	WHERE material_code Like #{material_code}
   	</update>
   	

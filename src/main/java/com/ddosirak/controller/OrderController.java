@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,10 +32,13 @@ public class OrderController {
 	
 	// http://localhost:8088/inbound/orderWrite
 	@RequestMapping(value="/orderWrite",method=RequestMethod.GET)
-	public void orderWriteGET() {
+	public String orderWriteGET(HttpSession session) {
+		if(session.getAttribute("login_id")==null){
+			return "redirect:/public/login";
+			};
 		logger.debug("orderWriteGET() 호출!");
 		logger.debug("inbound/order_write.jsp 뷰페이지로 연결");
-		
+		return null;
 	}//발주서 페이지로 이동
 	
 	@RequestMapping(value="/orderWrite",method=RequestMethod.POST)
@@ -51,9 +55,12 @@ public class OrderController {
 	
 	// http://localhost:8088/inbound/orderList
 	@RequestMapping(value="/orderList",method=RequestMethod.GET)
-	public void orderListGET(Model model, HttpServletRequest request, PageVO pageVO) {
+	public String orderListGET(Model model, HttpServletRequest request, PageVO pageVO,HttpSession session) {
 		logger.debug("orderListGET() 호출!");
 		logger.debug("inbound/orderList.jsp 뷰페이지로 연결");
+		if(session.getAttribute("login_id")==null){
+			return "redirect:/public/login";
+			};
 		//================================페이징 처리를 위한 값 받아오기 동작========================================
 		// 준비물 : Inject > PageVO , 파라미터값 PageVO pageVO, HttpServletRequest request
 		//   		리스트를 반환하는 DAO - Service 메서드에 PageVO 추가, 쿼리에 LIMIT #{startRow}, #{pageSize} 추가.
@@ -97,7 +104,7 @@ public class OrderController {
 		//================================페이징 처리를 위한 값 받아오기 동작========================================
 		List<OrderVO> orderList = oService.orderAllList(pageVO);
 		model.addAttribute("orderList", orderList);
-		
+		return null;
 	}//발주현황에서 발주목록 불러오기
 	
 	

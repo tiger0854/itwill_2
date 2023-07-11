@@ -18,7 +18,23 @@
 <meta charset="UTF-8">
 
 </head>
+
 <script type="text/javascript">
+$(document).ready(function () {
+ 	  $("#collapseSale2").click(function () {
+ 		  var deptName = "${sessionScope.dept_name}";
+		 
+ 		  
+ 		  if(deptName.includes('유통')||deptName.includes('입고')||deptName.includes('출고')){
+ 		  }
+ 		  else if(deptName != ""){
+ 		  alert('권한이 없습니다.');
+ 		  return false;
+ 		  }
+ 		 
+ 	  });
+ 	});
+
 function toggleDropdown() {
 	  const collapseSale = document.getElementById('collapseSale');
 	  collapseSale.classList.toggle('show');
@@ -83,9 +99,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 	 // Your code to run since DOM is loaded and ready
 	});
+
+
+	
 </script>
 
-</script>
+
 <!-- 판매목록 drop 기능 -->
 
 <body>
@@ -160,10 +179,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					<a href="#" class="nav_link" onclick="toggleDropdown2()"> <i class="bx bxs-cart-alt nav_icon"></i> <span class="nav_name">입/출고관리</span> </a> 
 					<div class="nav_link collapse" id="collapseSale2">
 					<!--입출고-->
+					
 						  <a href="/inbound/orderWrite" class="nav_link"> - 발주등록</a><br>
 						  <a href="/inbound/orderList" class="nav_link"> - 발주현황</a><br>
 						  <a href="/inbound/inboundWrite" class="nav_link"> - 입고등록</a><br>
 						  <a href="/inbound/inboundList" class="nav_link"> - 입고현황</a><br>
+						
 						  <a href="/outbound/outboundInsert" class="nav_link"> - 출고등록</a><br>
 						  <a href="/outbound/outboundList" class="nav_link"> - 출고현황</a><br>
 					  <!--입출고-->
@@ -193,5 +214,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     </div>
     
           <!--   <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a> -->
+
+
+
 </body>
 </html>
