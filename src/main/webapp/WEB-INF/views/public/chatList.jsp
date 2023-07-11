@@ -136,7 +136,11 @@
 					var table = '';
 					table += '<thead>';
 					table += '	<tr>';
-					table += '		<td class="chatHead"><a href="/public/chat?chat_receiver='+employee_id+'&chat_sender=${login_id}" class="chatLink">'+employee_name+'</a></td>';
+					table += '	<td class="chatHead">';
+					table += '	<img src="../../resources/'+employee_id+'.png" onerror="this.onerror=null; '; 
+					table += " 	this.src='../../resources/default_profile_photo.png';";
+					table += '	" width="60" height="60">';
+					table += '	<a href="/public/chat?chat_receiver='+employee_id+'&chat_sender=${login_id}" class="chatLink">'+employee_name+'</a></td>';
 					table += '	</tr>';
 					table += '</thead>';
 					table += '<tbody>';
