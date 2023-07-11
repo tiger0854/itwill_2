@@ -7,6 +7,10 @@
 <link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -37,25 +41,27 @@ function sendInfo(row) {
 </script>
 </head>
 
-	<body id="body-pd" style="font-family: 'TheJamsil5';">
-	<jsp:include page="../common/header.jsp"/>
 
 <body>
- 	 수주 검색
+
+
+ 	 
 <!--     <input type="text" placeholder="담당자"> -->
 <!--     <button>Search</button> -->
- 	 <form action="" >		
+ 	 <form action="" >	
+ 	 <div class="input-group">	
   		<select id="kind" name="kind" >
   			<option value="reCd">수주번호</option>
   			<option value="customerName">거래처명</option>
   		</select>
   		
   		<input type="text" name="search" value="${pageVO.search }">
-  		<button type="submit">Search</button>
+  		<button type="submit" class="btn btn-primary">검색</button>
+  		</div>
   		<input type="hidden" name="pop" value="out">
   	</form>
-
-  <table border="1" class="table table-bordered">
+<br>
+  <table border="1" class="table table-hover">
 	  <tr>
 	 	 <th>수주번호</th> <!-- 클릭하면 팝업창 꺼지면서 폼에 입력 -->
 	 	 <th>상품코드</th>
@@ -78,7 +84,8 @@ function sendInfo(row) {
   </table>
 	
  <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
-	 		<ul class="pagination" id="pagination">
+	 	<div class="container" style="margin-top: 30px; margin-bottom: 30px">
+	 		<ul class="pagination" style= "justify-content: center;" id="pagination">
 		<c:choose>
 			<c:when test="${pageVO.startPage > pageVO.pageBlock}">
 				<li class="page-item"><a
@@ -110,6 +117,7 @@ function sendInfo(row) {
 			</c:otherwise>
 		</c:choose>
 	</ul>
+	</div>
 <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->	
 
 </body>

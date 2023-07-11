@@ -7,9 +7,15 @@
 <link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <meta charset="UTF-8">
 <title>출고 처리</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.min.css">
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.all.min.js"></script>
 <script type="text/javascript">
 
 	window.addEventListener("message", function(event) {
@@ -24,26 +30,31 @@
 
 </head>
 
- <body id="body-pd" style="font-family: 'TheJamsil5';">
- <jsp:include page="../common/header.jsp"/>
+
+ <body id="body-pd" >
+  <div class="container" style="margin-top: 120px;max-width: 100% !important;">
+<h4 style="font-weight: bold;" ><i class="bx bx-book"></i>출고수정</h4>
+<hr style="border: 2px solid black;">
+<div class="tab-content" style="margin-top: 20px; " >
 
    <form role="form" id="fr">
    <input type="hidden" name="re_code" id="re_code"><br>
-    출고 번호 <input type="text" name="out_num" id="out_num" readonly><br>
+    출고 번호 <input type="text" class="form-control" name="out_num" id="out_num" readonly><br>
     <br>
-    출고 예정 수량 <input type="text" name="out_qty" id="out_qty" ><br>
+    출고 예정 수량 <input type="text" class="form-control" name="out_qty" id="out_qty" readonly><br>
     <br>
-    출고 수량 <input type="text" name="out_Cqty" id="out_Cqty" ><br>
+    출고 수량 <input type="number" class="form-control" name="out_Cqty" id="out_Cqty" ><br>
     <p id="out_Cqty_error" style="color: red; font-size: small;"></p>
     <br>
-    출고 일자 <input type="date" name="out_date" id="out_date" ><br>
+    출고 일자 <input type="date" class="form-control" name="out_date" id="out_date" ><br>
     <p id="date_error" style="color: red; font-size: small;"></p>
     <br>
   <hr>
     <p id="qty_error" style="color: red; font-size: small;"></p>
-  	<button type="button" id="outCompleted" class="btn-completed">출고 완료</button>
+  	<button type="button" id="outCompleted" class="btn btn-primary">출고 완료</button>
   </form>
-
+</div>
+</div>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

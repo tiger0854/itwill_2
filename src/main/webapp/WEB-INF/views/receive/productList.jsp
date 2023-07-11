@@ -7,6 +7,10 @@
 <link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -30,27 +34,24 @@
 
 </head>
 
-<body id="body-pd" style="font-family: 'TheJamsil5';">
-<jsp:include page="../common/header.jsp"/>
-	<h1>productSearch.jsp</h1>
-	
-	 품목 검색
+<body>
 	  <form action="" >		
 <!--   		<select id="kind" name="kind" > -->
 <!--   			<option value="code">품목코드</option> -->
 <!--   			<option value="name">품목명</option> -->
 <!--   		</select> -->
-		
-  		
+	<h3>품목</h3>  		
+	<div class="input-group">
 	  	<input type="hidden" name="item_code" id="item_code" >
-	품목명  	<input type="text" name="item_name" id="item_name" >
+    	<input type="text" class="form-control" name="item_name" id="item_name" placeholder="품목명">
 <!--   	품목명	<input type="text" name="item_name" id="item_name"> -->
 <%--   		<input type="text" name="search" value="${pageVO.search }"> --%>
-  		<button type="submit">Search</button>
+  		<button type="submit" class="btn btn-primary">검색</button>
+  		</div>
   		<input type="hidden" name="pop" value="rec">
   	</form>
-  
-  <table border="1" class="table table-bordered">
+  <br>
+  <table border="1" class="table table-hover">
   <tr>
   <td>품목코드</td> <!-- 클릭하면 팝업창 꺼지면서 폼에 입력 -->
   <td>품목명</td> <!-- 클릭하면 팝업창 꺼지면서 폼에 입력 -->
@@ -94,7 +95,7 @@
  <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
 <%--   		${Search} --%>
 			<div class="container" style="margin-top: 30px; margin-bottom: 30px">
-				<ul class="pagination justify-content-center" id="pagination"
+				<ul class="pagination" style= "justify-content: center;" id="pagination"
 					style="margin-top: 20px;">
 					<c:if test="${pageVO.startPage > pageVO.pageBlock}">
 						<li class="page-item"><a class="page-link"

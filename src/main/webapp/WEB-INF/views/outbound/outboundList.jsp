@@ -13,42 +13,31 @@
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.min.css">
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.all.min.js"></script>
  
-
 </head>
-<body id="body-pd" style="font-family: 'TheJamsil5';">
+<body id="body-pd">
 <jsp:include page="../common/header.jsp"/>
+<div class="container" style="margin-top: 120px;max-width: 100% !important;">
+<h4 style="font-weight: bold;" onclick="location.href='/customer/customerList'"><i class="bx bx-book"></i>출고현황</h4>
+<hr style="border: 2px solid black;">
 
-	<br>
-	<br>
-  <h4>출고현황</h4>
+ <div class="tab-content" style="margin-top: 20px;" >
+ <button type="button" class="btn btn-primary"style="float: right;margin-top: 20px;margin-right: 30px;"  onclick="location.href='/outbound/outboundInsert'">출고예정등록</button>
   
   <form action="" method="get" id="searchFrm">
-<!-- 	  출고번호 <input type="text" style="width:50px;" > -->
-<!-- 	  출고일자 <input type="date" placeholder="날짜 선택"> ~ <input type="date" placeholder="날짜 선택"> -->
-<!-- 	  담당자 <input type="text"  style="width:50px;"> -->
-	  출고번호 <input type="text" id="out_num" name="search" value="${pageVO.search}"> 
-<%-- 	  <input type="hidden" name="state" value="${state}"> --%>
-  	<button type="submit">Search</button>
-<!-- 	<select name="kind" id="kind"> -->
-<!--   		<option value="itemNm">품목명</option> -->
-<!--   		<option value="customerNm">담당자</option> -->
-<!-- 		<option value="outNm">출고번호</option> -->
-<!--   	</select> -->
-<%--   <input type="text" placeholder="검색어를 입력하세요" name="search" value="${pageVO.search }">  --%>
-<!--   <button type="submit" class="btn btn-outline-info">Search</button> -->
-  
-  <hr>
-  
-<!--   onclick="getOutBoundList(2);" -->
-  
-  <button id="allButton" name="state"  value="all">전체</button>
-  <button id="ongoingButton" name="state"  value="ongoing">진행중</button>
-  <button id="completedButton" name="state"  value="completed">출고완료</button>
+  <button id="allButton" class="btn btn-primary" name="state"  value="all">전체</button>
+  <button id="ongoingButton" class="btn btn-primary" name="state"  value="ongoing">진행중</button>
+  <button id="completedButton" class="btn btn-primary" name="state"  value="completed">출고완료</button>
+  <div style="background-color: #E9E9E9;height: 80px;padding: 20px;border-radius:10px;margin-bottom: 30px;margin-top: 60px;">
+	<div class="input-group mb-3" style="width: 600px;justify-content: flex-start;align-items: center; justify-content: space-between;">
+	  출고번호 <input type="text" class="form-control" id="out_num" name="search" value="${pageVO.search}"> 
+  	<button type="submit" class="btn btn-primary" >검색</button>
 
-  	    </form>
   
-  <hr>
-  <table id="table" border="1" class="table table-bordered">
+  </div>
+  </form>
+  </div>
+  <table id="table" border="1" class="table table-bordered"  style="width: 100%;">
+  <thead style="border-top:3px solid #E9E9E9; background-color: #F9F9F9;text-align: center;">
   <tr>
   <td></td>
   <th>출고번호</th>
@@ -63,7 +52,8 @@
   <th>출고처리</th>  
   <th>수정</th>  
   </tr>
-  
+  </thead>
+  <tbody style="border-bottom:3px solid #E9E9E9; ">
   <c:forEach var="vo" items="${outList }">
   <tr>
   	
@@ -138,8 +128,8 @@
  <c:choose>
     <c:when test="${vo.out_state==1 }">
 <%--    		<td><button type="button" onclick="updateOutState('${vo.out_num}', 0)">출고</button></td>  --%>
-   		<td><button type="button" onclick="openChildWindow2(this);">출고</button></td> 
-   		<td><button type="button" onclick="openChildWindow(this);" >수정</button></td>
+   		<td><button type="button" class="btn-primary" onclick="openChildWindow2(this);">출고</button></td> 
+   		<td><button type="button" class="btn-primary" onclick="openChildWindow(this);" >수정</button></td>
     </c:when>
     <c:otherwise>
    		 <td></td>
@@ -149,9 +139,10 @@
 <!--   <td onclick="location.href='outboundPrint.jsp'">인쇄</td>  -->  
   </tr>
   </c:forEach>
+  </tbody>
   </table>
-  <hr>
-  
+  </div>
+  <button type="button" class="btn btn-danger" onclick="outboundRemove(this);">출고 취소</button>
    <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
 <!-- 	 	 		<ul class="pagination" id="pagination"> -->
 <%-- <%-- 	 		<c:set var="state" value="${state eq '0' ? '&state=0' : state eq '1' ? '&state=1' : ''}" /> --%> 
@@ -224,8 +215,8 @@
   
   
   
-  <button type="button" class="btn btn-outline-info" onclick="outboundRemove(this);">출고 취소</button>
-  <button type="button" class="btn btn-outline-info" onclick="location.href='/outbound/outboundInsert';">출고 예정 등록</button>
+  
+<!--   <button type="button" class="btn btn-outline-info" onclick="location.href='/outbound/outboundInsert';">출고 예정 등록</button> -->
   
   <!-- 진행상태 체크한것 일괄 변경 셀렉트버튼 추가 -->
   

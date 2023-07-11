@@ -7,6 +7,10 @@
 <link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -30,33 +34,33 @@ function sendInfo(row) {
 </script>
 </head>
 
-	<body id="body-pd" style="font-family: 'TheJamsil5';">
-	<jsp:include page="../common/header.jsp"/>
 
 <body>
- 	 거래처 검색
+ 	<h3> 거래처  </h3>
 <!--     <input type="text" placeholder="담당자"> -->
 <!--     <button>Search</button> -->
  	 <form action="" >		
 	<input type="hidden" name="state" value="output">
-  		<select id="kind" name="kind" >
+	<div class="input-group">
+  		<select class="form-select" style="max-width: 150px;" id="kind" name="kind" >
   			<option value="code">거래처코드</option>
   			<option value="name">거래처명</option>
   		</select>
   		
   		<input type="text" name="search" value="${pageVO.search }">
-  		<button type="submit">Search</button>
+  		<button type="submit" class="btn btn-primary">검색</button>
   		<input type="hidden" name="pop" value="rec">
+  		</div>
   	</form>
-
-  <table border="1" class="table table-bordered">
+	<br>
+  <table border="1" class="table table-hover">
   <tr>
   <td>거래처코드</td> <!-- 클릭하면 팝업창 꺼지면서 폼에 입력 -->
   <td>거래처명</td> <!-- 클릭하면 팝업창 꺼지면서 폼에 입력 -->
   </tr>
 
   <c:forEach var="vo" items="${customerList }">
-  <c:if test="${vo.cus_stat == 2 }">
+  <c:if test="${vo.cus_stat == '납품' }">
   <tr onclick="sendInfo(this);">
   <td>${vo.cus_code }</td>
   <td>${vo.cus_name }</td>
