@@ -144,41 +144,37 @@ function itemrecipeListPrint(array) {
 <input class="btn btn-primary" type="submit" value="조회">
 <input type="button" class="btn btn-outline-primary" onclick="orderwrite()" value="추가">
 </div>
-<table class="product-box" style="margin-top: 20px; width: 100%; " border="1">
+<table class="product-box2" style="margin-top: 20px; width: 100%; " border="1">
 			<tr>
 				<td >라인</td>
-				<td ><select name="line_code" class="line_code"  style="width: 40%">
+				<td ><select name="line_code" class="line_code form-control"  style="width: 100%" >
 						<option value="" selected>전체</option>
 						<c:forEach var="line" items="${lineList}">
 							<option value="${line.line_code}">${line.line_name}</option>
 						</c:forEach>
 					</select></td>
-<!-- 	<td>작업 지시자</td> -->
-<!-- 	<td><div class="input-group"> -->
-<!-- 	    <input type="text" style="width: 40%" placeholder="상품 이름" class="form-control" name="employee_id" id="employee_id"> -->
-<!-- 	    <input type="button" class="btn btn-primary" onclick="openItem()" value="검색"> -->
-<!-- 	</div></td> -->
 				<td>지시상태</td>
 				<td>
-				<select name="wo_status">
+				<select name="wo_status" style="width: 100%">
 				<option value="">전체</option>
 				<option value="지시">지시</option>
 				<option value="시작">시작</option>
 				<option value="마감">마감</option>
 				</select>
 				</td>
-			<td>지시일자</td>
-				<!-- 시작시 기본 날짜 설정은 value를 이용 -->
-				<td><input type="date" id="wo_date" class="form-control" name="wo_date" placeholder="날짜를 선택해주세요" />
 			</tr>
-			<tr>	
+			
+			
+			<tr>
+				<td>지시일자</td>
+				<!-- 시작시 기본 날짜 설정은 value를 이용 -->
+				<td><input type="date" style="width: 100%" id="wo_date" class="form-control" name="wo_date" placeholder="날짜를 선택해주세요" />
 				<td >품번</td>
-		<td colspan="5"><div class="input-group" >
+		<td colspan="5"><div class="input-group" style="width: 100%">
 	    <input type="text"  placeholder="상품 코드" class="form-control" name="item_code" id="item_code" readonly>
 	    <input type="text"  placeholder="상품 이름" class="form-control" name="item_name" id="item_name" readonly>
 	    <input type="button" class="btn btn-primary" onclick="openItem()" value="검색">
 	</div></td>
-	
 			</tr>
   </table>
 </div>

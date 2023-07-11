@@ -50,7 +50,7 @@ public interface CookOrderService {
 	public void insertcookPerf(CookAddVO cavo) throws Exception;
 		
 	//조리지시 실적삭제
-	public void cooketcDelete(String cook_id);
+	public void cooketcDelete(String cook_id) throws Exception;
 	
 	//조리지시 실적등록 - 생산수량 증가
 	public void addcpQTY(CookAddVO cavo);

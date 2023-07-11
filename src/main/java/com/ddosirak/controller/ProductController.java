@@ -16,9 +16,11 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,6 +36,7 @@ import com.ddosirak.domain.IntegrationCodeVO;
 import com.ddosirak.domain.ItemRecipeListVO;
 import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.LineVO;
+import com.ddosirak.domain.MaterialQuantityVO;
 import com.ddosirak.domain.MaterialdetailVO;
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.ProOrderVO;
@@ -458,7 +461,7 @@ public class ProductController {
 
 	// http://localhost:8088/pro/etcRemove
 	@RequestMapping(value = "/etcRemove", method = RequestMethod.GET)
-	public String productEtcRemoveGET(ProductionPerformanceVO dvo,HttpServletRequest request) {
+	public String productEtcRemoveGET(ProductionPerformanceVO dvo,HttpServletRequest request) throws Exception {
 		logger.debug("productEtcRemoveGET() 호출![]~(￣▽￣)~*");
 		String wo_code = request.getParameter("wo_code");
 		ppService.perfDeleteBoard(dvo.getPerf_id());
@@ -714,7 +717,7 @@ public class ProductController {
 	
 	// http://localhost:8088/pro/cooketcRemove
 	@RequestMapping(value = "/cooketcRemove", method = RequestMethod.GET)
-	public String cookEtcRemoveGET(HttpServletRequest request,String co_code,String cook_id) {
+	public String cookEtcRemoveGET(HttpServletRequest request,String co_code,String cook_id) throws Exception {
 		logger.debug("productEtcRemoveGET() 호출![]~(￣▽￣)~*");
 		cService.cooketcDelete(cook_id);
 		return "redirect:/pro/cooketcstatusList?co_code="+co_code;
@@ -1094,8 +1097,16 @@ public class ProductController {
 		return "/pro/empList";
 	}//l
 	
-	
-	
-	
+//	/pro/checkMaterialQuantity
+	@RequestMapping(value = "/pro/checkMaterialQuantity", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean checkMaterialQuantity(@RequestBody MaterialQuantityVO request) {
+	    String[] materialCodes = request.getMaterialCodes();
+	    int[] materialQuantities = request.getMaterialQuantities();
+
+	    boolean available = oService.checkMaterial(materialCodes, materialQuantities, null);
+
+	    return available;
+	}
 	
 }// public class end

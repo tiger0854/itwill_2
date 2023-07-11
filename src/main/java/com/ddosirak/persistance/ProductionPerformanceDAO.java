@@ -42,6 +42,9 @@ public interface ProductionPerformanceDAO {
 	
 	// 수량감소
 	public void deltQTY(Map<String, Object> params);
+	
+	//수량증가
+	public void plusQTY(Map<String, Object> params);
 
 	
 

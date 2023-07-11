@@ -51,5 +51,8 @@ public interface ProOrderService {
 	// 그래프 목록 
 	public List<Map<String, Object>> graphList();
 	
+	// 자재 수량 체크
+	public boolean checkMaterial(String[] materialCodes, int[] materialQuantities,Map<String, Object> material);
+	
 	
 } // interface end

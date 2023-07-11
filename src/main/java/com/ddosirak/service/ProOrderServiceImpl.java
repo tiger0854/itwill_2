@@ -110,6 +110,12 @@ public class ProOrderServiceImpl implements ProOrderService {
 		return odao.graphList();
 	}
 
+	@Override
+	public boolean checkMaterial(String[] materialCodes, int[] materialQuantities,Map<String, Object> material) {
+		// TODO Auto-generated method stub
+		return odao.checkMaterial(materialCodes,materialQuantities,material);
+	}
+
 	
 	
 	

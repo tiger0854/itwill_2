@@ -152,6 +152,13 @@ public class ProOrderDAOImpl implements ProOrderDAO {
 		sqlSession.selectOne(NAMESPACE+".orderStatus",re_code);
 	}
 
+	@Override
+	public boolean checkMaterial(String[] materialCodes, int[] materialQuantities,Map<String, Object> material) {
+		material.put("materialCodes", materialCodes);
+		material.put("materialQuantities", materialQuantities);
+		return sqlSession.selectOne(NAMESPACE+".checkMaterial",material);
+	}
+
 
 
 

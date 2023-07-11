@@ -57,6 +57,8 @@ public interface ProOrderDAO {
 	public List<Map<String, Object>> graphList();
 
 	public void orderStatusUpdate(String re_code);
+
+	public boolean checkMaterial(String[] materialCodes, int[] materialQuantities, Map<String, Object> material);
 	
 	
 }// public interface end

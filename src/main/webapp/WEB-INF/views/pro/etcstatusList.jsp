@@ -28,7 +28,7 @@ function etcRemove(perfId,wo_code) {
 			    cancelButtonText: "취소"
 			  }).then(result => {
 			    if (result.isConfirmed) {
-			      location.href = '/pro/proOrderDelete?wo_code='+wo_code;
+			      location.href = '/pro/etcRemove?wo_code='+wo_code+'&perf_id='+perfId;
 //			      Swal.fire("수동마감 완료!");
 			    }
 			  });		

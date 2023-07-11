@@ -21,7 +21,7 @@ public interface ProductionPerformanceService {
 	public Integer perfUpdateBoard(ProductionPerformanceVO uvo);
 	
 	// 실적삭제 동작
-	public void perfDeleteBoard(int perf_id);
+	public void perfDeleteBoard(int perf_id) throws Exception;
 
 	public void wostatusEnd(String wo_code);
 

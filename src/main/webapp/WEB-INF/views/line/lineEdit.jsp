@@ -105,8 +105,8 @@ function openempList() {
 
 <!-- 작업지시등록, 취소 버튼 -->
 <div style="text-align: center; margin-top: 50px">
-<button type="button" class=btn-add onclick="update();"> <i class='bx bx-edit'></i> 등록</button>
-<button class=btn-search onclick="window.close()">X 취소</button>
+<button type="button"  class="btn btn-outline-primary" onclick="update();"> <i class='bx bx-edit'></i> 등록</button>
+<button type="button"  class="btn btn-danger" onclick="window.close()">X 취소</button>
 </div>
 </form>
 

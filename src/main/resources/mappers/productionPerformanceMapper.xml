@@ -122,5 +122,13 @@
 	where material_code = #{material_code}
 	</update>
   	
+<!-- .qtyplus -->
+	<select id="qtyplus">
+	 UPDATE material_detail SET tQTY = tQTY + #{cfQTY}
+	 WHERE material_code Like #{material_code}
+	</select>	
+  	
+  	
+  	
   </mapper>
   

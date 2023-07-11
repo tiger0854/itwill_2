@@ -46,61 +46,24 @@ function openempList() {
 		  var childWindow = window.open("/pro/cosuList", "popup", "width=500, height=600,left=100, top=100");
 		  childWindow.addEventListener("beforeunload", function() {
 		    getRelatedMaterials();
+		    checkMaterialQuantity();
 		    recodecheck();
+// 			checkMaterialQuantityAndCooksu();
 		  });
 		}	
-	
-	  function recodecheck() {
-		  var re_code = $("#re_code").val(); // re_code 값 가져오기
-		  console.log(re_code);
-		  $.ajax({
-		    url: "/pro/checkcooksuList", // 첫 번째 요청을 보낼 서버의 URL
-		    type: "GET", // HTTP 요청 방식 (GET)
-		    data: { re_code: re_code }, // 전송할 데이터
-		    success: function(response) {
-		      if (response === true) {
-			     // 존재하지 않는 경우
-			     $("#add").prop("disabled", false);
-			     $('#ipmsg').show();
-			     $('#ipmsg').css('color', 'green');
-			     $('#ipmsg').text("*수주 등록이 가능합니다");  
 
-		      } else {
-			        // 이미 존재하는 경우
-			        $("#add").prop("disabled", true);
-			        $('#ipmsg').show();
-			        $('#ipmsg').css('color', 'red');
-			        $('#ipmsg').text("*중복된 수주는 등록 불가능합니다 ");  
-		      }
-		    },
-		    error: function(xhr, status, error) {
-		      console.error("첫 번째 요청 에러 발생:", error);
-		    }
-		  });
-		}
-	
-	
-		$(document).ready(function() {
-			$('#material_item').hide();
-			$('#item_code').click(function() {
-				if ($('#item_code').val() != '') {
-					$('#material_item').show()
-				}
-			});
-		});
 
 		
 		function onInsert() {
-
 			  var employee_name = $("#employee_name").val();
 			  var frObj = $("#fr");
 			  var formData = frObj.serialize();
-			  
+			
 			  if (employee_name === '') {
-				    Swal.fire("입력란을 채워주세요!");
-				    return; // 입력란이 비어있을 경우 함수 실행 종료
-				  }
-			  
+			    Swal.fire("입력란을 채워주세요!");
+			    return;
+			  }
+
 			  if (frObj[0].checkValidity()) {
 			    Swal.fire({
 			      title: "작성 성공!",
@@ -109,18 +72,8 @@ function openempList() {
 			      showCancelButton: false,
 			      confirmButtonText: "확인"
 			    }).then(function() {
-			      $.ajax({
-			        url: "/pro/cookorderWrite",
-			        type: "POST",
-			        data: formData,
-			        success: function(response) {
-			          opener.location.reload();
-			          window.close();
-			        },
-			        error: function(xhr, status, error) {
-			          Swal.fire("빈칸을 입력해주세요!");
-			        }
-			      });
+			       // 자재 수량 체크 호출
+			      // 등록 로직을 자재 수량 체크 콜백 함수 내부로 이동
 			    });
 			  } else {
 			    Swal.fire("입력란을 채워주세요!");
@@ -161,6 +114,10 @@ function openempList() {
 
 		}
 
+		
+		
+		
+		
 		//상품 검색
 		function itemSearch() {
 			window.open("/pro/itemList", "popup",
@@ -204,7 +161,6 @@ function openempList() {
 			for (var i = 0; i < materialArray.length; i++) {
 				var vo = materialArray[i];
 				var re_qty = $("#re_qty").val();	
-				
 				var row = $("<tr>");
 // 				row.append("<td></td>");
 				row.append("<td><input type='hidden'style='width: 40%' name='cookListvo[" + i + "].material_code' value='" + vo.material_code + "'>");
@@ -230,12 +186,50 @@ function openempList() {
 			console.log(materialArray.length);
 			tbodyBuilder(); //tbody 만들기 실행
 		}
+
+		
+		  function recodecheck() {
+			  var re_code = $("#re_code").val(); // re_code 값 가져오기
+			  console.log(re_code);
+			  $.ajax({
+			    url: "/pro/checkcooksuList", // 첫 번째 요청을 보낼 서버의 URL
+			    type: "GET", // HTTP 요청 방식 (GET)
+			    data: { re_code: re_code }, // 전송할 데이터
+			    success: function(response) {
+			      if (response === true) {
+				     // 존재하지 않는 경우
+				     $("#add").prop("disabled", false);
+				     $('#ipmsg').show();
+				     $('#ipmsg').css('color', 'green');
+				     $('#ipmsg').text("*수주 등록이 가능합니다");  
+
+			      } else {
+				        // 이미 존재하는 경우
+				        $("#add").prop("disabled", true);
+				        $('#ipmsg').show();
+				        $('#ipmsg').css('color', 'red');
+				        $('#ipmsg').text("*중복된 수주는 등록 불가능합니다 ");  
+			      }
+			    },
+			    error: function(xhr, status, error) {
+			      console.error("첫 번째 요청 에러 발생:", error);
+			    }
+			  });
+			}
+		  
+		  
+			$(document).ready(function() {
+				$('#material_item').hide();
+				$('#item_code').click(function() {
+					if ($('#item_code').val() != '') {
+						$('#material_item').show()
+					}
+				});
+			});
 	
+
 	
-	
-	
-	
-	
+		
 </script>
 
 
@@ -313,11 +307,11 @@ function openempList() {
 						<td>수주수량</td>
 						<td><input type="number" name="coQTY" id="re_qty" readonly="readonly"></td>
 					</tr>	
-					
 					<tr id="materialHeader">
-					</tr>	
+					</tr>
 				<tbody id="tbody">
 				</tbody>
+
 														
 				</tbody>
 			</table>
@@ -335,10 +329,10 @@ function openempList() {
 
 			<!-- 작업지시등록, 취소 버튼 -->
 			<div style="text-align: center; margin-top: 50px">
-				<button type="button" class=btn-add id="add" onclick="onInsert();">
+				<button type="button" class="btn btn-outline-primary" id="add" onclick="onInsert();">
 					<i class='bx bx-edit'></i> 등록
 				</button>
-				<button class=btn-search onclick="window.close()">X 취소</button>
+				<button class="btn btn-danger" onclick="window.close()">X 취소</button>
 			</div>
 
 		</form>

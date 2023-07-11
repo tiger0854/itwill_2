@@ -178,7 +178,7 @@ public class CookOrderServiceImpl implements CookOrderService {
 	
 	// 조리실적 삭제
 	@Override
-	public void cooketcDelete(String cook_id) {
+	public void cooketcDelete(String cook_id) throws Exception {
 		
 		CookAddVO cavo = cdao.getCooketc(cook_id);
 		logger.debug("pvo : "+cavo);
@@ -189,6 +189,28 @@ public class CookOrderServiceImpl implements CookOrderService {
 		if(cerf_gobd.equals("n")) {
 			cdao.cfQTYDel(cavo);
 			logger.debug("@@@@@@@@@@@@@@@@@@@@@@ cerf_gobd : "+cerf_gobd);
+			
+			
+			List<ItemRecipeListVO> itemList = rdao.selectItemRecipe(cavo.getMaterial_code());
+			for (ItemRecipeListVO material : itemList) {
+			    // 수량을 더하는 로직구현
+				String material_code = material.getMaterial_code();
+				logger.debug("@@@@@@@@@@@@ meterial_code : "+material_code);
+				String meterial_name = material.getMaterial_name();
+			    int material_con = material.getMaterial_con()*cavo.getCfQTY();
+			    int cfQTY = cavo.getCfQTY();
+			    logger.debug("@@@@@@@@@@@@ cavo ################### : "+cavo);
+			    // 수량을 더하는 처리수행
+			    // 해당 수량을 더함
+			    Map<String, Object> params = new HashMap<>();
+			    params.put("material_con", material_con);
+			    params.put("material_code", material_code);
+			    params.put("cfQTY", cfQTY);
+			    params.put("cavo", cavo);
+			    ppdao.plusQTY(params);
+			    
+			} 
+			
 		}
 		
 		cdao.cooketcDel(cook_id);

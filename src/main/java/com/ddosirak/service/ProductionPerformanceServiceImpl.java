@@ -92,7 +92,7 @@ public class ProductionPerformanceServiceImpl implements ProductionPerformanceSe
 
 	// 실적 삭제 동작
 	@Override
-	public void perfDeleteBoard(int perf_id) {
+	public void perfDeleteBoard(int perf_id) throws Exception {
 		
 		
 		ProductionPerformanceVO pvo = ppdao.perfUpdateList(perf_id);
@@ -104,6 +104,28 @@ public class ProductionPerformanceServiceImpl implements ProductionPerformanceSe
 		if(perf_gobd.equals("n")) {
 			ppdao.pfQTYDel(pvo);
 			logger.debug("@@@@@@@@@@@@@@@@@@@@@@ ppdao.pfQTYDel(pvo); "+perf_gobd);
+			
+			List<ItemRecipeListVO> itemList = rdao.selectItemRecipe(pvo.getItem_code());
+			for (ItemRecipeListVO item : itemList) {
+			    // 더하는 로직을 구현합니다
+				String material_code = item.getMaterial_code();
+				logger.debug("@@@@@@@@@@@@ meterial_code : "+material_code);
+				String meterial_name = item.getMaterial_name();
+			    int material_con = item.getMaterial_con()*pvo.getPfQTY();
+			    int cfQTY = pvo.getPfQTY();
+			    logger.debug("@@@@@@@@@@@@############# pvo : "+pvo);
+			    // 수량을 더하는처리를 수행
+			    // 수량을 더함
+			    Map<String, Object> params = new HashMap<>();
+			    params.put("material_con", material_con);
+			    params.put("material_code", material_code);
+			    params.put("cfQTY", cfQTY);
+			    params.put("pvo", pvo);
+			    ppdao.plusQTY(params);
+			    
+			}	
+			
+			
 		}
 		
 		ppdao.perfDeleteBoard(perf_id);

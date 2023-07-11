@@ -98,7 +98,7 @@ function opensucode() {
 <input class="btn btn-primary" type="submit" value="조회">
 <input type="button" class="btn btn-outline-primary" onclick="orderwrite()" value="추가">
 </div>
-<table class="product-box"style="margin-top: 20px; width: 100%; " border="1">
+<table class="product-box2"style="margin-top: 20px; width: 100%; " border="1">
 			<tr>
 				<td>라인</td>
 				<td><select name="line_code" class="line_code">
