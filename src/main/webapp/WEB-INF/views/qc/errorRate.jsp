@@ -11,8 +11,9 @@
 	href="../../resources/css/product.css">
 <jsp:include page="../common/header.jsp" />
 <meta charset="UTF-8">
-<title>Insert title here</title>
-
+<title>불량현황</title>
+<script type="text/javascript">
+</script>
 
 </head>
 <body id="body-pd" style="font-family: 'TheJamsil5';">
@@ -33,7 +34,7 @@
 				<!-- 품질현황목록 검색박스 -->
 				<form id="instr">
 					<input type="hidden" name="wo_code" value="${param.wo_code }">
-					<!-- 작업지시목록 검색, 등록버튼 -->
+					<!-- 품질현황목록 검색, 등록버튼 -->
 					<div class="btn-container">
 						<input type="submit" class="btn btn-primary" value="조회">
 					</div>
@@ -78,10 +79,12 @@
 								<td>${vo.item_code }</td>
 								<td>${vo.total_QTY }</td>
 								<td>${vo.total_error_QTY }</td>
-								<c:if test="${(((vo.total_QTY - vo.total_error_QTY) / vo.total_QTY * 100) - 100) * (-1) <= 0 }">
+								<c:if
+									test="${(((vo.total_QTY - vo.total_error_QTY) / vo.total_QTY * 100) - 100) * (-1) <= 0 }">
 									<td>0%</td>
 								</c:if>
-								<c:if test="${(((vo.total_QTY - vo.total_error_QTY) / vo.total_QTY * 100) - 100) * (-1) > 0 }">
+								<c:if
+									test="${(((vo.total_QTY - vo.total_error_QTY) / vo.total_QTY * 100) - 100) * (-1) > 0 }">
 									<td><fmt:formatNumber value="${errorRate}"
 											minFractionDigits="0" maxFractionDigits="0" />%</td>
 								</c:if>
@@ -89,7 +92,8 @@
 									<c:if test="${vo.error_status != null }">
 										<td>${vo.error_status }</td>
 									</c:if>
-									<c:if test="${vo.item_code != null && vo.error_status == null }">
+									<c:if
+										test="${vo.item_code != null && vo.error_status == null }">
 										<td><input type="hidden" name="wo_code"
 											value="${vo.wo_code }"> <input type="hidden"
 											name="item_code" value="${vo.item_code }"> <select
@@ -98,7 +102,8 @@
 												<option value="재고초과">재고초과</option>
 												<option value="불량">불량</option>
 										</select>
-											<button type="submit" class="btn-search">등록</button></td>
+											<button class="btn-search"
+												>등록</button></td>
 									</c:if>
 								</form>
 							</tr>
@@ -106,7 +111,7 @@
 					</tbody>
 				</table>
 
- 
+
 				<!-- 페이징처리 -->
 				<%--   		${Search} --%>
 				<div class="container" style="margin-top: 30px; margin-bottom: 30px">

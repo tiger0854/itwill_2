@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.ddosirak.domain.EmployeeVO;
+import com.ddosirak.domain.ItemdetailVO;
+import com.ddosirak.domain.LineVO;
 import com.ddosirak.domain.PageVO;
+import com.ddosirak.domain.ProOrderVO;
 import com.ddosirak.domain.QualityControlVO;
 import com.ddosirak.service.QualityService;
 
@@ -37,13 +42,13 @@ public class QualityController {
 		String wo_code = request.getParameter("wo_code");
 		String line_code = request.getParameter("line_code");
 		String item_name = request.getParameter("item_name");
-		String employee_id = request.getParameter("employee_id");
+		String employee_name = request.getParameter("employee_name");
 
 		Map<String, Object> instrSearch = new HashMap<String, Object>();
 		instrSearch.put("wo_code", wo_code);
 		instrSearch.put("line_code", line_code);
 		instrSearch.put("item_name", item_name);
-		instrSearch.put("employee_id", employee_id);
+		instrSearch.put("employee_name", employee_name);
 
 		// ================================페이징 처리를 위한 값 받아오기
 		// 동작========================================
@@ -88,7 +93,7 @@ public class QualityController {
 		logger.debug("startRow @@@@@@@@@@2" + startRow);
 		logger.debug("pageSize @@@@@@@@@@2" + pageSize);
 		List<QualityControlVO> qualityList = null;
-		if (wo_code == null && line_code == null && item_name == null && employee_id == null) {
+		if (wo_code == null && line_code == null && item_name == null && employee_name == null) {
 			// 품질현황 전체 조회
 			logger.debug("qualityList 전체 호출 ![]~(￣▽￣)~*");
 			qualityList = service.qualityList(pageVO);
@@ -100,7 +105,178 @@ public class QualityController {
 
 		model.addAttribute("qualityList", qualityList);
 		model.addAttribute("Search", instrSearch);
+		
+		
 	}
+
+	// http://localhost:8088/qc/qualityWrite
+	@RequestMapping(value = "/qualityWrite", method = RequestMethod.GET)
+	public void qualitytWriteGET(QualityControlVO vo, Model model, PageVO pageVO) throws Exception {
+		logger.debug("qualitytWriteGET() 호출![]~(￣▽￣)~*");
+		logger.debug(vo + " ");
+		List<QualityControlVO> qualityList = service.qualityList(pageVO);
+		model.addAttribute("qualityList", qualityList);
+	}
+	
+	// 검수자 글작성
+	// http://localhost:8088/qc/qualityWrite
+	@RequestMapping(value = "/qualityWrite", method = RequestMethod.POST)
+	public String qualitytWritePost(QualityControlVO vo, HttpSession session) throws Exception {
+			
+			logger.debug("qualitytWritePost() 호출![]~(￣▽￣)~*");
+			logger.debug(vo + " ");
+			service.qualityInsert(vo);
+			
+			if(session.getAttribute("login_id") == null) {
+				return "redirect:/public/login";
+			}
+			
+			return null;
+		}// productWriteGET() method end
+
+	@RequestMapping(value = "/qualityItemList", method = RequestMethod.GET)
+	public void itemListGET(Model model, HttpServletRequest request, PageVO pageVO) throws Exception {
+
+		String wo_code = request.getParameter("wo_code");
+		String item_name = request.getParameter("item_name");
+		Map<String, Object> instrSearch = new HashMap<String, Object>();
+		instrSearch.put("wo_code", wo_code);
+		instrSearch.put("item_name", item_name);
+		// ================================페이징 처리를 위한 값 받아오기
+		// 동작========================================
+		// 준비물 : Inject > PageVO , 파라미터값 PageVO pageVO, HttpServletRequest request
+		// 리스트를 반환하는 DAO - Service 메서드에 PageVO 추가, 쿼리에 LIMIT #{startRow}, #{pageSize}
+		// 추가.
+		// 페이징 처리
+		// 한 화면에 보여줄 글 개수 설정
+		int pageSize = 5; // sql문에 들어가는 항목
+		// 현페이지 번호 가져오기
+		String pageNum = request.getParameter("pageNum");
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		// 페이지번호를 정수형으로 변경
+		int currentPage = Integer.parseInt(pageNum);
+		pageVO.setPageSize(pageSize);
+		pageVO.setPageNum(pageNum);
+		pageVO.setCurrentPage(currentPage);
+		int startRow = (pageVO.getCurrentPage() - 1) * pageVO.getPageSize() + 1; // sql문에 들어가는 항목
+		int endRow = startRow + pageVO.getPageSize() - 1;
+
+		pageVO.setStartRow(startRow - 1); // limit startRow (0이 1열이기 때문 1을 뺌)
+		pageVO.setEndRow(endRow);
+		int count = service.itemCount(instrSearch);
+
+		logger.debug("글갯수 @@@@@@@@@@2" + count);
+		// 게시글 개수 가져오기
+		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
+		int startPage = (currentPage - 1) / pageBlock * pageBlock + 1;
+		int endPage = startPage + pageBlock - 1;
+		int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
+		if (endPage > pageCount) {
+			endPage = pageCount;
+		}
+		pageVO.setCount(count);
+		pageVO.setPageBlock(pageBlock);
+		pageVO.setStartPage(startPage);
+		pageVO.setEndPage(endPage);
+		pageVO.setPageCount(pageCount);
+
+		model.addAttribute("pageVO", pageVO);
+
+//		List<ItemdetailVO> itemList=iservice.idList();
+		List<QualityControlVO> itemList;
+		if (wo_code == null && item_name == null) {
+			// 품질팝업 전체 조회
+			logger.debug("qualityItemList 전체 호출 ![]~(￣▽￣)~*");
+			itemList = service.qualityitemList(pageVO);
+//			int instrSearchCount = instructService.instrCount(instrSearch);
+//			model.addAttribute("instrSearchCount", instrSearchCount);
+
+		} else {
+			// 품질팝업 검색 조회
+			logger.debug("qualityItemList 검색 호출 ![]~(￣▽￣)~*");
+//			proOrderList = oService.proOrderList();
+			itemList = service.qualityitemList(pageVO, instrSearch, model);
+//			int instrSearchCount = instructService.instrCount(instrSearch);
+//			model.addAttribute("instrSearchCount", instrSearchCount);
+		}
+		logger.debug("idlistGET 실행");
+		model.addAttribute("Search", instrSearch);
+		model.addAttribute("itemList", itemList);
+	}// /itemListGET() method end
+
+	@RequestMapping(value = "/employeeItemList", method = RequestMethod.GET)
+	public void employeeListGET(Model model, HttpServletRequest request, PageVO pageVO) throws Exception {
+
+		String employee_id = request.getParameter("employee_id");
+		String employee_name = request.getParameter("employee_name");
+		Map<String, Object> instrSearch = new HashMap<String, Object>();
+		instrSearch.put("employee_id", employee_id);
+		instrSearch.put("employee_name", employee_name);
+		// ================================페이징 처리를 위한 값 받아오기
+		// 동작========================================
+		// 준비물 : Inject > PageVO , 파라미터값 PageVO pageVO, HttpServletRequest request
+		// 리스트를 반환하는 DAO - Service 메서드에 PageVO 추가, 쿼리에 LIMIT #{startRow}, #{pageSize}
+		// 추가.
+		// 페이징 처리
+		// 한 화면에 보여줄 글 개수 설정
+		int pageSize = 5; // sql문에 들어가는 항목
+		// 현페이지 번호 가져오기
+		String pageNum = request.getParameter("pageNum");
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		// 페이지번호를 정수형으로 변경
+		int currentPage = Integer.parseInt(pageNum);
+		pageVO.setPageSize(pageSize);
+		pageVO.setPageNum(pageNum);
+		pageVO.setCurrentPage(currentPage);
+		int startRow = (pageVO.getCurrentPage() - 1) * pageVO.getPageSize() + 1; // sql문에 들어가는 항목
+		int endRow = startRow + pageVO.getPageSize() - 1;
+
+		pageVO.setStartRow(startRow - 1); // limit startRow (0이 1열이기 때문 1을 뺌)
+		pageVO.setEndRow(endRow);
+		int count = service.employeeCount(instrSearch);
+
+		logger.debug("글갯수 @@@@@@@@@@2" + count);
+		// 게시글 개수 가져오기
+		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
+		int startPage = (currentPage - 1) / pageBlock * pageBlock + 1;
+		int endPage = startPage + pageBlock - 1;
+		int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
+		if (endPage > pageCount) {
+			endPage = pageCount;
+		}
+		pageVO.setCount(count);
+		pageVO.setPageBlock(pageBlock);
+		pageVO.setStartPage(startPage);
+		pageVO.setEndPage(endPage);
+		pageVO.setPageCount(pageCount);
+
+		model.addAttribute("pageVO", pageVO);
+
+//		List<ItemdetailVO> itemList=iservice.idList();
+		List<EmployeeVO> itemList;
+		if (employee_name == null && employee_id == null) {
+			// 품질팝업 전체 조회
+			logger.debug("employeeItemList 전체 호출 ![]~(￣▽￣)~*");
+			itemList = service.employeeItemList(pageVO);
+//			int instrSearchCount = instructService.instrCount(instrSearch);
+//			model.addAttribute("instrSearchCount", instrSearchCount);
+
+		} else {
+			// 품질팝업 검색 조회
+			logger.debug("employeeItemList 검색 호출 ![]~(￣▽￣)~*");
+//			proOrderList = oService.proOrderList();
+			itemList = service.employeeItemList(pageVO, instrSearch, model);
+//			int instrSearchCount = instructService.instrCount(instrSearch);
+//			model.addAttribute("instrSearchCount", instrSearchCount);
+		}
+		logger.debug("idlistGET 실행");
+		model.addAttribute("Search", instrSearch);
+		model.addAttribute("itemList", itemList);
+	}// /itemListGET() method end
 
 	// http://localhost:8088/qc/qualityInspection
 	// 품질검사 목록
@@ -199,7 +375,7 @@ public class QualityController {
 		logger.debug("errorRateListGET() 호출![]~(￣▽￣)~*");
 
 		logger.debug("@@@@wo_code : " + wo_code);
-		
+
 		String item_code = request.getParameter("item_code");
 		String error_status = request.getParameter("error_status");
 		Map<String, Object> instrSearch = new HashMap<String, Object>();
@@ -266,7 +442,7 @@ public class QualityController {
 		service.insertStatus(ivo);
 		logger.debug("@@@@ivo" + ivo);
 
-		return "redirect:/qc/errorRate?wo_code="+ivo.getWo_code();
+		return "redirect:/qc/errorRate?wo_code=" + ivo.getWo_code();
 	}
 
 }

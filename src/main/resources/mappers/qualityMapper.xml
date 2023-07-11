@@ -12,12 +12,12 @@
 		resultType="com.ddosirak.domain.QualityControlVO">
 		SELECT DISTINCT
 		p.wo_code,
-		p.employee_id,
 		p.line_code,
 		p.item_code,
 		p.sQTY,
 		p.pQTY,
 		p.item_name,
+		ir.employee_name,
 		(
 		SELECT COALESCE(SUM(pfQTY), 0)
 		FROM prod_perf_add
@@ -32,7 +32,7 @@
 		prod_perf_add pa ON pa.wo_code = p.wo_code
 		LEFT
 		OUTER JOIN
-		items_error_rate ir ON ir.item_code = pa.item_code
+		items_error_rate ir ON ir.wo_code = p.wo_code
 		Limit
 		#{startRow},
 		#{pageSize}
@@ -43,12 +43,12 @@
 		resultType="com.ddosirak.domain.QualityControlVO">
 		SELECT DISTINCT
 		p.wo_code,
-		p.employee_id,
 		p.line_code,
 		p.item_code,
 		p.sQTY,
 		p.pQTY,
 		p.item_name,
+		ir.employee_name,
 		(
 		SELECT COALESCE(SUM(pfQTY), 0)
 		FROM
@@ -64,9 +64,10 @@
 		prod_perf_add pa ON pa.wo_code = p.wo_code
 		LEFT
 		OUTER JOIN
-		items_error_rate ir ON ir.item_code = pa.item_code
+		items_error_rate ir ON ir.wo_code = p.wo_code
 		WHERE
-		p.wo_code LIKE
+		p.wo_code
+		LIKE
 		CONCAT('%',
 		#{wo_code}, '%')
 		AND p.line_code LIKE
@@ -75,25 +76,90 @@
 		AND
 		p.item_name LIKE CONCAT('%',
 		#{item_name}, '%')
-		AND p.employee_id LIKE
-		CONCAT('%', #{employee_id},
-		'%')
+		<if test="employee_name != null and employee_name != ''">
+			AND
+			ir.employee_name LIKE CONCAT('%',
+			#{employee_name}, '%')
+		</if>
+
 		LIMIT
 		#{startRow}, #{pageSize}
 	</select>
 
+	<!-- 품질 검수자 등록 -->
+	<insert id="qcInsert">
+		insert into items_error_rate (wo_code, employee_id,
+		employee_name) values
+		(#{wo_code}, #{employee_id}, #{employee_name})
+	</insert>
+
+	<!-- 작업지시목록 -->
+	<select id="qualityitemList"
+		resultType="com.ddosirak.domain.QualityControlVO">
+		SELECT * FROM prod
+		LIMIT #{startRow}, #{pageSize}
+	</select>
+
+	<!-- 상품검색 -->
+	<!-- proitemSearch -->
+	<!-- 작업지시 검색목록 -->
+	<select id="qualityitemSearch"
+		resultType="com.ddosirak.domain.QualityControlVO">
+		SELECT * FROM prod
+		WHERE wo_code LIKE CONCAT('%',
+		#{wo_code}, '%')
+		AND item_name LIKE CONCAT('%', #{item_name}, '%')
+		LIMIT #{startRow}, #{pageSize}
+	</select>
+
+	<!-- 사원목록 -->
+	<select id="employeeitemList"
+		resultType="com.ddosirak.domain.EmployeeVO">
+		SELECT * FROM emp_main
+		where department_name = '품질팀'
+		LIMIT
+		#{startRow}, #{pageSize}
+	</select>
+
+	<!-- 사원목록검색 -->
+	<!-- proitemSearch -->
+	<!-- 작업지시 검색목록 -->
+	<select id="employeeitemSearch"
+		resultType="com.ddosirak.domain.EmployeeVO">
+		SELECT * FROM emp_main
+		where department_name = '품질팀'
+		AND
+		employee_id LIKE CONCAT('%', #{employee_id}, '%')
+		AND employee_name
+		LIKE CONCAT('%', #{employee_name}, '%')
+		LIMIT #{startRow}, #{pageSize}
+	</select>
+
 	<!-- 품질 현황 검색 갯수 -->
 	<select id="itemCount" resultType="java.lang.Integer">
-		SELECT count(*) FROM prod
-		<if
-			test="line_code != null and item_name != null and employee_id != null and wo_code != null">
-			where wo_code like concat('%', #{wo_code}, '%')
-			and line_code
-			like concat('%', #{line_code}, '%')
-			and employee_id like concat('%',
-			#{employee_id}, '%')
-			and item_name like concat('%', #{item_name}, '%')
-		</if>
+		SELECT count(*) FROM prod p LEFT OUTER JOIN items_error_rate ir
+		ON
+		p.wo_code =
+		ir.wo_code
+		<!-- <if -->
+		<!-- test="line_code != null and wo_code != null and item_name != null"> -->
+		<!-- where p.wo_code like concat('%', #{wo_code}, '%') -->
+		<!-- and p.line_code -->
+		<!-- like concat('%', #{line_code}, '%') -->
+		<!-- and p.item_name like concat('%', -->
+		<!-- #{item_name}, '%') -->
+		<!-- </if> -->
+		<!-- <if test="employee_name != null"> -->
+		<!-- and ir.employee_name like concat('%', -->
+		<!-- #{employee_name}, '%') -->
+		<!-- </if> -->
+	</select>
+
+	<!-- 사원목록 검색 갯수 -->
+	<select id="employeeCount" resultType="java.lang.Integer">
+		SELECT count(*) FROM
+		emp_main
+		where department_name = '품질팀'
 	</select>
 
 	<!-- 불량리스트 -->
@@ -144,14 +210,22 @@
 		LEFT OUTER
 		JOIN
 		items_error_rate ie ON ie.wo_code = pp.wo_code
-		where p.wo_code = #{wo_code}
+		where p.wo_code =
+		#{wo_code}
 		and pp.item_code = #{item_code}
 		limit 1
 	</insert>
 
+	<update id="updateStatus">
+		update items_error_rate
+		set error_status = #{error_status}, item_code = #{item_code}
+		where wo_code = #{wo_code}
+	</update>
+
 	<!-- 불량 현황 검색 갯수 -->
 	<select id="errorCount" resultType="java.lang.Integer">
-		select count(DISTINCT pp.item_code)
+		select count(DISTINCT
+		pp.item_code)
 		from prod p
 		LEFT OUTER JOIN prod_perf_add pp
 		ON p.wo_code

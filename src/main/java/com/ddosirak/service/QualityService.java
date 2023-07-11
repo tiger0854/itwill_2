@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.ui.Model;
 
+import com.ddosirak.domain.EmployeeVO;
+import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.QualityControlVO;
 
@@ -16,8 +18,20 @@ public interface QualityService {
 	public List<QualityControlVO> qualityList(PageVO pageVO, Map<String, Object> instrSearch, Model model)
 			throws Exception;
 
+	// 품질검수자 등록
+	public void qualityInsert(QualityControlVO vo) throws Exception;
+
+	// 상품목록
+	public List<QualityControlVO> qualityitemList(PageVO pageVO);
+	public List<EmployeeVO> employeeItemList(PageVO pageVO);
+
+	// 상품목록 검색
+	public List<QualityControlVO> qualityitemList(PageVO pageVO, Map<String, Object> instrSearch, Model model);
+	public List<EmployeeVO> employeeItemList(PageVO pageVO, Map<String, Object> instrSearch, Model model);
+
 	// 상품 검색 갯수
 	public Integer itemCount(Map<String, Object> instrSearch) throws Exception;
+	public Integer employeeCount(Map<String, Object> instrSearch) throws Exception;
 
 	// 품질검사 등록
 	public void insertQualityInspection(QualityControlVO vo) throws Exception;
