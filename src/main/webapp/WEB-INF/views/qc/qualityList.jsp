@@ -11,11 +11,22 @@
 
 <jsp:include page="../common/header.jsp" />
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>품질현황</title>
 
 
 <script>
-	
+	var deptName = "${sessionScope.dept_name}";
+	function qualityWrite() {
+		if (deptName.includes('생산')) {
+			// 새 창을 열기 위한 URL
+			var popupUrl = '/qc/qualityWrite';
+			// 새 창 열기
+			window.open(popupUrl, '_blank',
+					'width=500,height=600,resizable=yes');
+		} else {
+			swal.fire("권한이 없습니다!");
+		}
+	}
 </script>
 
 </head>
@@ -36,7 +47,9 @@
 				<form id="instr">
 					<!-- 작업지시목록 검색, 등록버튼 -->
 					<div class="btn-container">
-						<input type="submit" class="btn btn-primary" value="조회">
+						<input type="submit" class="btn btn-primary" value="조회"> <input
+							type="button" class="btn btn-outline-primary"
+							onclick="qualityWrite()" value="추가">
 					</div>
 					<table class="product-box" style="margin-top: 20px; width: 100%;"
 						border="1">
@@ -57,8 +70,8 @@
 							</tr>
 							<tr>
 								<td>검수자</td>
-								<td><label> <input type="text" id="employee_id"
-										name="employee_id" placeholder="검수자" width="100%">
+								<td><label> <input type="text" id="employee_name"
+										name="employee_name" placeholder="검수자" width="100%">
 								</label></td>
 							</tr>
 						</tbody>
@@ -90,7 +103,7 @@
 								<td>${vo.line_code }</td>
 								<td>${vo.item_name }</td>
 								<td>${vo.item_code }</td>
-								<td>${vo.employee_id }</td>
+								<td>${vo.employee_name }</td>
 								<td>${vo.sQTY }</td>
 								<td>${vo.pQTY }</td>
 								<td>${vo.total_error_QTY }</td>
@@ -107,17 +120,17 @@
 						style="margin-top: 20px;">
 						<c:if test="${pageVO.startPage > pageVO.pageBlock}">
 							<li class="page-item"><a class="page-link"
-								href="/qc/qualityList?wo_code=${Search.wo_code }&line_code=${Search.line_code }&item_name=${Search.item_name }&employee_id=${Search.employee_id }&pageNum=${pageVO.startPage - pageVO.pageBlock}"><sapn>
+								href="/qc/qualityList?wo_code=${Search.wo_code }&line_code=${Search.line_code }&item_name=${Search.item_name }&employee_name=${Search.employee_name }&pageNum=${pageVO.startPage - pageVO.pageBlock}"><sapn>
 									< </sapn></a></li>
 						</c:if>
 						<c:forEach var="i" begin="${pageVO.startPage}"
 							end="${pageVO.endPage}" step="1">
 							<li class="page-item"><a class="page-link"
-								href="/qc/qualityList?wo_code=${Search.wo_code }&line_code=${Search.line_code }&item_name=${Search.item_name }&employee_id=${Search.employee_id }&pageNum=${i}"><span>${i}</span></a></li>
+								href="/qc/qualityList?wo_code=${Search.wo_code }&line_code=${Search.line_code }&item_name=${Search.item_name }&employee_name=${Search.employee_name }&pageNum=${i}"><span>${i}</span></a></li>
 						</c:forEach>
 						<c:if test="${pageVO.endPage < pageVO.pageCount}">
 							<li class="page-item"><a class="page-link"
-								href="/qc/qualityList?wo_code=${Search.wo_code }&line_code=${Search.line_code }&item_name=${Search.item_name }&employee_id=${Search.employee_id }&pageNum=${pageVO.startPage + pageVO.pageBlock}"><span>
+								href="/qc/qualityList?wo_code=${Search.wo_code }&line_code=${Search.line_code }&item_name=${Search.item_name }&employee_name=${Search.employee_name }&pageNum=${pageVO.startPage + pageVO.pageBlock}"><span>
 										> </span></a></li>
 						</c:if>
 					</ul>

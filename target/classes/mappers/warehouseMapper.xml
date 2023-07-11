@@ -66,12 +66,7 @@
 	<select id="getMaxCode" resultType="String">
 		select max(wh_code)
 		from warehouse
-		where wh_code LIKE concat('%', #{wh_code}, '%') 
-		and wh_name LIKE concat('%', #{wh_name}, '%')
-		and wh_type LIKE concat('%', #{wh_type}, '%') 
-		and retail_code LIKE concat('%', #{retail_code}, '%') 
-		and wh_size &gt;= #{minsize}
-		and wh_size &lt;= #{maxsize}
+		where wh_type=#{wh_type} and retail_code=#{retail_code}
 	</select>
 	<!-- max(코드) -->
 

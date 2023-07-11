@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 
+import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.QualityControlVO;
 
@@ -50,6 +51,35 @@ public class QualityDAOImpl implements QualityDAO {
 		List<QualityControlVO> qualityList = sqlSession.selectList(NAMESPACE + ".qualitySearchList", instrSearch);
 		return qualityList;
 	}
+	
+	@Override
+	public void qualityInsert(QualityControlVO vo) throws Exception {
+		sqlSession.insert(NAMESPACE + ".qcInsert", vo);
+	}
+
+	@Override
+	public List<QualityControlVO> qualityitemList(PageVO pageVO) {
+		return sqlSession.selectList(NAMESPACE + ".qualityitemList", pageVO);
+	}
+
+	@Override
+	public List<QualityControlVO> qualityitemList(PageVO pageVO, Map<String, Object> instrSearch, Model model) {
+		instrSearch.put("startRow", pageVO.getStartRow());
+		instrSearch.put("pageSize", pageVO.getPageSize());
+		return sqlSession.selectList(NAMESPACE + ".qualityitemSearch", instrSearch);
+	}
+
+	@Override
+	public List<EmployeeVO> employeeitemList(PageVO pageVO) {
+		return sqlSession.selectList(NAMESPACE + ".employeeitemList", pageVO);
+	}
+
+	@Override
+	public List<EmployeeVO> employeeitemList(PageVO pageVO, Map<String, Object> instrSearch, Model model) {
+		instrSearch.put("startRow", pageVO.getStartRow());
+		instrSearch.put("pageSize", pageVO.getPageSize());
+		return sqlSession.selectList(NAMESPACE + ".employeeitemSearch", instrSearch);
+	}
 
 	@Override
 	public String getMaxCode() throws Exception {
@@ -61,6 +91,13 @@ public class QualityDAOImpl implements QualityDAO {
 	public Integer itemCount(Map<String, Object> instrSearch) throws Exception {
 		logger.debug("itemCount()!");
 		return sqlSession.selectOne(NAMESPACE + ".itemCount", instrSearch);
+	}
+
+	@Override
+	public Integer employeeCount(Map<String, Object> instrSearch) throws Exception {
+		
+		logger.debug("employeeCount()!");
+		return sqlSession.selectOne(NAMESPACE + ".employeeCount", instrSearch);
 	}
 
 	@Override
@@ -108,7 +145,7 @@ public class QualityDAOImpl implements QualityDAO {
 	@Override
 	public Integer insertStatus(QualityControlVO ivo) {
 		logger.debug("insertStatus(QualityControlVO vo)!");
-		return sqlSession.insert(NAMESPACE + ".insertStatus", ivo);
+		return sqlSession.selectOne(NAMESPACE + ".updateStatus", ivo);
 	}
 
 	@Override
