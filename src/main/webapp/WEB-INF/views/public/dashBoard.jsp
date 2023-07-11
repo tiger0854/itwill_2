@@ -49,7 +49,9 @@
 
 <!-- 불량률 -->
 <div id="card" style="width: 700px;padding: 20px">
-불량률
+<h4>불량률 현황</h4>
+<hr>
+<canvas id="canvas_err"></canvas>
 </div>
 <!-- 불량률 -->
 </div>
@@ -78,7 +80,47 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+//----------------------  불량률 현황-----------------------------
+const errQTY = "${errQTY }";
+const totalQTY = "${totalQTY }";
 
+var errRate = (Math.round((errQTY / totalQTY) * 1000) / 1000)*100;
+
+const canvas_err = document.getElementById('canvas_err');
+
+canvas_err.style.width = '600.467px';
+canvas_err.style.height = '219.733px';
+
+new Chart(canvas_err, {
+  type: 'bar',
+  data: {
+    labels: ['불량률 현황'],
+    datasets: [{
+      label: '목표치',
+      data: [20],
+      backgroundColor: ['green'],
+      borderWidth: 1
+    },{
+        label: '불량률',
+        data: [errRate ],
+        backgroundColor: ['red'],
+        borderWidth: 1
+      }
+    
+    ]
+  },
+  options: {
+	 responsive: false,
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+//----------------------  불량률 현황-----------------------------
+
+//----------------------  임직원 현황-----------------------------
 const emp_count = document.getElementById('emp_count');
 
 new Chart(emp_count, {
@@ -100,7 +142,7 @@ new Chart(emp_count, {
     }
   }
 }); // chart end
-
+//----------------------  임직원 현황-----------------------------
 // ----------------------   라인별 생산률 -----------------------------
 $(document).ready(function(){
 	
@@ -124,7 +166,7 @@ $(document).ready(function(){
 	myChart = new Chart(ctx, {
 	  type: 'bar',
 	  data: {
-	    labels: ["라인1","라인2"], // 배열로 라벨 지정
+	    labels: ["1번 라인","2번 라인"], // 배열로 라벨 지정
 	    datasets: [{
 	      label: '작업지시 생산률',
 	      data: values,

@@ -30,6 +30,7 @@ import com.ddosirak.service.InboundService;
 import com.ddosirak.service.OutboundService;
 import com.ddosirak.service.PageService;
 import com.ddosirak.service.ProOrderService;
+import com.ddosirak.service.QualityService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
@@ -52,6 +53,8 @@ public class PublicController {
 	private InboundService iService;
 	@Inject
 	private OutboundService obService;
+	@Inject
+	private QualityService qService;
 	
 /////////////////////////////////게시판///////////////////////////////////
 	// http://localhost:8088/public/write
@@ -312,6 +315,10 @@ public class PublicController {
 		// 출고 예정/완료
 		model.addAttribute("outScheduleToday", obService.outScheduleToday()); // 금일출고예정
 		model.addAttribute("outCompleteToday", obService.outCompleteToday());  // 금일출고완료
+		
+		// 전체 라인 불량률
+		model.addAttribute("errQTY", qService.errorList().get(0).getTotal_error_QTY()); // 불량개수
+		model.addAttribute("totalQTY", qService.errorList().get(0).getTotal_QTY()); // 총 생산량
 		
 		return null;
 	}//dashBoardGET() method end
