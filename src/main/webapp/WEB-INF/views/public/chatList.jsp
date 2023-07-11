@@ -7,7 +7,7 @@
 <head>
 <link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <meta charset="UTF-8">
-<title>Messenger</title>
+<title>사내 메신저</title>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <jsp:include page="../common/header.jsp"/>
 <style>

@@ -111,7 +111,6 @@ $(document).ready(function() {
 				   휴대폰번호:
 				    <input type="text" name="phone_num" value="${vvo.phone_num }" class="form-control"><br><br>
 				   휴가종류:
-	<!--  			    <input type="text" name="vacation_management"><br><br>  -->
 				    <select name="vacation_management" required class="form-control">
 					  <option value="" selected disabled>휴가 관리를 선택하세요</option>
 					  <option value="연차">연차</option>
@@ -125,7 +124,6 @@ $(document).ready(function() {
 	                         휴가 종료일:
 				    <input type="date" name="vacation_finish" required class="form-control"><br><br>
 	                         휴가 사유:
-	<!-- 			    <input type="text" name="vacation_reason" required><br><br> -->
 				    <select name="vacation_reason" required class="form-control">
 					  <option value="" selected disabled>휴가 사유를 선택하세요</option>
 					  <option value="연차">연차</option>
@@ -134,25 +132,14 @@ $(document).ready(function() {
 					  <option value="경조사">경조사</option>
 					  <option value="기타">기타</option>
 					</select><br><br>
-	<!--                          휴가 승인여부: -->
-	<!-- 			    <input type="text" name="approve" required><br><br> -->
-	<!--                          휴가 승인자: -->
-	<!-- 			    <input type="text" name="approve_emp" required><br><br> -->
 	                         휴가 대체인:
 				    <input type="text" name="subsitute" required class="form-control"><br><br>
 	                         사원명:
 				    <input type="text" name="employee_name" value="${vvo.employee_name}" required class="form-control"><br><br>
-	<!--                          휴가 승인일자: -->
-	<!-- 			    <input type="date" name="approve_date" required><br><br> -->
 	                         휴가 신청일자:
 				    <input type="date" name="prop_date" required class="form-control">
-<!-- 	                         연차 일 수 : -->
-<%-- 				    <input type="hidden" name="vacation_date" value="${vvo.vacation_date}" class="form-control"><br><br> --%>
-<!-- 	                         휴가 아이디 : -->
-<%-- 				    <input type="hidden" name="vacation_id" value="${vvo.vacation_id}" class="form-control"><br><br> --%>
-	
+
 		</table>
-	<!--   <input type="submit" value="휴가신청" id="btn"> -->
 	  <button type="button" class=btn-add> <i class='bx bx-edit'></i> 휴가신청</button>
 	 </form>
   

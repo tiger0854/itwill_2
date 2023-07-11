@@ -78,8 +78,12 @@ public class PublicController {
 	// http://localhost:8088/public/boardList
 	// 게시판 리스트 페이지 R 
 	@RequestMapping(value = "/boardList", method = RequestMethod.GET)
-	public void boardListGET(Model model, PageVO pageVO, HttpServletRequest request) throws Exception{
+	public String boardListGET(Model model, PageVO pageVO, HttpServletRequest request, HttpSession session) throws Exception{
 		logger.debug("boardListGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
+		
+		if(session.getAttribute("login_id") == null) {
+			return "redirect:/public/login";
+		} // session control
 		logger.debug("/public/boardList.jsp로 이동!");
 		
 		//================================페이징 처리를 위한 값 받아오기 동작========================================
@@ -125,6 +129,7 @@ public class PublicController {
 		//================================페이징 처리를 위한 값 받아오기 동작========================================
 		
 		model.addAttribute("boardList", bService.getBoardList(pageVO)); // 리스트반환 동작에 pageVO 넣기.
+		return null;
 	}//boardListGET() method end
 	
 	// 게시판 글 조회
@@ -273,9 +278,13 @@ public class PublicController {
 /////////////////////////////////대시보드///////////////////////////////////
 	// 대시보드 페이지
 	@RequestMapping(value = "/dashBoard", method = RequestMethod.GET)
-	public void dashBoardGET(Model model) throws Exception{
+	public String dashBoardGET(Model model, HttpSession session) throws Exception{
 		logger.debug("dashBoardGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 
+		if(session.getAttribute("login_id") == null) {
+			return "redirect:/public/login";
+		} // session control
+		
 		// -------------- 라인별 생산률 (예원)  0_< ----------------------
 		List<Map<String, Object>> graphList = oService.graphList();
 		logger.debug("graphList : " + graphList);
@@ -304,28 +313,29 @@ public class PublicController {
 		model.addAttribute("outScheduleToday", obService.outScheduleToday()); // 금일출고예정
 		model.addAttribute("outCompleteToday", obService.outCompleteToday());  // 금일출고완료
 		
-		
+		return null;
 	}//dashBoardGET() method end
 /////////////////////////////////대시보드///////////////////////////////////
 	
 /////////////////////////////////메신저///////////////////////////////////
 	// http://localhost:8088/public/chatList
 	@RequestMapping(value = "/chatList", method = RequestMethod.GET)
-	public void chatListGET (Model model,HttpSession session) throws Exception{
+	public String chatListGET (Model model,HttpSession session) throws Exception{
 		logger.debug("chatListGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
+		
+		if(session.getAttribute("login_id") == null) {
+			return "redirect:/public/login";
+		} // session control
 
 		// 채팅 시작을 위한 리스트
 		List<EmployeeVO> empList = eService.empList();
 		model.addAttribute("empList", empList);
 		
-		// 채팅 내역리스트
-//		List<ChatVO> chatList = bService.chatList((String)session.getAttribute("login_id"));
-//		model.addAttribute("chatList", chatList);
-		
 		// 채팅방 리스트
 		List<String> chatRoomList = bService.chatRoom((String)session.getAttribute("login_id"));
 		model.addAttribute("chatRoomList", chatRoomList);
 		
+		return null;
 	}// chatListGET() method end
 	
 	// http://localhost:8088/public/chat

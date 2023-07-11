@@ -6,7 +6,7 @@
 <head>
 <link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <meta charset="UTF-8">
-<title>글 조회</title>
+<title>게시판</title>
 <link rel="stylesheet" type="text/css"
 	href="../../resources/css/css.css">
 <jsp:include page="../common/header.jsp" />
@@ -40,7 +40,7 @@
 </head>
 <body id="body-pd" style="font-family: 'TheJamsil5';">
 
-	<h1>글 조회</h1>
+	<h1>게시판</h1>
 	<form action="" method="post">
 		<input type="hidden" name="emp_bno" value="${boardContent.emp_bno }">
 		<button onclick="location.href='/public/boardList'">목록으로</button>

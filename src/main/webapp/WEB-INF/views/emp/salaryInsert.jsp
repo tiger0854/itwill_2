@@ -6,7 +6,7 @@
 <head>
 <link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>사원 급여정보 수정</title>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 </head>
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>

@@ -13,8 +13,6 @@
 <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 <link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <link rel="stylesheet" type="text/css"href="../../resources/css/css.css">
-<!-- <link rel="stylesheet" type="text/css" href="../css/css.css"> -->
-<!-- <link rel="stylesheet" type="text/css" href="../../resources/css/product.css"> -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 	// 휴가 삭제하기
@@ -67,75 +65,10 @@
      	// 승인하기 버튼 클릭 
         $(document).on("click", ".btn-approve", function() {
             var vacationId = $(this).data("vacation-id");
-            
-         // 확인 대화상자 표시
-//             var confirmMessage = "승인하시겠습니까?";
-//             if (confirm(confirmMessage)) {
-//                 // 확인 버튼이 눌렸을 때의 동작
-//                 approveVacation(vacationId); // 승인 처리 함수 호출
-//             } else {
-//                 // 취소 버튼이 눌렸을 때의 동작
-//                 cancelApproval(vacationId); // 취소 처리 함수 호출
+
             });
 
-      // 승인 처리 함수
-// 		function approveVacation(vacationId) {  
-// 		    if (confirm("휴가를 승인하시겠습니까?")) {
-// 		        // 삭제 작업 수행
-// 		        $.ajax({
-// 		            url: '/emp/vacationapprove',
-// 		            type: 'GET',
-// 		            data: {
-// 		                vacation_id: vacationId
-// 		            },
-// 		            success: function(response) {
-// 		                // 삭제 작업이 성공한 경우
-// 		                alert('휴가가 승인되었습니다.');
-// 		                // vacationlist 페이지로 이동
-// 		                location.href = '/emp/vacationlist';
-// 		                // 승인자 값을 가져와서 스팬 요소에 설정
-// 		                var approveEmp = response.approve_emp;
-// 		                $("#approveEmp_" + vacationId).text(approveEmp);
-// 		            },
-		            
-// 		            error: function() {
-// 		                // 삭제 작업이 실패한 경우
-// 		                alert('휴가 승인에 실패하였습니다.');
-// 		            }
-// 		        });
-// 		    }
-// 		    console.log("승인 처리 - vacationId: " + vacationId);
-// 		}
-//         // 반려 처리 함수
-//         function cancelApproval(vacationId) {
-// 		    if (confirm("휴가를 반려하시겠습니까?")) {
-// 		        // 취소 작업 수행
-// 		        $.ajax({
-// 		            url: '/emp/vacationcancel',
-// 		            type: 'GET',
-// 		            data: {
-// 		                vacation_id: vacationId
-// 		            },
-// 		            success: function(response) {
-// 		                // 취소 작업이 성공한 경우
-// 		                alert('휴가 반려 처리되었습니다.');
-// 		                // vacationlist 페이지로 이동
-// 		                location.href = '/emp/vacationlist';
-// 		                // 승인자 값을 초기화
-// 		                $("#approveEmp_" + vacationId).text("");
-// 		            },
-// 		            error: function() {
-// 		                // 취소 작업이 실패한 경우
-// 		                alert('휴가 반려에 실패하였습니다.');
-// 		            }
-// 		        });
-// 		    }
-//     console.log("반려 처리 - vacationId: " + vacationId);
-// }
-
-       
-   
-//         // 반려하기 버튼 클릭 
+         // 반려하기 버튼 클릭 
         $(document).on("click", ".btn-return", function() {
         	 var vacationId = $(this).data("vacation-id");
         });
@@ -143,12 +76,6 @@
   }); // jquary end
 </script>
 	<style>
-	
-	body {
-/* 		display: table-row-group; */
-	}
-	
-	
  tbody, td, tfoot, th, thead, tr { 
      border-color: inherit; 
      border-style: solid; 
@@ -165,10 +92,6 @@
 	.table-striped tr:nth-child(even) {
         background-color: #f2f2f2;
     }
-/*     .table { */
-/*         width: 100%; */
-/*         border-collapse: collapse; */
-/*     } */
 
     .table th,
     .table td {
@@ -258,8 +181,7 @@
 <body id="body-pd" style="font-family: 'TheJamsil5';">
 <jsp:include page="../common/header.jsp"/>
 <h1>사원 휴가관리</h1>
-<%-- 	${vacationList } --%>
-<%-- ${vc.employee_id} --%>
+
 <table class="table-striped">
 <tr>
 <td class="box">휴가 예정자 : ${pvacationCount}</td>
@@ -282,7 +204,6 @@
 	        <td>승인여부</td>
 	        <td>승인자</td>
 	        <td>대체인</td>
-	<!--         <td>휴가번호</td> -->
 	        <td>승인</td>
 	        <td>반려</td>
 	        <td>수정</td>
@@ -299,15 +220,7 @@
             <td>${vc.approve_date}</td>
             <td>${vc.vacation_start}</td>
             <td>${vc.vacation_finish}</td>
-
-<!-- 			<td><script> -->
-<%-- //             var vacationStart = new Date('${vc.vacation_start}'); --%>
-<%-- //             var vacationFinish = new Date('${vc.vacation_finish}'); --%>
-<!-- //             var vacationDate = (Math.ceil((vacationFinish - vacationStart) / (1000 * 60 * 60 * 24))+1); -->
-<!-- //             document.write(vacationDate); -->
-<!--         	</script></td> -->
 			<td>${vc.vacation_date}</td>
-
             <td>${vc.vacation_reason}</td>
              <td class="approve-cell"><c:choose>
                     <c:when test="${vc.approve == '승인'}"><span style="color:blue;">승인</span></c:when>
@@ -326,13 +239,7 @@
              
             
             <td>${vc.subsitute}</td>
-<%--             <td>${vc.vacation_id}</td> --%>
-<%-- ${approve_emp} --%>
-<%-- ${login_id} --%>
 
-<%-- 				 <td><a href="vacationcheck?vacation_id=${vc.vacation_id}&approve=승인">승인</a></td> --%>
-<%--             	 <td><a href="vacationcheck?vacation_id=${vc.vacation_id}&approve=반려">반려</a></td> --%>
-	
             	 <td><button class="btn-addd"><a href="vacationcheck?vacation_id=${vc.vacation_id}&approve=승인">승인</a></button></td>
             	 <td><button class="btn-adds"><a href="vacationcheck?vacation_id=${vc.vacation_id}&approve=반려">반려</a></button></td>
 

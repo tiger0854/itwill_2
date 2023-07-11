@@ -55,8 +55,6 @@ $(document).ready(function() {
 </script>
  <title>휴가 수정</title>
 </head>
-<%-- ${param.vacation_id } --%>
-<%-- ${vvo} --%>
 <body>
 
     <div id="popupForm" class="popup">

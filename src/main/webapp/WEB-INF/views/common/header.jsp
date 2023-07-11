@@ -83,6 +83,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 	 // Your code to run since DOM is loaded and ready
 	});
+	
+// 	var login_id = "${sessionScope.login_id}";
+
+// 	if(login_id == "" ){
+// 		location.href="/public/login";
+// 		return false;
+// 	}
 
 </script>
 
@@ -122,33 +129,35 @@ document.addEventListener("DOMContentLoaded", function(event) {
                    <a href="#" class="nav_link" onclick="toggleDropdown()"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">인사관리</span> </a> 
                 <div class="nav_link collapse" id="collapseSale">
                 <!-- 인사과 헤더 메뉴제어 -->
+                <c:if test="${sessionScope.login_id ne null }"> <!-- 로그인아이디 없는경우 인사 메뉴 안뜸 -->
                 <!-- 사원관리 페이지 제어 -->
-                <c:if test="${sessionScope.dept_name ne '인사과'}">
-              	  <a href="/emp/info?employee_id=${sessionScope.login_id }" class="nav_link"> - 사원관리</a><br>
-                </c:if>
-                <c:if test="${sessionScope.dept_name eq '인사과'}">
-              	  <a href="/emp/list" class="nav_link"> - 사원관리</a><br>
-                </c:if>
+	                <c:if test="${sessionScope.dept_name ne '인사과'}">
+	              	  <a href="/emp/info?employee_id=${sessionScope.login_id }" class="nav_link"> - 사원관리</a><br>
+	                </c:if>
+	                <c:if test="${sessionScope.dept_name eq '인사과'}">
+	              	  <a href="/emp/list" class="nav_link"> - 사원관리</a><br>
+	                </c:if>
                 <!-- 사원관리 페이지 제어 -->
                 
                 <!-- 휴가관리 페이지 제어 -->
-                <c:if test="${sessionScope.dept_name ne '인사과'}">
-              	  <a href="/emp/vacationinf?employee_id=${login_id}" class="nav_link" > - 나의 휴가 정보</a><br>
-                </c:if>
-                <c:if test="${sessionScope.dept_name eq '인사과'}">
-               	  <a href="/emp/vacationinf?employee_id=${login_id}" class="nav_link" > - 나의 휴가 정보</a><br>
-              	  <a href="/emp/vacationlist" class="nav_link" > - 휴가관리</a><br>
-                </c:if>
+	                <c:if test="${sessionScope.dept_name ne '인사과'}">
+	              	  <a href="/emp/vacationinf?employee_id=${login_id}" class="nav_link" > - 나의 휴가 정보</a><br>
+	                </c:if>
+	                <c:if test="${sessionScope.dept_name eq '인사과'}">
+	               	  <a href="/emp/vacationinf?employee_id=${login_id}" class="nav_link" > - 나의 휴가 정보</a><br>
+	              	  <a href="/emp/vacationlist" class="nav_link" > - 휴가관리</a><br>
+	                </c:if>
 		  		<!-- 휴가관리 페이지 제어 -->    
 		  		   
 		  		<!-- 급여관리 페이지 제어 -->      
-		  		<c:if test="${sessionScope.dept_name ne '인사과'}">
-		  		 <a href="/emp/salaryInfo?employee_id=${sessionScope.login_id }" class="nav_link"> - 급여관리</a><br>
-                </c:if>
-				<c:if test="${sessionScope.dept_name eq '인사과'}">
-              	  <a href="/emp/salary" class="nav_link"> - 급여관리</a><br>
-                </c:if>
+			  		<c:if test="${sessionScope.dept_name ne '인사과'}">
+			  		 <a href="/emp/salaryInfo?employee_id=${sessionScope.login_id }" class="nav_link"> - 급여관리</a><br>
+	                </c:if>
+					<c:if test="${sessionScope.dept_name eq '인사과'}">
+	              	  <a href="/emp/salary" class="nav_link"> - 급여관리</a><br>
+	                </c:if>
 		  		<!-- 급여관리 페이지 제어 -->
+                </c:if>
 		  	
 				</div>
 					</div>

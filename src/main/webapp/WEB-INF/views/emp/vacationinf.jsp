@@ -56,10 +56,6 @@ $(document).ready(function(){
 		$('#department_name').attr('disabled',false);
 		$('#address_find').attr('disabled',false);
 		$('#employee_status').attr('disabled',false);
-
-// 		$('#save').on('click',function(){
-// 			location.reload();
-// 		})// save click function end
 		
 	})// update click function end
 	 
@@ -152,15 +148,6 @@ $(document).ready(function(){
 					<td>휴대폰 번호</td>
 					<td><input type="text" size="50" value="${evo.phone_num }"
 						id="phone_num" name="phone_num" readonly></td>
-<!-- 					<td>주소</td> -->
-<!-- 					<td><input type="text" size="30" placeholder="주소" id="address" -->
-<%-- 						name="address" value="${evo.address }" readonly> <input --%>
-<!-- 						type="text" size="18" placeholder="상세주소" id="extraAddress" -->
-<%-- 						name="extraaddress" value="${evo.extraaddress }" readonly></td> --%>
-<!-- 					<td><input type="button" value="우편번호 찾기" -->
-<!-- 						onclick="execDaumPostcode()" id="address_find" disabled></td> -->
-<!-- 					<td><input type="text" size="10" placeholder="우편번호" -->
-<%-- 						id="postcode" name="post_num" value="${evo.post_num }" readonly></td> --%>
 					<td>휴가상태</td>	
 					<td><select name="vacation_status" id="employee_status"
 						disabled>
@@ -182,10 +169,7 @@ $(document).ready(function(){
 		<table class="table table-striped" style="margin-top: 10px;">
 			<thead>
 				<tr>
-					<th>사원아이디</th>
-					<th>직위</th>
-					<th>부서</th>
-					<th>휴대폰번호</th>
+
 					<th>휴가관리</th>
 					<th>휴가시작일</th>
 					<th>휴가종료일</th>
@@ -197,10 +181,7 @@ $(document).ready(function(){
 			<c:forEach var="mvc" items="${myvacationList }">
 				<tbody>
 					<tr>
-						<td><a href="/emp/vacationinf?employee_id=${mvc.employee_id}">${mvc.employee_id}</a></td>
-						<td>${mvc.position }</td>
-						<td>${mvc.department_name }</td>
-						<td>${mvc.phone_num }</td>
+
 						<td>${mvc.vacation_management }</td>
 						<td>${mvc.vacation_start }</td>
 						<td>${mvc.vacation_finish}</td>

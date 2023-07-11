@@ -7,7 +7,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <meta charset="UTF-8">
-<title>Dash Board</title>
+<title>대시보드</title>
 <jsp:include page="../common/header.jsp"/>
 <script type="text/javascript">
 
