@@ -28,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ddosirak.domain.CookAddVO;
 import com.ddosirak.domain.CookListVO;
 import com.ddosirak.domain.CookVO;
+import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.GraphVO;
 import com.ddosirak.domain.IntegrationCodeVO;
 import com.ddosirak.domain.ItemRecipeListVO;
@@ -38,8 +39,10 @@ import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.ProOrderVO;
 import com.ddosirak.domain.ProductionPerformanceVO;
 import com.ddosirak.domain.ReceiveVO;
+import com.ddosirak.persistance.EmployeeDAO;
 import com.ddosirak.persistance.ProductionPerformanceDAO;
 import com.ddosirak.service.CookOrderService;
+import com.ddosirak.service.EmployeeService;
 import com.ddosirak.service.ItemRecipeService;
 import com.ddosirak.service.ItemdetailService;
 import com.ddosirak.service.LineService;
@@ -73,6 +76,8 @@ public class ProductController {
 
 	// 서비스의 정보가 필요함. > 의존관계
 	@Inject
+	private EmployeeService eService;
+	@Inject
 	private ProOrderService oService;
 	@Inject
 	private ItemdetailService iservice;
@@ -98,7 +103,7 @@ public class ProductController {
 	// http://localhost:8088/pro/orderList
 	// 작업지시 목록
 	@RequestMapping(value = "/orderList", method = RequestMethod.GET)
-	public void productListGET(Model model,HttpServletRequest request,PageVO pageVO,HttpSession session) {
+	public String productListGET(Model model,HttpServletRequest request,PageVO pageVO,HttpSession session) {
 		logger.debug("productListGET() 호출![]~(￣▽￣)~*");
 		logger.debug("/pro/oderList.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
 //		String employeeIdString = (String) session.getAttribute("login_id");
@@ -108,7 +113,10 @@ public class ProductController {
 //		String dept_name = (String) session.getAttribute("dept_name");
 //		logger.debug("@@@@@@@@@@@@@@@@@@@@@@ dept_name  :  "+dept_name);
 		
-
+		if(session.getAttribute("login_id") == null) {
+			return "redirect:/public/login";
+		} // session control
+		
 		
 		
 		String line_code = request.getParameter("line_code");
@@ -171,7 +179,6 @@ public class ProductController {
 			// 작업지시 전체 조회
 			logger.debug("productList 전체 호출 ![]~(￣▽￣)~*");
 			proOrderList = oService.proOrderList(pageVO);
-
 		} else {
 			// 작업지시 검색 조회
 			logger.debug("productList 검색 호출 ![]~(￣▽￣)~*");
@@ -184,7 +191,7 @@ public class ProductController {
 //		// 라인 이름 불러오기
 		List<LineVO> lineList = lService.LineList();
 		model.addAttribute("lineList", lineList);
-
+		return "/pro/orderList";
 	}// productListGET() method end
 
 
@@ -329,7 +336,12 @@ public class ProductController {
 	
 	// http://localhost:8088/pro/etcstatusList
 	@RequestMapping(value = "/etcstatusList", method = RequestMethod.GET)
-	public void productEtclistGET(String wo_code, Model model, PageVO pageVO, HttpServletRequest request) {
+	public String productEtclistGET(String wo_code, Model model, PageVO pageVO, HttpServletRequest request,HttpSession session) {
+		
+		if(session.getAttribute("login_id") == null) {
+			return "redirect:/public/login";
+		} // session control
+		
 		ProOrderVO pvo = oService.getProOder(wo_code);
 		model.addAttribute("pvo", pvo);
 		//================================페이징 처리를 위한 값 받아오기 동작========================================
@@ -380,6 +392,8 @@ public class ProductController {
 		logger.debug("/pro/etcstatusList.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
 		List<ProductionPerformanceVO> prodPerfList = ppService.prodPerfList(instrSearch,wo_code,pageVO);
 		model.addAttribute("prodPerfList", prodPerfList);
+		
+		return "/pro/etcstatusList";
 	}// productEtclistGET()
 		// 생산관리 - 실적목록
 
@@ -493,7 +507,13 @@ public class ProductController {
 	// http://localhost:8088/pro/cookorderList
 	// 조리지시 목록
 	@RequestMapping(value = "/cookorderList", method = RequestMethod.GET)
-	public void cookListGET(Model model,HttpServletRequest request,PageVO pageVO) {
+	public String cookListGET(Model model,HttpServletRequest request,PageVO pageVO,HttpSession session) {
+		
+		
+		if(session.getAttribute("login_id") == null) {
+			return "redirect:/public/login";
+		} // session control
+		
 		logger.debug("productListGET() 호출![]~(￣▽￣)~*");
 		logger.debug("/pro/oderList.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
 	
@@ -570,7 +590,7 @@ public class ProductController {
 //		// 라인 이름 불러오기
 		List<LineVO> lineList = lService.LineList();
 		model.addAttribute("lineList", lineList);
-
+		return "/pro/cookorderList";
 	}// productListGET() method end
 
 //	 http://localhost:8088/pro/cookorderEdit
@@ -634,9 +654,17 @@ public class ProductController {
 	
 	// http://localhost:8088/pro/cooketcstatusList
 	@RequestMapping(value = "/cooketcstatusList", method = RequestMethod.GET)
-	public void cooketcListGET(String co_code, Model model, PageVO pageVO, HttpServletRequest request) {
+	public String cooketcListGET(String co_code, Model model, PageVO pageVO, HttpServletRequest request,HttpSession session) {
 		CookVO cvo = cService.getcookOder(co_code);
 		model.addAttribute("cvo", cvo);
+		
+		if(session.getAttribute("login_id") == null) {
+			return "redirect:/public/login";
+		} // session control
+		
+		
+		
+		
 		//================================페이징 처리를 위한 값 받아오기 동작========================================
 		// 준비물 : Inject > PageVO , 파라미터값 PageVO pageVO, HttpServletRequest request
 		//   		리스트를 반환하는 DAO - Service 메서드에 PageVO 추가, 쿼리에 LIMIT #{startRow}, #{pageSize} 추가.
@@ -682,7 +710,7 @@ public class ProductController {
 		logger.debug("/pro/cooketcstatusList.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
 		List<CookAddVO> cookEtcList = cService.cookEtcList(instrSearch,co_code,pageVO);
 		model.addAttribute("cookEtcList", cookEtcList);
-		
+		return "/pro/cooketcstatusList";
 	}// productEtclistGET()
 	
 	
@@ -1004,6 +1032,69 @@ public class ProductController {
 	}
 	
 	
+	
+	// http://localhost:8088/pro/empList
+	@RequestMapping(value = "/empList", method = RequestMethod.GET)
+	public String emplistGET(Model model,PageVO pageVO, HttpServletRequest request,@RequestParam(value ="pop",required = false) String pop) throws Exception{
+		logger.debug("listGET() 호출![]~(￣▽￣)~*");
+		
+		//================================페이징 처리를 위한 값 받아오기 동작========================================
+		// 준비물 : Inject > PageVO , 파라미터값 PageVO pageVO, HttpServletRequest request
+		//   		리스트를 반환하는 DAO - Service 메서드에 PageVO 추가, 쿼리에 LIMIT #{startRow}, #{pageSize} 추가.
+		// 페이징 처리
+		// 한 화면에 보여줄 글 개수 설정
+		int pageSize = 5; // sql문에 들어가는 항목
+		
+		// 현페이지 번호 가져오기
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum==null) {
+			pageNum="1";
+		}
+		// 페이지번호를 정수형으로 변경
+		int currentPage=Integer.parseInt(pageNum);
+		pageVO.setPageSize(pageSize);
+		pageVO.setPageNum(pageNum);
+		pageVO.setCurrentPage(currentPage);
+		int startRow=(pageVO.getCurrentPage()-1)*pageVO.getPageSize()+1; // sql문에 들어가는 항목
+		int endRow = startRow+pageVO.getPageSize()-1;
+		
+		pageVO.setStartRow(startRow-1); // limit startRow (0이 1열이기 때문 1을 뺌)
+		pageVO.setEndRow(endRow);
+		
+		// 게시글 개수 가져오기
+		int count = pService.countEmpList(); // 요 동작만 각자 페이지에 맞게 수정하면 됨!!
+
+		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
+		int startPage=(currentPage-1)/pageBlock*pageBlock+1;
+		int endPage=startPage+pageBlock-1;
+		int pageCount=count/pageSize+(count%pageSize==0?0:1);
+		if(endPage > pageCount){
+		 	endPage = pageCount;
+		 }
+		pageVO.setCount(count);
+		pageVO.setPageBlock(pageBlock);
+		pageVO.setStartPage(startPage);
+		pageVO.setEndPage(endPage);
+		pageVO.setPageCount(pageCount);
+		
+		model.addAttribute("pageVO", pageVO);
+		//================================페이징 처리를 위한 값 받아오기 동작========================================
+		
+		List<EmployeeVO> empList = eService.empList(); // 리스트를 반환하는 메서드의 파라미터 값으로 pageVO 넣기
+		
+		int empCount = eService.empCount();
+		int alCount_all = eService.alCount_all();
+		int alCount_am = eService.alCount_am();
+		int alCount_pm = eService.alCount_pm();
+		int alCount = alCount_all+alCount_am+alCount_pm;
+		model.addAttribute("empList",empList);
+		model.addAttribute("empCount",empCount);
+		model.addAttribute("alCount_all",alCount_all);
+		model.addAttribute("alCount_am",alCount_am);
+		model.addAttribute("alCount_pm",alCount_pm);
+		model.addAttribute("alCount",alCount);
+		return "/pro/empList";
+	}//l
 	
 	
 	

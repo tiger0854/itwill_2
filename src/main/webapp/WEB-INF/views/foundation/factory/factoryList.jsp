@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
+
 function factoryUpload() {
 	// 새 창을 열기 위한 URL
 	var popupUrl = '/foundation/factory/factoryUpload';
@@ -46,6 +47,7 @@ function openItem() {
 	window.open("/foundation/factory/factoryItemList", "popup",
 			"width=500, height=600,left=100, top=100");
 }
+
 </script>
 
 

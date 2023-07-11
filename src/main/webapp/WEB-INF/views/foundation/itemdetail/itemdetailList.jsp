@@ -19,7 +19,7 @@ var deptName = "${sessionScope.dept_name}";
 		window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
 	}else{
 		swal.fire("권한이 없습니다!");
-	}
+		}
 	}
 	function itemUpdate(item_code) {
 		if(deptName.includes('생산')){    	
@@ -36,6 +36,7 @@ var deptName = "${sessionScope.dept_name}";
 		swal.fire("권한이 없습니다!");
 	}
 	}
+	
 	function itemDelete(item_code, item_name) {
 		if(deptName.includes('생산')){  
 		  Swal.fire({

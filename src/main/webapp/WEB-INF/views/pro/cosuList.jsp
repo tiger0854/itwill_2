@@ -16,7 +16,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <script>
 
 </script>
@@ -60,21 +60,19 @@
         <th>작업지시자</th>
     </tr>
     <c:forEach var="vo" items="${receiveList }">
-        <tr onclick="selectItem('${vo.re_code}', '${vo.re_qty}','${vo.item_code}','${vo.item_name}','${vo.re_empCd}')">
+        <tr onclick="selectItem('${vo.re_code}', '${vo.re_qty}','${vo.item_code}','${vo.item_name}')">
             <td id="con">${vo.re_code}</td>
             <td id="con">${vo.re_qty}</td>
             <td id="con">${vo.item_code}</td>
             <td id="con">${vo.item_name}</td>
-            <td id="con">${vo.re_empCd}</td>
         </tr>
     <script>
-	    function selectItem(a, b, c, d, e) {
+	    function selectItem(a, b, c, d) {
 	        // 부모 창으로 값 전달하기
 	        opener.document.getElementById("re_code").value = a;
 	        opener.document.getElementById("re_qty").value = b;
 	        opener.document.getElementById("item_code").value = c;
 	        opener.document.getElementById("item_name").value = d;
-	        opener.document.getElementById("employee_id").value = e;
 	        window.close();
 	    }
 	</script>

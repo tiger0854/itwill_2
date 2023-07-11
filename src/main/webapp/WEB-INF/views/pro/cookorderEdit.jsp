@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -21,31 +22,39 @@
 <script>
 
 
+
 function onUpdate() {
 	  var frObj = $("#fr");
 	  var formData = frObj.serialize();
-	    Swal.fire("수정완료!");
-	    if (frObj[0].checkValidity()) {
-	    
+
+	  if (frObj[0].checkValidity()) {
+	    Swal.fire({
+	      title: "작성 성공!",
+	      text: "작성이 성공하였습니다.",
+	      icon: "success",
+	      showCancelButton: false,
+	      confirmButtonText: "확인"
+	    }).then(function() {
 	      $.ajax({
-	        url: "/pro/cookorderEdit", // 요청을 보낼 서버의 URL
-	        type: "POST", // HTTP 요청 방식 (POST)
-	        data: formData, // 전송할 데이터 (직렬화된 폼 데이터)
+	        url: "/pro/cookorderEdit",
+	        type: "POST",
+	        data: formData,
 	        success: function(response) {
 	          opener.location.reload();
-	          window.close(); // 윈도우 창을 닫습니다.
-	        },
-	        error: function(xhr, status, error) {
-//	          alert("모든 칸을 입력해 주세요!");
-	          console.error("에러 발생:", error);
+	          window.close();
 	        }
 	      });
-	    } else {
-	      // 필수 필드가 비어있을 경우 처리할 내용
-	      Swal.fire("모든 칸을 입력해 주세요!");
-	    }
+	    });
+	  } else {
+	    Swal.fire("입력란을 채워주세요!");
+	  }
 	}
 
+//openempList()  
+function openempList() {
+  var childWindow = window.open("/pro/empList", "popup", "width=500, height=600, left=100, top=100");
+}
+ 
 
 
 </script>
@@ -68,8 +77,14 @@ function onUpdate() {
 				<tbody>
 					<%-- ${lineList} --%>
 					<tr>
-						<td>조리지시자</td>
-						<td><input type="text" name="employee_id" value="${cvo.employee_id }" readonly></td>
+		      <td>작업지시자</td>
+      <td><input type="hidden" name="co_code" value=${cvo.co_code } readonly>
+    <div class="input-group">
+      <input type="text" style="width: 40%" placeholder="지시자 ID" class="form-control" name="employee_id" id="employee_id" readonly>
+	    <input type="text" style="width: 40%"  value="${cvo.employee_name}" placeholder="지시자 이름" class="form-control" name="employee_name" id="employee_name" readonly>
+	    <input type="button" class="btn btn-primary" onclick="openempList();" value="검색">
+	</div>
+      </td>
 					</tr>
 					<tr>
 						<td>라인명</td>
@@ -118,8 +133,8 @@ function onUpdate() {
 
 <!-- 작업지시등록, 취소 버튼 -->
 <div style="text-align: center; margin-top: 50px">
-<button class=btn-add onclick="onUpdate();"> <i class='bx bx-edit'></i> 수정</button>
-<button class=btn-search onclick="window.close()">X 닫기</button>
+<button type="button" class=btn-add onclick="onUpdate();"> <i class='bx bx-edit'></i> 수정</button>
+<button type="button" class=btn-search onclick="window.close()">X 닫기</button>
 </div>
 
 </form>

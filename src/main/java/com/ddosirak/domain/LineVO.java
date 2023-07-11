@@ -11,6 +11,15 @@ public class LineVO {
 	private String line_name;
 	private String factory_code;
 	private String remark;
+	private String employee_name;
+	
+	
+	public String getEmployee_name() {
+		return employee_name;
+	}
+	public void setEmployee_name(String employee_name) {
+		this.employee_name = employee_name;
+	}
 	public String getLine_code() {
 		return line_code;
 	}
@@ -39,7 +48,7 @@ public class LineVO {
 	@Override
 	public String toString() {
 		return "LineVO [line_code=" + line_code + ", line_name=" + line_name + ", factory_code=" + factory_code
-				+ ", remark=" + remark + "]";
+				+ ", remark=" + remark + ", employee_name=" + employee_name + "]";
 	}
 	
 	

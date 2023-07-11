@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
@@ -14,28 +15,31 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+var deptName = "${sessionScope.dept_name}";
 
 function orderwrite() {
-  // 새 창을 열기 위한 URL
-  var popupUrl = '/pro/orderWrite';
-  // 새 창 열기
-  window.open(popupUrl, '_blank', 'width=500,height=600,left=100, top=100');
+	if(deptName.includes('생산')){   
+	// 새 창을 열기 위한 URL
+		  var popupUrl = '/pro/orderWrite';
+		  // 새 창 열기
+		  window.open(popupUrl, '_blank', 'width=500,height=600,left=100, top=100');
+}else{
+	swal.fire("권한이 없습니다!");
+	}
 }
+
 
 function orderedit(wo_code) {
-	  var popupUrl = '/pro/orderEdit?wo_code='+ wo_code;
-	  window.open(popupUrl, '_blank', 'width=500,height=600,left=100, top=100');
+	if(deptName.includes('생산')){    	
+		  var popupUrl = '/pro/orderEdit?wo_code='+ wo_code;
+		  window.open(popupUrl, '_blank', 'width=500,height=600,left=100, top=100');
+		}else{
+	swal.fire("권한이 없습니다!");
 	}
-
-
-//품명 검색 팝업창
-function openItem(){
-    window.open("/pro/itemList","popup", "width=500, height=600,left=100, top=100");
 }
 
-
-function ProOrderDelete(wo_code){
-
+function  ProOrderDelete(wo_code) {
+	if(deptName.includes('생산')){  
 		  Swal.fire({
 			    title: "경고",
 			    text: "정말로 삭제하시겠습니까?",
@@ -49,9 +53,20 @@ function ProOrderDelete(wo_code){
 //			      Swal.fire("수동마감 완료!");
 			    }
 			  });		
-		
-		
+	}else{
+	swal.fire("권한이 없습니다!");
 	}
+}
+
+
+
+
+//품명 검색 팝업창
+function openItem(){
+    window.open("/pro/itemList","popup", "width=500, height=600,left=100, top=100");
+}
+
+
 
 
 function itemrecipeList(item_code,item_name){ // 해당 작업지시번호에 맞는 생산실적 ajax로 불러오기
@@ -200,7 +215,7 @@ function itemrecipeListPrint(array) {
       <tr>
 		<td><a href="/pro/etcstatusList?wo_code=${vo.wo_code}">${vo.wo_code}</a></td>
         <td>${vo.so_code}</td>
-        <td>${vo.employee_id}</td>
+        <td>${vo.employee_name}</td>
         <c:choose>
 	  <c:when test="${vo.wo_status eq '지시'}">
 	    <td style="color: blue;">${vo.wo_status}</td>

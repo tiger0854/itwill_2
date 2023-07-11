@@ -21,7 +21,7 @@ public class ProOrderVO {
 	
 	private String wo_code;
 	private String so_code;
-	private int employee_id;
+	private String employee_name;
 	private String factory_code;
 	private String line_code;
 	private String item_code;
@@ -46,11 +46,18 @@ public class ProOrderVO {
 	public void setSo_code(String so_code) {
 		this.so_code = so_code;
 	}
-	public int getEmployee_id() {
-		return employee_id;
+
+	public String getEmployee_name() {
+		return employee_name;
 	}
-	public void setEmployee_id(int employee_id) {
-		this.employee_id = employee_id;
+	public void setEmployee_name(String employee_name) {
+		this.employee_name = employee_name;
+	}
+	public String getLine_name() {
+		return line_name;
+	}
+	public void setLine_name(String line_name) {
+		this.line_name = line_name;
 	}
 	public String getFactory_code() {
 		return factory_code;
@@ -121,7 +128,7 @@ public class ProOrderVO {
 	}
 	@Override
 	public String toString() {
-		return "ProOrderVO [wo_code=" + wo_code + ", so_code=" + so_code + ", employee_id=" + employee_id
+		return "ProOrderVO [wo_code=" + wo_code + ", so_code=" + so_code + ", employee_name=" + employee_name
 				+ ", factory_code=" + factory_code + ", line_code=" + line_code + ", item_code=" + item_code + ", oQTY="
 				+ oQTY + ", pQTY=" + pQTY + ", wo_status=" + wo_status + ", wo_date=" + wo_date + ", remark=" + remark
 				+ ", delivery_date=" + delivery_date + ", sQTY=" + sQTY + ", item_name=" + item_name + ", line_name="
