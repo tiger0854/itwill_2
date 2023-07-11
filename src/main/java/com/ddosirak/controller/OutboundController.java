@@ -301,42 +301,6 @@ public class OutboundController {
 		return "redirect:/outbound/outboundList";	
 	}
 	
-	
-	// http://localhost:8088/outbound/outGrp
-	// 출고현황 그래프
-//	@RequestMapping(value = "/outGrp", method = RequestMethod.GET)
-//	@ResponseBody
-//	public List<Map<String, Object>> outGrpGET(OutboundVO vo) throws Exception {
-//	    logger.debug("outGrpGET() 호출");
-//	    List<Map<String, Object>> outGrp = oService.outGrp(vo);
-//	    return outGrp;
-//	}
-	
-	// 출고현황 그래프 데이터를 반환하는 메서드
-//	@RequestMapping(value = "/outGrp", method = RequestMethod.GET)
-//	@ResponseBody
-//	public Map<String, Object> outGrpChartData(OutboundVO vo) throws Exception {
-//	    logger.debug("outGrpChartData() 호출");
-//	    
-//	    List<Map<String, Object>> outGrp = oService.outGrp(vo);
-//	    
-//	    // 그래프에 필요한 데이터를 가공하여 Map에 담음
-//	    Map<String, Object> chartData = new HashMap<>();
-//	    List<String> labels = new ArrayList<>();
-//	    List<Integer> data = new ArrayList<>();
-//	    
-//	    for (Map<String, Object> item : outGrp) {
-//	        String itemName = (String) item.get("item_name");
-//	        Integer count = (Integer) item.get("count");
-//	        
-//	        labels.add(itemName);
-//	        data.add(count);
-//	    }
-//	    
-//	    chartData.put("labels", labels);
-//	    chartData.put("data", data);
-//	    
-//	    return chartData;
-//	}
+
 	
 }

@@ -38,7 +38,7 @@ public class LineController {
 	// --------------------- 예웡  (｡･∀･)ﾉﾞﾞ -----------------------------	
 		// http://localhost:8088/line/lineList
 		@RequestMapping(value = "/lineList", method = RequestMethod.GET)
-		public String LineListGET(Model model,HttpServletRequest request,PageVO pageVO,HttpSession session) {
+		public String LineListGET(Model model,HttpServletRequest request,PageVO pageVO, HttpSession session) {
 			logger.debug("LineListGET() 호출![]~(￣▽￣)~*");
 			logger.debug("/line/linList.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
 

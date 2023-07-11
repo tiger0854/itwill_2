@@ -54,3 +54,10 @@ input[type=password] {font-family:'Malgun gothic', dotum, sans-serif;}
 	box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2);
 	padding: 70px;
    }
+#card{
+	 border: 1px solid #ebf1f6; 
+	border-radius: 10px;
+	box-shadow: rgba(145,158,171,0.2) 0px 0px 2px 0px,rgba(145,158,171,0.12) 0px 12px 24px -4px;
+	padding: 20px;
+	margin: 20px;
+   }   

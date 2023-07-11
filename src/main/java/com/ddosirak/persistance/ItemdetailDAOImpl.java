@@ -21,7 +21,7 @@ public class ItemdetailDAOImpl implements ItemdetailDAO {
 	private static final Logger logger=org.slf4j.LoggerFactory.getLogger(ItemdetailDAOImpl.class);
 	
 	@Inject
-	SqlSession sqlsession;
+	private SqlSession sqlsession;
 	
 	//상품 기초 목록
 	@Override

@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <html>
 <head>
 <link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
@@ -12,54 +11,115 @@
 <script type="text/javascript">
 
 </script>
-<style type="text/css">
-.emp_dash{display: flex;}
-.emp_vac{border: 1px solid; margin-left: 100px;}
-.emp_vac tr{border: 1px solid; margin: 100px;}
-.emp_vac tr td{border: 1px solid; margin: 100px;}
-</style>
+
 </head>
 <body id="body-pd">
+<div style="margin: auto;margin-left: 100px;">
+<div style="display: flex;margin:auto;margin-top: 100px;">
+  <div id="card" style="width: 300px;padding: 20px">
+		
+		<h5><i class='bx bxs-clinic' ></i>금일 입고예정</h5>
+			<h3><b>${selectNowIndate } 건</b></h3>
+		</div>
+		 <div id="card" style="width: 300px;padding: 20px">
+		<h5><i class='bx bxs-clinic' ></i>금일 입고완료 </h5>
+			<h3><b>${selectNowEdate } 건</b></h3>
+		</div>
+		
+				 <div id="card" style="width: 300px;padding: 20px">
+		<h5><i class='bx bx-log-out-circle' ></i>금일 출고예정 </h5>
+			<h3><b>${outScheduleToday }건</b></h3>
+		</div>
+		
+				 <div id="card" style="width: 300px;padding: 20px">
+		<h5><i class='bx bx-log-out-circle' ></i>금일 출고완료 </h5>
+			<h3><b>${outCompleteToday } 건</b></h3>
+		</div>
+		</div>
 
+<div style="display: flex;">
 <!-- 라인별 생산률 그래프 -->
-<h3>라인별 생산률</h3>
+<div id="card" style="width: 700px;padding: 20px">
+<h4>라인별 생산률</h4>
+<hr>
 <canvas id="canvas"></canvas>
+</div>
 <!-- 라인별 생산률 그래프 -->
 
-<table>
-	<tr>
-		<td>금일 입고예정 : </td>
-		<td>${selectNowIndate } 건</td>
-	</tr>
-	<tr>
-		<td>금일 입고완료 : </td>
-		<td>${selectNowEdate } 건</td>
-	</tr>
-</table>
-
-<p>outScheduleToday:${outScheduleToday }</p>
-<p>outCompleteToday:${outCompleteToday }</p>
-
+<!-- 불량률 -->
+<div id="card" style="width: 700px;padding: 20px">
+<h4>불량률 현황</h4>
+<hr>
+<canvas id="canvas_err"></canvas>
+</div>
+<!-- 불량률 -->
+</div>
 
 <!-- 인사 관련 내용 -->
-<h3>임직원 현황</h3>
-<div class="emp_dash">
+<div style="display: flex;">
+<div id="card" style="width: 500px;padding: 20px">
+<h4>임직원 현황</h4>
+<hr>
   <canvas id="emp_count"  width ="300" height="300"></canvas>
-	<table class="emp_vac">
-		<tr>
-			<td>현재 휴가자</td>
-			<td>${vacationCount } 명</td>
-		</tr>
-		<tr>
-			<td>휴가 신청자</td>
-			<td>${pvacationCount } 명</td>
-		</tr>
-	</table>
 </div>
+<div>
+  <div id="card" style="width: 300px;padding: 20px">
+		
+		<h5><i class='bx bxs-user-voice'></i>현재 휴가자</h5>
+		${vacationCount }명
+		</div>
+		 <div id="card" style="width: 300px;padding: 20px">
+		<h5><i class='bx bxs-user-voice'></i>휴가 신청자</h5>
+			${pvacationCount } 명
+		</div>
+		</div>
+		</div>
+		</div>
+		
 </body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+//----------------------  불량률 현황-----------------------------
+const errQTY = "${errQTY }";
+const totalQTY = "${totalQTY }";
 
+var errRate = (Math.round((errQTY / totalQTY) * 1000) / 1000)*100;
+
+const canvas_err = document.getElementById('canvas_err');
+
+canvas_err.style.width = '600.467px';
+canvas_err.style.height = '219.733px';
+
+new Chart(canvas_err, {
+  type: 'bar',
+  data: {
+    labels: ['불량률 현황'],
+    datasets: [{
+      label: '목표치',
+      data: [20],
+      backgroundColor: ['green'],
+      borderWidth: 1
+    },{
+        label: '불량률',
+        data: [errRate ],
+        backgroundColor: ['red'],
+        borderWidth: 1
+      }
+    
+    ]
+  },
+  options: {
+	 responsive: false,
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+//----------------------  불량률 현황-----------------------------
+
+//----------------------  임직원 현황-----------------------------
 const emp_count = document.getElementById('emp_count');
 
 new Chart(emp_count, {
@@ -81,7 +141,7 @@ new Chart(emp_count, {
     }
   }
 }); // chart end
-
+//----------------------  임직원 현황-----------------------------
 // ----------------------   라인별 생산률 -----------------------------
 $(document).ready(function(){
 	
@@ -97,7 +157,7 @@ $(document).ready(function(){
 	canvas.height = 219.733; // 높이 설정 (숫자 값만 사용)
 	canvas.style.display = 'block';
 	canvas.style.boxSizing = 'border-box';
-	canvas.style.width = '439.467px';
+	canvas.style.width = '600.467px';
 	canvas.style.height = '219.733px';
 	
 	ctx = canvas.getContext('2d');
@@ -105,7 +165,7 @@ $(document).ready(function(){
 	myChart = new Chart(ctx, {
 	  type: 'bar',
 	  data: {
-	    labels: ["라인1","라인2"], // 배열로 라벨 지정
+	    labels: ["1번 라인","2번 라인"], // 배열로 라벨 지정
 	    datasets: [{
 	      label: '작업지시 생산률',
 	      data: values,

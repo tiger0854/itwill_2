@@ -101,6 +101,11 @@ public class QualityServiceImpl implements QualityService {
 	}
 	
 	@Override
+	public List<QualityControlVO> errorList() throws Exception {
+		return qdao.errorList();
+	}
+	
+	@Override
 	public Integer insertStatus(QualityControlVO ivo) throws Exception {
 		return qdao.insertStatus(ivo);
 	}
@@ -109,11 +114,11 @@ public class QualityServiceImpl implements QualityService {
 	public Integer errorCount(Map<String, Object> instrSearch) throws Exception {
 		return qdao.errorCount(instrSearch);
 	}
-	
-	
-	
-	
-	
+
+	@Override
+	public Integer errorCount() throws Exception {
+		return qdao.errorCount();
+	}
 	
 
 } // public class end

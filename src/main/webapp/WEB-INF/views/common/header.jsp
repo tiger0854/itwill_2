@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 <div class="nav_list">
                   <a href="#" class="nav_link" onclick="foundDropdown()"> <i class='bx bxs-package nav_name'></i> <span class="nav_name">기반관리</span> </a> 
                 <div class="nav_link collapse" id="foundation">
-		  		    	<a href="/foundation/itemdetail/itemdetailList" class="nav_link"> - 상품관리</a><br>
+		  		    	<a href="/foundation/itemdetail/itemdetailList" class="nav_link"> - 품목관리</a><br>
 		  		    	<a href="/foundation/materialdetail/materialdetailList" class="nav_link"> - 자재관리</a><br>
 		  		    	<a href="/foundation/itemrecipe/itemrecipeList" class="nav_link"> - 레시피관리</a><br>
 		  			<a href="/foundation/warehouse/warehouseList" class="nav_link"> - 창고관리</a><br>

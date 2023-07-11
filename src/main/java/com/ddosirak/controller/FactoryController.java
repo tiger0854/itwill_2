@@ -28,15 +28,13 @@ public class FactoryController {
 	public static final Logger logger = LoggerFactory.getLogger(FactoryController.class);
 
 	@Inject
-	FactoryService service;
+	private FactoryService service;
 	
-	@Inject
-	HttpSession session;
 
 	// http://localhost:8088/foundation/factory/factoryList
 	// 공장 목록 출력
 	@RequestMapping(value = "/factoryList", method = RequestMethod.GET)
-	public String factoryListGET(Model model, HttpServletRequest request, PageVO pageVO) throws Exception {
+	public String factoryListGET(Model model, HttpServletRequest request, PageVO pageVO, HttpSession session) throws Exception {
 
 		logger.debug("factoryListGET 호출");
 

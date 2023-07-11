@@ -30,13 +30,11 @@ public class WarehouseController {
 	@Inject
 	private WarehouseService service;
 	
-	@Inject
-	HttpSession session;
 
 	// http://localhost:8088/foundation/warehouse/warehouseList
 	// 창고 목록
 	@RequestMapping(value = "/warehouseList", method = RequestMethod.GET)
-	public String warehouseListGET(Model model, HttpServletRequest request, PageVO pageVO,@RequestParam( value = "pop", required = false) String pop) throws Exception {
+	public String warehouseListGET(Model model, HttpServletRequest request, PageVO pageVO,@RequestParam( value = "pop", required = false) String pop, HttpSession session) throws Exception {
 
 		logger.debug("warehouseListGET호출");
 		

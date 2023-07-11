@@ -13,7 +13,7 @@
 var deptName = "${sessionScope.dept_name}";
 var positionName = "${sessionScope.position_name}";
 function factoryUpload() {
-if(deptName.includes('생산')||positionName==='이사'){
+if(deptName.includes('생산')||positionName==='이사'||deptName.includes('인사')){
 	// 새 창을 열기 위한 URL
 	var popupUrl = '/foundation/factory/factoryUpload';
 	// 새 창 열기
@@ -24,7 +24,7 @@ if(deptName.includes('생산')||positionName==='이사'){
 }
 
 function factoryUpdate(factory_code) {
-if(deptName.includes('생산')||positionName==='이사'){
+if(deptName.includes('생산')||positionName==='이사'||deptName.includes('인사')){
 	// 새 창을 열기 위한 URL
 	var popupUrl = '/foundation/factory/factoryUpdate?factory_code='
 			+ factory_code;
@@ -36,7 +36,7 @@ if(deptName.includes('생산')||positionName==='이사'){
 }
 
 function factoryDelete(factory_code, factory_name) {
-if(deptName.includes('생산')||positionName==='이사'){
+if(deptName.includes('생산')||positionName==='이사'||deptName.includes('인사')){
 	  Swal.fire({
 	    title: "경고",
 	    text: "공장 명 : " + factory_name + "를/을 정말로 삭제하시겠습니까?",

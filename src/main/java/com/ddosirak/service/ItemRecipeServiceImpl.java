@@ -56,62 +56,47 @@ public class ItemRecipeServiceImpl implements ItemRecipeService {
 	    List<ItemRecipeListVO> existingRecipe = dao.selectItemRecipe(vo.getItem_code());
 	    List<ItemRecipeVO> removeList = new ArrayList<>(); // 없는 값들을 담을 리스트
 	    
-	    //자재가 없으면 레시피 전체 삭제
-	    if(itemRecipeUploadvo == null || itemRecipeUploadvo.isEmpty()) {
-	    	dao.deleteItemRecipe(vo.getItem_code());
-	    }else {
-    
-    	//등록자 이름이 존재하지 않거나 소모량 변경이 있을경우 등록자를 바꿈
-		if (existingRecipe == null || existingRecipe.isEmpty()) {
-			int id = Integer.valueOf((String) session.getAttribute("login_id"));
-			for (ItemRecipeVO item : itemRecipeUploadvo) {
-				item.setEmployee_name(edao.vacationfind(id));
-			}
+		// 자재가 없으면 레시피 전체 삭제
+		if (itemRecipeUploadvo == null || itemRecipeUploadvo.isEmpty()) {
+			dao.deleteItemRecipe(vo.getItem_code());
 		} else {
-			for (ItemRecipeVO item : itemRecipeUploadvo) {
-				boolean found = false;
+
+			if (existingRecipe == null || existingRecipe.isEmpty()) {
+				int id = Integer.valueOf((String) session.getAttribute("login_id"));
+				for (ItemRecipeVO item : itemRecipeUploadvo) {
+					item.setEmployee_name(edao.vacationfind(id));
+				}
+			} else {
 				for (ItemRecipeListVO existingItem : existingRecipe) {
-					logger.info(existingItem+"");
-					if (existingItem.getEmployee_name() == null
-						|| existingItem.getMaterial_con() != item.getMaterial_con()) {
-						found = true;
-						break;
+					boolean found = false;
+					for (ItemRecipeVO item : itemRecipeUploadvo) {
+
+						if (existingItem.getMaterial_code().equals(item.getMaterial_code())) {
+							found = true;
+							break;
 						}
 					}
-					if (found) {
-						int id = Integer.valueOf((String) session.getAttribute("login_id"));
-						item.setEmployee_name(edao.vacationfind(id));
+					if (!found) {
+						ItemRecipeVO removeItem = new ItemRecipeVO();
+						removeItem.setItem_code(vo.getItem_code());
+						removeItem.setMaterial_code(existingItem.getMaterial_code());
+						removeList.add(removeItem); // 기존 레시피에는 있지만 업로드하는 레시피에 없는 아이템을 추가
 					}
 				}
+
+				for (ItemRecipeVO item : itemRecipeUploadvo) {
+					item.setItem_code(vo.getItem_code()); // 값을 설정
+					int id = Integer.valueOf((String) session.getAttribute("login_id"));
+					item.setEmployee_name(edao.vacationfind(id));
+					dao.insertOrUpdateItemRecipe(item); // 변경된 ItemRecipeVO 객체를 사용하여 레시피 등록
+				}
+
+				for (ItemRecipeVO item : removeList) {
+					dao.deleteItemRecipeMaterial(item);
+				}
+			}
 		}
-	    for (ItemRecipeListVO existingItem : existingRecipe) {
-	        boolean found = false;
-	        for (ItemRecipeVO item : itemRecipeUploadvo) {
-	        	
-	            if (existingItem.getMaterial_code().equals(item.getMaterial_code())) {
-	                found = true;
-	                break;
-	            }
-	        }
-	        if (!found) {
-	            ItemRecipeVO removeItem = new ItemRecipeVO();
-	            removeItem.setItem_code(vo.getItem_code());
-	            removeItem.setMaterial_code(existingItem.getMaterial_code());
-	            removeList.add(removeItem); // 기존 레시피에는 있지만 업로드하는 레시피에 없는 아이템을 추가
-	        }
-	    }
-
-	    for (ItemRecipeVO item : itemRecipeUploadvo) {
-	        item.setItem_code(vo.getItem_code()); // 값을 설정
-	        dao.insertOrUpdateItemRecipe(item); // 변경된 ItemRecipeVO 객체를 사용하여 레시피 등록
-	    }
-
-	    for (ItemRecipeVO item : removeList) {
-	        dao.deleteItemRecipeMaterial(item);
-	    }
-	    }
 	}
-
 
 
 	@Override

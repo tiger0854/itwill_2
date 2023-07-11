@@ -19,13 +19,13 @@ import com.ddosirak.persistance.MaterialdetailDAO;
 public class MaterialdetailServiceImpl implements MaterialdetailService {
 	
 	@Inject
-	MaterialdetailDAO dao;
+	private MaterialdetailDAO dao;
 	
 	@Inject
-	HttpSession session;
+	private HttpSession session;
 	
 	@Inject
-	EmployeeDAO edao;
+	private EmployeeDAO edao;
 	
 	public static final Logger logger = LoggerFactory.getLogger(MaterialdetailServiceImpl.class);
 	

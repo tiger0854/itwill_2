@@ -28,14 +28,11 @@ public class MaterialdetailController {
  
 	@Inject
 	private MaterialdetailService service;
-	
-	@Inject
-	private HttpSession session;
 
 	// 자재 기초 목록
 	// http://localhost:8088/foundation/materialdetail/materialdetailList
 	@RequestMapping(value = "/materialdetailList", method = RequestMethod.GET)
-	public String materialdetailListGET(Model model, HttpServletRequest request, PageVO pageVO) throws Exception {
+	public String materialdetailListGET(Model model, HttpServletRequest request, PageVO pageVO, HttpSession session) throws Exception {
 		logger.debug("materialdetailListGET호출");
 
 		String material_code = request.getParameter("material_code");

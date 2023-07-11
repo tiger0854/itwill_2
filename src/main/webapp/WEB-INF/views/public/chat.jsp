@@ -104,7 +104,11 @@
 		var addChat = "";
 		if(sender == "${receiverInfo.employee_id }"){
 			// 받은거
-			addChat += "<li class='left'><div class='sender'>"+"${receiverInfo.employee_name }"+"</div></li>";
+			addChat += "<li class='left'><div class='sender'>"
+			addChat += '	<img src="../../resources/'+'${receiverInfo.employee_id }'+'.png" onerror="this.onerror=null; '; 
+			addChat += " 	this.src='../../resources/default_profile_photo.png';";
+			addChat += '	" width="60" height="60">';
+			addChat += "${receiverInfo.employee_name }"+"</div></li>";
 			addChat += "<li class='left'><div class='message'>"+chat +"</div></li>";
 		}else{
 			// 보낸거
@@ -155,10 +159,13 @@
 				var timeString = hours + ':' + minutes  + ':' + seconds;
 				
 				if(data[i].chat_sender == myid ){
-// 					content += "<li class='rignt'>"+"나"+"</li>";
 					content += "<li class='right'><span class='timeRight'>"+dateString+" "+timeString+"</span><div class='message'>"+data[i].message+"</div></li>";
 				}else{
-					content += "<li class='left'><div class='sender'>"+"${receiverInfo.employee_name }"+"</div></li>";
+					content += "<li class='left'><div class='sender'>"
+					content += '	<img src="../../resources/'+'${receiverInfo.employee_id }'+'.png" onerror="this.onerror=null; '; 
+					content += " 	this.src='../../resources/default_profile_photo.png';";
+					content += '	" width="30" height="30">';
+					content += "${receiverInfo.employee_name }"+"</div></li>";
 					content += "<li class='left'><div class='message'>"+data[i].message+"</div><span class='timeLeft'>"+dateString+" "+timeString+"</span></li>";
 				}// i-e end
 			}// for end

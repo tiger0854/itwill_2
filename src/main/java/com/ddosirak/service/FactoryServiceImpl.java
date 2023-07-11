@@ -21,13 +21,13 @@ public class FactoryServiceImpl implements FactoryService {
 	public static final Logger logger = LoggerFactory.getLogger(FactoryServiceImpl.class);
 	
 	@Inject
-	FactoryDAO dao;
+	private FactoryDAO dao;
 	
 	@Inject
-	EmployeeDAO edao;
+	private EmployeeDAO edao;
 	
 	@Inject
-	HttpSession session;
+	private HttpSession session;
 	
 	@Override
 	public List<FactoryVO> facList(PageVO pageVO) throws Exception {

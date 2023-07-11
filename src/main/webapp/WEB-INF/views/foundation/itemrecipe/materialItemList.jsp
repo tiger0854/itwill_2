@@ -38,7 +38,7 @@
 <body>
 	<div class="black-bar">
 		<h4 style="text-align: center; color: white; padding-top: 8px">
-			<i class='bx bx-edit'></i> 상품검색
+			<i class='bx bx-edit'></i> 자재검색
 		</h4>
 	</div>
 	<div class="container mt-3">
