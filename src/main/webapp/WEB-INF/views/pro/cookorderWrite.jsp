@@ -263,7 +263,8 @@ function openempList() {
 				    <input type="button" class="btn btn-primary" onclick="opensucode()" value="검색">
 				</div></td>
 			    </tr>
-					<tr>
+			<tr>
+				<td>조리지시자</td>	
 			      <td>
 			    <div class="input-group">
 				    <input type="text" style="width: 40%" placeholder="지시자 ID" class="form-control" name="employee_id" id="employee_id" readonly>
