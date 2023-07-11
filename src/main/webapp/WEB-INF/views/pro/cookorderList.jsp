@@ -89,7 +89,6 @@ function opensucode() {
 <div style="margin-top: 10px;">
 <hr width="100%" style="border: 2px solid black">
 
-
 <!-- 작업지시목록 검색박스 -->
 
 <form id="instr">

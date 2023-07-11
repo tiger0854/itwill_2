@@ -82,10 +82,11 @@ function LineDelete(line_code) {
 <form>
 <!-- 라인목 검색, 등록버튼 -->
 <div class=btn-container>
-<button type="submit" class=btn-search><i class='bx bx-search-alt-2'></i> 조회</button>
-<button type="button" class=btn-add onclick="lineAdd()"><i class='bx bx-plus-medical'></i> 추가</button>
+<button type="submit" class="btn btn-primary" ><i class='bx bx-search-alt-2'></i> 조회</button>
+<button type="button" class="btn btn-outline-primary" onclick="lineAdd()"><i class='bx bx-plus-medical'></i> 추가</button>
 </div>
-
+<!--  class="btn btn-primary" -->
+<!--  class="btn btn-outline-primary" -->
 <!-- 품목 검색박스 -->
 <table class="product-box3"style="margin-top: 20px; width: 100%; " border="1">
 <!-- 라인코드,라인명,작업장,비고	 -->
@@ -127,8 +128,6 @@ function LineDelete(line_code) {
         <td><button class=btn-edit onclick="lineEdit('${vo.line_code}')"><i class='bx bx-edit'></i></button></td>
         <td><button class=btn-delete onclick="LineDelete('${vo.line_code}');"><i class='bx bxs-trash'></i></button></td>
       </tr>
-      
-      
      </c:forEach>
         
       
