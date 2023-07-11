@@ -37,9 +37,16 @@ public class LineController {
 	// --------------------- 예웡  (｡･∀･)ﾉﾞﾞ -----------------------------	
 		// http://localhost:8088/line/lineList
 		@RequestMapping(value = "/lineList", method = RequestMethod.GET)
-		public void LineListGET(Model model,HttpServletRequest request,PageVO pageVO) {
+		public String LineListGET(Model model,HttpServletRequest request,PageVO pageVO,HttpSession session) {
 			logger.debug("LineListGET() 호출![]~(￣▽￣)~*");
 			logger.debug("/line/linList.jsp 로 뷰페이지 연결!"); // 자동으로 연결, 리턴타입이 void 이기때문.
+
+			if(session.getAttribute("login_id") == null) {
+				return "redirect:/public/login";
+			} // session control	
+
+
+
 			
 			String line_code = request.getParameter("line_code");
 			String line_name = request.getParameter("line_name");
@@ -109,7 +116,7 @@ public class LineController {
 //			// 라인 이름 불러오기
 //			List<LineDTO> lineList = lineService.lineList();
 //			model.addAttribute("lineList", lineList);
-
+			return "/line/lineList";
 		}// productListGET() method end
 
 		//라인추가
