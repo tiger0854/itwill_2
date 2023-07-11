@@ -24,8 +24,8 @@
 	<!-- 물품 조회 -->
 	<!-- 물품 기초 등록 -->
 	<insert id="insertMaterialDetail">
-		insert into material_detail (material_code, material_name, material_type, material_unit)
-		values (#{material_code}, #{material_name}, #{material_type}, #{material_unit})
+		insert into material_detail (material_code, material_name, material_type, material_unit, employee_name)
+		values (#{material_code}, #{material_name}, #{material_type}, #{material_unit}, #{employee_name})
 	</insert>
 	<!-- 물품 기초 등록 -->
 	<!-- 특정 물품 기초 조회 -->
@@ -39,7 +39,7 @@
 	<!-- 물품 기초 수정 -->
 	<update id="updateMaterialDetail">
 		UPDATE material_detail
-		SET material_name = #{material_name}, material_type = #{material_type}, material_unit=#{material_unit}
+		SET material_name = #{material_name}, material_type = #{material_type}, material_unit=#{material_unit}, employee_name=#{employee_name}
 		WHERE material_code = #{material_code}
 	</update>
 	<!-- 물품 기초 수정 -->
