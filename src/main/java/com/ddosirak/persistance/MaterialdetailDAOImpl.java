@@ -16,7 +16,7 @@ import com.ddosirak.domain.PageVO;
 public class MaterialdetailDAOImpl implements MaterialdetailDAO {
 
 	@Inject
-	SqlSession sqlsession;
+	private SqlSession sqlsession;
 
 	private static final String NAMESPACE = "com.ddosirak.mapper.MaterialdetailMapper";
 

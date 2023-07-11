@@ -18,13 +18,13 @@ import com.ddosirak.persistance.ItemdetailDAO;
 @Service
 public class ItemdetailServiceImpl implements ItemdetailService {
 	@Inject
-	ItemdetailDAO dao;
+	private ItemdetailDAO dao;
 	
 	@Inject
-	HttpSession session;
+	private HttpSession session;
 	
 	@Inject
-	EmployeeDAO edao;
+	private EmployeeDAO edao;
 	
 	public static final Logger logger = LoggerFactory.getLogger(ItemdetailServiceImpl.class);
 	

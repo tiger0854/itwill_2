@@ -28,15 +28,14 @@ public class ItemdetailController {
 	private static final Logger logger = LoggerFactory.getLogger(ItemdetailController.class);
 	
 	@Inject
-	ItemdetailService service;
+	private ItemdetailService service;
 	
-	@Inject
-	HttpSession session;
+	
 	
 	// http://localhost:8088/foundation/itemdetail/itemdetailList
 	//상품 기초 목록 
 	@RequestMapping(value="/itemdetailList", method=RequestMethod.GET)
-	public String idlistGET(Model model, HttpServletRequest request, PageVO pageVO, @RequestParam(value ="pop",required = false) String pop) throws Exception {
+	public String idlistGET(Model model, HttpServletRequest request, PageVO pageVO, @RequestParam(value ="pop",required = false) String pop, HttpSession session) throws Exception {
 
 		logger.debug("idlistGET 실행");
 		

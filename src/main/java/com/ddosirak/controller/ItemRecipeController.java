@@ -34,17 +34,14 @@ public class ItemRecipeController {
 	Logger logger = LoggerFactory.getLogger(ItemRecipeController.class);
 
 	@Inject
-	ItemRecipeService service;
+	private ItemRecipeService service;
 	
 	@Inject
-	MaterialdetailService mService;
-	
-	@Inject
-	HttpSession session;
+	private MaterialdetailService mService;
 
 	// http://localhost:8088/foundation/itemrecipe/itemrecipeList
 	@RequestMapping(value = "/itemrecipeList", method = RequestMethod.GET)
-	public String ItemRecipeListGET(Model model, HttpServletRequest request, PageVO pageVO) throws Exception {
+	public String ItemRecipeListGET(Model model, HttpServletRequest request, PageVO pageVO, HttpSession session) throws Exception {
 
 		logger.debug("ItemRecipeListGET 호출");
 

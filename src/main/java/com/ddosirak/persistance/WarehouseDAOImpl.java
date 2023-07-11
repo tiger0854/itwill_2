@@ -17,7 +17,7 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 	
 	
 	@Inject
-	SqlSession sqlsession;
+	private SqlSession sqlsession;
 	
 	private static final String NAMESPACE="com.ddosirak.mapper.WarehouseMapper";
 	

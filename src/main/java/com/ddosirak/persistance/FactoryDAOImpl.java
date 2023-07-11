@@ -20,7 +20,7 @@ public class FactoryDAOImpl implements FactoryDAO {
 	Logger logger = LoggerFactory.getLogger(FactoryDAOImpl.class);
 	
 	@Inject
-	SqlSession sqlsession;
+	private SqlSession sqlsession;
 	
 	@Override
 	public List<FactoryVO> facList(PageVO pageVO) throws Exception {

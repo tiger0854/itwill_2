@@ -22,7 +22,7 @@ public class ItemRecipeDAOImpl implements ItemRecipeDAO {
 	private static final Logger logger = org.slf4j.LoggerFactory.getLogger(ItemRecipeDAOImpl.class);
 
 	@Inject
-	SqlSession sqlsession;
+	private SqlSession sqlsession;
 
 	// 레시피 목록
 	@Override
