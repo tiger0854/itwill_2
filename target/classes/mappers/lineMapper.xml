@@ -12,13 +12,13 @@
 		   SELECT CONCAT('LINE', LPAD((SELECT COUNT(line_code) + 1 FROM pro_line), 3, '0')) AS line_code limit 1
 		  </selectKey>
 		  INSERT INTO pro_line
-		  (line_code, line_name, factory_code, remark,employee_name)
+		  (line_code, line_name, factory_code, remark,employee_id)
 		  VALUES (
-		    #{line_code}, #{line_name}, #{factory_code}, #{remark}, #{employee_name}
+		    #{line_code}, #{line_name}, #{factory_code}, #{remark}, #{employee_id}
 		  )
 		</insert>
 
-  	<!-- 작업지시 등록 -->
+
 <!--   	.LineListAll -->
 	<select id="LineListAll" resultType="com.ddosirak.domain.LineVO">
 		SELECT * FROM pro_line 
@@ -26,12 +26,17 @@
 
   	<!-- 작업지시 목록 출력-->
   	<select id="LineList" resultType="com.ddosirak.domain.LineVO">
-		SELECT * FROM pro_line LIMIT #{startRow}, #{pageSize}
+		SELECT l.line_code,l.line_name,l.employee_id,e.employee_name,l.factory_code,l.remark
+		FROM pro_line l
+		JOIN emp_main e ON l.employee_id = e.employee_id
+		LIMIT #{startRow}, #{pageSize}
   	</select>
   
   	<!-- 작업지시 검색목록 -->
   	<select id="lineSearch" resultType="com.ddosirak.domain.LineVO">
-		SELECT * FROM pro_line
+		SELECT l.line_code,l.line_name,l.employee_id,e.employee_name,l.factory_code,l.remark
+		FROM pro_line l
+		JOIN emp_main e ON l.employee_id = e.employee_id
 		WHERE line_code LIKE CONCAT('%', #{line_code}, '%')
 		AND line_name LIKE CONCAT('%', #{line_name}, '%')
 		LIMIT #{startRow}, #{pageSize}
@@ -48,7 +53,7 @@
 	  SET line_name=#{line_name},
 	      factory_code=#{factory_code},
 	      remark=#{remark},
-	      employee_name=#{employee_name}
+	      employee_id=#{employee_id}
 	  WHERE line_code=#{line_code}
 	</update>
   	<!-- 라인  수정 -->
