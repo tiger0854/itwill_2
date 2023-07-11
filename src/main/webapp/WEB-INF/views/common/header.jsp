@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					<a href="/emp/list" class="nav_link"> - 사원관리</a><br>
 <!-- 		  		    <a href="/emp/vacationlist" class="nav_link" > - 휴가관리</a><br> -->
 		  		    <a href="/emp/vacationinf?employee_id=${login_id}" class="nav_link" > - 휴가관리</a><br>
-		  		   <a href="/emp/vacationlist" class="nav_link" > - 휴가관리 리스트</a><br>
+		  		   <a href="/emp/vacationlist" class="nav_link"> - 휴가관리 리스트</a><br>
 		  		    <a href="/emp/salary" class="nav_link"> - 급여관리</a><br>
 <!-- 		  		    <a href="#" class="nav_link"> - 이력관리</a><br> --> <!-- 0707 삭제 -->
 		  		<!-- 0607 -->

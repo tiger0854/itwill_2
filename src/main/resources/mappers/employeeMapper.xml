@@ -182,7 +182,7 @@
   	<select id="bvacount" resultType="int">
   	SELECT COUNT(vacation_id) 
 	FROM emp_vacation
-	WHERE  CURDATE() > vacation_finish
+	WHERE  CURDATE() = vacation_finish
   	</select>
   	<!-- 휴가 복귀자 사원 개수 출력 -->
   	
