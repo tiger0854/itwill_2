@@ -8,7 +8,7 @@
 <jsp:include page="../common/header.jsp" />
 <link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <meta charset="UTF-8">
-<title> </title>
+<title>조리 실적 현황</title>
 
 <script>
 

@@ -11,7 +11,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <jsp:include page="../common/header.jsp"/>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>조리지시목록</title>
 <script>
 var deptName = "${sessionScope.dept_name}";
 

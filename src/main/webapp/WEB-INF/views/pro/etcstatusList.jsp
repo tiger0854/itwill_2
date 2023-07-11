@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <jsp:include page="../common/header.jsp" />
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>작업지시 현황</title>
 
 <script>
 
