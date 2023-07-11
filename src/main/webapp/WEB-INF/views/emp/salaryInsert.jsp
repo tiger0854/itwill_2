@@ -42,14 +42,14 @@ $(document).ready(function(){
 <h1>사원 급여 등록 / 수정</h1>
 	<div>
 	    <form action="" method="post">
-<%-- 	    <input type="hidden" name="employee_id" value="${evo.employee_id }"> --%>
-	    <!-- 권한제어 -->
-<%-- 	    <c:if test="${sessionScope.department_name eq '인사팀' }"> --%>
-		    <input type="button" value="수정" id="update">
-<!-- 		    <input type="submit" value="등록" > -->
-		    <span id="save_button_place"></span>
-<%-- 	    </c:if> --%>
-	    <input type="button" value="뒤로가기" onclick="location.href='/emp/salary'">
+	    	<c:if test="${sessionScope.dept_name eq '인사과'}">
+			    <input type="button" value="수정" id="update">
+			    <span id="save_button_place"></span>
+			    <input type="button" value="뒤로가기" onclick="location.href='/emp/salary'">
+            </c:if>
+	       	<c:if test="${sessionScope.dept_name ne '인사과'}">
+				<input type="button" value="뒤로가기" onclick="location.href='/emp/salaryInfo?employee_id=${sessionScope.login_id}'">
+            </c:if>
 	    
 		    <table class="table table-striped" style="margin-top: 10px;" >
 		

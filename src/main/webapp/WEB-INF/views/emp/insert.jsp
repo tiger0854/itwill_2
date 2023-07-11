@@ -66,7 +66,7 @@ function checkFile(el){ //파일 용량 & 확장자 체크
 <!-- 		<form action="/emp/insert" method="post"> -->
 	    <input type="submit" value="등록" >
 	    <input type="button" value="뒤로가기" onclick="location.href='/emp/list'">
-	    <input type="file" name="employee_photo_link" id= "file1" onchange="checkFile(this)">
+	    <input type="file" name="employee_photo_link" id= "file1" onchange="checkFile(this)" required="required">
         
 	    
 		    <table class="table table-striped" style="margin-top: 10px;" >
@@ -75,19 +75,19 @@ function checkFile(el){ //파일 용량 & 확장자 체크
 		            <td rowspan="4"><img src="../../resources/default_profile_photo.png" alt="default_image" width="150" height="150" id="preview1"  ></td>
 		            
 		            <td>성명</td>
-		            <td><input type="text" size="40" name="employee_name"></td>
+		            <td><input type="text" size="40" name="employee_name" required></td>
 		            <td>주민등록번호</td>
-		            <td><input type="text" size="50" name="jumin"></td>
+		            <td><input type="text" size="50" name="jumin" required></td>
 		            <td>성별</td>
 		            <td>
-		                <select name="gender">
+		                <select name="gender" required>
 		                    <option value="남">남</option>
 		                    <option value="여">여</option>
 		                </select></td>
 		        </tr>
 		        <tr>
 		            <td>부서</td>
-		            <td><select name="department_name">
+		            <td><select name="department_name" required>
 			            <optgroup label="생산">
 			            	<option value="생산과">생산과</option>
 			            	<option value="생산 1팀">생산 1팀</option>
@@ -105,7 +105,7 @@ function checkFile(el){ //파일 용량 & 확장자 체크
 			            </optgroup>
 		            </select></td>
 		            <td>직급</td>
-		        	<td><select name="position">
+		        	<td><select name="position" required>
 			            	<option value="이사">이사</option>
 			            	<option value="과장">과장</option>
 			            	<option value="팀장">팀장</option>
@@ -119,22 +119,22 @@ function checkFile(el){ //파일 용량 & 확장자 체크
 		        </tr>
 		        <tr>
 		            <td>휴대폰 번호</td>
-		            <td><input type="text" size="40" name="phone_num"></td>
+		            <td><input type="text" size="40" name="phone_num" required></td>
 		            <td>내선번호</td>
-		            <td><input type="text" size="50" placeholder="내선" name="line_num"></td>
+		            <td><input type="text" size="50" placeholder="내선" name="line_num" required></td>
 		            <td>결혼여부</td>
 		            <td>
-		                <select name="marriage">
+		                <select name="marriage" required>
 		                    <option value="미혼">미혼</option>
 		                    <option value="기혼">기혼</option>
 		                </select></td>
 		        </tr>
 		        <tr>
 		            <td>이메일</td>
-		            <td><input type="text" size="40" name="email"></td>
+		            <td><input type="text" size="40" name="email" required></td>
 		            <td>주소</td>
 		            <td><input type="text" size="30" placeholder="주소" id="address" name="address" readonly="readonly">
-		            <input type="text" size="18" placeholder="상세주소" id="extraAddress" name="extraaddress"></td>
+		            <input type="text" size="18" placeholder="상세주소" id="extraAddress" name="extraaddress" required></td>
 		            <td><input type="button" value="우편번호 찾기" onclick="execDaumPostcode()"></td>
 		            <td><input type="text" size="10" placeholder="우편번호" id="postcode" name="post_num" readonly="readonly"></td>
 		

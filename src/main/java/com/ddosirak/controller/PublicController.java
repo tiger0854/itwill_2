@@ -183,10 +183,13 @@ public class PublicController {
 		session.setAttribute("login_id", lvo.getEmployee_id()); // 세션에 사원 id 저장
 		EmployeeVO evo = eService.getEmployee(Integer.parseInt(session.getAttribute("login_id").toString()));
 		session.setAttribute("dept_name", evo.getDepartment_name()); // 세션에 사원 부서 저장 >> 인사관리 권한 제어
+		session.setAttribute("position_name", evo.getPosition()); // 세션에 사원 직급 저장
+		
 		
 		logger.debug(session.getAttribute("dept_name")+"의 "+
 				session.getAttribute("login_id")+"번 사원, 로그인 성공!!!");
-		return "redirect:/emp/list";
+		
+		return "redirect:/public/dashBoard";
 	}//loginGET() method end
 	// 로그아웃 동작
 	@RequestMapping(value = "/logout")
@@ -271,6 +274,7 @@ public class PublicController {
 	// 대시보드 페이지
 	@RequestMapping(value = "/dashBoard", method = RequestMethod.GET)
 	public void dashBoardGET(Model model) throws Exception{
+		logger.debug("dashBoardGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 
 		// -------------- 라인별 생산률 (예원)  0_< ----------------------
 		List<Map<String, Object>> graphList = oService.graphList();
@@ -280,7 +284,6 @@ public class PublicController {
 		model.addAttribute("graphListJson", graphListJson);
 		// -------------- 라인별 생산률 (예원)  0_< ----------------------
 
-		logger.debug("dashBoardGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 		
 		// 임직원 수 리턴
 		model.addAttribute("alCount_all", eService.alCount_all());// 전일반 근무자
@@ -298,8 +301,8 @@ public class PublicController {
 		model.addAttribute("selectNowEdate", iService.selectNowEdate()); // 오늘 입고완료 수
 		
 		// 출고 예정/완료
-		model.addAttribute("outScheduleToday", obService.outScheduleToday()); // 당일출고예정
-		model.addAttribute("outCompleteToday", obService.outCompleteToday());  // 당일출고완료
+		model.addAttribute("outScheduleToday", obService.outScheduleToday()); // 금일출고예정
+		model.addAttribute("outCompleteToday", obService.outCompleteToday());  // 금일출고완료
 		
 		
 	}//dashBoardGET() method end

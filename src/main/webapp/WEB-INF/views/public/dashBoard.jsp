@@ -9,31 +9,53 @@
 <meta charset="UTF-8">
 <title>Dash Board</title>
 <jsp:include page="../common/header.jsp"/>
-<style type="text/css">
+<script type="text/javascript">
 
+</script>
+<style type="text/css">
+.emp_dash{display: flex;}
+.emp_vac{border: 1px solid; margin-left: 100px;}
+.emp_vac tr{border: 1px solid; margin: 100px;}
+.emp_vac tr td{border: 1px solid; margin: 100px;}
 </style>
 </head>
 <body id="body-pd">
-<h1>대시보드</h1>
-
-<div class="emp_count">
-  <canvas id="emp_count"  width ="300" height="300"></canvas>
-</div>
 
 <!-- 라인별 생산률 그래프 -->
-<h2>라인별 생산률</h2>
+<h3>라인별 생산률</h3>
 <canvas id="canvas"></canvas>
 <!-- 라인별 생산률 그래프 -->
 
-<p>vacationCount:${vacationCount }</p>
-<p>pvacationCount:${pvacationCount }</p>
-<p>bvacountCount:${bvacountCount }</p>
-<p>selectNowIndate:${selectNowIndate }</p>
-<p>selectNowEdate:${selectNowEdate }</p>
+<table>
+	<tr>
+		<td>금일 입고예정 : </td>
+		<td>${selectNowIndate } 건</td>
+	</tr>
+	<tr>
+		<td>금일 입고완료 : </td>
+		<td>${selectNowEdate } 건</td>
+	</tr>
+</table>
+
 <p>outScheduleToday:${outScheduleToday }</p>
 <p>outCompleteToday:${outCompleteToday }</p>
 
 
+<!-- 인사 관련 내용 -->
+<h3>임직원 현황</h3>
+<div class="emp_dash">
+  <canvas id="emp_count"  width ="300" height="300"></canvas>
+	<table class="emp_vac">
+		<tr>
+			<td>현재 휴가자</td>
+			<td>${vacationCount } 명</td>
+		</tr>
+		<tr>
+			<td>휴가 신청자</td>
+			<td>${pvacationCount } 명</td>
+		</tr>
+	</table>
+</div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>

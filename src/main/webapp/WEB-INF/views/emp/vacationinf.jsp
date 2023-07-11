@@ -85,24 +85,10 @@ $(document).ready(function(){
 	<jsp:include page="../common/header.jsp" />
 	<div>
 		<br>
-		<h1>사원 정보</h1>
+		<h1>내 휴가 정보</h1>
 
-		<%-- 	    ${evo.employee_id} --%>
-		<%-- 	    ${evo.position} --%>
-		<%-- 	    ${evo.department_name} --%>
-		<%-- 	    ${evo.phone_num} --%>
-
-
-		<%-- 	    	    ${evo } --%>
 		<form action="" method="post">
 			<input type="hidden" name="employee_id" value="${evo.employee_id }">
-			<!-- 권한제어 -->
-			<%-- 	    <c:if test="${sessionScope.department_name eq '인사팀' }"> --%>
-			<input type="button" value="수정" id="update"> <span
-				id="save_button_place"></span>
-			<%-- 	    </c:if> --%>
-			<input type="button" value="뒤로가기" onclick="location.href='/emp/list'">
-
 			<table class="table table-striped" style="margin-top: 10px;">
 
 				<tr>
@@ -124,6 +110,8 @@ $(document).ready(function(){
 								<option value="생산과">생산과</option>
 								<option value="생산 1팀">생산 1팀</option>
 								<option value="생산 2팀">생산 2팀</option>
+								<option value="조리팀">조리팀</option>
+			            		<option value="품질팀">품질팀</option>
 							</optgroup>
 							<optgroup label="유통">
 								<option value="유통과">유통과</option>
