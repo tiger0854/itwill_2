@@ -28,7 +28,7 @@
   <th>담당자 이름</th>
 
   </tr>
-  <c:forEach var="vo" items="${empList}">
+  <c:forEach var="vo" items="${empListAll}">
 	<c:if test="${vo.department_name == '유통과' || vo.department_name == '입고팀'}">
   <tr onclick="sendInfo(this);">
   <td>${vo.employee_id }</td>

@@ -5,7 +5,7 @@
 <head>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>발주등록</title>
 	<!-- header && sidebar include -->
     <jsp:include page="../common/header.jsp"></jsp:include>
 	<!-- header && sidebar include -->

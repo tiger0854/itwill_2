@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -48,9 +49,13 @@ public class InboundController {
 	// http://localhost:8088/inbound
 	//inboundWrite
 	@RequestMapping(value="/inboundWrite",method=RequestMethod.GET)
-	public void inboundWriteGET()  {
+	public String inboundWriteGET(HttpSession session)  {
+		if(session.getAttribute("login_id")==null){
+			return "redirect:/public/login";
+			};
 		logger.debug("inboundWriteGET() 호출!");
 		logger.debug("inbound/inboundWrite.jsp 뷰페이지로 연결");
+		return null;
 		
 	}//입고예정 등록서로 이동
 	
@@ -71,9 +76,12 @@ public class InboundController {
 	
 	// http://localhost:8088/inbound/inboundList
 	@RequestMapping(value="/inboundList",method=RequestMethod.GET)
-	public void inboundListGET(Model model, HttpServletRequest request, PageVO pageVO) {
+	public String inboundListGET(Model model, HttpServletRequest request, PageVO pageVO,HttpSession session) {
 		logger.debug("inboundListGET() 호출!");
 		logger.debug("inbound/inboundList.jsp 뷰페이지로 연결");
+		if(session.getAttribute("login_id")==null){
+			return "redirect:/public/login";
+			};
 		//================================페이징 처리를 위한 값 받아오기 동작========================================
 				// 준비물 : Inject > PageVO , 파라미터값 PageVO pageVO, HttpServletRequest request
 				//   		리스트를 반환하는 DAO - Service 메서드에 PageVO 추가, 쿼리에 LIMIT #{startRow}, #{pageSize} 추가.
@@ -119,7 +127,7 @@ public class InboundController {
 		
 		List<InboundVO> inboundList = iService.inboundAllList(pageVO);
 		model.addAttribute("inboundList", inboundList);
-		
+		return null;
 	}//입고현황에서 입고목록 불러오기
 	
 	@RequestMapping(value="/InboundProcess",method=RequestMethod.GET)

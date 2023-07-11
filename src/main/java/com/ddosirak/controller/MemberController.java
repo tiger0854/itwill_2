@@ -234,12 +234,16 @@ public class MemberController {
 		model.addAttribute("alCount",alCount);
 		
 		if(pop != null && pop.equals("rec")) {
+			model.addAttribute("empListAll",eService.empList());
 			return "/receive/empList";
 		} else if(pop != null && pop.equals("out")) {
+			model.addAttribute("empListAll",eService.empList());
 			return "/outbound/empList";
 		} else if(pop != null && pop.equals("ok")) {
+			model.addAttribute("empListAll",eService.empList());
 			return "/inbound/empList";
 		} else if(pop != null && pop.equals("rec2")) {
+			model.addAttribute("empListAll",eService.empList());
 			return "/receive/empList2";
 		}
 			return "/emp/list";

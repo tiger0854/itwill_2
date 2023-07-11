@@ -48,3 +48,9 @@ color: black;
 .body-pd{padding-left: calc(var(--nav-width) + 188px)}}
 
 input[type=password] {font-family:'Malgun gothic', dotum, sans-serif;}
+#login{ 
+	margin: auto; margin-top: 250px; margin-bottom: 100px; border: 1px solid #C0C0C0; width:500px;
+	border-radius: 5px;
+	box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2);
+	padding: 70px;
+   }

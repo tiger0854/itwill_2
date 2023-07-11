@@ -7,7 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
+<title>입고리스트</title>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 
 
 <!-- 판매목록 drop 기능 -->
@@ -44,7 +45,7 @@ height: 50px; vertical-align: middle; text-align: center;
 <!-- Nav tabs -->
 
 <div class="container" style="margin-top: 120px;max-width: 100% !important;">
-<h4 style="font-weight: bold;" onclick="location.href='/customer/customerList'"><i class="bx bx-book"></i>입고현황</h4>
+<h4 style="font-weight: bold;"><i class="bx bx-book"></i>입고현황</h4>
 <hr style="border: 2px solid black;">
 
 <div class="tab-content" style="margin-top: 20px; " >
@@ -200,6 +201,7 @@ height: 50px; vertical-align: middle; text-align: center;
   <script type="text/javascript">
  
  function openChildWindow(button) {
+	 
    var row = button.parentNode.parentNode;
    var cells = row.getElementsByTagName("td");
    var rowData = [];
