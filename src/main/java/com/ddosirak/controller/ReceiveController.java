@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,8 +40,13 @@ public class ReceiveController {
 	// http://localhost:8088/receive/receiveInsert
 	// 수주 등록 - C
 	@RequestMapping(value = "/receiveInsert", method = RequestMethod.GET)
-	public void receiveInsertGET() throws Exception {
-		logger.debug("receiveInsertGET() 호출");		
+	public String receiveInsertGET(HttpSession session) throws Exception {
+		logger.debug("receiveInsertGET() 호출");	
+		
+		if(session.getAttribute("login_id") == null) {
+			return "redirect:/public/login;";
+		}
+		return null;
 	}
 	
 	@RequestMapping(value = "/receiveInsert", method = RequestMethod.POST)
@@ -81,7 +87,7 @@ public class ReceiveController {
 	// http://localhost:8088/receive/receiveList
 	// 수주 리스트 
 	@RequestMapping(value = "/receiveList", method = RequestMethod.GET)
-	public String receiveListGET(PageVO pageVO, Model model, HttpServletRequest request, @RequestParam(value ="pop",required = false) String pop) throws Exception {
+	public String receiveListGET(PageVO pageVO, Model model, HttpServletRequest request, @RequestParam(value ="pop",required = false) String pop, HttpSession session) throws Exception {
 		logger.debug("receiveListGET() 호출");
 		
 		//================================페이징 처리를 위한 값 받아오기 동작========================================
@@ -124,6 +130,10 @@ public class ReceiveController {
 		model.addAttribute("pageVO", pageVO);
 		//================================페이징 처리를 위한 값 받아오기 동작========================================
 		
+		if(session.getAttribute("login_id") == null) {
+			return "redirect:/public/login;";
+		}
+		
 		
 		List<ReceiveVO> receiveList = rService.receiveList(pageVO);
 		logger.debug("receiveList : " + receiveList);
@@ -134,6 +144,8 @@ public class ReceiveController {
 			return "/outbound/recConnection";
 		}	
 			return "/receive/receiveList";
+			
+			
 		
 	}
 	

@@ -87,9 +87,14 @@
 		}
 
 </script>
+
+
+
 </head>
-<body id="body-pd" style="font-family: 'TheJamsil5';">
+<body id="body-pd" >
 <jsp:include page="../common/header.jsp"/>
+
+
 
 <!-- The Modal -->
 	<div class="modal" id="myModal">
@@ -118,19 +123,28 @@
 	  <!-- 모달창 -->
 
 
+ <div class="container" style="margin-top: 120px;max-width: 100% !important;">
+<h4 style="font-weight: bold;" ><i class="bx bx-book"></i>수주목록</h4>
+<hr style="border: 2px solid black;">
 
-  <h1>receiveList</h1>
-  <h1>수주 목록</h1>
+ <div class="tab-content" style="margin-top: 20px;" >
+ <button type="button" class="btn btn-primary"style="float: right;margin-top: 20px;margin-right: 30px;"  onclick="location.href='/receive/receiveInsert'">수주등록</button>
+  <div style="background-color: #E9E9E9;height: 80px;padding: 20px;border-radius:10px;margin-bottom: 30px;margin-top: 60px;">
+ 
    <!-- select box 검색 품목명, 수주업체 -->
   <form action="" method="get">
-  	<select name="kind" id="kind">
+  <div class="input-group mb-3"style="width: 600px;justify-content: flex-start;align-items: center; justify-content: space-between;">
+  	<select class="form-select" style="max-width: 150px;" name="kind" id="kind">
   		<option value="itemName">품목명</option>
   		<option value="customerName">수주업체명</option>
   	</select>
-  <input type="text" placeholder="검색어를 입력하세요" name="search" value="${pageVO.search }"> 
-  <button type="submit" class="btn btn-outline-info">Search</button>
+  <input type="text" placeholder="검색어를 입력하세요" class="form-control" name="search" value="${pageVO.search }"> 
+  <button type="submit" class="btn btn-primary">검색</button>
+  </div>
   </form>
-  <table border="1" class="table table-bordered">
+  </div>
+  <table class="table table-bordered" style="width: 100%;">
+  <thead style="border-top:3px solid #E9E9E9; background-color: #F9F9F9;text-align: center;">
   <tr>
   <td></td>
   <th>수주번호</th>
@@ -141,7 +155,8 @@
   <th>담당자</th>
   <th>진행상태</th>
   </tr>
-  
+  </thead>
+  <tbody style="border-bottom:3px solid #E9E9E9; ">
   <c:forEach var="vo" items="${receiveList }">
     <tr>
 	  <td class="text_ct"><input type="checkbox" name="rowCheck" value="${vo.re_code }"/></td>
@@ -161,10 +176,13 @@
   </c:choose>
     </tr>
   </c:forEach>
+  </tbody>
   </table>
-  
+</div>
+<button type="button" class="btn btn-danger" style="margin-bottom: 30px;" onclick="receiveRemove(this);">수주 삭제</button>
   <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
-	 		<ul class="pagination" id="pagination">
+	 		<div class="container">
+	 		<ul class="pagination" style="justify-content: center;" id="pagination">
 		<c:choose>
 			<c:when test="${pageVO.startPage > pageVO.pageBlock}">
 				<li class="page-item"><a
@@ -197,8 +215,8 @@
 		</c:choose>
 	</ul>
 <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
-  <button type="button" class="btn btn-outline-info" onclick="receiveRemove(this);">수주 삭제</button>
-  <button class="btn btn-outline-info" onclick="location.href='./receiveInsert';">등록</button>
-
+  </div>
+<!--   <button class="btn btn-outline-info" onclick="location.href='./receiveInsert';">등록</button> -->
+ </div> 
 </body>
 </html>

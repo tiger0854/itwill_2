@@ -7,6 +7,10 @@
 <link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -28,8 +32,6 @@
 
 </head>
 
-<body id="body-pd" style="font-family: 'TheJamsil5';">
-<jsp:include page="../common/header.jsp"/>
 
 <!--   <h1>user.jsp</h1> -->
 <!--   담당자 검색 -->
@@ -43,18 +45,20 @@
 <!--   		<button type="submit">Search</button> -->
 <!--   		<input type="hidden" name="pop" value="rec"> -->
 <!--   	</form> -->
-  
-  <table border="1" class="table table-bordered">
+  <h3>담당자</h3>
+  <table border="1" class="table table-hover">
   <tr>
   <td>담당자코드</td> <!-- 클릭하면 팝업창 꺼지면서 폼에 입력 -->
   <td>담당자명</td> <!-- 클릭하면 팝업창 꺼지면서 폼에 입력 -->
   </tr>
   
  <c:forEach var="vo" items="${empList }">
+ <c:if test="${vo.department_name == '유통과'}">
   <tr onclick="sendInfo(this);">
   <td>${vo.employee_id }</td>
   <td>${vo.employee_name }</td>
   </tr>
+  </c:if>
   </c:forEach>
   </table>
  <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->

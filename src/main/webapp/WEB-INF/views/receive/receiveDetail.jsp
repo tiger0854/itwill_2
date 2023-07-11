@@ -7,6 +7,10 @@
 <head>
 <link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <title>수주 상세</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -18,12 +22,12 @@
 		var frObj = $("form[role='form']");
 		
 		// 목록으로
-		$(".btn-list").click(function(){
+		$("#list").click(function(){
 			location.href='/receive/receiveList';
 		});
 		
 		// 수정
-		$(".btn-update").click(function(){
+		$("#update").click(function(){
 			frObj.attr("action","/receive/receiveUpdate"); 
 			frObj.submit();
 		});	
@@ -41,18 +45,25 @@
 
 </script>
 </head>
-<body id="body-pd" style="font-family: 'TheJamsil5';">
+<body id="body-pd">
 <jsp:include page="../common/header.jsp"/>
 
-<h1>receiveDetail.jsp</h1>
-  <h1>수주상세</h1>
+<div class="container" style="margin-top: 120px;max-width: 100% !important;">
+<h4 style="font-weight: bold;" ><i class="bx bx-book"></i>수주상세</h4>
+<hr style="border: 2px solid black;">
+
+<div class="tab-content" style="margin-top: 20px; " >
+
+  
+
   
   <!-- 수정(get-post)/삭제(post)시 정보 전달용 form -->
 	<form role="form" id="fr"> 
 		<input type="hidden" name="re_code" value="${vo.re_code }">
 	</form>
   
-  <table border="1" class="table table-bordered">
+  <table class="table table-bordered" style="width: 100%;">
+  <thead style="border-top:3px solid #E9E9E9; background-color: #F9F9F9;text-align: center;">
   <tr>
   <th>수주번호</th>
   <th>수주업체명</th>
@@ -63,7 +74,8 @@
   <th>담당자명</th>
   <th>수주수량</th>
   </tr>
-
+ </thead>
+ <tbody style="border-bottom:3px solid #E9E9E9; ">
 	   <tr>
 	    <td>${vo.re_code }</td>
 	    <td>${vo.re_customerNm }</td>
@@ -75,22 +87,23 @@
 	    <td>${vo.re_qty }</td>
 	  </tr>
 
-  
+  </tbody>
   </table>
-  
+  </div>
   
   <c:choose>
 	  <c:when test="${vo.re_state == 1}">
-	     <button class="btn-update">수정</button>
+<!-- 	     <button class="btn-update">수정</button> -->
+	     <button type="button" id="update" class="btn btn-primary"style="float: right;margin-top: 20px;margin-right: 30px;">수정</button>
 	  </c:when>
 	  <c:otherwise>
 	     <font style="color: red; font-size: small;">*출고 완료된 수주는 수정이 불가합니다.</font><br>
 	  </c:otherwise>
   </c:choose>
-  	  
+  	  <button type="button" id="list" class="btn btn-primary"style="float: right;margin-top: 20px;margin-right: 30px;" >목록</button>
 <!-- 	  <button class="btn-del">삭제</button> -->
-		  <button class="btn-list">목록</button>
+<!-- 		  <button class="btn-list">목록</button> -->
 
-
+</div>
 </body>
 </html>

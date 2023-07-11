@@ -7,6 +7,10 @@
 <head>
 <link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <title>재고</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -16,49 +20,53 @@
 
 </script>
 </head>
-<body id="body-pd" style="font-family: 'TheJamsil5';">
+<body id="body-pd">
 <jsp:include page="../common/header.jsp"/>
   
-  <h1>outboundStock.jsp</h1>
-  <h1>출고 재고 관리</h1>
+<div class="container" style="margin-top: 120px;max-width: 100% !important;">
+<h4 style="font-weight: bold;" ><i class="bx bx-book"></i>출고 상세</h4>
+<hr style="border: 2px solid black;">
+
+<div class="tab-content" style="margin-top: 20px; " >
   
-  <table border="1" class="table table-bordered">
+  <table border="1" class="table table-bordered" style="width: 100%;">
    <c:forEach var="vo" items="${outList }">
   <tr>
-  <th rowspan="2">수주번호</th>
-  <td rowspan="2">${vo.re_code }</td>
-  <th>생산진행현황</th>
+  <th rowspan="2" style="border-top:3px; border-bottom:3px solid #E9E9E9; background-color: #F9F9F9;text-align: center;">수주번호</th>
+  <td rowspan="2" style="border-bottom:3px; border-top:3px solid #E9E9E9; ">${vo.re_code }</td>
+  <th style="border-top:3px solid #E9E9E9; background-color: #F9F9F9;text-align: center;">생산진행현황</th>
   <c:choose>
      <c:when test="${vo.out_qty <= vo.proOrderVO.pQTY }">
-        <td> <font color="blue">생산완료</font> </td>
+        <td style="border-top:3px solid #E9E9E9; "> <font color="blue">생산완료</font> </td>
      </c:when>
      <c:otherwise>
-       <td> 진행중 </td>
+       <td style="border-top:3px solid #E9E9E9; "> 진행중 </td>
      </c:otherwise>
   </c:choose>
   
-  <th>출고진행현황</th>
+  <th style="border-top:3px solid #E9E9E9; background-color: #F9F9F9;text-align: center;">출고진행현황</th>
    <c:choose>
      <c:when test="${vo.out_state==1}">
-  <td>진행중</td>
+  <td style="border-top:3px solid #E9E9E9; ">진행중</td>
    </c:when>
      <c:otherwise>
-         <td><font color="red">출고 완료</font></td>
+         <td style="border-top:3px solid #E9E9E9; "><font color="red">출고 완료</font></td>
      </c:otherwise>
   </c:choose>
   </tr>
   <tr>
   
-  <th>납기일자</th>
-  <td>${vo.due_date }</td>
-  <th>출고 담당자</th>
-  <td>${vo.out_empNm }</td>
+  <th style="border-bottom:3px solid #E9E9E9; background-color: #F9F9F9;text-align: center;">납기일자</th>
+  <td style="border-bottom:3px solid #E9E9E9; ">${vo.due_date }</td>
+  <th style="border-bottom:3px solid #E9E9E9; background-color: #F9F9F9;text-align: center;">출고 담당자</th>
+  <td style="border-bottom:3px solid #E9E9E9; ">${vo.out_empNm }</td>
   </tr>
   </c:forEach>
   </table>
   
   
-  <table border="1" class="table table-bordered">
+  <table border="1" class="table table-bordered" style="width: 100%;">
+ <thead style="border-top:3px solid #E9E9E9; background-color: #F9F9F9;text-align: center;">
   <tr>
   <th>출고번호</th>
   <th>상품명</th> 
@@ -67,6 +75,8 @@
   <th>생산수량</th>
   <th>비고</th>
   </tr>
+  </thead>
+  <tbody style="border-bottom:3px solid #E9E9E9; ">
   <c:forEach var="vo" items="${outList }">
   <tr>
     <td>${vo.out_num }</td>
@@ -78,7 +88,9 @@
     <td>${vo.out_notes }</td>
   </tr>
    </c:forEach>
-
+</tbody>
   </table>
+  </div>
+  </div>
 </body>
 </html>

@@ -13,51 +13,74 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.min.css">
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.all.min.js"></script>
+<style type="text/css">
+td{height: 80px !important; vertical-align: middle;font-weight: bold;}
+</style>
 
 </head>
-<body id="body-pd" style="font-family: 'TheJamsil5';">
-	<br>
-	<br>
-  <h3>수주등록</h3>
-  <span style="color: gray">receive register</span>
+
+</head>
+<body  id="body-pd">
+
+<div class="container" style=" width: 1000px; margin: auto; margin-top:100px; ">
+<h4 style="font-weight: bold;"><i class="bx bx-book"></i>수주등록</h4>
+<hr style="border: 2px solid black;">
   
   <form action="" method="post">
   <table border="1" class="table table-borderless" style="margin-top: 30px;">
   <tr>
-  <th>수주업체코드</th>
-  <td><input type="text" id="re_customerCd" name="re_customerCd" placeholder="수주업체코드" 
-	  		onclick="openChildWindow1();" ><p id="cus_error" style="color: red; font-size: small;"></p></td>
+  <td>수주업체코드</td>
+  <td>
+  <div class="input-group">
+  <input type="text" id="re_customerCd" name="re_customerCd" placeholder="수주업체코드" 
+	  		onclick="openChildWindow1();" readonly>
+   <button class="btn btn-primary" type="button" onclick="openChildWindow1();">검색</button>
+  </div>
+  <p id="cus_error" style="color: red; font-size: small;">  </p>
+  </td>
   <th>수주업체명</th>
-  <td><input type="text" id="re_customerNm" name="re_customerNm" placeholder="수주업체명" 
-	  		onclick="openChildWindow1();" ></td>
+  <td><input type="text" id="re_customerNm" name="re_customerNm" class="form-control" placeholder="수주업체명" 
+	  		onclick="openChildWindow1();" readonly></td>
   </tr>
   <tr>
   <th>품목코드</th>
-  <td><input type="text" id="item_code" name="item_code" placeholder="품목코드" 
-	  		onclick="openChildWindow3();" ><p id="item_error" style="color: red; font-size: small;"></p> </td>
+  <td>
+  <div class="input-group">
+  <input type="text" id="item_code" name="item_code" placeholder="품목코드" 
+	  		onclick="openChildWindow3();" readonly> 
+  <button class="btn btn-primary" type="button" onclick="openChildWindow3();">검색</button>
+  </div>
+  <p id="item_error" style="color: red; font-size: small;"></p>
+  </td>
   <th>품목명</th>
-  <td><input type="text" id="item_name" name="item_name" placeholder="품목명" 
-	   		onclick="openChildWindow3();"> </td>
+  <td><input type="text" id="item_name" name="item_name" class="form-control" placeholder="품목명" 
+	   		onclick="openChildWindow3();" readonly> </td>
   </tr>
   <tr>
   <th>담당자코드</th>
-  <td><input type="text" id="re_empCd" name="re_empCd" placeholder="담당자코드" 
-	  		onclick="openChildWindow2();"><p id="emp_error" style="color: red; font-size: small;"></p></td>
+  <td>
+  <div class="input-group">
+  <input type="text" id="re_empCd" name="re_empCd" placeholder="담당자코드" 
+	  		onclick="openChildWindow2();" readonly>
+  <button class="btn btn-primary" type="button" onclick="openChildWindow2();" >click</button>
+  </div>
+  <p id="emp_error" style="color: red; font-size: small;"></p>
+  </td>
   <th>담당자명</th>
-  <td><input type="text" id="re_empNm" name="re_empNm" placeholder="담당자명" 
-	  		onclick="openChildWindow2();"></td>
+  <td><input type="text" id="re_empNm" name="re_empNm" class="form-control" placeholder="담당자명" 
+	  		onclick="openChildWindow2();" readonly></td>
   </tr>
   <tr>
   <th>수주수량</th>
-	  <td><input type="text" id="re_qty" name="re_qty" placeholder="수주수량"><p id="qty_error" style="color: red; font-size: small;"></p></td>
+	  <td><input type="number" id="re_qty" name="re_qty" class="form-control" placeholder="수량" style="width: 150px;"><p id="qty_error" style="color: red; font-size: small;"></p></td>
   <th>수주일자</th>
-  <td><input type="date" id="re_date" name="re_date" placeholder="년-월-일"><p id="date_error" style="color: red; font-size: small;"></p></td>
+  <td><input type="date" id="re_date" name="re_date" class="form-control" placeholder="년-월-일"><p id="date_error" style="color: red; font-size: small;"></p></td>
   </tr>
   </table>
     
-    <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 200px;margin-bottom: 20px;float: right;">수주등록</button>
+    <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 200px;margin-bottom: 20px; margin: auto;display: block;">수주등록</button>
   </form>
-
+</div>
 </body>
 
   <script type="text/javascript">

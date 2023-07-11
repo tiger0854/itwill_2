@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,8 +41,12 @@ public class OutboundController {
 	// http://localhost:8088/outbound/outboundInsert
 	// 출고 상품 등록
 	@RequestMapping(value = "/outboundInsert", method = RequestMethod.GET)
-	public void outInsertGET() {
+	public String outInsertGET(HttpSession session) {
 		logger.debug("outInsertGET() 호출");
+		if(session.getAttribute("login_id") == null) {
+			return "redirect:/public/login;";
+		}
+		return null;
 	}
 	
 	@RequestMapping(value = "/outboundInsert", method = RequestMethod.POST)
@@ -122,7 +127,7 @@ public class OutboundController {
 							 @RequestParam(name = "out_num", required = false) String out_num,
 							 @RequestParam(name = "out_state", required = false) Integer out_state,
 							 @RequestParam(name="search", required = false) String search,
-							 Model model, PageVO pageVO, HttpServletRequest request) {
+							 Model model, PageVO pageVO, HttpServletRequest request, HttpSession session) {
 		logger.debug("outListGET() 호출");
 		logger.info("#################out_num" + out_num +"########out_state"+ out_state);
 		
@@ -190,6 +195,10 @@ public class OutboundController {
 		model.addAttribute("search", search);
 		
 		logger.debug("state @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2" + state);
+		
+		if(session.getAttribute("login_id") == null) {
+			return "redirect:/public/login;";
+		}
 		 
 		return "/outbound/outboundList";   
 

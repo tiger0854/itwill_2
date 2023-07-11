@@ -161,25 +161,26 @@
   	
   
   	<!-- 출고 현황 그래프 -->
-  	<select id="outGrp" resultType="com.ddosirak.domain.OutboundVO">
-  		select item_name, count(*) as count
-  		from outbound
-  		where  date(out_date) = curdate()
-		group by item_name
-  	</select>
+<!--   	<select id="outGrp" resultType="com.ddosirak.domain.OutboundVO"> -->
+<!--   		select item_name, count(*) as count -->
+<!--   		from outbound -->
+<!--   		where  date(out_date) = curdate() -->
+<!-- 		group by item_name -->
+<!--   	</select> -->
   	<!-- 출고 현황 그래프 -->
+
   	
   	<!-- 당일 출고 완료 그래프 -->
-  	<select id="outCompleteToday" resultType="com.ddosirak.domain.OutboundVO">
-  		SELECT COUNT(*) AS out_count
+  	<select id="outCompleteToday" resultType="Integer">
+  		SELECT COUNT(*) 
 		FROM outbound
 		WHERE DATE(out_date) = CURDATE();
   	</select>
   	<!-- 당일 출고 완료 그래프 -->
   	
   	<!-- 당일 출고 예정 그래프 -->
-  	<select id="outScheduleToday" resultType="com.ddosirak.domain.OutboundVO">
-  		SELECT COUNT(*) AS outSche_count
+  	<select id="outScheduleToday" resultType="Integer">
+  		SELECT COUNT(*) 
 		FROM outbound
 		WHERE DATE(due_date) = CURDATE();
   	</select>
