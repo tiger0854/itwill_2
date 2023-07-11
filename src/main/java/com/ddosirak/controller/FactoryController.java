@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,11 +29,14 @@ public class FactoryController {
 
 	@Inject
 	FactoryService service;
+	
+	@Inject
+	HttpSession session;
 
 	// http://localhost:8088/foundation/factory/factoryList
 	// 공장 목록 출력
 	@RequestMapping(value = "/factoryList", method = RequestMethod.GET)
-	public void factoryListGET(Model model, HttpServletRequest request, PageVO pageVO) throws Exception {
+	public String factoryListGET(Model model, HttpServletRequest request, PageVO pageVO) throws Exception {
 
 		logger.debug("factoryListGET 호출");
 
@@ -124,6 +128,11 @@ public class FactoryController {
 		model.addAttribute("Search", instrSearch);
 		model.addAttribute("factoryList", factoryList);
 
+		if(session.getAttribute("login_id")==null) {
+			return "redirect:/public/login";
+		}
+		
+		return null;
 	}
 
 

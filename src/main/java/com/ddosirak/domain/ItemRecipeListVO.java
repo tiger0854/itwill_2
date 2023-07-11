@@ -8,7 +8,14 @@ public class ItemRecipeListVO {
 	private String item_name;
 	private String material_name;
 	private String material_unit;
-	
+	private String employee_name;
+    
+	public String getEmployee_name() {
+		return employee_name;
+	}
+	public void setEmployee_name(String employee_name) {
+		this.employee_name = employee_name;
+	}
 	public String getMaterial_unit() {
 		return material_unit;
 	}

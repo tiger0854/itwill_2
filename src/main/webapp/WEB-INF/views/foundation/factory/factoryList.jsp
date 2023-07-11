@@ -7,24 +7,36 @@
 <jsp:include page="../../common/header.jsp" />
 <link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>창고 목록</title>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <script>
+var deptName = "${sessionScope.dept_name}";
+var positionName = "${sessionScope.position_name}";
 function factoryUpload() {
+if(deptName.includes('생산')||positionName==='이사'){
 	// 새 창을 열기 위한 URL
 	var popupUrl = '/foundation/factory/factoryUpload';
 	// 새 창 열기
 	window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
+	}else{
+		swal.fire("권한이 없습니다!");
+	}
 }
 
 function factoryUpdate(factory_code) {
+if(deptName.includes('생산')||positionName==='이사'){
 	// 새 창을 열기 위한 URL
 	var popupUrl = '/foundation/factory/factoryUpdate?factory_code='
 			+ factory_code;
 	// 새 창 열기
 	window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
+	}else{
+		swal.fire("권한이 없습니다!");
+	}
 }
 
 function factoryDelete(factory_code, factory_name) {
+if(deptName.includes('생산')||positionName==='이사'){
 	  Swal.fire({
 	    title: "경고",
 	    text: "공장 명 : " + factory_name + "를/을 정말로 삭제하시겠습니까?",
@@ -38,6 +50,9 @@ function factoryDelete(factory_code, factory_name) {
 	      location.href = '/foundation/factory/factoryDelete?factory_code=' + factory_code;
 	    } 
 	  });
+	}else{
+		swal.fire("권한이 없습니다!");
+	}
 	}
 
 
@@ -95,6 +110,7 @@ function openItem() {
 			<tr>
 				<th>공장코드</th>
 				<th>공장명</th>
+				<th>최종 등록자</th>
 				<th>수정</th>
 				<th>삭제</th>
 			</tr>
@@ -104,6 +120,7 @@ function openItem() {
 				<tr>
 					<td>${vo.factory_code }</td>
 					<td>${vo.factory_name }</td>
+					<td>${vo.employee_name }</td>
 					<td><button type="button" class=btn-edit
 							onclick="factoryUpdate('${vo.factory_code}')">
 							<i class='bx bx-edit'></i>

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.ddosirak.domain.MaterialdetailVO;
 import com.ddosirak.domain.PageVO;
+import com.ddosirak.persistance.EmployeeDAO;
 import com.ddosirak.persistance.MaterialdetailDAO;
 
 @Service
@@ -18,6 +20,12 @@ public class MaterialdetailServiceImpl implements MaterialdetailService {
 	
 	@Inject
 	MaterialdetailDAO dao;
+	
+	@Inject
+	HttpSession session;
+	
+	@Inject
+	EmployeeDAO edao;
 	
 	public static final Logger logger = LoggerFactory.getLogger(MaterialdetailServiceImpl.class);
 	
@@ -40,6 +48,8 @@ public class MaterialdetailServiceImpl implements MaterialdetailService {
 	@Override
 	public Integer insertMD(MaterialdetailVO vo) throws Exception {
 		logger.debug("service : 자재 등록 호출");
+		int id=Integer.valueOf((String)session.getAttribute("login_id"));
+		vo.setEmployee_name(edao.vacationfind(id));
 		if(dao.getMaxCode()!=null && dao.getMaxCode().contains("M")) {
 			int codeNum=Integer.parseInt(dao.getMaxCode().substring(1));
 			StringBuilder sb = new StringBuilder();
@@ -57,6 +67,8 @@ public class MaterialdetailServiceImpl implements MaterialdetailService {
 	@Override
 	public Integer updateMD(MaterialdetailVO vo) throws Exception {
 		logger.debug("service : 자재 수정 호출 (update)");
+		int id=Integer.valueOf((String)session.getAttribute("login_id"));
+		vo.setEmployee_name(edao.vacationfind(id));
 		int result=dao.updateMD(vo);
 		return result;
 	}

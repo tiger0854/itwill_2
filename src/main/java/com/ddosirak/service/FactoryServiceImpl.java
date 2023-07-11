@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.ddosirak.domain.FactoryVO;
 import com.ddosirak.domain.PageVO;
+import com.ddosirak.persistance.EmployeeDAO;
 import com.ddosirak.persistance.FactoryDAO;
 
 @Service
@@ -21,7 +23,11 @@ public class FactoryServiceImpl implements FactoryService {
 	@Inject
 	FactoryDAO dao;
 	
+	@Inject
+	EmployeeDAO edao;
 	
+	@Inject
+	HttpSession session;
 	
 	@Override
 	public List<FactoryVO> facList(PageVO pageVO) throws Exception {
@@ -42,6 +48,10 @@ public class FactoryServiceImpl implements FactoryService {
 	@Override
 	public Integer insertFac(FactoryVO vo) throws Exception {
 		logger.debug("service : 창고 등록");
+	
+		int id=Integer.valueOf((String)session.getAttribute("login_id"));
+		vo.setEmployee_name(edao.vacationfind(id));
+		
 		if(dao.getMaxCode()!=null && dao.getMaxCode().contains("FAC")) {
 		int codeNum=Integer.parseInt(dao.getMaxCode().substring(3));
 		logger.debug("codenum : "+codeNum);
@@ -58,6 +68,8 @@ public class FactoryServiceImpl implements FactoryService {
 	@Override
 	public Integer updateFac(FactoryVO vo) throws Exception {
 		logger.debug("service : 공장 수정");
+		int id=Integer.valueOf((String)session.getAttribute("login_id"));
+		vo.setEmployee_name(edao.vacationfind(id));
 		return dao.updateFac(vo);
 	}
 

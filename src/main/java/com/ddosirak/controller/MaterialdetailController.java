@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,11 +28,14 @@ public class MaterialdetailController {
  
 	@Inject
 	private MaterialdetailService service;
+	
+	@Inject
+	private HttpSession session;
 
 	// 자재 기초 목록
 	// http://localhost:8088/foundation/materialdetail/materialdetailList
 	@RequestMapping(value = "/materialdetailList", method = RequestMethod.GET)
-	public void materialdetailListGET(Model model, HttpServletRequest request, PageVO pageVO) throws Exception {
+	public String materialdetailListGET(Model model, HttpServletRequest request, PageVO pageVO) throws Exception {
 		logger.debug("materialdetailListGET호출");
 
 		String material_code = request.getParameter("material_code");
@@ -97,6 +101,13 @@ public class MaterialdetailController {
 		logger.debug("resultlist 개수 : " + resultlist.size());
 		model.addAttribute("Search", instrSearch);
 		model.addAttribute("resultlist", resultlist);
+	
+		if(session.getAttribute("login_id")==null) {
+			return "redirect:/public/login";
+		}
+		
+		return null;
+		
 	}
 
 	// 자재 기초 등록

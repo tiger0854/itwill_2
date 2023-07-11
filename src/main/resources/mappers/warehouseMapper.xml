@@ -25,8 +25,8 @@
 	<!-- 창고 등록 -->
 	<insert id="insertWarehouse">
 		insert into warehouse
-		(wh_code, wh_name, retail_code, wh_type, wh_size)
-		values(#{wh_code},#{wh_name},#{retail_code},#{wh_type},#{wh_size})
+		(wh_code, wh_name, retail_code, wh_type, wh_size, employee_name)
+		values(#{wh_code},#{wh_name},#{retail_code},#{wh_type},#{wh_size},#{employee_name})
 	</insert>
 	<!-- 창고 등록 -->
 	<!-- 특정 창고 조회 -->
@@ -38,7 +38,7 @@
 	<!-- 창고 수정 -->
 	<update id="updateWarehouse">
 		UPDATE warehouse
-		SET wh_name = #{wh_name}, retail_code = #{retail_code}, wh_type = #{wh_type}, wh_size=#{wh_size}
+		SET wh_name = #{wh_name}, retail_code = #{retail_code}, wh_type = #{wh_type}, wh_size=#{wh_size}, employee_name=#{employee_name}
 		WHERE wh_code = #{wh_code}
 	</update>
 	<!-- 창고 수정 -->

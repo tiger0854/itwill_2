@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import com.ddosirak.domain.ItemRecipeVO;
 import com.ddosirak.domain.ItemdetailVO;
 import com.ddosirak.domain.MaterialdetailVO;
 import com.ddosirak.domain.PageVO;
+import com.ddosirak.persistance.EmployeeDAO;
 import com.ddosirak.persistance.ItemRecipeDAO;
 
 
@@ -24,8 +26,14 @@ import com.ddosirak.persistance.ItemRecipeDAO;
 public class ItemRecipeServiceImpl implements ItemRecipeService {
 
 	@Inject
-	ItemRecipeDAO dao;
-
+	private ItemRecipeDAO dao;
+	
+	@Inject 
+	private HttpSession session;
+	
+	@Inject
+	private EmployeeDAO edao;
+	
 	Logger logger = LoggerFactory.getLogger(ItemRecipeServiceImpl.class);
 	
 	//레시피 목록 호출
@@ -52,10 +60,34 @@ public class ItemRecipeServiceImpl implements ItemRecipeService {
 	    if(itemRecipeUploadvo == null || itemRecipeUploadvo.isEmpty()) {
 	    	dao.deleteItemRecipe(vo.getItem_code());
 	    }else {
-	    
+    
+    	//등록자 이름이 존재하지 않거나 소모량 변경이 있을경우 등록자를 바꿈
+		if (existingRecipe == null || existingRecipe.isEmpty()) {
+			int id = Integer.valueOf((String) session.getAttribute("login_id"));
+			for (ItemRecipeVO item : itemRecipeUploadvo) {
+				item.setEmployee_name(edao.vacationfind(id));
+			}
+		} else {
+			for (ItemRecipeVO item : itemRecipeUploadvo) {
+				boolean found = false;
+				for (ItemRecipeListVO existingItem : existingRecipe) {
+					logger.info(existingItem+"");
+					if (existingItem.getEmployee_name() == null
+						|| existingItem.getMaterial_con() != item.getMaterial_con()) {
+						found = true;
+						break;
+						}
+					}
+					if (found) {
+						int id = Integer.valueOf((String) session.getAttribute("login_id"));
+						item.setEmployee_name(edao.vacationfind(id));
+					}
+				}
+		}
 	    for (ItemRecipeListVO existingItem : existingRecipe) {
 	        boolean found = false;
 	        for (ItemRecipeVO item : itemRecipeUploadvo) {
+	        	
 	            if (existingItem.getMaterial_code().equals(item.getMaterial_code())) {
 	                found = true;
 	                break;
@@ -93,7 +125,7 @@ public class ItemRecipeServiceImpl implements ItemRecipeService {
 		logger.debug("service : 레시피 수정");
 		return dao.updateItemRecipe(vo);
 	}
-
+	
 	@Override
 	public void deleteItemRecipe(String item_code) throws Exception {
 		logger.debug("service: 레시피 삭제");

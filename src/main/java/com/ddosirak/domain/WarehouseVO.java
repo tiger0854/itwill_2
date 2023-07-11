@@ -8,7 +8,14 @@ public class WarehouseVO {
 	private Integer wh_size;
 	private Integer minsize;
 	private Integer maxsize;
-	
+	private String employee_name;
+    
+	public String getEmployee_name() {
+		return employee_name;
+	}
+	public void setEmployee_name(String employee_name) {
+		this.employee_name = employee_name;
+	}
 	
 	
 	public Integer getWh_size() {
