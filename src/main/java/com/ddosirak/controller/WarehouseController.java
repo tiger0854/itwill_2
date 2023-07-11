@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,9 @@ public class WarehouseController {
 
 	@Inject
 	private WarehouseService service;
+	
+	@Inject
+	HttpSession session;
 
 	// http://localhost:8088/foundation/warehouse/warehouseList
 	// 창고 목록
@@ -35,7 +39,9 @@ public class WarehouseController {
 	public String warehouseListGET(Model model, HttpServletRequest request, PageVO pageVO,@RequestParam( value = "pop", required = false) String pop) throws Exception {
 
 		logger.debug("warehouseListGET호출");
-
+		
+		
+		
 		String wh_code = request.getParameter("wh_code");
 		String wh_name = request.getParameter("wh_name");
 		String retail_code = request.getParameter("retail_code");
@@ -114,6 +120,9 @@ public class WarehouseController {
 		logger.debug("whlist 개수 : " + whList.size());
 		model.addAttribute("Search", instrSearch);
 		model.addAttribute("whList", whList);
+		if(session.getAttribute("login_id")==null) {
+			return "redirect:/public/login";
+		}
 		
 		if(pop!=null && pop.equals("ok")) {
 			return "/inbound/warehouseList";
@@ -153,8 +162,9 @@ public class WarehouseController {
 
 	// 창고 삭제
 	@RequestMapping(value = "/warehouseDelete", method = RequestMethod.GET)
-	public String deleteWhGET(String wh_code) throws Exception {
+	public String deleteWhGET(@RequestParam("warehouse_code") String wh_code) throws Exception {
 		logger.debug("deleteWhGET 호출");
+		logger.debug(wh_code);
 		service.deletewh(wh_code);
 		return "redirect:/foundation/warehouse/warehouseList";
 	}

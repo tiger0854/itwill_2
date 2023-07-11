@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,9 @@ public class ItemdetailController {
 	
 	@Inject
 	ItemdetailService service;
+	
+	@Inject
+	HttpSession session;
 	
 	// http://localhost:8088/foundation/itemdetail/itemdetailList
 	//상품 기초 목록 
@@ -109,7 +113,12 @@ public class ItemdetailController {
 		} if(pop != null && pop.equals("out")) {
 			return "/outbound/itemList";
 		}
-		return "/foundation/itemdetail/itemdetailList";
+		
+		if(session.getAttribute("login_id")==null) {
+			return "redirect:/public/login";
+		}
+		
+		return null;
 		
 	}
 	

@@ -27,7 +27,7 @@
 	<!-- 레시피 목록 출력 -->
 	<select id="itemRecipeList"
 		resultType="com.ddosirak.domain.ItemRecipeListVO">
-		select i.item_code, i.material_code, i.material_con, id.item_name, md.material_name, md.material_unit
+		select i.item_code, i.material_code, i.material_con, id.item_name, md.material_name, md.material_unit, i.employee_name
 		from item_recipe i
 		join item_detail id
 		on i.item_code= id.item_code
@@ -39,7 +39,7 @@
 
 	<select id="itemRecipeSearchList"
 		resultType="com.ddosirak.domain.ItemRecipeListVO">
-		select i.item_code, i.material_code, i.material_con, id.item_name, md.material_name
+		select i.item_code, i.material_code, i.material_con, id.item_name, md.material_name, md.material_unit, i.employee_name
 		from item_recipe i
 		join item_detail id
 		on i.item_code = id.item_code
@@ -57,14 +57,14 @@
 	<!-- 레시피 등록 -->
 	<insert id="insertItemRecipe">
 		insert into item_recipe (item_code, material_code,
-		material_con)
-		values(#{item_code}, #{material_code}, #{material_con})
+		material_con, employee_name)
+		values(#{item_code}, #{material_code}, #{material_con}, #{employee_name})
 	</insert>
 	<!-- 레시피 등록 -->
 
 	<!-- 레시피 수정 -->
 	<select id="selectItemRecipe" resultType="com.ddosirak.domain.ItemRecipeListVO">
-		select ir.material_code, ir.material_con, m.material_name, m.material_unit
+		select ir.material_code, ir.material_con, m.material_name, m.material_unit, ir.employee_name
 		from item_recipe ir join material_detail m
 		on ir.material_code = m.material_code
 		where item_code=#{item_code}
@@ -72,8 +72,7 @@
 	
 	<update id="updateItemRecipe">
 		update item_recipe
-		set item_code=#{item_code},
-		material_code=#{material_code}, material_con=#{material_con}
+		set item_code=#{item_code}, material_code=#{material_code}, material_con=#{material_con}, employee_name=#{employee_name}
 	</update>
 	<!-- 레시피 수정 -->
 
@@ -107,11 +106,11 @@
 
 	<!-- 등록/추가 -->
 	<insert id="insertOrUpdateItemRecipe">
-		INSERT INTO item_recipe (item_code,
-		material_code,material_con)
-		VALUES (#{item_code}, #{material_code},#{material_con})
+		INSERT INTO item_recipe (item_code,material_code,material_con,employee_name)
+		VALUES (#{item_code}, #{material_code},#{material_con},#{employee_name})
 		ON DUPLICATE KEY UPDATE
-		material_con = VALUES(material_con)
+		material_con = VALUES(material_con),
+		employee_name= VALUES(employee_name)
 	</insert>
 	<!-- 등록/추가 -->
 

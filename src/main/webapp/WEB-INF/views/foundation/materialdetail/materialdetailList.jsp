@@ -7,8 +7,8 @@
 <jsp:include page="../../common/header.jsp" />
 <link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <meta charset="UTF-8">
-<title>Insert title here</title>
-
+<title>자재 목록</title>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <script>
 var deptName = "${sessionScope.dept_name}";
 
@@ -125,6 +125,7 @@ var deptName = "${sessionScope.dept_name}";
 						<th>자재이름</th>
 						<th>자재단위</th>
 						<th>자재속성</th>
+						<th>최종등록자</th>
 						<th>수정</th>
 						<th>삭제</th>
 					</tr>
@@ -136,6 +137,7 @@ var deptName = "${sessionScope.dept_name}";
 							<td>${vo.material_name }</td>
 							<td>${vo.material_unit }</td>
 							<td>${vo.material_type }</td>
+							<td>${vo.employee_name }</td>
 							<td><button class=btn-edit type="button"
 									onclick="materialUpdate('${vo.material_code}');">
 									<i class='bx bx-edit'></i>

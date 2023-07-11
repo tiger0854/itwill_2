@@ -6,7 +6,14 @@ public class ItemRecipeVO {
 	private int material_con;
 	private ReceiveVO receiveVO;
 	private MaterialdetailVO materialdetailVO;
-	
+	private String employee_name;
+    
+	public String getEmployee_name() {
+		return employee_name;
+	}
+	public void setEmployee_name(String employee_name) {
+		this.employee_name = employee_name;
+	}
 	
 	
 	public ReceiveVO getReceiveVO() {

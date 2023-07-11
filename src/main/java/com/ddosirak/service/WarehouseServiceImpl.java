@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,12 +12,19 @@ import org.springframework.stereotype.Service;
 
 import com.ddosirak.domain.PageVO;
 import com.ddosirak.domain.WarehouseVO;
+import com.ddosirak.persistance.EmployeeDAO;
 import com.ddosirak.persistance.WarehouseDAO;
 
 @Service
 public class WarehouseServiceImpl implements WarehouseService {
 	@Inject
 	private WarehouseDAO dao;
+	
+	@Inject
+	private HttpSession session;
+	
+	@Inject
+	private EmployeeDAO edao;
 	
 	public static final Logger logger = LoggerFactory.getLogger(WarehouseServiceImpl.class);
 	
@@ -44,6 +52,8 @@ public class WarehouseServiceImpl implements WarehouseService {
 		logger.debug("service : 창고 등록 호출");
 		String codeFinder=dao.getMaxCode(vo);
 		logger.debug("codefinder : "+codeFinder);
+		int id=Integer.valueOf((String)session.getAttribute("login_id"));
+		vo.setEmployee_name(edao.vacationfind(id));
 		if(codeFinder!=null) {
 			int codeNum=Integer.parseInt(codeFinder.substring(2));
 			StringBuilder sb = new StringBuilder();
@@ -94,6 +104,8 @@ public class WarehouseServiceImpl implements WarehouseService {
 	@Override
 	public Integer updatewh(WarehouseVO vo) {
 		logger.debug("service : 창고 수정 호출");
+		int id=Integer.valueOf((String)session.getAttribute("login_id"));
+		vo.setEmployee_name(edao.vacationfind(id));
 		int result=dao.updateWh(vo);
 		logger.debug("sevice : 창고 수정 완료");
 		return result;

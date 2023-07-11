@@ -7,7 +7,8 @@
 <jsp:include page="../../common/header.jsp" />
 <link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>레시피 목록</title>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <script>
 var deptName = "${sessionScope.dept_name}";
 
@@ -136,6 +137,7 @@ var deptName = "${sessionScope.dept_name}";
 						<th>자재명</th>
 						<th>자재 소모량</th>
 						<th>자재 단위</th>
+						<th>최종 등록자</th>
 						<th>자재 개별 삭제</th>
 						<th>레시피 전체 삭제</th>
 					</tr>
@@ -149,6 +151,7 @@ var deptName = "${sessionScope.dept_name}";
 							<td>${vo.material_name}</td>
 							<td>${vo.material_con }</td>
 							<td>${vo.material_unit }</td>
+							<td>${vo.employee_name }</td>
 							<td><button class=btn-delete type="button"
 									onclick="recipeDeleteMaterial('${vo.item_code}','${vo.item_name }','${vo.material_code }','${vo.material_name }');">
 									<i class='bx bxs-trash'></i>

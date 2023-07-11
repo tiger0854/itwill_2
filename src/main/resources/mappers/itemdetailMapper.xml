@@ -27,8 +27,8 @@
 
 	<!-- 상품 기초 등록 -->
 	<insert id="insertid">
-		INSERT INTO item_detail (item_code, item_name, item_price, unit)
-		VALUES (#{item_code}, #{item_name}, #{item_price}, #{unit})
+		INSERT INTO item_detail (item_code, item_name, item_price, unit, employee_name)
+		VALUES (#{item_code}, #{item_name}, #{item_price}, #{unit}, #{employee_name})
 	</insert>
 	<!-- 상품 기초 등록 -->
 	<!-- 특정 상품 조회 -->
@@ -41,7 +41,7 @@
 	<update id="updateid">
 		UPDATE item_detail
 		SET item_name = #{item_name},
-		item_price = #{item_price}, unit = #{unit}
+		item_price = #{item_price}, unit = #{unit} , employee_name= #{employee_name}
 		WHERE item_code = #{item_code}
 	</update>
 	<!-- 상품 기초 수정 -->

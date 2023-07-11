@@ -271,7 +271,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		@Override
 		public String vacationfind(int id) {
 			
-			return sqlSession.selectOne(NAMESPACE+"vacationfind", id);
+			return sqlSession.selectOne(NAMESPACE+".vacationfind", id);
 		}
 		
 	// 사원 휴가관리 페이지 페이징

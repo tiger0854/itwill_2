@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>${item_name }의 레시피</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -28,11 +28,12 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 </head>
 <body>
 	<div class="black-bar">
 		<h4 style="text-align: center; color: white; padding-top: 8px">
-			<i class='bx bx-edit'></i> 레시피
+			<i class="bx bx-book"></i> 레시피
 		</h4>
 	</div>
 	<div class="container mt-3">

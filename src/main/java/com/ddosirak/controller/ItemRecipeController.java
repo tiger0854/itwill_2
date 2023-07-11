@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,10 +38,13 @@ public class ItemRecipeController {
 	
 	@Inject
 	MaterialdetailService mService;
+	
+	@Inject
+	HttpSession session;
 
 	// http://localhost:8088/foundation/itemrecipe/itemrecipeList
 	@RequestMapping(value = "/itemrecipeList", method = RequestMethod.GET)
-	public void ItemRecipeListGET(Model model, HttpServletRequest request, PageVO pageVO) throws Exception {
+	public String ItemRecipeListGET(Model model, HttpServletRequest request, PageVO pageVO) throws Exception {
 
 		logger.debug("ItemRecipeListGET 호출");
 
@@ -113,6 +117,12 @@ public class ItemRecipeController {
 		}
 		model.addAttribute("Search", instrSearch);
 		model.addAttribute("resultlist", resultlist);
+		
+		if(session.getAttribute("login_id")==null) {
+			return "redirect:/public/login";
+		}
+		
+		return null;
 	}
 
 	// 레시피 등록
