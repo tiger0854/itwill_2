@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link
@@ -72,30 +73,40 @@
 		});
 	
 
+	
 	function onInsert() {
 		  var frObj = $("#fr");
 		  var formData = frObj.serialize();
-		    Swal.fire("작성완료!");
-		    if (frObj[0].checkValidity()) {
-		    
+
+		  if (frObj[0].checkValidity()) {
+		    Swal.fire({
+		      title: "작성 성공!",
+		      text: "작성이 성공하였습니다.",
+		      icon: "success",
+		      showCancelButton: false,
+		      confirmButtonText: "확인"
+		    }).then(function() {
 		      $.ajax({
-		        url: "/pro/cooketcWrite", // 요청을 보낼 서버의 URL
-		        type: "POST", // HTTP 요청 방식 (POST)
-		        data: formData, // 전송할 데이터 (직렬화된 폼 데이터)
+		        url: "/pro/cooketcWrite",
+		        type: "POST",
+		        data: formData,
 		        success: function(response) {
 		          opener.location.reload();
-		          window.close(); // 윈도우 창을 닫습니다.
+		          window.close();
 		        },
 		        error: function(xhr, status, error) {
-//		          alert("모든 칸을 입력해 주세요!");
-		          console.error("에러 발생:", error);
+		          Swal.fire("빈칸을 입력해주세요!");
 		        }
 		      });
-		    } else {
-		      // 필수 필드가 비어있을 경우 처리할 내용
-		      Swal.fire("모든 칸을 입력해 주세요!");
-		    }
-		}
+		    });
+		  } else {
+		    Swal.fire("입력란을 채워주세요!");
+		  }
+		}	
+	
+	
+	
+	
 </script>
 </head>
 <body>
@@ -119,6 +130,7 @@
 							readonly required></td>
 			<span id="ipmsg"></span>				
 			<table class="box" style="margin-top: 30px; width: 100%">
+			<input type="hidden" name="wo_code" value="${param.co_code }" readonly>
 				<tbody>
 					<tr>
 						<td>품번</td>
@@ -181,7 +193,7 @@
 			
 			<!-- 작업지시등록, 취소 버튼 -->
 			<div style="text-align: center; margin-top: 50px">
-				<button  class="btn btn-primary" id="add" onclick="onInsert();">
+				<button type="button" class="btn btn-primary" id="add" onclick="onInsert();">
 					<i class='bx bx-edit'></i> 등록
 				</button>
 				<button class=btn-search onclick="window.close()">X 취소</button>

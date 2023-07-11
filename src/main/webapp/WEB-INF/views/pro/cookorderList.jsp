@@ -4,25 +4,58 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <jsp:include page="../common/header.jsp"/>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-
 <script>
+var deptName = "${sessionScope.dept_name}";
+
 function orderwrite() {
-  // 새 창을 열기 위한 URL
-  var popupUrl = '/pro/cookorderWrite';
-  // 새 창 열기
-  window.open(popupUrl, '_blank', 'width=500,height=600,left=100, top=100');
+	if(deptName.includes('생산')){   
+	// 새 창을 열기 위한 URL
+	 var popupUrl = '/pro/cookorderWrite';
+	// 새 창 열기
+	 window.open(popupUrl, '_blank', 'width=500,height=600,left=100, top=100');
+}else{
+	swal.fire("권한이 없습니다!");
+	}
 }
 
+
 function orderedit(co_code) {
-	  var popupUrl = '/pro/cookorderEdit?co_code='+ co_code;
-	  window.open(popupUrl, '_blank', 'width=500,height=600,left=100, top=100');
+	if(deptName.includes('생산')){    	
+	// 새 창을 열기 위한 URL
+		var popupUrl = '/pro/cookorderEdit?co_code='+ co_code;
+		  window.open(popupUrl, '_blank', 'width=500,height=600,left=100, top=100');
+		}else{
+	swal.fire("권한이 없습니다!");
 	}
+}
+
+function cookOrderDelete(co_code) {
+	if(deptName.includes('생산')){  
+		  Swal.fire({
+			    title: "경고",
+			    text: "정말로 삭제하시겠습니까?",
+			    icon: "warning",
+			    showCancelButton: true,
+			    confirmButtonText: "네",
+			    cancelButtonText: "취소"
+			  }).then(result => {
+			    if (result.isConfirmed) {
+			      location.href = '/pro/cookOrderDelete?co_code='+co_code;
+//			      Swal.fire("수동마감 완료!");
+			    }
+	  });
+	}else{
+	swal.fire("권한이 없습니다!");
+	}
+}
 
 
 //품명 검색 팝업창
@@ -31,28 +64,17 @@ function openmaterial(){
 }
 
 
-function cookOrderDelete(co_code){
-	  Swal.fire({
-		    title: "경고",
-		    text: "정말로 삭제하시겠습니까?",
-		    icon: "warning",
-		    showCancelButton: true,
-		    confirmButtonText: "네",
-		    cancelButtonText: "취소"
-		  }).then(result => {
-		    if (result.isConfirmed) {
-		      location.href = '/pro/cookOrderDelete?co_code='+co_code;
-//		      Swal.fire("수동마감 완료!");
-		    }
-		  });
-	
-	}
+
 
 //품명 검색 팝업창
 function opensucode() {
   var childWindow = window.open("/pro/searchsuList", "popup", "width=500, height=600, left=100, top=100");
   childWindow.onunload = recodecheck;
 }
+
+
+
+
 
 </script>
 
@@ -137,7 +159,7 @@ function opensucode() {
 		<td><a href="/pro/cooketcstatusList?co_code=${vo.co_code}">${vo.co_code}</a></td>
 		<td>${vo.so_code }</td>
 		
-        <td>${vo.employee_id}</td>
+        <td>${vo.employee_name}</td>
         <c:choose>
 	  <c:when test="${vo.co_status eq '지시'}">
 	    <td style="color: blue;">${vo.co_status}</td>

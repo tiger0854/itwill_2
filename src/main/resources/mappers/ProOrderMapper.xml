@@ -21,9 +21,9 @@
       ) AS wo_code
   </selectKey>
   INSERT INTO prod
-  (wo_code, so_code, sQTY, employee_id, delivery_date, line_code, item_code, wo_date, oQTY, pQTY, item_name)
+  (wo_code, so_code, sQTY, employee_name, delivery_date, line_code, item_code, wo_date, oQTY, pQTY, item_name)
   VALUES (
-    #{wo_code}, #{so_code}, #{sQTY}, #{employee_id}, #{delivery_date}, #{line_code}, #{item_code},
+    #{wo_code}, #{so_code}, #{sQTY}, #{employee_name}, #{delivery_date}, #{line_code}, #{item_code},
     CURDATE(), #{oQTY}, #{pQTY}, #{item_name}
   )
 </insert>
@@ -71,7 +71,7 @@
 	  UPDATE prod
 	  SET so_code=#{so_code},
 	      sQTY=#{sQTY},
-	      employee_id=#{employee_id},
+	      employee_name=#{employee_name},
 	      delivery_date=#{delivery_date},
 	      line_code=#{line_code},
 	      item_code=#{item_code},

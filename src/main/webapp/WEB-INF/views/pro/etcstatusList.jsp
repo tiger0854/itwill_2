@@ -5,41 +5,20 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <jsp:include page="../common/header.jsp" />
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
 <script>
-	function etcwrite(woCode) {
-		
-		var wo_status = "${pvo.wo_status}";
-		
-		if(wo_status === "마감") {
-        	Swal.fire({
-                title: "마감된 지시입니다!",
-                text: "",
-                icon: "error"
-              })
-		}else{
-		
-		console.log(woCode);
-		// 새 창을 열기 위한 URL
-		var popupUrl = '/pro/etcWrite?wo_code=' + woCode;
-		// 새 창 열기
-		window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
-		}
-	}
 
-	function etcEdit(perfId) {
-		// 새 창을 열기 위한 URL
-		var popupUrl = '/pro/etcEdit?perf_id=' + perfId;
-		// 새 창 열기
-		window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
-	}
-	
-	function etcRemove(perfId,wo_code) {
-		
+var deptName = "${sessionScope.dept_name}";
+
+
+
+function etcRemove(perfId,wo_code) {
+	if(deptName.includes('생산')){  
 		  Swal.fire({
 			    title: "경고",
 			    text: "정말로 삭제하시겠습니까?",
@@ -49,29 +28,61 @@
 			    cancelButtonText: "취소"
 			  }).then(result => {
 			    if (result.isConfirmed) {
-			    location.href = '/pro/etcRemove?perf_id='+perfId+'&wo_code='+wo_code;
+			      location.href = '/pro/proOrderDelete?wo_code='+wo_code;
 //			      Swal.fire("수동마감 완료!");
 			    }
-			  });
+			  });		
+	}else{
+	swal.fire("권한이 없습니다!");
 	}
+}
+
+
 	
-		// 	wostatus
+
+	function etcwrite(woCode) {
+		
+		var wo_status = "${pvo.wo_status}";
+		if (deptName.includes('생산')) {
+			  if (wo_status === "마감") {
+			    Swal.fire({
+			      title: "마감된 지시입니다!",
+			      text: "",
+			      icon: "error"
+			    });
+			  } else {
+			    console.log(woCode);
+			    // 새 창을 열기 위한 URL
+			    var popupUrl = '/pro/etcWrite?wo_code=' + woCode;
+			    // 새 창 열기
+			    window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
+			  }
+			} else {
+				swal.fire("권한이 없습니다!");
+			}
+	}
+
+
 		function wostatus(wo_code) {
-		  Swal.fire({
-		    title: "경고",
-		    text: "수동마감 하시겠습니까?",
-		    icon: "warning",
-		    showCancelButton: true,
-		    confirmButtonText: "네",
-		    cancelButtonText: "취소"
-		  }).then(result => {
-		    if (result.isConfirmed) {
-		      window.location.href = '/pro/wostatusEnd?wo_code=' + wo_code;
-		      // Swal.fire("수동마감 완료!");
-		    }
-		  });
-		}
-	
+			if(deptName.includes('생산')){  
+				  Swal.fire({
+					    title: "경고",
+					    text: "수동마감 하시겠습니까?",
+					    icon: "warning",
+					    showCancelButton: true,
+					    confirmButtonText: "네",
+					    cancelButtonText: "취소"
+					  }).then(result => {
+					    if (result.isConfirmed) {
+					      window.location.href = '/pro/wostatusEnd?wo_code=' + wo_code;
+					      // Swal.fire("수동마감 완료!");
+					    }
+					  });	
+			}else{
+			swal.fire("권한이 없습니다!");
+			}
+		}		
+		
 </script>
 
 </head>
@@ -111,7 +122,7 @@
 		      <tr>
 				<td><a href="/pro/etcstatusList?wo_code=${pvo.wo_code}">${pvo.wo_code}</a></td>
 		        <td>${pvo.so_code}</td>
-		        <td>${pvo.employee_id}</td>
+		        <td>${pvo.employee_name}</td>
 		        <c:choose>
 			  <c:when test="${pvo.wo_status eq '지시'}">
 			    <td style="color: blue;">${pvo.wo_status}</td>

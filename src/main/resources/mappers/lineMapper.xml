@@ -12,9 +12,9 @@
 		   SELECT CONCAT('LINE', LPAD((SELECT COUNT(line_code) + 1 FROM pro_line), 3, '0')) AS line_code limit 1
 		  </selectKey>
 		  INSERT INTO pro_line
-		  (line_code, line_name, factory_code, remark)
+		  (line_code, line_name, factory_code, remark,employee_name)
 		  VALUES (
-		    #{line_code}, #{line_name}, #{factory_code}, #{remark}
+		    #{line_code}, #{line_name}, #{factory_code}, #{remark}, #{employee_name}
 		  )
 		</insert>
 
@@ -47,7 +47,8 @@
 	  UPDATE pro_line
 	  SET line_name=#{line_name},
 	      factory_code=#{factory_code},
-	      remark=#{remark}
+	      remark=#{remark},
+	      employee_name=#{employee_name}
 	  WHERE line_code=#{line_code}
 	</update>
   	<!-- 라인  수정 -->

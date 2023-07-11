@@ -14,10 +14,10 @@
 	      (SELECT count(co_code) + 1 FROM cook)) AS wo_code
 	  </selectKey>
 		  INSERT INTO cook
-		  (co_code, employee_id, line_code, item_code, co_date,
+		  (co_code, employee_name, line_code, item_code, co_date,
 		  coQTY, cpQTY,item_name,material_code,material_name,line_name,so_code,material_con)
 		  VALUES (
-		  #{co_code}, #{employee_id}, #{line_code}, #{item_code},
+		  #{co_code}, #{employee_name}, #{line_code}, #{item_code},
 		  CURDATE(), #{coQTY}, #{cpQTY},#{item_name},
 		  #{material_code},#{material_name},#{line_name},#{so_code},#{material_con}
 		  )
@@ -79,7 +79,7 @@
   	<!-- editcookOrder 조리지시  수정 -->
 	<update id="editcookOrder">
 	  UPDATE cook
-	  SET employee_id=#{employee_id},
+	  SET employee_name=#{employee_name},
 	      line_code=#{line_code},
 	      line_name=#{line_name},
 	      item_code=#{item_code},

@@ -4,84 +4,71 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <jsp:include page="../common/header.jsp" />
 <link rel="stylesheet" type="text/css" href="../../resources/css/product.css">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title> </title>
 
 <script>
-	function etcwrite(co_code) {
-		
-		var co_status = "${cvo.co_status}";
-		
-		if(co_status === "마감") {
-			
-			
-        	Swal.fire({
-                title: "마감된 지시입니다!",
-                text: "",
-                icon: "error"
-              })
-// 			alert("마감된 지시입니다!");
-		}else{
-		
-		
-		console.log(co_code);
-		// 새 창을 열기 위한 URL
-		var popupUrl = '/pro/cooketcWrite?co_code=' + co_code;
-		// 새 창 열기
-		window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
-		}
-	}
 
-	function etcEdit(perfId) {
-		// 새 창을 열기 위한 URL
-		var popupUrl = '/pro/etcEdit?perf_id=' + perfId;
-		// 새 창 열기
-		window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
-	}
-	
-	function etcRemove(cook_id,co_code) {
-		  Swal.fire({
-			    title: "경고",
-			    text: "정말로 삭제하시겠습니까?",
-			    icon: "warning",
-			    showCancelButton: true,
-			    confirmButtonText: "네",
-			    cancelButtonText: "취소"
-			  }).then(result => {
-			    if (result.isConfirmed) {
-			      location.href = '/pro/cooketcRemove?cook_id='+cook_id+'&co_code='+co_code;
-//			      Swal.fire("수동마감 완료!");
-			    }
-			  });
-		
-	}
-	
-// 	wostatus
-	function costatus(co_code) {
-	
-	
-		  Swal.fire({
-			    title: "경고",
-			    text: "수동마감 하시겠습니까?",
-			    icon: "warning",
-			    showCancelButton: true,
-			    confirmButtonText: "네",
-			    cancelButtonText: "취소"
-			  }).then(result => {
-			    if (result.isConfirmed) {
-			      location.href = '/pro/costatusEnd?co_code='+co_code;
-// 			      Swal.fire("수동마감 완료!");
-			    }
-			  });
 
-	}
-	
-	function closePopupWindow() {
-		  window.close();
-		}	
-	
+var deptName = "${sessionScope.dept_name}";
+function etcRemove(cook_id, co_code) {
+  if (deptName.includes('생산')) {
+    Swal.fire({
+      title: "경고",
+      text: "정말로 삭제하시겠습니까?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "네",
+      cancelButtonText: "취소"
+    }).then(result => {
+      if (result.isConfirmed) {
+        location.href = '/pro/cooketcRemove?cook_id=' + cook_id + '&co_code=' + co_code;
+      }
+    });
+  } else {
+    swal.fire("권한이 없습니다!");
+  }
+}
+function etcwrite(co_code) {
+  var co_status = "${cvo.co_status}";
+  if (deptName.includes('생산')) {
+    if (co_status === "마감") {
+      Swal.fire({
+        title: "마감된 지시입니다!",
+        text: "",
+        icon: "error"
+      });
+    } else {
+      console.log(co_code);
+      var popupUrl = '/pro/cooketcWrite?co_code=' + co_code;
+      window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
+    }
+  } else {
+    swal.fire("권한이 없습니다!");
+  }
+}
+function costatus(co_code) {
+  if (deptName.includes('생산')) {
+    Swal.fire({
+      title: "경고",
+      text: "수동마감 하시겠습니까?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "네",
+      cancelButtonText: "취소"
+    }).then(result => {
+      if (result.isConfirmed) {
+        location.href = '/pro/costatusEnd?co_code=' + co_code;
+      }
+    });
+  } else {
+    swal.fire("권한이 없습니다!");
+  }
+}
+
 </script>
 
 </head>
@@ -116,7 +103,7 @@
     <tbody>
       <tr>
 		<td><a href="/pro/cooketcstatusList?co_code=${cvo.co_code}">${cvo.co_code}</a></td>
-        <td>${cvo.employee_id}</td>
+        <td>${cvo.employee_name}</td>
         <c:choose>
 	  <c:when test="${cvo.co_status eq '지시'}">
 	    <td style="color: blue;">${cvo.co_status}</td>

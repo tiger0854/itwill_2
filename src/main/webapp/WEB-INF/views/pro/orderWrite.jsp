@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -103,6 +104,11 @@ function opensucode() {
   childWindow.onunload = recodecheck;
 }
   
+// openempList()  
+function openempList() {
+  var childWindow = window.open("/pro/empList", "popup", "width=500, height=600, left=100, top=100");
+}
+ 
 </script>
 <!-- 	        opener.document.getElementById("re_code").value = a; -->
 <!-- 	        opener.document.getElementById("re_qty").value = b; -->
@@ -142,7 +148,13 @@ function opensucode() {
     </tr>
     <tr>
       <td>작업지시자</td>
-      <td><input type="text" name="employee_id" id="re_empCd" required readonly></td>
+      <td>
+    <div class="input-group">
+	    <input type="text" style="width: 40%" placeholder="지시자 ID" class="form-control" name="employee_id" id="employee_id" readonly>
+	    <input type="text" style="width: 40%" placeholder="지시자 이름" class="form-control" name="employee_name" id="employee_name" readonly>
+	    <input type="button" class="btn btn-primary" onclick="openempList();" value="검색">
+	</div>
+      </td>
     </tr>
     <tr>
       <td>납품예정일</td>

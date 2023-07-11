@@ -28,9 +28,14 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
-
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <script>
 
+//openempList()  
+function openempList() {
+  var childWindow = window.open("/pro/empList", "popup", "width=500, height=600, left=100, top=100");
+}
+ 
 
 	//품명 검색 팝업창
 	function openItem() {
@@ -84,42 +89,37 @@
 			});
 		});
 
-
 		
 		function onInsert() {
+			  var frObj = $("#fr");
+			  var formData = frObj.serialize();
 
+			  if (frObj[0].checkValidity()) {
+			    Swal.fire({
+			      title: "작성 성공!",
+			      text: "작성이 성공하였습니다.",
+			      icon: "success",
+			      showCancelButton: false,
+			      confirmButtonText: "확인"
+			    }).then(function() {
+			      $.ajax({
+			        url: "/pro/cookorderWrite",
+			        type: "POST",
+			        data: formData,
+			        success: function(response) {
+			          opener.location.reload();
+			          window.close();
+			        },
+			        error: function(xhr, status, error) {
+			          Swal.fire("빈칸을 입력해주세요!");
+			        }
+			      });
+			    });
+			  } else {
+			    Swal.fire("입력란을 채워주세요!");
+			  }
+			}
 
-			var frObj = $("#fr");
-			var formData = frObj.serialize(); // 폼 데이터를 직렬화합니다.
-			
-			   
-				if (frObj[0].checkValidity()) {
-				    Swal.fire({
-				      title: "작성 성공!",
-				      text: "작성이 성공하였습니다.",
-				      icon: "success",
-				      showCancelButton: false,
-				      confirmButtonText: "확인"
-				    }).then(function() {
-				      $.ajax({
-				        url: "/pro/cookorderWrite",
-				        type: "POST",
-				        data: formData,
-				        success: function(response) {
-				          opener.location.reload();
-				          window.close();
-				        },
-				        error: function(xhr, status, error) {
-				          Swal.fire("작성실패!");
-				        }
-				      });
-				    });
-				  } else {
-				    Swal.fire("입력란을 채워주세요!");
-				  }
-				
-		}
-		
 		
 		
 		
@@ -133,7 +133,7 @@
 				return;
 			}
 			$.ajax({
-				url : "/foundation/itemrecipe/getMaterials",
+				url : "/foundation/itemrecipe/materials/"+itemCode,
 				method : "GET",
 				data : {
 					item_code : itemCode
@@ -204,7 +204,6 @@
 				row.append("<input type='text' name='cookListvo[" + i + "].material_name' value='" + vo.material_name + "' readonly='readonly'></td>");
 				row.append("<td><input type='text' style='width: 40%' name='cookListvo[" + i + "].material_con' value='" + vo.material_con*re_qty + "' placeholder='" + vo.material_code + "의 소모량' required></td>");
 				tbody.append(row);
-
 			}
 
 			//materialHeader가 없고 자재가 있을 경우 작동 자재 코드 자재 소모량 칸도 append
@@ -256,21 +255,25 @@
 			<table class="box" style="margin-top: 30px; width: 100%">
 				<tbody>
 					<%-- ${lineList} --%>
-					<td><input type="hidden" name="pQTY" value=0></td>
+					<td><input type="hidden" name="pQTY" value=0 required></td>
 			    <tr>
 			      <td>수주번호</td>
 			     <td><div class="input-group">
-				    <input style="width: 40%" type="text" name="so_code" onclick="recodecheck()" id="re_code" placeholder="수주번호" class="form-control">
+				    <input style="width: 40%" type="text" name="so_code" onclick="recodecheck()" id="re_code" placeholder="수주번호" class="form-control" required>
 				    <input type="button" class="btn btn-primary" onclick="opensucode()" value="검색">
 				</div></td>
 			    </tr>
 					<tr>
-						<td>조리지시자</td>
-						<td><input type="text" name="employee_id" id="employee_id"></td>
+			      <td>
+			    <div class="input-group">
+				    <input type="text" style="width: 40%" placeholder="지시자 ID" class="form-control" name="employee_id" id="employee_id" readonly>
+				    <input type="text" style="width: 40%" placeholder="지시자 이름" class="form-control" name="employee_name" id="employee_name" readonly>
+				    <input type="button" class="btn btn-primary" onclick="openempList();" value="검색">
+				</div></td>
 					</tr>
 					<tr>
 						<td>라인명</td>
-						<td><select name="line_code" class="line_code">
+						<td><select name="line_code" class="line_code" required>
 								<c:forEach var="line" items="${lineList}">
 									<option value="${line.line_code}">${line.line_name}</option>
 								</c:forEach>
@@ -280,8 +283,8 @@
 				   <td>상품코드</td>
 				  <td>
 				  	<div class="input-group"> 
-					    <input type="text" style="width: 40%" placeholder="상품 코드" class="form-control" name="item_code" id="item_code" onclick="getRelatedMaterials();">
-					    <input type="text" style="width: 40%" placeholder="상품 이름" class="form-control" name="item_name" id="item_name" readonly>
+					    <input type="text" style="width: 40%" placeholder="상품 코드" class="form-control" name="item_code" id="item_code" onclick="getRelatedMaterials();" required>
+					    <input type="text" style="width: 40%" placeholder="상품 이름" class="form-control" name="item_name" id="item_name" readonly required>
 					</div>
 					</td>
 				    </tr>

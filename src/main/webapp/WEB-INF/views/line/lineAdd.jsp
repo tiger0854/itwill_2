@@ -16,37 +16,49 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <script>
 
 
 function onInsert() {
 	  var frObj = $("#fr");
 	  var formData = frObj.serialize();
-	    Swal.fire("작성완료!");
-	    if (frObj[0].checkValidity()) {
+
+	  if (frObj[0].checkValidity()) {
+	    Swal.fire({
+	      title: "작성 성공!",
+	      text: "작성이 성공하였습니다.",
+	      icon: "success",
+	      showCancelButton: false,
+	      confirmButtonText: "확인"
+	    }).then(function() {
 	      $.ajax({
-	        url: "/line/lineAdd", // 요청을 보낼 서버의 URL
-	        type: "POST", // HTTP 요청 방식 (POST)
-	        data: formData, // 전송할 데이터 (직렬화된 폼 데이터)
+	        url: "/line/lineAdd",
+	        type: "POST",
+	        data: formData,
 	        success: function(response) {
 	          opener.location.reload();
-	          window.close(); // 윈도우 창을 닫습니다.
+	          window.close();
 	        },
 	        error: function(xhr, status, error) {
-//	          alert("모든 칸을 입력해 주세요!");
-	          console.error("에러 발생:", error);
+	          Swal.fire("빈칸을 입력해주세요!");
 	        }
 	      });
-	    } else {
-	      // 필수 필드가 비어있을 경우 처리할 내용
-	      Swal.fire("모든 칸을 입력해 주세요!");
+	    });
+	  } else {
+	    Swal.fire("입력란을 채워주세요!");
 	  }
-}
- 
+	}	
 
 function openfactroy(){
     window.open("/line/factoryList","popup", "width=500, height=600,left=100, top=100");
 }
+
+//openempList()  
+function openempList() {
+  var childWindow = window.open("/pro/empList", "popup", "width=500, height=600, left=100, top=100");
+}
+ 
 
 </script>
 
@@ -76,6 +88,16 @@ function openfactroy(){
 	    <input type="text" style="width: 40%" placeholder="공장 이름" class="form-control" name="factory_name" id="factory_name" readonly  required>
 	    <button type="button" class="btn btn-primary" onclick="openfactroy();">검색</button>
 	</div></td>
+	</tr>
+    <tr>
+     <td>라인등록자</td>
+      <td>
+    <div class="input-group">
+	    <input type="text" style="width: 40%" placeholder="지시자 ID" class="form-control" name="employee_id" id="employee_id" readonly>
+	    <input type="text" style="width: 40%" placeholder="지시자 이름" class="form-control" name="employee_name" id="employee_name" readonly>
+	    <input type="button" class="btn btn-primary" onclick="openempList();" value="검색">
+	</div>
+      </td>
 	</tr>
     <tr>
       	<td>비고</td>

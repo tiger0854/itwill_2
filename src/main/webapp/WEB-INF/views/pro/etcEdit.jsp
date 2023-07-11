@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link
@@ -21,6 +22,8 @@
 <!-- <link rel="stylesheet" type="text/css" href="../css/css.css"> -->
 <link rel="stylesheet" type="text/css"
 	href="../../resources/css/product.css">
+	
+	
 </head>
 <body>
 	<!-- 생산실적수정 폼 -->
