@@ -35,7 +35,7 @@
 function openempList() {
   var childWindow = window.open("/pro/empList", "popup", "width=500, height=600, left=100, top=100");
 }
- 
+    
 
 	//품명 검색 팝업창
 	function openItem() {
