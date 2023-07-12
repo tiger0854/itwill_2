@@ -54,31 +54,42 @@ function openempList() {
 
 
 		
-		function onInsert() {
-			  var employee_name = $("#employee_name").val();
-			  var frObj = $("#fr");
-			  var formData = frObj.serialize();
-			
-			  if (employee_name === '') {
-			    Swal.fire("입력란을 채워주세요!");
-			    return;
-			  }
+	function onInsert() {
 
-			  if (frObj[0].checkValidity()) {
-			    Swal.fire({
-			      title: "작성 성공!",
-			      text: "작성이 성공하였습니다.",
-			      icon: "success",
-			      showCancelButton: false,
-			      confirmButtonText: "확인"
-			    }).then(function() {
-			       // 자재 수량 체크 호출
-			      // 등록 로직을 자재 수량 체크 콜백 함수 내부로 이동
-			    });
-			  } else {
+		  var employee_id = $("#employee_id").val();
+		  var frObj = $("#fr");
+		  var formData = frObj.serialize();
+		  
+		  if (employee_id === '') {
 			    Swal.fire("입력란을 채워주세요!");
+			    return; // 입력란이 비어있을 경우 함수 실행 종료
 			  }
-			}
+		  
+		  if (frObj[0].checkValidity()) {
+		    Swal.fire({
+		      title: "작성 성공!",
+		      text: "작성이 성공하였습니다.",
+		      icon: "success",
+		      showCancelButton: false,
+		      confirmButtonText: "확인"
+		    }).then(function() {
+		      $.ajax({
+		        url: "/pro/cookorderWrite",
+		        type: "POST",
+		        data: formData,
+		        success: function(response) {
+		          opener.location.reload();
+		          window.close();
+		        },
+		        error: function(xhr, status, error) {
+		          Swal.fire("빈칸을 입력해주세요!");
+		        }
+		      });
+		    });
+		  } else {
+		    Swal.fire("입력란을 채워주세요!");
+		  }
+		}
 
 		
 		
@@ -315,14 +326,7 @@ function openempList() {
 														
 				</tbody>
 			</table>
-			
 
-			
-
-			
-
-			
-			
 			
 			<!--     <hr width="100%" style="border: 2px solid black"> -->
 
