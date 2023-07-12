@@ -36,7 +36,8 @@ public class QualityController {
 	// http://localhost:8088/qc/qualityList
 	// 품질현황 목록
 	@RequestMapping(value = "/qualityList", method = RequestMethod.GET)
-	public void qualityControlListGET(Model model, HttpServletRequest request, PageVO pageVO) throws Exception {
+	public String qualityControlListGET(Model model, HttpServletRequest request, PageVO pageVO, HttpSession session)
+			throws Exception {
 		logger.debug("qualityControlListGET() 호출!(((o(*ﾟ▽ﾟ*)o)))");
 
 		String wo_code = request.getParameter("wo_code");
@@ -105,8 +106,12 @@ public class QualityController {
 
 		model.addAttribute("qualityList", qualityList);
 		model.addAttribute("Search", instrSearch);
-		
-		
+
+		if (session.getAttribute("login_id") == null) {
+			return "redirect:/public/login";
+		}
+
+		return null;
 	}
 
 	// http://localhost:8088/qc/qualityWrite
@@ -117,22 +122,17 @@ public class QualityController {
 		List<QualityControlVO> qualityList = qService.qualityList(pageVO);
 		model.addAttribute("qualityList", qualityList);
 	}
-	
+
 	// 검수자 글작성
 	// http://localhost:8088/qc/qualityWrite
 	@RequestMapping(value = "/qualityWrite", method = RequestMethod.POST)
-	public String qualitytWritePost(QualityControlVO vo, HttpSession session) throws Exception {
-			
-			logger.debug("qualitytWritePost() 호출![]~(￣▽￣)~*");
-			logger.debug(vo + " ");
-			qService.qualityInsert(vo);
-			
-			if(session.getAttribute("login_id") == null) {
-				return "redirect:/public/login";
-			}
-			
-			return null;
-		}// productWriteGET() method end
+	public void qualitytWritePost(QualityControlVO vo) throws Exception {
+
+		logger.debug("qualitytWritePost() 호출![]~(￣▽￣)~*");
+		logger.debug(vo + " ");
+		qService.qualityInsert(vo);
+
+	}// productWriteGET() method end
 
 	@RequestMapping(value = "/qualityItemList", method = RequestMethod.GET)
 	public void itemListGET(Model model, HttpServletRequest request, PageVO pageVO) throws Exception {
@@ -407,10 +407,10 @@ public class QualityController {
 		pageVO.setStartRow(startRow - 1); // limit startRow (0이 1열이기 때문 1을 뺌)
 		pageVO.setEndRow(endRow);
 		int count = 0;
-		if(instrSearch.size() == 0) {
-			count = qService.errorCount();		
+		if (instrSearch.size() == 0) {
+			count = qService.errorCount();
 		} else {
-			count = qService.errorCount(instrSearch);			
+			count = qService.errorCount(instrSearch);
 		}
 		logger.debug("글갯수 @@@@@@@@@@2" + count);
 		// 게시글 개수 가져오기
@@ -431,12 +431,12 @@ public class QualityController {
 		logger.debug("startRow @@@@@@@@@@2" + startRow);
 		logger.debug("pageSize @@@@@@@@@@2" + pageSize);
 		List<QualityControlVO> errorList = null;
-		if(wo_code != null) {
+		if (wo_code != null) {
 			logger.debug("@@@@@@@@검색조회");
 			errorList = qService.errorList(wo_code, pageVO, instrSearch, model);
 		} else {
 			logger.debug("@@@@@@@@전체조회");
-			errorList = qService.errorList();			
+			errorList = qService.errorList();
 		}
 
 		logger.debug("@@@@@@errorList : " + errorList);
