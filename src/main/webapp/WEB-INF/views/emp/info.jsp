@@ -163,11 +163,8 @@
 		<form action="" method="post">
 			<input type="hidden" name="employee_id" value="${evo.employee_id }">
 			<!-- 권한제어 -->
-			<c:if test="${evo.employee_id eq sessionScope.login_id || sessionScope.dept_name eq '인사과' }">
-				<input type="button" value="수정" id="update"> <span id="save_button_place"></span>
-			</c:if>
-
 			<c:if test="${sessionScope.dept_name eq '인사과'}">
+				  <input type="button" value="수정" id="update"> <span id="save_button_place"></span>
               	  <input type="button" value="뒤로가기" onclick="location.href='/emp/list'">
             </c:if>
 
