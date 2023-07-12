@@ -8,12 +8,17 @@
 <title>사원 정보</title>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <jsp:include page="../common/header.jsp"/>
+<script type="text/javascript">
+Swal.fire({
+	title: "에러 발생",
+	text: "지속적인 에러 발생시 051-803-0909로 연락 바랍니다.",
+	icon: "warning",
+		  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+		  confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+	}) // swal end
+</script>
 </head>
 <body id="body-pd" style="font-family: 'TheJamsil5';">
-
-<h1>에러 페이지</h1>
-<h2>어떻게 꾸며나갈지는 우리모두 협의</h2>
-${err }
 
 </body>
 </html>
