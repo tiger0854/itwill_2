@@ -65,11 +65,11 @@ tr{border-bottom: 1px solid;}
 		   <th>거래처분류</th>
 		    <td>	
 				<select name="cus_stat" class="form-control">
-				<c:if test="${cus.cus_stat == 1}">
+				<c:if test="${cus.cus_stat == '납입'}">
 					<option value="1" selected="selected">납입처</option>
 					<option value="2">납품처</option>
 				</c:if>
-				<c:if test="${cus.cus_stat == 2}">
+				<c:if test="${cus.cus_stat == '납품'}">
 					<option value="1">납입처</option>
 					<option value="2" selected="selected">납품처</option>
 				</c:if>
