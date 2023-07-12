@@ -20,20 +20,6 @@
 </head>
 
 <script type="text/javascript">
-$(document).ready(function () {
- 	  $("#collapseSale2").click(function () {
- 		  var deptName = "${sessionScope.dept_name}";
-		 
- 		  
- 		  if(deptName.includes('유통')||deptName.includes('입고')||deptName.includes('출고')){
- 		  }
- 		  else if(deptName != ""){
- 		  alert('권한이 없습니다.');
- 		  return false;
- 		  }
- 		 
- 	  });
- 	});
 
 function toggleDropdown() {
 	  const collapseSale = document.getElementById('collapseSale');
@@ -238,7 +224,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     </div>
     
           <!--   <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a> -->
-
 
 
 </body>
