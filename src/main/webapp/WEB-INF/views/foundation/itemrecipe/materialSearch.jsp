@@ -134,7 +134,7 @@
 	</script>
 	<div class="black-bar">
 		<h4 style="text-align: center; color: white; padding-top: 8px">
-			<i class='bx bx-edit'></i> 상품검색
+			<i class='bx bx-edit'></i> 자재검색
 		</h4>
 	</div>
 	<!-- 작업지시등록 폼 -->
@@ -164,7 +164,7 @@
         					<option value="부자재">부자재</option>
         				</select>
         			<td>
-					<td><button type="submit" class="btn-add">조회</button></td>
+					<td><button type="submit" class="btn btn-primary">조회</button></td>
 				</tr>
 			</table>
 		</form>
