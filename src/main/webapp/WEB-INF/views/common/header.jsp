@@ -192,10 +192,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 <div class="nav_link collapse" id="pro">
 		  			<a href="/pro/orderList" class="nav_link"> - 작업지시</a><br>
 		  		    <a href="/pro/cookorderList" class="nav_link"> - 조리지시</a><br>
-		  		    <a href="/qc/qualityList" class="nav_link"> - 품질현황</a><br>
+		  		    <c:if test="${sessionScope.dept_name ne '품질팀'}">
+		  		    	<a href="/qc/qualityList" class="nav_link"> - 품질현황</a><br>
+		  		    </c:if>
 				</div>
 				</div>
-
+ 
                 
 				<div class="nav_list">
 					<a href="#" class="nav_link" onclick="toggleDropdown2()"> <i class="bx bxs-cart-alt nav_icon"></i> <span class="nav_name">입/출고관리</span> </a> 
