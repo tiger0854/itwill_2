@@ -46,7 +46,7 @@ function openempList() {
 		  var childWindow = window.open("/pro/cosuList", "popup", "width=500, height=600,left=100, top=100");
 		  childWindow.addEventListener("beforeunload", function() {
 		    getRelatedMaterials();
-		    checkMaterialQuantity();
+// 		    checkMaterialQuantity();
 		    recodecheck();
 // 			checkMaterialQuantityAndCooksu();
 		  });
@@ -114,7 +114,7 @@ function openempList() {
 
 		}
 
-		
+		    
 		
 		
 		
@@ -186,7 +186,7 @@ function openempList() {
 			console.log(materialArray.length);
 			tbodyBuilder(); //tbody 만들기 실행
 		}
-
+  
 		
 		  function recodecheck() {
 			  var re_code = $("#re_code").val(); // re_code 값 가져오기
