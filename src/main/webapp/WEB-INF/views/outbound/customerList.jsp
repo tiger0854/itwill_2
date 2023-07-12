@@ -6,7 +6,7 @@
 <head>
 <link rel="icon" href="../../resources/logo_favicon.png" type="image/x-icon">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>거래처 상세</title>
 <link rel="stylesheet" type="text/css" href="../../resources/css/css.css">
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
