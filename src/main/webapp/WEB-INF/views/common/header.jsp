@@ -197,7 +197,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		  		    </c:if>
 				</div>
 				</div>
-
+ 
                 
 				<div class="nav_list">
 					<a href="#" class="nav_link" onclick="toggleDropdown2()"> <i class="bx bxs-cart-alt nav_icon"></i> <span class="nav_name">입/출고관리</span> </a> 
