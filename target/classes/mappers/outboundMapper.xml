@@ -76,7 +76,7 @@
 		from outbound 
 		WHERE 1=1
 		<choose>
-  				<when test="state == 'all'">AND out_state>= 0</when>
+  				<when test="state == 'all'">AND out_state >= 0</when>
   				<when test="state == 'ongoing'">AND out_state = 1</when>
   				<when test="state == 'completed'">AND out_state = 0</when>
   		</choose> 

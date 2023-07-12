@@ -27,53 +27,53 @@ td{height: 80px !important; vertical-align: middle;font-weight: bold;}
 <hr style="border: 2px solid black;">
   
   <form action="" method="post">
-  <table border="1" class="table table-borderless" style="margin-top: 30px;">
+  <table class="table table-borderless" style="margin-top: 30px;">
   <tr>
   <td>수주업체코드</td>
   <td>
   <div class="input-group">
-  <input type="text" id="re_customerCd" name="re_customerCd" placeholder="수주업체코드" 
-	  		onclick="openChildWindow1();" readonly>
+  <input type="text" id="re_customerCd" name="re_customerCd" class="form-control" placeholder="수주업체코드" 
+	  		onclick="openChildWindow1();" style="width:100px;" readonly>
    <button class="btn btn-primary" type="button" onclick="openChildWindow1();">검색</button>
   </div>
   <p id="cus_error" style="color: red; font-size: small;">  </p>
   </td>
-  <th>수주업체명</th>
+  <td>수주업체명</td>
   <td><input type="text" id="re_customerNm" name="re_customerNm" class="form-control" placeholder="수주업체명" 
 	  		onclick="openChildWindow1();" readonly></td>
   </tr>
   <tr>
-  <th>품목코드</th>
+  <td>품목코드</td>
   <td>
   <div class="input-group">
   <input type="text" id="item_code" name="item_code" placeholder="품목코드" 
-	  		onclick="openChildWindow3();" readonly> 
+	  		onclick="openChildWindow3();" class="form-control" readonly> 
   <button class="btn btn-primary" type="button" onclick="openChildWindow3();">검색</button>
   </div>
   <p id="item_error" style="color: red; font-size: small;"></p>
   </td>
-  <th>품목명</th>
+  <td>품목명</td>
   <td><input type="text" id="item_name" name="item_name" class="form-control" placeholder="품목명" 
-	   		onclick="openChildWindow3();" readonly> </td>
+	   		onclick="openChildWindow3();" class="form-control" readonly> </td>
   </tr>
   <tr>
-  <th>담당자코드</th>
+  <td>담당자코드</td>
   <td>
   <div class="input-group">
   <input type="text" id="re_empCd" name="re_empCd" placeholder="담당자코드" 
-	  		onclick="openChildWindow2();" readonly>
+	  		onclick="openChildWindow2();" class="form-control" readonly>
   <button class="btn btn-primary" type="button" onclick="openChildWindow2();" >click</button>
   </div>
   <p id="emp_error" style="color: red; font-size: small;"></p>
   </td>
-  <th>담당자명</th>
+  <td>담당자명</td>
   <td><input type="text" id="re_empNm" name="re_empNm" class="form-control" placeholder="담당자명" 
-	  		onclick="openChildWindow2();" readonly></td>
+	  		onclick="openChildWindow2();" class="form-control" readonly></td>
   </tr>
   <tr>
-  <th>수주수량</th>
+  <td>수주수량</td>
 	  <td><input type="number" id="re_qty" name="re_qty" class="form-control" placeholder="수량" style="width: 150px;"><p id="qty_error" style="color: red; font-size: small;"></p></td>
-  <th>수주일자</th>
+  <td>수주일자</td>
   <td><input type="date" id="re_date" name="re_date" class="form-control" placeholder="년-월-일"><p id="date_error" style="color: red; font-size: small;"></p></td>
   </tr>
   </table>
@@ -81,7 +81,7 @@ td{height: 80px !important; vertical-align: middle;font-weight: bold;}
     <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 200px;margin-bottom: 20px; margin: auto;display: block;">수주등록</button>
   </form>
 </div>
-</body>
+
 
   <script type="text/javascript">
 
@@ -160,5 +160,5 @@ td{height: 80px !important; vertical-align: middle;font-weight: bold;}
 		// 유효성 end
 
   </script>
-
+</body>
 </html>
