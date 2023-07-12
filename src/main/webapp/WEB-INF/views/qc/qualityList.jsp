@@ -16,8 +16,10 @@
 
 <script>
 	var deptName = "${sessionScope.dept_name}";
+	var positionName = "${sessionScope.position_name}";
+	
 	function qualityWrite() {
-		if (deptName.includes('품질팀')) {
+		if (deptName.includes('품질팀')||positionName==='이사') {
 			// 새 창을 열기 위한 URL
 			var popupUrl = '/qc/qualityWrite';
 			// 새 창 열기
