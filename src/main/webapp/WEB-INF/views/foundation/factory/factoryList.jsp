@@ -13,7 +13,7 @@
 var deptName = "${sessionScope.dept_name}";
 var positionName = "${sessionScope.position_name}";
 function factoryUpload() {
-if(deptName.includes('생산')||positionName==='이사'||deptName.includes('인사')){
+if(deptName.includes('생산')||positionName==='이사'){
 	// 새 창을 열기 위한 URL
 	var popupUrl = '/foundation/factory/factoryUpload';
 	// 새 창 열기

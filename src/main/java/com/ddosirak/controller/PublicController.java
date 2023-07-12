@@ -24,6 +24,7 @@ import com.ddosirak.domain.EmployeeCheckVO;
 import com.ddosirak.domain.EmployeeVO;
 import com.ddosirak.domain.LoginVO;
 import com.ddosirak.domain.PageVO;
+import com.ddosirak.domain.QualityControlVO;
 import com.ddosirak.service.BoardService;
 import com.ddosirak.service.EmployeeService;
 import com.ddosirak.service.InboundService;
@@ -287,39 +288,57 @@ public class PublicController {
 		if(session.getAttribute("login_id") == null) {
 			return "redirect:/public/login";
 		} // session control
-		
 		// -------------- 라인별 생산률 (예원)  0_< ----------------------
 		List<Map<String, Object>> graphList = oService.graphList();
-		logger.debug("graphList : " + graphList);
+		logger.debug("graphList: " + graphList);
 		ObjectMapper objectMapper = new ObjectMapper();
 		String graphListJson = objectMapper.writeValueAsString(graphList);
 		model.addAttribute("graphListJson", graphListJson);
 		// -------------- 라인별 생산률 (예원)  0_< ----------------------
 
-		
 		// 임직원 수 리턴
-		model.addAttribute("alCount_all", eService.alCount_all());// 전일반 근무자
-		model.addAttribute("alCount_am", eService.alCount_am());// 오전근무자
-		model.addAttribute("alCount_pm", eService.alCount_pm());// 오후근무자
-		model.addAttribute("empCount", eService.empCount());// 임직원
 		
-		// 휴가자 수
-	    model.addAttribute("vacationCount", eService.vacount()); // 현재 휴가 사원수
-	    model.addAttribute("pvacationCount", eService.pvacount()); // 휴가예정 사원수
-	    model.addAttribute("bvacountCount", eService.bvacount()); // 휴가복귀 사원 수
+		int al = eService.alCount_all();
+		int aa = eService.alCount_am();
+		int ap = eService.alCount_am();
+		int ep = eService.empCount();
+		// 임직원 수 리턴
+		model.addAttribute("alCount_all", al);// 전일반 근무자
+		model.addAttribute("alCount_am", aa);// 오전근무자
+		model.addAttribute("alCount_pm", ap);// 오후근무자
+		model.addAttribute("empCount", ep);// 임직원
 		
-		// 입고 예정/완료
-		model.addAttribute("selectNowIndate", iService.selectNowIndate()); //오늘 입고예정 수
-		model.addAttribute("selectNowEdate", iService.selectNowEdate()); // 오늘 입고완료 수
+		int vc = eService.vacount();
+		int pvc =  eService.pvacount();
+		int bva =  eService.bvacount();
+				// 휴가자 수
+			    model.addAttribute("vacationCount", vc); // 현재 휴가 사원수
+			    model.addAttribute("pvacationCount", pvc); // 휴가예정 사원수
+			    model.addAttribute("bvacountCount", bva); // 휴가복귀 사원 수
+		int sc = iService.selectNowIndate();
+		int sn = iService.selectNowEdate();
+				// 입고 예정/완료
+				model.addAttribute("selectNowIndate", sc); //오늘 입고예정 수
+				model.addAttribute("selectNowEdate", sn); // 오늘 입고완료 수
+		int out = obService.outScheduleToday();
+		int outc = obService.outCompleteToday();
+				// 출고 예정/완료
+				model.addAttribute("outScheduleToday", out); // 금일출고예정
+				model.addAttribute("outCompleteToday",outc);
+				Integer er = 0;
+				Integer gty = 0;
+		if (qService.errorList().get(0) != null ) {
+			er =  qService.errorList().get(0).getTotal_error_QTY();
+			gty = qService.errorList().get(0).getTotal_QTY();
 		
-		// 출고 예정/완료
-		model.addAttribute("outScheduleToday", obService.outScheduleToday()); // 금일출고예정
-		model.addAttribute("outCompleteToday", obService.outCompleteToday());
-		
-		// 전체 라인 불량률
-		model.addAttribute("errQTY", qService.errorList().get(0).getTotal_error_QTY()); // 불량개수
-		model.addAttribute("totalQTY", qService.errorList().get(0).getTotal_QTY()); // 총 생산량
-		
+			if(er == null || gty == null) {
+				er = 0;
+				gty = 0;
+			}			
+		}
+			// 전체 라인 불량률
+		model.addAttribute("errQTY", er); // 불량개수
+		model.addAttribute("totalQTY", gty); // 총 생산량
 		return null;
 	}//dashBoardGET() method end
 /////////////////////////////////대시보드///////////////////////////////////
