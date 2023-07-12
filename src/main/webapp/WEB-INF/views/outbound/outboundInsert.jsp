@@ -24,14 +24,14 @@
   <form role="form" action="" method="post" id="fr">
   <table class="table table-borderless" style="margin-top: 30px;" >
   <tr>
-  <th>담당자 코드</th>
+  <td>담당자 코드</td>
   <td>
   <div class="input-group">
   <input type="text" id="out_empCd" class="form-control" name="outboundList[0].out_empCd" onclick="openChildWindow2();" readonly placeholder="담당자코드">
   <button class="btn btn-primary" type="button" onclick="openChildWindow2();">click</button>
   </div>
   </td>
-  <th>담당자명</th>
+  <td>담당자명</td>
   <td><input type="text" id="out_empNm" class="form-control" name="outboundList[0].out_empNm" onclick="openChildWindow2();" readonly placeholder="담당자명"></td>
   </tr>
   </table>
@@ -40,7 +40,7 @@
   
   <table id="tbl" border="1" class="table table-bordered">
    <thead>
-    <tr>
+    <tr style=" text-align: center;">
 	  <td>수주번호</td>
 	  <td>품목코드</td>
 	  <td>품목명</td>
@@ -180,41 +180,7 @@
  			errorElement.textContent = ''; // 수량 오류 메시지 초기화
  		});
 		
-		
-	
-		
-// 		var re_code_values = [];
-		
-// 		 $("tr[name='trProduct']").each(function() {
 
-// 		  var re_code = $(this).find("input[name^='outboundList']").eq(0).val();
-// 		  re_code_values.push(re_code);
-// 		 });
-		
-// 		  var json = {};
-// 		  json['re_code'] = re_code_values;
-// 		  alert(JSON.stringify(json));
-
-// 		$.ajax({
-// 		  url: "/outbound/outboundInsert", 
-// 		  type: "POST",
-// 		  data: JSON.stringify(json),
-// 		  contentType: "application/json",
-// 		  success: function(response) {
-// 			  Swal.fire({
-// 	                title: "출고 등록이 완료되었습니다.",
-// 	                text: "",
-// 	                icon: "success"
-// 	              }).then(function() {
-// 	                opener.location.reload();
-// 	                window.close();
-// 	              });
-// 		  },
-// 		  error: function(xhr, status, error) {
-// 		    console.error("Ajax 요청 실패:", error);
-// 		  }
-// 		});
-			
 		
 </script>
 
