@@ -13,7 +13,7 @@
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
 <style>
- 
+ 	.chat_wrap {margin-right: 245px;}
 	.chat_wrap .chat { padding-top: 4px; padding-bottom:50px; width: 600px; margin:auto; background-color: silver; overflow-y: scroll; height: 45em;}
 	.chat_wrap .chat ul { width: 100%; list-style: none; padding-left: 0!important; }
 	.chat_wrap .chat ul li { width: 100%; }
