@@ -57,6 +57,7 @@
   	<!-- 사원 목록 출력-->
   	<select id="empList" resultType="com.ddosirak.domain.EmployeeVO">
 		SELECT * FROM emp_main
+		WHERE employee_status = '재직중'
 		LIMIT #{startRow}, #{pageSize}
   	</select>
   	<!-- 사원 목록 출력 -->
