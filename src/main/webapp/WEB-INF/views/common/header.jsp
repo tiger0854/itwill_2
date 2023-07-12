@@ -114,15 +114,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		<div class="header_toggle">
 			<i class='bx bx-menu' id="header-toggle"></i>
 		</div>
-		<button onclick="location.href='/public/in'" class="btn btn-success" style=" width: 100px;">출근</button>
-		<button onclick="location.href='/public/out'" class="btn btn-success" style=" width: 100px;">퇴근</button>
+		<button onclick="location.href='/public/in'" class="btn btn-dark" style=" width: 100px;">출근</button>
+		<button onclick="location.href='/public/out'" class="btn btn-dark" style=" width: 100px;">퇴근</button>
 		<div>
 			<c:if test="${empty login_id }">
 				<a style="margin: 10px;" href="/public/login">로그인</a>
 				<!-- 0619 추가 -->
 			</c:if>
 			<c:if test="${!empty login_id }">
-				<button class="btn btn-success" onclick='location.href="/emp/info?employee_id=${login_id}"' >
+				<button class="btn btn-primary" onclick='location.href="/emp/info?employee_id=${login_id}"' >
 				사원번호: ${login_id }</button>
 				<!-- 0620 추가 -->
 				<a style="margin: 10px;" href="/public/logout">로그아웃</a>

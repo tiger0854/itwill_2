@@ -86,7 +86,7 @@ $(document).ready(function(){
 <form action="" method="post">
 	사원번호<input type="text" name="employee_id" placeholder="사원번호를 입력해주세요." class="form-control" style="height: 70px;"><br>
 	비밀번호<input type="password" name="employee_pw" placeholder="비밀번호를 입력해주세요."  class="form-control" style="height: 70px;font-family: 'GmarketSansMedium';"><br>
-	<input type="submit" value="로그인"  class="btn btn-dark" style="width: 100%;">
+	<input type="submit" value="로그인"  class="btn btn-primary" style="width: 100%;">
 </form>
 </div>
 

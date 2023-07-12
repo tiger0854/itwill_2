@@ -14,7 +14,7 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
 <style>
  
-	.chat_wrap .chat { padding-top: 4px; padding-bottom:50px; width: 600px; margin:auto; background-color: silver; overflow-y: scroll; height: 60em;}
+	.chat_wrap .chat { padding-top: 4px; padding-bottom:50px; width: 600px; margin:auto; background-color: silver; overflow-y: scroll; height: 45em;}
 	.chat_wrap .chat ul { width: 100%; list-style: none; padding-left: 0!important; }
 	.chat_wrap .chat ul li { width: 100%; }
 	.chat_wrap .chat ul li.left { text-align: left;  }
@@ -27,15 +27,15 @@
 	.chat_wrap .chat ul li > span.timeLeft {margin-bottom: 25px; font-size: 1px; vertical-align: bottom; margin-right: 10px; } 
 	 	
 	 	
-	.chat_wrap .input-div { position: fixed; bottom: 0; width: 100%; background-color: #FFF; text-align: center; }
-	.chat_wrap .input-div > input { width: 60%; height: 35px; border: 1px solid; padding: 10px; }
+	.chat_wrap .input-div { position: fixed; bottom: 0; width: 60%; background-color: #FFF; text-align: center;border: 1px solid #9F9F9F;margin-bottom: 20px;border-radius: 8px;margin-left: 290px;height: 100px;	box-shadow: rgba(145,158,171,0.2) 0px 0px 2px 0px,rgba(145,158,171,0.12) 0px 12px 24px -4px; }
+	.chat_wrap .input-div > input { width: 90%; height: 35px; padding: 10px;}
 	 
 	.format { display: none; }
 </style>
 </head>
 <body id="body-pd">
 	<div class="chat_wrap">
-	<table class="table table-bordered" style="margin:auto; width: 600px;">
+	<table class="table table-bordered" style="margin:auto; width: 600px;margin-top: 80px;">
 		<tr>
 			<td>대화상대</td>
 			<td>내선번호</td>
@@ -51,8 +51,8 @@
         </ul>
     </div>
 	<div class="input-div">
-		<input type="text" id="message" />
-		<input type="button" id="sendBtn" class="btn btn-secondary" value="전송"/>
+		<i class='bx bx-message-square-dots'></i><input type="text" id="message" style="border: none;" placeholder="메시지를 입력하세요"/>
+		<input type="button" id="sendBtn" class="btn btn-secondary" value="전송" style="width: 100%;margin-top: 28px;"/>
 	</div>
 	</div>
 </body>
