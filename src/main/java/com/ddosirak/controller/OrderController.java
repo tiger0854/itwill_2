@@ -116,7 +116,7 @@ public class OrderController {
 		
 		// 페이징 처리
 				// 한 화면에 보여줄 글 개수 설정
-				int pageSize = 10; // sql문에 들어가는 항목
+				int pageSize = 50; // sql문에 들어가는 항목
 				
 				// 현페이지 번호 가져오기
 				String pageNum = request.getParameter("pageNum");

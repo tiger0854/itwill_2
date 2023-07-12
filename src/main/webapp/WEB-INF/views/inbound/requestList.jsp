@@ -23,6 +23,7 @@
   <th>자재코드</th> 
   <th>자재명</th>
   <th>요청수량</th>
+  <th>수주번호</th>
   </tr>
   
   <c:forEach var="vo" items="${requestList}">
@@ -32,39 +33,13 @@
   <td>${vo.material_code}</td>
   <td>${vo.material_name}</td>
   <td>${(vo.material_con * vo.re_qty)+20}</td>
+  <td>${vo.re_code}</td>
   </tr>
   </c:if>
   </c:forEach>
 
   
   </table>
-	    <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
-	<div class="container">
-	 	<ul class="pagination"style="justify-content: center;">			
-			<c:choose>
-				<c:when test="${pageVO.startPage > pageVO.pageBlock}">
-					<li class="page-item"><a class="page-link" href="/inbound/requestList?pageNum=${pageVO.startPage - pageVO.pageBlock}" style="margin: 0.5em;">◀</a></li>
-				</c:when>
-				<c:otherwise>
-				</c:otherwise>
-			</c:choose>
-			
-			<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
-		
-					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/inbound/requestList?pageNum=${i}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
-				
-			</c:forEach>
-			
-			<c:choose>
-				<c:when test="${pageVO.endPage < pageVO.pageCount}">
-					<li class="page-item"><a class="page-link" href="/inbound/requestList?pageNum=${pageVO.startPage + pageVO.pageBlock}" style="margin: 0.5em;">▶</a></li>
-				</c:when>
-				<c:otherwise>
-				</c:otherwise>
-			</c:choose>
-		</ul>
-		</div>
-<!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
 
 	
 <script>

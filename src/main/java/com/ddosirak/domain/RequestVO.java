@@ -7,6 +7,15 @@ public class RequestVO {
 	private int material_con;
 	private int re_qty;
 	private int state;
+	private String re_code;
+	
+	
+	public String getRe_code() {
+		return re_code;
+	}
+	public void setRe_code(String re_code) {
+		this.re_code = re_code;
+	}
 	public int getRequest_id() {
 		return request_id;
 	}

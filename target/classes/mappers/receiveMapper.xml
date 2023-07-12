@@ -87,8 +87,8 @@
   	</select>
   	
   	<insert id="receiveRequest">
-  	insert into ret_request (material_code,material_name,material_con,re_qty) 
-	SELECT m.material_code , material_name,material_con, re_qty
+  	insert into ret_request (material_code,material_name,material_con,re_qty,re_code) 
+	SELECT m.material_code , material_name,material_con, re_qty,re_code
 	FROM receive r JOIN item_recipe i
 	JOIN material_detail m
 	WHERE r.item_code = i.item_code AND
