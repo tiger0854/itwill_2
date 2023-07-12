@@ -20,7 +20,7 @@
 	<select id="countCusList"  parameterType="com.ddosirak.domain.PageVO" resultType="Integer">
 		SELECT COUNT(*) FROM ret_customer	 	
 		<choose>
-			<when test="state == 'all'">WHERE cus_stat = '납입' or cus_stat = '납품'</when>
+			<when test="state == 'all'">WHERE (cus_stat = '납입' or cus_stat = '납품')</when>
 			<when test="state == 'input'">WHERE cus_stat = '납입'</when>
 			<when test="state == 'output'">WHERE cus_stat = '납품'</when>
   		</choose> 
