@@ -63,7 +63,7 @@ function onInsert() {
 		+"<tr><td></td><td><input type='button' value='자재 검색' onclick='materialSearch();'></td>"
 		+"<tr><td>품번</td><td><input type='text' name='item_code' id='material_code' readonly><input type='hidden' id='material_type'></td></tr>"
 		+"<tr><td>품명</td><td><input type='text' name='item_name' id='material_name' readonly></td></tr>"
-		+"<tr><td>재고단위</td><td><input type='text' name='unit'value='미등록' readonly></td></tr>"
+		+"<tr><td>재고단위</td><td><input type='text' name='unit'value='레시피용' readonly></td></tr>"
 		+"<tr><td>단가</td><td><input type='number' name='item_price' value='0' readonly></td></tr>"
 		);
 	}
