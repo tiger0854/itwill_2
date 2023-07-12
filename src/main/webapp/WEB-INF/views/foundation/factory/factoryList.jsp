@@ -30,10 +30,11 @@ if(deptName.includes('생산')||positionName==='이사'||deptName.includes('인�
 			+ factory_code;
 	// 새 창 열기
 	window.open(popupUrl, '_blank', 'width=500,height=600,resizable=yes');
-	}else{
+		}else{
 		swal.fire("권한이 없습니다!");
 	}
 }
+
 
 function factoryDelete(factory_code, factory_name) {
 if(deptName.includes('생산')||positionName==='이사'||deptName.includes('인사')){
@@ -52,7 +53,7 @@ if(deptName.includes('생산')||positionName==='이사'||deptName.includes('인�
 	  });
 	}else{
 		swal.fire("권한이 없습니다!");
-	}
+		}
 	}
 
 

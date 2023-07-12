@@ -16,9 +16,11 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 var deptName = "${sessionScope.dept_name}";
+var positionName = "${sessionScope.position_name}";
+
 
 function orderwrite() {
-	if(deptName.includes('생산')){   
+	if(deptName.includes('생산')||positionName==='이사' ){   
 	// 새 창을 열기 위한 URL
 		  var popupUrl = '/pro/orderWrite';
 		  // 새 창 열기
@@ -30,7 +32,7 @@ function orderwrite() {
 
 
 function orderedit(wo_code) {
-	if(deptName.includes('생산')){    	
+	if(deptName.includes('생산')||positionName==='이사' ){    	
 		  var popupUrl = '/pro/orderEdit?wo_code='+ wo_code;
 		  window.open(popupUrl, '_blank', 'width=500,height=600,left=100, top=100');
 		}else{
@@ -39,7 +41,7 @@ function orderedit(wo_code) {
 }
 
 function  ProOrderDelete(wo_code) {
-	if(deptName.includes('생산')){  
+	if(deptName.includes('생산')||positionName==='이사' ){  
 		  Swal.fire({
 			    title: "경고",
 			    text: "정말로 삭제하시겠습니까?",
