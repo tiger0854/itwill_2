@@ -37,6 +37,9 @@ public interface EmployeeDAO {
 	public List<EmployeeVO> empList();
 	public List<EmployeeVO> empList(PageVO pageVO);
 	
+	// 퇴사직원 수 리턴
+	public Integer countExpEmp();
+	
 	// 사원정보 수정
 	public Integer updateEmployee(EmployeeVO vo);
 	

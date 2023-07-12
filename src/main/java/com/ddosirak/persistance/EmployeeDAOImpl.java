@@ -117,6 +117,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		List<EmployeeVO> empList = sqlSession.selectList(NAMESPACE+".empList",pageVO);
 		return empList;
 	}// empList() method end
+	
+	// 퇴사자 수
+	@Override
+	public Integer countExpEmp() {
+		logger.debug("countExpEmp()!");
+		return sqlSession.selectOne(NAMESPACE+".countExpEmp");
+	}// countExpEmp() method end
 
 	//사원정보 수정
 	@Override

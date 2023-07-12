@@ -43,7 +43,6 @@
   	<!-- 사원 정보 조회 -->
   	<select id="getEmployee" resultType="com.ddosirak.domain.EmployeeVO">
 		SELECT * FROM emp_main WHERE employee_id=#{employee_id}
-		  	
   	</select>
   	<!-- 사원 정보 조회 -->
   	
@@ -53,6 +52,13 @@
 		ORDER BY FIELD (position, '이사', '과장', '팀장', '주임', '사원', '외주', '일용')
   	</select>
   	<!-- 사원 목록 출력 -->
+  	
+  	<!-- 퇴사 사원 수 -->
+  	<select id="countExpEmp" resultType="Integer" >
+  		SELECT COUNT(*) FROM emp_main
+  		WHERE employee_status = '퇴사'
+  	</select>
+  	<!-- 퇴사 사원 수 -->
   	
   	<!-- 사원 목록 출력-->
   	<select id="empList" resultType="com.ddosirak.domain.EmployeeVO">

@@ -105,6 +105,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return edao.empList(pageVO);
 	}//empList() method end
 	
+	// 퇴사자 수 출력
+	@Override
+	public Integer countExpEmp() {
+		return edao.countExpEmp();
+	} // countExpEmp() method end
+	
 	// 사원 정보 수정
 	@Override
 	public Integer updateEmployee(EmployeeVO vo) {

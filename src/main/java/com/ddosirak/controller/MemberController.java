@@ -198,7 +198,7 @@ public class MemberController {
 		pageVO.setEndRow(endRow);
 		
 		// 게시글 개수 가져오기
-		int count = pService.countEmpList(); // 요 동작만 각자 페이지에 맞게 수정하면 됨!!
+		int count = pService.countEmpList() - eService.countExpEmp(); // 요 동작만 각자 페이지에 맞게 수정하면 됨!!
 
 		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
 		int startPage=(currentPage-1)/pageBlock*pageBlock+1;
@@ -494,7 +494,7 @@ public class MemberController {
 		pageVO.setEndRow(endRow);
 		
 		// 게시글 개수 가져오기
-		int count = pService.countEmpList(); // 요 동작만 각자 페이지에 맞게 수정하면 됨!!
+		int count = pService.countEmpList() - eService.countExpEmp(); // 요 동작만 각자 페이지에 맞게 수정하면 됨!!
 
 		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
 		int startPage=(currentPage-1)/pageBlock*pageBlock+1;
@@ -599,7 +599,7 @@ public class MemberController {
 		pageVO.setEndRow(endRow);
 		
 		// 게시글 개수 가져오기
-		int count = pService.countEmpList(); // 요 동작만 각자 페이지에 맞게 수정하면 됨!!
+		int count = pService.countEmpList() - eService.countExpEmp(); // 요 동작만 각자 페이지에 맞게 수정하면 됨!!
 
 		int pageBlock = 5; // 1 2 3 4 5 > 넣는 기준
 		int startPage=(currentPage-1)/pageBlock*pageBlock+1;
