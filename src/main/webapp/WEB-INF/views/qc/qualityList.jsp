@@ -92,8 +92,8 @@
 							<th>품명</th>
 							<th>품번</th>
 							<th>검수자</th>
-							<th>수주량</th>
-							<th>생산량</th>
+							<th>지시수량</th>
+							<th>실생산량</th>
 							<th>불량</th>
 						</tr>
 					</thead>
@@ -106,7 +106,7 @@
 								<td>${vo.item_name }</td>
 								<td>${vo.item_code }</td>
 								<td>${vo.employee_name }</td>
-								<td>${vo.sQTY }</td>
+								<td>${vo.oQTY }</td>
 								<td>${vo.pQTY }</td>
 								<td>${vo.total_error_QTY }</td>
 							</tr>

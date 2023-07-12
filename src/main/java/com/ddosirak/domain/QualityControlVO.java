@@ -11,7 +11,7 @@ public class QualityControlVO {
 	private String item_code; // 품번코드
 	private String employee_id; // 검수자
 	private String employee_name; // 검수자
-	private int sQTY; // 수주수량
+	private int oQTY; // 지시수량
 	private int pQTY; // 생산수량
 	private int total_error_QTY; // 불량수량
 	private int total_QTY; // 총생산량
@@ -59,11 +59,11 @@ public class QualityControlVO {
 	public void setEmployee_name(String employee_name) {
 		this.employee_name = employee_name;
 	}
-	public int getsQTY() {
-		return sQTY;
+	public int getoQTY() {
+		return oQTY;
 	}
-	public void setsQTY(int sQTY) {
-		this.sQTY = sQTY;
+	public void setoQTY(int oQTY) {
+		this.oQTY = oQTY;
 	}
 	public int getpQTY() {
 		return pQTY;
@@ -99,10 +99,13 @@ public class QualityControlVO {
 	public String toString() {
 		return "QualityControlVO [wo_code=" + wo_code + ", line_name=" + line_name + ", line_code=" + line_code
 				+ ", item_name=" + item_name + ", item_code=" + item_code + ", employee_id=" + employee_id
-				+ ", employee_name=" + employee_name + ", sQTY=" + sQTY + ", pQTY=" + pQTY + ", total_error_QTY="
+				+ ", employee_name=" + employee_name + ", oQTY=" + oQTY + ", pQTY=" + pQTY + ", total_error_QTY="
 				+ total_error_QTY + ", total_QTY=" + total_QTY + ", error_rate=" + error_rate + ", error_status="
 				+ error_status + "]";
 	}
+	
+	
+	
 	
 	
 	
