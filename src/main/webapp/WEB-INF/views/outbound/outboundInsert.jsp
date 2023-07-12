@@ -17,7 +17,7 @@
 	</style>
 </head>
  <body id ="body-pd">
-  <div class="container" style=" width: 1000px; margin: auto; margin-top:100px; ">
+  <div class="container" style=" width: 2200px; margin: auto; margin-top:100px; ">
 <h4 style="font-weight: bold;"><i class="bx bx-book"></i>출고예정등록</h4>
 <hr style="border: 2px solid black;">
  

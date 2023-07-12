@@ -85,6 +85,10 @@
   <td>${vo.due_date }</td> 
   
  <c:choose>
+  	<c:when test="${vo.out_state==1 and vo.out_qty <= vo.proOrderVO.pQTY}">
+        <td><font color="blue">생산완료<br>
+        					   (출고가능)</font></td>
+    </c:when>
     <c:when test="${vo.out_state==1 }">
    		<td>진행중</td>
     </c:when>
@@ -105,15 +109,19 @@
   <td>${vo.out_empNm }</td>
   
  <c:choose>
-    <c:when test="${vo.out_state==1 }">
-   		<td><button type="button" class="btn-primary" onclick="openChildWindow2(this);">출고</button></td> 
-   		<td><button type="button" class="btn-primary" onclick="openChildWindow(this);" >수정</button></td>
+    <c:when test="${vo.out_state==1 and vo.out_qty <= vo.proOrderVO.pQTY}">
+        <td><button type="button" class="btn-primary" onclick="openChildWindow2(this);">출고</button></td>
+        <td></td>
+    </c:when>
+    <c:when test="${vo.out_state==1 and vo.out_qty > vo.proOrderVO.pQTY}">
+        <td></td>
+        <td><button type="button" class="btn-primary" onclick="openChildWindow(this);">수정</button></td>
     </c:when>
     <c:otherwise>
-   		 <td></td>
-		 <td></td>
+        <td></td>
+        <td></td>
     </c:otherwise>
- </c:choose>
+</c:choose>
   </tr>
   </c:forEach>
   </tbody>

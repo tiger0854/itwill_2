@@ -33,7 +33,7 @@
 
  <body id="body-pd" >
   <div class="container" style="margin-top: 120px;max-width: 100% !important;">
-<h4 style="font-weight: bold;" ><i class="bx bx-book"></i>출고수정</h4>
+<h4 style="font-weight: bold;" ><i class="bx bx-book"></i>출고처리</h4>
 <hr style="border: 2px solid black;">
 <div class="tab-content" style="margin-top: 20px; " >
 
