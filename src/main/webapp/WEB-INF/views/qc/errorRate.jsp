@@ -13,6 +13,7 @@
 <meta charset="UTF-8">
 <title>불량현황</title>
 <script type="text/javascript">
+	
 </script>
 
 </head>
@@ -79,31 +80,35 @@
 								<td>${vo.item_code }</td>
 								<td>${vo.total_QTY }</td>
 								<td>${vo.total_error_QTY }</td>
-								<c:if
-									test="${vo.total_error_QTY == null }">
+								<c:if test="${vo.total_error_QTY == null }">
 									<td></td>
 								</c:if>
-								<c:if
-									test="${vo.total_error_QTY != null }">
-									<td><fmt:formatNumber value="${errorRate }"
-											minFractionDigits="0" maxFractionDigits="0" />%</td>
+								<c:if test="${vo.total_error_QTY != null }">
+									<c:if test="${errorRate <= 0 }">
+										<td>0%</td>
+									</c:if>
+									<c:if test="${errorRate > 0 }">
+										<td><fmt:formatNumber value="${errorRate }"
+												minFractionDigits="0" maxFractionDigits="0" />%</td>
+									</c:if>
 								</c:if>
 								<form action="/qc/errorStatus" method="post">
-									<c:if test="${vo.error_status != null }">
-										<td>${vo.error_status }</td>
-									</c:if>
-									<c:if
-										test="${vo.item_code != null && vo.error_status == null }">
-										<td><input type="hidden" name="wo_code"
-											value="${vo.wo_code }"> <input type="hidden"
-											name="item_code" value="${vo.item_code }"> <select
-											id="error_status" name="error_status">
-												<option value=""></option>
-												<option value="재고초과">재고초과</option>
-												<option value="불량">불량</option>
-										</select>
-											<button class="btn-search"
-												>등록</button></td>
+									<c:if test="${vo.oQTY <= vo.total_QTY }">
+										<c:if test="${vo.error_status != null }">
+											<td>${vo.error_status }</td>
+										</c:if>
+										<c:if
+											test="${vo.item_code != null && vo.error_status == null }">
+											<td><input type="hidden" name="wo_code"
+												value="${vo.wo_code }"> <input type="hidden"
+												name="item_code" value="${vo.item_code }"> <select
+												id="error_status" name="error_status">
+													<option value=""></option>
+													<option value="재고초과">재고초과</option>
+													<option value="불량">불량</option>
+											</select>
+												<button class="btn-search">등록</button></td>
+										</c:if>
 									</c:if>
 								</form>
 							</tr>

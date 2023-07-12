@@ -49,7 +49,12 @@
 		and id.item_name like concat ('%', #{item_name}, '%')
 		and i.material_code like concat ('%', #{material_code}, '%')
 		and md.material_name like concat ('%', #{material_name}, '%')
-		order by i.item_code
+		ORDER BY CASE 
+	    WHEN i.item_code LIKE 'I%' THEN 0 
+	    WHEN i.item_code LIKE 'M%' THEN 1 
+	    ELSE 2 
+	  	END, 
+	  	CAST(SUBSTRING(i.item_code, 2) AS UNSIGNED) DESC
 		limit #{startRow}, #{pageSize}
 	</select>
 	<!-- 레시피 목록 출력 -->

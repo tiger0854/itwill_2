@@ -14,7 +14,7 @@
 		p.wo_code,
 		p.line_code,
 		p.item_code,
-		p.sQTY,
+		p.oQTY,
 		p.pQTY,
 		p.item_name,
 		ir.employee_name,
@@ -45,7 +45,7 @@
 		p.wo_code,
 		p.line_code,
 		p.item_code,
-		p.sQTY,
+		p.oQTY,
 		p.pQTY,
 		p.item_name,
 		ir.employee_name,
@@ -187,6 +187,7 @@
 	<select id="errorSearchList"
 		resultType="com.ddosirak.domain.QualityControlVO">
 		select
+		p.oQTY,
 		p.wo_code,
 		pp.item_code,
 		SUM(pp.pfQTY) AS total_QTY,
