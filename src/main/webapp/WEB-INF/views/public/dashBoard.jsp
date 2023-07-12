@@ -83,40 +83,44 @@
 const errQTY = "${errQTY }";
 const totalQTY = "${totalQTY }";
 
+
 var errRate = (Math.round((errQTY / totalQTY) * 1000) / 1000)*100;
 
 const canvas_err = document.getElementById('canvas_err');
 
 canvas_err.style.width = '600.467px';
 canvas_err.style.height = '219.733px';
+if(errQTY !== null && totalQTY !== null){
+	new Chart(canvas_err, {
+		  type: 'bar',
+		  data: {
+		    labels: ['불량률 현황'],
+		    datasets: [{
+		      label: '목표치',
+		      data: [20],
+		      backgroundColor: ['green'],
+		      borderWidth: 1
+		    },{
+		        label: '불량률',
+		        data: [errRate ],
+		        backgroundColor: ['red'],
+		        borderWidth: 1
+		      }
+		    
+		    ]
+		  },
+		  options: {
+			 responsive: false,
+		    scales: {
+		      y: {
+		        beginAtZero: true
+		      }
+		    }
+		  }
+	});
+	
+}
 
-new Chart(canvas_err, {
-  type: 'bar',
-  data: {
-    labels: ['불량률 현황'],
-    datasets: [{
-      label: '목표치',
-      data: [20],
-      backgroundColor: ['green'],
-      borderWidth: 1
-    },{
-        label: '불량률',
-        data: [errRate ],
-        backgroundColor: ['red'],
-        borderWidth: 1
-      }
-    
-    ]
-  },
-  options: {
-	 responsive: false,
-    scales: {
-      y: {
-        beginAtZero: true
-      }
-    }
-  }
-});
 //----------------------  불량률 현황-----------------------------
 
 //----------------------  임직원 현황-----------------------------
@@ -141,7 +145,6 @@ new Chart(emp_count, {
     }
   }
 }); // chart end
-//----------------------  임직원 현황-----------------------------
 // ----------------------   라인별 생산률 -----------------------------
 $(document).ready(function(){
 	
@@ -161,7 +164,7 @@ $(document).ready(function(){
 	canvas.style.height = '219.733px';
 	
 	ctx = canvas.getContext('2d');
-	
+if(values !== null)	{
 	myChart = new Chart(ctx, {
 	  type: 'bar',
 	  data: {
@@ -208,6 +211,9 @@ $(document).ready(function(){
 	  }
 	});
 });
+
+}
+
 // ----------------------   라인별 생산률 ------------------------------
 
 </script>

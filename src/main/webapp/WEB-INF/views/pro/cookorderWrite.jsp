@@ -90,12 +90,7 @@ function openempList() {
 		    Swal.fire("입력란을 채워주세요!");
 		  }
 		}
-
-		
-		
-		
-		
-
+	
 		// 상품 검색 후 자재 가져오기
 		function getRelatedMaterials() {
 			var itemCode = document.getElementById("item_code").value;
