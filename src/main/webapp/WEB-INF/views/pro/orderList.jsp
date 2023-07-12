@@ -270,8 +270,8 @@ function itemrecipeListPrint(array) {
 </div>
 
 	
-<br><br><br>
-    <div id="Require_ajax" style="margin-top: 50px">
+
+    <div id="Require_ajax" style="margin-top: 30px">
 	<table class="product-table" style="margin-top: 50px;margin-bottom:20px; width: 100%;">
 <!-- 	<tr id="th"><th>자재코드</th><th>자재이름</th><th>투입량</th></tr> -->
 	<tr id="con"><td> 레시피를 확인하려면 해당 상품코드를 클릭해주세요 </td></tr>
