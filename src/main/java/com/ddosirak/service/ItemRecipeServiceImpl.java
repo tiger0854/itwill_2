@@ -60,13 +60,6 @@ public class ItemRecipeServiceImpl implements ItemRecipeService {
 		if (itemRecipeUploadvo == null || itemRecipeUploadvo.isEmpty()) {
 			dao.deleteItemRecipe(vo.getItem_code());
 		} else {
-
-			if (existingRecipe == null || existingRecipe.isEmpty()) {
-				int id = Integer.valueOf((String) session.getAttribute("login_id"));
-				for (ItemRecipeVO item : itemRecipeUploadvo) {
-					item.setEmployee_name(edao.vacationfind(id));
-				}
-			} else {
 				for (ItemRecipeListVO existingItem : existingRecipe) {
 					boolean found = false;
 					for (ItemRecipeVO item : itemRecipeUploadvo) {
@@ -96,7 +89,7 @@ public class ItemRecipeServiceImpl implements ItemRecipeService {
 				}
 			}
 		}
-	}
+	
 
 
 	@Override
