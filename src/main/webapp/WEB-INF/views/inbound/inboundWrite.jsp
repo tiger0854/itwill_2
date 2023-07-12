@@ -122,6 +122,21 @@ td{height: 80px !important; vertical-align: middle;font-weight: bold;}
 </form>
 </div>
 <script type="text/javascript">
+	$(document).ready(function () {
+	 	 
+		  var deptName = "${sessionScope.dept_name}";
+		  var positionName = "${sessionScope.position_name}";	
+		  
+		  if(deptName.includes('유통')||deptName.includes('입고')||deptName.includes('출고')||positionName=='이사'){
+		  }
+		  else{
+			Swal.fire("권한이 없습니다.").then(function() {
+		    history.back() 
+		    });
+		  return false;
+		  }
+	
+	});
 	var popupWidth = 600;
 	var popupHeight = 400;
 	
