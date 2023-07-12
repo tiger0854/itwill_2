@@ -40,7 +40,6 @@ import com.ddosirak.service.PageService;
 public class CustomerController {
 		 
 	private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
-	
 	@Inject
 	private CustomerService cService;
 	
