@@ -19,23 +19,44 @@ function vacationmodify(vacation_id) {
 	  window.open(popupUrl, '_blank', 'width=500,height=600,left=100, top=100');
 	}
 </script>
-<script>
-function vacationdelete(vacation_id,employee_id) {
-	
-	Swal.fire({
-	    title: "경고",
-	    text: "주의 : " + "당신의 휴가 리스트를 정말 삭제하시겠습니까?",
-	    icon: "error",
-	    showCancelButton:true,
-	    confirmButtonText: '확인',
-	    cancelButtonText: '취소'
-	  })
-	  .then(result => {
-	    if (result.isConfirmed) { // 만약 모달창에서 확인 버튼을 눌렀다면
-	      location.href = '/emp/vacationinf';
+<script>	
+function vacationdelete(vacation_id, employee_id) {
+	  swal.fire({
+	    title: "휴가 취소",
+	    text: "정말 휴가를 취소하시겠습니까?",
+	    icon: "warning",
+	    showCancelButton: true,
+	    confirmButtonColor: "#3085D6",
+	    cancelButtonColor: "#d33",
+	    confirmButtonText: "확인",
+	    cancelButtonText: "취소",
+	  }).then((result) => {
+	    if (result.isConfirmed) {
+	      // 삭제 작업 수행
+	      $.ajax({
+	        url: '/emp/vacationdelete',
+	        type: 'GET',
+	        data: {
+	          vacation_id: vacation_id,
+	          employee_id: employee_id
+	        },
+	        success: function(response) {
+	          // 삭제 작업이 성공한 경우
+	          swal.fire("삭제 완료", "휴가가 삭제되었습니다.", "success").then(() => {
+	            // vacationlist 페이지로 이동
+	            location.href = '/emp/vacationinf?vacation_id=' + vacation_id + "&employee_id=" + employee_id;
+	          });
+	        },
+	        error: function() {
+	          // 삭제 작업이 실패한 경우
+	          swal.fire("삭제 실패", "휴가 삭제에 실패하였습니다.", "error");
+	        }
+	      });
 	    }
 	  });
-}
+	}
+
+
 	
 
 </script>

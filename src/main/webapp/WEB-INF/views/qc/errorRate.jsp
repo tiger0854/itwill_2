@@ -80,12 +80,12 @@
 								<td>${vo.total_QTY }</td>
 								<td>${vo.total_error_QTY }</td>
 								<c:if
-									test="${(((vo.total_QTY - vo.total_error_QTY) / vo.total_QTY * 100) - 100) * (-1) <= 0 }">
-									<td>0%</td>
+									test="${vo.total_error_QTY == null }">
+									<td></td>
 								</c:if>
 								<c:if
-									test="${(((vo.total_QTY - vo.total_error_QTY) / vo.total_QTY * 100) - 100) * (-1) > 0 }">
-									<td><fmt:formatNumber value="${errorRate}"
+									test="${vo.total_error_QTY != null }">
+									<td><fmt:formatNumber value="${errorRate }"
 											minFractionDigits="0" maxFractionDigits="0" />%</td>
 								</c:if>
 								<form action="/qc/errorStatus" method="post">
