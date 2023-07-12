@@ -79,6 +79,7 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+$(document).ready(function(){
 //----------------------  불량률 현황-----------------------------
 const errQTY = "${errQTY }";
 const totalQTY = "${totalQTY }";
@@ -146,7 +147,7 @@ new Chart(emp_count, {
   }
 }); // chart end
 // ----------------------   라인별 생산률 -----------------------------
-$(document).ready(function(){
+
 	
 	var result = JSON.parse('${graphListJson}');
 	var values = result.map(function(obj) {
@@ -210,10 +211,9 @@ if(values !== null)	{
 	    }
 	  }
 	});
-});
+}// if end
 
-}
-
+}); // jQ end
 // ----------------------   라인별 생산률 ------------------------------
 
 </script>

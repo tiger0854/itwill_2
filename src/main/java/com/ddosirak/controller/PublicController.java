@@ -300,7 +300,7 @@ public class PublicController {
 		
 		int al = eService.alCount_all();
 		int aa = eService.alCount_am();
-		int ap = eService.alCount_am();
+		int ap = eService.alCount_pm();
 		int ep = eService.empCount();
 		// 임직원 수 리턴
 		model.addAttribute("alCount_all", al);// 전일반 근무자

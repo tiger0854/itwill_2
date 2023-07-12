@@ -91,6 +91,7 @@
 	<select id="materialList"
 		resultType="com.ddosirak.domain.MaterialdetailVO">
 		SELECT * FROM material_detail 
+		order by material_code desc
 		LIMIT #{startRow}, #{pageSize}
 	</select>
 
