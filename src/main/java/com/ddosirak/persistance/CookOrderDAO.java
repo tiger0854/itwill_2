@@ -95,6 +95,8 @@ public interface CookOrderDAO {
 	
 	// 수주번호 중복체크2
 	public Boolean checksucookList(String re_code);
+	
+	public void updatemetarial(CookAddVO cavo);
 
 	
 

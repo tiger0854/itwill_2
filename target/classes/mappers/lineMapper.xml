@@ -69,42 +69,5 @@
 		</if>
   	</select>
   	
-  	
-  	<!-- 작업지시 상태변경 -->
-	<!--   	statusProOrder -->
-	<update id="statusProOrder">
-	  UPDATE prod
-	  SET wo_status = CASE
-	    WHEN (wo_status != "마감" AND (SELECT COUNT(wo_code) FROM prod_perf_add WHERE wo_code = #{wo_code}) > 0) THEN "시작"
-	    ELSE wo_status
-	  END
-	  WHERE wo_code = #{wo_code}
-	</update>
-  		<!-- 작업지시 상태변경 -->
-  	
-  	
-  	<!-- 상품목록 -->
-  	<select id="proitemList" resultType="com.ddosirak.domain.ItemdetailVO">
-		SELECT * FROM item_detail
-  	</select>
-  	
-  	<!-- 상품검색 -->
-<!--   	proitemSearch -->
-  	  	<!-- 작업지시 검색목록 -->
-  	<select id="proitemSearch" resultType="com.ddosirak.domain.ItemdetailVO">
-		<include refid="itemList" />
-		<include refid="itemSearch" />
-  	</select>
-
-	
-	<sql id="itemList">
-		SELECT * FROM item_detail
-	</sql>
-	
-	<sql id="itemSearch">
-	  WHERE item_code LIKE CONCAT('%', #{item_code}, '%')
-	  AND item_name LIKE CONCAT('%', #{item_name}, '%')
-	</sql>
-  	
   
   </mapper>
