@@ -62,10 +62,7 @@
 		// 상품 검색 후 자재 가져오기
 		function getRelatedMaterials() {
 			var itemCode = document.getElementById("item_code").value;
-			if (!itemCode) {
-				Swal.fire("상품 검색을 해주세요!");
-				return;
-			}
+			
 			$.ajax({
 				url : "/foundation/itemrecipe/materials/"+itemCode,
 				method : "GET",
