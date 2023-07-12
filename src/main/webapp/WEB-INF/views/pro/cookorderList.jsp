@@ -14,9 +14,10 @@
 <title>조리지시목록</title>
 <script>
 var deptName = "${sessionScope.dept_name}";
+var positionName = "${sessionScope.position_name}";
 
 function orderwrite() {
-	if(deptName.includes('생산')){   
+	if(deptName.includes('생산')||positionName==='이사'){   
 	// 새 창을 열기 위한 URL
 	 var popupUrl = '/pro/cookorderWrite';
 	// 새 창 열기
@@ -28,7 +29,7 @@ function orderwrite() {
 
 
 function orderedit(co_code) {
-	if(deptName.includes('생산')){    	
+	if(deptName.includes('생산') ||positionName==='이사'){    	
 	// 새 창을 열기 위한 URL
 		var popupUrl = '/pro/cookorderEdit?co_code='+ co_code;
 		  window.open(popupUrl, '_blank', 'width=500,height=600,left=100, top=100');
@@ -38,7 +39,7 @@ function orderedit(co_code) {
 }
 
 function cookOrderDelete(co_code) {
-	if(deptName.includes('생산')){  
+	if(deptName.includes('생산') ||positionName==='이사'){  
 		  Swal.fire({
 			    title: "경고",
 			    text: "정말로 삭제하시겠습니까?",

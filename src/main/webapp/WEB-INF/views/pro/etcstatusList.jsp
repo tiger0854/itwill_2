@@ -14,11 +14,12 @@
 <script>
 
 var deptName = "${sessionScope.dept_name}";
+var positionName = "${sessionScope.position_name}";
 
 
 
 function etcRemove(perfId,wo_code) {
-	if(deptName.includes('생산')){  
+	if(deptName.includes('생산')||positionName==='이사' ){  
 		  Swal.fire({
 			    title: "경고",
 			    text: "정말로 삭제하시겠습니까?",
@@ -43,7 +44,7 @@ function etcRemove(perfId,wo_code) {
 	function etcwrite(woCode) {
 		
 		var wo_status = "${pvo.wo_status}";
-		if (deptName.includes('생산')) {
+		if (deptName.includes('생산')||positionName==='이사') {
 			  if (wo_status === "마감") {
 			    Swal.fire({
 			      title: "마감된 지시입니다!",
@@ -64,7 +65,7 @@ function etcRemove(perfId,wo_code) {
 
 
 		function wostatus(wo_code) {
-			if(deptName.includes('생산')){  
+			if(deptName.includes('생산') ||positionName==='이사'){  
 				  Swal.fire({
 					    title: "경고",
 					    text: "수동마감 하시겠습니까?",

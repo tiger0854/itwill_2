@@ -14,8 +14,9 @@
 
 
 var deptName = "${sessionScope.dept_name}";
+var positionName = "${sessionScope.position_name}";
 function etcRemove(cook_id, co_code) {
-  if (deptName.includes('생산')) {
+  if (deptName.includes('생산') ||positionName==='이사') {
     Swal.fire({
       title: "경고",
       text: "정말로 삭제하시겠습니까?",
@@ -34,7 +35,7 @@ function etcRemove(cook_id, co_code) {
 }
 function etcwrite(co_code) {
   var co_status = "${cvo.co_status}";
-  if (deptName.includes('생산')) {
+  if (deptName.includes('생산') || positionName==='이사') {
     if (co_status === "마감") {
       Swal.fire({
         title: "마감된 지시입니다!",
@@ -51,7 +52,7 @@ function etcwrite(co_code) {
   }
 }
 function costatus(co_code) {
-  if (deptName.includes('생산')) {
+  if (deptName.includes('생산') ||positionName==='이사' ) {
     Swal.fire({
       title: "경고",
       text: "수동마감 하시겠습니까?",
