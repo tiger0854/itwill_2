@@ -178,9 +178,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 <div class="nav_link collapse" id="pro">
 		  			<a href="/pro/orderList" class="nav_link"> - 작업지시</a><br>
 		  		    <a href="/pro/cookorderList" class="nav_link"> - 조리지시</a><br>
-		  		    <c:if test="${sessionScope.dept_name ne '품질팀'}">
-		  		    	<a href="/qc/qualityList" class="nav_link"> - 품질현황</a><br>
-		  		    </c:if>
+	  		    	<a href="/qc/qualityList" class="nav_link"> - 품질현황</a><br>
 				</div>
 				</div>
  
