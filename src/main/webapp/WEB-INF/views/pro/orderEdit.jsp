@@ -125,12 +125,12 @@ function openempList() {
 
 <!-- 작업지시등록, 취소 버튼 -->
 <div style="text-align: center; margin-top: 50px">
-<button type="button" class=btn-add onclick="onUpdate();"> <i class='bx bx-edit'></i> 수정</button>
-<button type="button" class=btn-search onclick="window.close()">X 닫기</button>
+<button type="button"  class="btn btn-outline-primary" onclick="onUpdate();"> <i class='bx bx-edit'></i> 수정</button>
+<button type="button" class="btn btn-danger" onclick="window.close()">X 닫기</button>
 </div>
-
 </form>
-
+<!--  class="btn btn-outline-primary" -->
+<!--  class="btn btn-danger" -->
 <br>
 </div>
 </body>

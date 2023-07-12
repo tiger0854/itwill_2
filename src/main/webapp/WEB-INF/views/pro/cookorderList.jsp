@@ -98,7 +98,7 @@ function opensucode() {
 <input class="btn btn-primary" type="submit" value="조회">
 <input type="button" class="btn btn-outline-primary" onclick="orderwrite()" value="추가">
 </div>
-<table class="product-box"style="margin-top: 20px; width: 100%; " border="1">
+<table class="product-box2"style="margin-top: 20px; width: 100%; " border="1">
 			<tr>
 				<td>라인</td>
 				<td><select name="line_code" class="line_code">
@@ -143,7 +143,7 @@ function opensucode() {
         <th>수주번호</th>
         <th>조리지시자</th>
         <th>지시상태</th>
-        <th>라인코드</th>
+        <th>라인이름</th>
         <th>상품이름</th>
         <th>자재이름</th>
         <th>지시수량</th>
@@ -174,7 +174,7 @@ function opensucode() {
 	    <td>${vo.co_status}</td>
 	  </c:otherwise>
 	</c:choose>
-        <td>${vo.line_code}</td>
+        <td>${vo.line_name}</td>
         <td>${vo.item_name}</td>
         <th>${vo.material_name}</th>
         <td>${vo.material_con}</td>

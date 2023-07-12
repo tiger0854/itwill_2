@@ -19,7 +19,7 @@ public class CookVO {
 	
 	private String co_code;
 	private String employee_name;
-
+	private int employee_id;
 	private String factory_code;
 	private String line_code;
 	private String line_name;
@@ -38,6 +38,12 @@ public class CookVO {
 	
 
 	
+	public int getEmployee_id() {
+		return employee_id;
+	}
+	public void setEmployee_id(int employee_id) {
+		this.employee_id = employee_id;
+	}
 	public String getEmployee_name() {
 		return employee_name;
 	}
@@ -143,11 +149,12 @@ public class CookVO {
 	
 	@Override
 	public String toString() {
-		return "CookVO [co_code=" + co_code + ", employee_name=" + employee_name + ", factory_code=" + factory_code
-				+ ", line_code=" + line_code + ", line_name=" + line_name + ", item_code=" + item_code + ", item_name="
-				+ item_name + ", coQTY=" + coQTY + ", cpQTY=" + cpQTY + ", co_status=" + co_status + ", delivery_date="
-				+ delivery_date + ", co_date=" + co_date + ", co_time=" + co_time + ", material_code=" + material_code
-				+ ", material_name=" + material_name + ", so_code=" + so_code + ", material_con=" + material_con + "]";
+		return "CookVO [co_code=" + co_code + ", employee_name=" + employee_name + ", employee_id=" + employee_id
+				+ ", factory_code=" + factory_code + ", line_code=" + line_code + ", line_name=" + line_name
+				+ ", item_code=" + item_code + ", item_name=" + item_name + ", coQTY=" + coQTY + ", cpQTY=" + cpQTY
+				+ ", co_status=" + co_status + ", delivery_date=" + delivery_date + ", co_date=" + co_date
+				+ ", co_time=" + co_time + ", material_code=" + material_code + ", material_name=" + material_name
+				+ ", so_code=" + so_code + ", material_con=" + material_con + "]";
 	}
 
 	

@@ -133,6 +133,12 @@ public class ProductionPerformanceDAOImpl implements ProductionPerformanceDAO {
 		logger.debug("자재 감소 완료 @@@@@@@@@ "+params);
 	}
 
+	@Override
+	public void plusQTY(Map<String, Object> params) {
+		sqlSession.update(NAMESPACE + ".qtyplus", params);
+		logger.debug("자재 증가 완료 @@@@@@@@@ "+params);
+	}
+
 
 
 

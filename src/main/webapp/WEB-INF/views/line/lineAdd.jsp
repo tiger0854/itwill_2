@@ -67,7 +67,7 @@ function openempList() {
 <!-- 상품 수정 폼 -->
 <div class="black-bar"> <h4 style="text-align: center; color: white; padding-top: 8px">  <i class='bx bx-edit'></i>라인 등록 하기</h4></div>
 		<div style="display: flex; justify-content: center; margin-bottom: 15px" >
-		  <img src="../../resources/css/logo.png">
+<!-- 		  <img src="../../resources/css/logo.png"> -->
 		</div>
 <div class="container mt-3">
 <!--  		<hr width="100%" style="border: 2px solid black"> -->
@@ -110,8 +110,8 @@ function openempList() {
 
 <!-- 작업지시등록, 취소 버튼 -->
 <div style="text-align: center; margin-top: 50px">
-<button type="button" class=btn-add onclick="onInsert();"> <i class='bx bx-edit'></i> 등록</button>
-<button class=btn-search onclick="window.close()">X 취소</button>
+<button type="button" class="btn btn-outline-primary" onclick="onInsert();"> <i class='bx bx-edit'></i> 등록</button>
+<button type="button" class="btn btn-danger" onclick="window.close()">X 취소</button>
 </div>
 
 </form>

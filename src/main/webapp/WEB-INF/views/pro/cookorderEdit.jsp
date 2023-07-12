@@ -80,7 +80,7 @@ function openempList() {
 		      <td>작업지시자</td>
       <td><input type="hidden" name="co_code" value=${cvo.co_code } readonly>
     <div class="input-group">
-      <input type="text" style="width: 40%" placeholder="지시자 ID" class="form-control" name="employee_id" id="employee_id" readonly>
+      <input type="text" style="width: 40%" value="${cvo.employee_id}" placeholder="지시자 ID" class="form-control" name="employee_id" id="employee_id" readonly>
 	    <input type="text" style="width: 40%"  value="${cvo.employee_name}" placeholder="지시자 이름" class="form-control" name="employee_name" id="employee_name" readonly>
 	    <input type="button" class="btn btn-primary" onclick="openempList();" value="검색">
 	</div>
@@ -133,8 +133,8 @@ function openempList() {
 
 <!-- 작업지시등록, 취소 버튼 -->
 <div style="text-align: center; margin-top: 50px">
-<button type="button" class=btn-add onclick="onUpdate();"> <i class='bx bx-edit'></i> 수정</button>
-<button type="button" class=btn-search onclick="window.close()">X 닫기</button>
+<button type="button"class="btn btn-outline-primary" onclick="onUpdate();"> <i class='bx bx-edit'></i> 수정</button>
+<button type="button" class="btn btn-danger" onclick="window.close()">X 닫기</button>
 </div>
 
 </form>

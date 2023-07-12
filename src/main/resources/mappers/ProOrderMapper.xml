@@ -206,6 +206,12 @@
 	where re_code = #{re_code}
 	</update>
   	
-  	
+<!-- checkMaterial -->
+	<select id="checkMaterial" resultType="boolean">
+	  SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END
+	  FROM material_detail
+	  WHERE material_code = #{materialCode} AND tQTY = #{materialQuantity}	
+	</select>
+
   	
   </mapper>
