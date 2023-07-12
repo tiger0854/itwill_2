@@ -50,11 +50,10 @@ public class CustomerController {
 //	http://localhost:8088/customer/customerList?pop=no
 	@RequestMapping(value = "/customerList",method=RequestMethod.GET) 
 	public String customerGET(Model model,PageVO pageVO, HttpServletRequest request,@RequestParam(value ="pop",required = false) String pop,HttpSession session)throws Exception {
-		
-		logger.debug("customerGET() 호출!");
 		if(session.getAttribute("login_id")==null){
 			return "redirect:/public/login";
 			};
+
 		
 		//================================페이징 처리를 위한 값 받아오기 동작========================================
 		// 준비물 : Inject > PageVO , 파라미터값 PageVO pageVO, HttpServletRequest request
