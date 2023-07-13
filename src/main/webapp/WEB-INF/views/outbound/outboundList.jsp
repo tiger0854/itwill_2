@@ -59,7 +59,7 @@
   <tr>
   	
   <c:choose>
-  	<c:when test="${vo.out_state == 1 and vo.out_qty > vo.proOrderVO.pQTY}">
+  	<c:when test="${vo.out_state == 1}">
   		<td class="text_ct"><input type="checkbox" name="rowCheck" value="${vo.out_num }"/></td>
  	</c:when>
  	<c:otherwise>
@@ -79,16 +79,11 @@
        <td> ${vo.item_name} </td>
      </c:otherwise>
   </c:choose>
-  
   <td>${vo.out_qty }</td>
   <td><a href='/outbound/outboundStock?out_num=${vo.out_num}'><i class='bx bx-search-alt-2'></i></a></td> 
   <td>${vo.due_date }</td> 
   
  <c:choose>
-  	<c:when test="${vo.out_state==1 and vo.out_qty <= vo.proOrderVO.pQTY}">
-        <td><font color="blue">생산완료<br>
-        					   (출고가능)</font></td>
-    </c:when>
     <c:when test="${vo.out_state==1 }">
    		<td>진행중</td>
     </c:when>
