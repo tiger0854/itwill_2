@@ -24,7 +24,12 @@
 		select * from item_detail
 		WHERE item_code LIKE CONCAT('%', #{item_code}, '%')
 		and item_name LIKE CONCAT('%', #{item_name}, '%')
-		order by item_code desc
+		ORDER BY CASE 
+	    WHEN item_code LIKE 'I%' THEN 0 
+	    WHEN item_code LIKE 'M%' THEN 1 
+	    ELSE 2 
+	  	END, 
+	  	CAST(SUBSTRING(item_code, 2) AS UNSIGNED) DESC
 		LIMIT #{startRow}, #{pageSize}
 	</select>
 	<!-- 상품 기초 목록 검색 -->

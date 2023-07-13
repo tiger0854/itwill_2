@@ -33,7 +33,12 @@
 		on i.item_code= id.item_code
 		join material_detail md
 		on i.material_code = md.material_code
-		order by i.item_code
+		ORDER BY CASE 
+	    WHEN i.item_code LIKE 'I%' THEN 0 
+	    WHEN i.item_code LIKE 'M%' THEN 1 
+	    ELSE 2 
+	  	END, 
+	  	CAST(SUBSTRING(i.item_code, 2) AS UNSIGNED) DESC
 		limit #{startRow}, #{pageSize}
 	</select>
 
