@@ -83,7 +83,6 @@
 			and o.out_num like CONCAT('%',#{pageVO.search},'%')
 		</if>
 		order by o.out_id desc
-		limit #{pageVO.startRow}, #{pageVO.pageSize}
   	</select>
   	<!-- 출고 리스트 --> 
   	

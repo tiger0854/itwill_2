@@ -59,7 +59,7 @@
   <tr>
   	
   <c:choose>
-  	<c:when test="${vo.out_state == 1 }">
+  	<c:when test="${vo.out_state == 1 and vo.out_qty > vo.proOrderVO.pQTY}">
   		<td class="text_ct"><input type="checkbox" name="rowCheck" value="${vo.out_num }"/></td>
  	</c:when>
  	<c:otherwise>
@@ -130,37 +130,29 @@
   <button type="button" class="btn btn-danger" onclick="outboundRemove(this);">출고 취소</button>
   
   <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
-	<div class="container">
-	 	<ul class="pagination"style="justify-content: center;">		
-			<c:choose>
-				<c:when test="${pageVO.startPage > pageVO.pageBlock}">
-					<li class="page-item"><a class="page-link" href="/outbound/outboundList?pageNum=${pageVO.startPage - pageVO.pageBlock}" style="margin: 0.5em;">이전</a></li>
-				</c:when>
-				<c:otherwise>
-				</c:otherwise>
-			</c:choose>
+<!-- 	<div class="container"> -->
+<!-- 	 	<ul class="pagination"style="justify-content: center;">		 -->
+<%-- 			<c:choose> --%>
+<%-- 				<c:when test="${pageVO.startPage > pageVO.pageBlock}"> --%>
+<%-- 					<li class="page-item"><a class="page-link" href="/outbound/outboundList?pageNum=${pageVO.startPage - pageVO.pageBlock}" style="margin: 0.5em;">이전</a></li> --%>
+<%-- 				</c:when> --%>
+<%-- 				<c:otherwise> --%>
+<%-- 				</c:otherwise> --%>
+<%-- 			</c:choose> --%>
 			
-			<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
-				<c:choose>
-					<c:when test="${pageVO.search != null}">
-					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/outbound/outboundList?pageNum=${i}&search=${pageVO.search}&state=${state}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
-					</c:when>
-					<c:otherwise>
-					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/outbound/outboundList?pageNum=${i}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li>
-					</c:otherwise>
-				</c:choose>
-				
-			</c:forEach>
+<%-- 			<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1"> --%>
+<%-- 					<li class="page-item ${pageVO.pageNum eq i ? 'active' : ''}"><a href="/outbound/outboundList?pageNum=${i}&state=${state}" style="margin: 0.5em;border-radius: 2px;"  class="page-link">${i}</a></li> --%>
+<%-- 			</c:forEach> --%>
 			
-			<c:choose>
-				<c:when test="${pageVO.endPage < pageVO.pageCount}">
-					<li class="page-item"><a class="page-link" href="/outbound/outboundList?pageNum=${pageVO.startPage + pageVO.pageBlock}" style="margin: 0.5em;">다음</a></li>
-				</c:when>
-				<c:otherwise>
-				</c:otherwise>
-			</c:choose>
-		</ul>
-		</div>
+<%-- 			<c:choose> --%>
+<%-- 				<c:when test="${pageVO.endPage < pageVO.pageCount}"> --%>
+<%-- 					<li class="page-item"><a class="page-link" href="/outbound/outboundList?pageNum=${pageVO.startPage + pageVO.pageBlock}" style="margin: 0.5em;">다음</a></li> --%>
+<%-- 				</c:when> --%>
+<%-- 				<c:otherwise> --%>
+<%-- 				</c:otherwise> --%>
+<%-- 			</c:choose> --%>
+<!-- 		</ul> -->
+<!-- 		</div> -->
 <!-- -------------------------------------------------------------------------------페이징 구현부-------------------------------------------------------------------------------------------------------- -->
   
   
