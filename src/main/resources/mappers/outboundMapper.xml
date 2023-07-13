@@ -70,18 +70,14 @@
 <!-- 		order by out_id desc -->
 <!-- 		limit #{pageVO.startRow}, #{pageVO.pageSize} -->
 <!--   	</select> -->
-  	<select id="outList" resultType="com.ddosirak.domain.OutboundVO" parameterType="map" resultMap="outbound">
+<select id="outList" resultType="com.ddosirak.domain.OutboundVO" parameterType="map" resultMap="outbound">
   		select o.out_date, o.create_date, o.out_id, o.out_state, o.due_date, o.out_empCd, o.out_empNm, o.out_num, o.item_code, o.item_name, o.out_customerNm,o.out_Cqty, o.out_qty, o.re_code, p.so_code, p.pQTY, o.out_notes, o.price
 		from outbound o join prod p
-		WHERE 1=1
 		<choose>
   				<when test="state == 'all'">AND o.out_state >= 0</when>
   				<when test="state == 'ongoing'">AND o.out_state = 1</when>
   				<when test="state == 'completed'">AND o.out_state = 0</when>
-  		</choose> 
-		<if test="search != ''">
-			and o.out_num like CONCAT('%',#{pageVO.search},'%')
-		</if>
+  		</choose>
 		order by o.out_id desc
   	</select>
   	<!-- 출고 리스트 --> 
